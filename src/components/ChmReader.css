@@ -150,42 +150,93 @@
 
 .chm-toc-item {
   user-select: none;
+  contain: layout style;
 }
 
 .chm-toc-label {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   padding: 5px 12px;
-  cursor: pointer;
   font-size: 13px;
   line-height: 1.4;
   color: var(--text-secondary, #555);
   border-radius: 4px;
   margin: 1px 4px;
-  transition: background 0.15s, color 0.15s;
 }
-.chm-toc-label:hover {
+
+.chm-toc-arrow-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.chm-toc-arrow-btn:hover {
+  background: var(--hover-bg, rgba(0,0,0,0.06));
+}
+
+.chm-toc-arrow-btn:focus-visible {
+  outline: 2px solid var(--accent-color, #6366f1);
+  outline-offset: 1px;
+}
+
+.chm-toc-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+
+.chm-toc-text-action {
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: -1px -2px;
+}
+
+.chm-toc-text-action:hover {
   background: var(--hover-bg, rgba(0,0,0,0.04));
   color: var(--text-primary, #1a1a2e);
 }
-.chm-toc-label.active {
-  background: var(--accent-bg, rgba(99, 102, 241, 0.12));
+
+.chm-toc-label.active .chm-toc-text {
   color: var(--accent-color, #6366f1);
   font-weight: 500;
+}
+
+.chm-toc-label.active {
+  background: var(--accent-bg, rgba(99, 102, 241, 0.12));
 }
 
 .chm-toc-arrow {
   display: inline-block;
   font-size: 8px;
   color: var(--text-tertiary, #999);
-  transition: transform 0.2s;
   flex-shrink: 0;
-  width: 12px;
+  width: 10px;
   text-align: center;
+  transform: rotate(0deg);
+  transition: transform 0.12s ease-out;
 }
-.chm-toc-arrow.expanded {
+
+.chm-toc-arrow-btn.expanded .chm-toc-arrow {
   transform: rotate(90deg);
+}
+
+.chm-toc-children--collapsed {
+  display: none;
 }
 
 .chm-toc-dot {
@@ -194,13 +245,7 @@
   border-radius: 50%;
   background: var(--text-tertiary, #ccc);
   flex-shrink: 0;
-  margin: 0 4px;
-}
-
-.chm-toc-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin: 0 4px 0 6px;
 }
 
 .chm-toc-empty {
