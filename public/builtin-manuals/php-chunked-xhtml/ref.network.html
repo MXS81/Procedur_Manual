@@ -1,0 +1,407 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>网络 函数</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="network.constants.html" class="navbar__link">« 预定义常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.checkdnsrr.html" class="navbar__link">checkdnsrr »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.network.html">网络</a></li>
+        <li>网络 函数</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="ref.network" class="reference">
+ <h1 class="title">网络 函数</h1>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>目录</h2><ul class="chunklist chunklist_reference"><li><a href="function.checkdnsrr.html">checkdnsrr</a> — 给指定的主机（域名）或者IP地址做DNS通信检查</li><li><a href="function.closelog.html">closelog</a> — 关闭系统日志链接</li><li><a href="function.dns-check-record.html">dns_check_record</a> — 别名 checkdnsrr</li><li><a href="function.dns-get-mx.html">dns_get_mx</a> — 别名 getmxrr</li><li><a href="function.dns-get-record.html">dns_get_record</a> — 获取指定主机名的 DNS 纪录</li><li><a href="function.fsockopen.html">fsockopen</a> — 打开 Internet 或者 Unix 套接字连接</li><li><a href="function.gethostbyaddr.html">gethostbyaddr</a> — 获取指定 IP 地址对应的 Internet 主机名</li><li><a href="function.gethostbyname.html">gethostbyname</a> — 返回主机名对应的 IPv4地址。</li><li><a href="function.gethostbynamel.html">gethostbynamel</a> — 获取互联网主机名对应的 IPv4 地址列表</li><li><a href="function.gethostname.html">gethostname</a> — 获取主机名</li><li><a href="function.getmxrr.html">getmxrr</a> — 获取 Internet 主机名对应的 MX 记录</li><li><a href="function.getprotobyname.html">getprotobyname</a> — Get protocol number associated with protocol name</li><li><a href="function.getprotobynumber.html">getprotobynumber</a> — Get protocol name associated with protocol number</li><li><a href="function.getservbyname.html">getservbyname</a> — 获取互联网服务协议对应的端口</li><li><a href="function.getservbyport.html">getservbyport</a> — Get Internet service which corresponds to port and protocol</li><li><a href="function.header.html">header</a> — 发送原生 HTTP 头</li><li><a href="function.header-register-callback.html">header_register_callback</a> — 调用一个 header 函数</li><li><a href="function.header-remove.html">header_remove</a> — 删除之前设置的 HTTP 头</li><li><a href="function.headers-list.html">headers_list</a> — 返回已发送的 HTTP 响应头（或准备发送的）</li><li><a href="function.headers-sent.html">headers_sent</a> — 检测消息头是否已经发送</li><li><a href="function.http-clear-last-response-headers.html">http_clear_last_response_headers</a> — Clears the stored HTTP response headers</li><li><a href="function.http-get-last-response-headers.html">http_get_last_response_headers</a> — Retrieve last HTTP response headers</li><li><a href="function.http-response-code.html">http_response_code</a> — 获取/设置响应的 HTTP 状态码</li><li><a href="function.inet-ntop.html">inet_ntop</a> — Converts a packed internet address to a human readable representation</li><li><a href="function.inet-pton.html">inet_pton</a> — Converts a human readable IP address to its packed in_addr representation</li><li><a href="function.ip2long.html">ip2long</a> — 将 IPV4 的字符串互联网协议转换成长整型数字</li><li><a href="function.long2ip.html">long2ip</a> — 将长整型转化为字符串形式带点的互联网标准格式地址（IPV4）</li><li><a href="function.net-get-interfaces.html">net_get_interfaces</a> — 获取网络接口</li><li><a href="function.openlog.html">openlog</a> — Open connection to system logger</li><li><a href="function.pfsockopen.html">pfsockopen</a> — 打开持久的 Internet 或 Unix 套接字连接</li><li><a href="function.request-parse-body.html">request_parse_body</a> — Read and parse the request body and return the result</li><li><a href="function.setcookie.html">setcookie</a> — 发送 Cookie</li><li><a href="function.setrawcookie.html">setrawcookie</a> — 发送未经 URL 编码的 cookie</li><li><a href="function.socket-get-status.html">socket_get_status</a> — 别名 stream_get_meta_data</li><li><a href="function.socket-set-blocking.html">socket_set_blocking</a> — 别名 stream_set_blocking</li><li><a href="function.socket-set-timeout.html">socket_set_timeout</a> — 别名 stream_set_timeout</li><li><a href="function.syslog.html">syslog</a> — Generate a system log message</li></ul>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

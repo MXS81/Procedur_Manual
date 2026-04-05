@@ -1,0 +1,244 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>安装</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="openssl.requirements.html" class="navbar__link">« 需求</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="openssl.configuration.html" class="navbar__link">运行时配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="openssl.setup.html">安装/配置</a></li>
+        <li>安装</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="openssl.installation" class="section">
+ <h2 class="title">安装</h2>
+ <p class="para">
+  要使用 PHP 的 OpenSSL 支持，你应该使用 <strong class="option configure">--with-openssl</strong> 参数来编译 PHP。
+ </p>
+ <p class="para">
+  OpenSSL 库还在运行时对正常操作有额外的要求。最明显的是，OpenSSL 需要访问随机或伪随机数生成器； 在大多数 Unix 和类 Unix 平台上(包括linux)，意味着它必须要访问
+  <code class="literal">/dev/urandom</code> 或者 <code class="literal">/dev/random</code> 设备。
+ </p>
+ <p class="para">
+  <strong class="option configure">--with-system-ciphers</strong> 配置选项可用于设置 PHP 使用系统密码列表，而不是硬编码。
+ </p>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <strong>Win32 平台的用户请注意</strong><br />
+  <p class="para">
+   为了使此扩展生效，
+<abbr title="Dynamic Link Library">DLL</abbr> 文件必须能在 Windows 系统的
+<var class="envar">PATH</var> 指示的路径下找到。如何操作的信息，请参见题为“<a href="faq.installation.html#faq.installation.addtopath" class="link">如何在 Windows 中将 PHP
+目录加到 PATH 中</a>”的<abbr title="Frequently Asked Questions">FAQ</abbr>。虽然将
+DLL 文件从 PHP 文件夹复制到 Windows 系统目录也行，但不建议这样做。
+<em>此扩展需要下列文件在 <var class="envar">PATH</var> 路径中：</em>
+   <var class="filename">libeay32.dll</var>，
+   或者，自 OpenSSL 1.1 起，为 <var class="filename">libcrypto-*.dll</var>
+  </p>
+  <p class="para">
+   此外，如果打算使用密钥生成和证书签名功能，你需要在你的系统上安装一个可用的 <var class="filename">openssl.cnf</var> 文件。
+   在我们的 win32 二进制发行版本中，我们已经包含了一个示例配置文件，在
+   <var class="filename">extras/ssl</var> 文件夹中。
+  </p>
+  <p class="para">
+   PHP 将会使用如下逻辑搜索 <var class="filename">openssl.cnf</var> 文件:
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">如果 <code class="literal">OPENSSL_CONF</code> 环境变量设置了，该变量将会被当作配置文件的路径（含文件名）。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">如果 <code class="literal">SSLEAY_CONF</code> 环境变量设置了，该变量将会被当作配置文件的路径（含文件名）。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">假设<var class="filename">openssl.cnf</var> 文件将会在 openssl DLL 被编译时配置的默认证书区域被找到。这通常意味着默认的文件名是 <var class="filename">C:\Program Files\Common Files\SSL\openssl.cnf</var>(x64)
+      或者 <var class="filename">C:\Program Files (x86)\Common Files\SSL\openssl.cnf</var> (x86)，而 PHP 7.4.0之前，则是 <var class="filename">C:\usr\local\ssl\openssl.cnf</var>。
+     </span>
+    </li>
+   </ul>
+  </p>
+  <span class="simpara">
+   在你的安装过程中，你需要决定是否将配置文件安装在默认路径或者使用环境变量(可能是基于每个虚拟主机的基础)来定位配置文件安装到其他地方。注意，可以使用引入配置文件的函数中的
+   <code class="parameter">options</code> 参数来覆盖脚本中的默认路径。
+  </span>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    确保无权限的用户无法修改 <var class="filename">openssl.cnf</var> 文件。
+   </p>
+  </div>
+  <span class="simpara">
+   自 OpenSSL 3.0.0 起，Windows 上默认使用的 OpenSSL 版本为 PHP 8.2.0，已经将几种算法视为遗留算法。
+   这些算法通常已经不再使用，被密码学社区视为不安全，或者类似的原因。
+   这些算法仍然可以通过遗留提供者(<var class="filename">extras/ssl/legacy.dll</var>)使用；其使用方法在 OpenSSL 手册的
+   <a href="https://docs.openssl.org/master/man5/config/#Provider-Configuration" class="link external">&raquo;&nbsp;提供者配置</a>部分中有描述。
+  </span>
+ </p></blockquote>
+
+ <div class="simplesect">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>7.4.0</td>
+       <td>
+        <strong class="option configure">--with-openssl[=DIR]</strong> 不再接受目录参数，有利于将 pkg-config 变量 <var class="envar">PKG_CONFIG_PATH</var>
+        设置为 OpenSSL 位置，或者通过指定 <var class="envar">OPENSSL_LIBS</var> 和 <var class="envar">OPENSSL_CFLAGS</var> 变量来指向位置。
+       </td>
+      </tr>
+
+      <tr>
+       <td>7.4.0</td>
+       <td>
+        OpenSSL 默认配置文件的路径已经从 <var class="filename">C:\usr\local\ssl</var>
+        分别改至 <var class="filename">C:\Program Files\Common Files\SSL</var> 和
+        <var class="filename">C:\Program Files (x86)\Common Files\SSL</var>。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

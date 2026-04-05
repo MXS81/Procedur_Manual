@@ -1,0 +1,272 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>打开一个到 MySQL 服务器的持久连接</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.mysql-num-rows.html" class="navbar__link">« mysql_num_rows</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.mysql-ping.html" class="navbar__link">mysql_ping »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.mysql.html">MySQL 函数</a></li>
+        <li>打开一个到 MySQL 服务器的持久连接</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.mysql-pconnect" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">mysql_pconnect</h1>
+  <p class="verinfo">(PHP 4, PHP 5)</p><p class="refpurpose"><span class="refname">mysql_pconnect</span> &mdash; <span class="dc-title">打开一个到 MySQL 服务器的持久连接</span></p>
+
+ </div>
+
+ <div id="function.mysql-pconnect-refsynopsisdiv">
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">本扩展自 PHP 5.5.0
+起已废弃，并在自 PHP 7.0.0 开始被移除。应使用 <a href="book.mysqli.html" class="link">MySQLi</a>
+或 <a href="ref.pdo-mysql.html" class="link">PDO_MySQL</a> 扩展来替换之。参见 <a href="mysqlinfo.api.choosing.html" class="link">MySQL：选择 API</a> 
+指南来获取更多信息。用以替代本函数的有：</p>
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.mysqli-connect.html" class="function">mysqli_connect()</a></span> with <code class="literal">p:</code> host prefix</li>
+    <li><span class="methodname"><a href="pdo.construct.html" class="methodname">PDO::__construct()</a></span> with <strong><code><a href="pdo.constants.html#pdo.constants.attr-persistent">PDO::ATTR_PERSISTENT</a></code></strong> as a driver option</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.mysql-pconnect-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>mysql_pconnect</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$server</code><span class="initializer"> = ini_get(&quot;mysql.default_host&quot;)</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$username</code><span class="initializer"> = ini_get(&quot;mysql.default_user&quot;)</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$password</code><span class="initializer"> = ini_get(&quot;mysql.default_password&quot;)</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$client_flags</code><span class="initializer"> = 0</span></span><br>): <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span></div>
+
+  
+  <p class="simpara">
+   打开一个到 MySQL 服务器的持久连接。
+  </p>
+  
+  <p class="simpara">
+   <span class="function"><strong>mysql_pconnect()</strong></span> 和
+   <span class="function"><a href="function.mysql-connect.html" class="function">mysql_connect()</a></span> 非常相似，但有两个主要区别。
+  </p>
+  <p class="simpara">
+   首先，当连接的时候本函数将先尝试寻找一个在同一个主机上用同样的用户名和密码已经打开的（持久）连接，如果找到，则返回此连接标识而不打开新连接。
+  </p>
+  <p class="simpara">
+   其次，当脚本执行完毕后到 SQL 服务器的连接不会被关闭，此连接将保持打开以备以后使用（<span class="function"><a href="function.mysql-close.html" class="function">mysql_close()</a></span>
+   不会关闭由 <span class="function"><strong>mysql_pconnect()</strong></span> 建立的连接）。
+  </p>
+  <p class="simpara">
+   此种连接称为“持久的”。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.mysql-pconnect-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">server</code></dt>
+    <dd>
+     <span class="simpara">
+      MySQL 服务器地址，参数也可以包括端口号，例如
+      “hostname:port“ 或者是本机套接字的的路径，例如 “:/path/to/socket“
+     </span>
+     <span class="simpara">
+      如果 PHP 配置文件中 <a href="mysql.configuration.html#ini.mysql.default-host" class="link">
+      mysql.default_host</a> 的值未设置（默认情况下），则默认值为 &#039;localhost:3306&#039;
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">username</code></dt>
+    <dd>
+     <span class="simpara">
+      数据库连接使用的用户名。默认为当前服务器进程的用户。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">password</code></dt>
+    <dd>
+     <span class="simpara">
+      数据库连接使用的密码。默认为空密码。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">client_flags</code></dt>
+    <dd>
+     <span class="simpara">
+      参数 <code class="parameter">client_flags</code> 可以为以下常量：
+      128 (enable <code class="literal">LOAD DATA LOCAL</code> handling),
+      <strong><code><a href="mysql.constants.html#constant.mysql-client-ssl">MYSQL_CLIENT_SSL</a></code></strong>,
+      <strong><code><a href="mysql.constants.html#constant.mysql-client-compress">MYSQL_CLIENT_COMPRESS</a></code></strong>,
+      <strong><code><a href="mysql.constants.html#constant.mysql-client-ignore-space">MYSQL_CLIENT_IGNORE_SPACE</a></code></strong> 或
+      <strong><code><a href="mysql.constants.html#constant.mysql-client-interactive">MYSQL_CLIENT_INTERACTIVE</a></code></strong>。
+     </span>
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.mysql-pconnect-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   如果成功则返回一个正的 MySQL 持久连接标识符，出错则返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.mysql-pconnect-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    需要注意的是，此函数仅当在 PHP 模块化运行时才会生效。更多信息请参阅
+    <a href="features.persistent-connections.html" class="link">持久数据库连接</a> 章节。
+   </span>
+  </p></blockquote>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    使用持久连接可能需要对 Apache 和 MySQL 配置进行一些调整，以确保不超过
+    MySQL 服务器允许的最大连接数。
+   </p>
+  </div>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.mysql-pconnect-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="function.mysql-connect.html" class="function" rel="rdfs-seeAlso">mysql_connect()</a> - 打开一个到 MySQL 服务器的连接</span></li>
+   <li><a href="features.persistent-connections.html" class="link">Persistent
+   Database Connections</a></li>
+  </ul>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

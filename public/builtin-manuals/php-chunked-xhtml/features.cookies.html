@@ -1,0 +1,171 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Cookie</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="features.http-auth.html" class="navbar__link">« 用 PHP 进行 HTTP 认证</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="features.sessions.html" class="navbar__link">会话 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="features.html">特点</a></li>
+        <li>Cookie</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="features.cookies" class="chapter">
+ <h1 class="title">Cookie</h1>
+
+
+ <p class="para">
+  PHP 透明地支持 <abbr title="Hypertext Transfer Protocol">HTTP</abbr> cookie。cookie
+  是一种在远程浏览器端储存数据并以此来跟踪和识别用户的机制。可以用
+  <span class="function"><a href="function.setcookie.html" class="function">setcookie()</a></span> 或
+  <span class="function"><a href="function.setrawcookie.html" class="function">setrawcookie()</a></span> 函数来设置 cookie。cookie 是
+  <abbr title="Hypertext Transfer Protocol">HTTP</abbr> 标头的一部分，因此
+  <span class="function"><a href="function.setcookie.html" class="function">setcookie()</a></span> 函数必须在其它信息被输出到浏览器前调用，这和对
+  <span class="function"><a href="function.header.html" class="function">header()</a></span> 函数的限制类似。可以使用<a href="ref.outcontrol.html" class="link">输出缓冲函数</a>来延迟脚本的输出，直到按需要设置好了所有的
+  cookie 或者其它HTTP头。
+ </p>
+
+ <p class="para">
+  如果 <a href="ini.core.html#ini.variables-order" class="link">variables_order</a>
+  中包括“C”，则任何从客户端发送的 cookie 都会被自动包括进
+  <var class="varname"><a href="reserved.variables.cookies.html" class="classname">$_COOKIE</a></var>
+  自动全局数组。如果希望对一个
+  cookie 变量设置多个值，则需在 cookie 的名称后加 <code class="literal">[]</code> 符号。
+ </p>
+
+ <p class="para">
+  关于更多细节以及有关浏览器问题的注意事项，参见 <span class="function"><a href="function.setcookie.html" class="function">setcookie()</a></span>
+  和 <span class="function"><a href="function.setrawcookie.html" class="function">setrawcookie()</a></span> 函数。
+ </p>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

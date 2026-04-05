@@ -1,0 +1,233 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>OpenBSD 上从软件包或者 ports 中安装 PHP</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="install.unix.dnf.html" class="navbar__link">« 在使用 DNF 的 GNU/Linux 发行版上通过软件包安装</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="install.unix.source.html" class="navbar__link">在 Unix 和 macOS 系统上以源码安装 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="install.unix.html">在 Unix 系统上安装 PHP</a></li>
+        <li>OpenBSD 上从软件包或者 ports 中安装 PHP</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="install.unix.openbsd" class="sect1">
+ <h2 class="title">OpenBSD 上从软件包或者 ports 中安装 PHP</h2>
+ <p class="para">
+  本章节的内容和提示仅限于将 PHP 安装到 
+  <a href="http://www.openbsd.org/" class="link external">&raquo;&nbsp;OpenBSD</a> 系统上。
+ </p>
+ <div class="sect2" id="install.openbsd.packages">
+  <h3 class="title">使用二进制包安装</h3>
+  <p class="simpara">
+   使用二进制包安装 PHP 到 OpenBSD 系统上是被推荐的同时也是最简单的方法。PHP
+   核心包已经从其他模块中分离出来了并且每个模块可以被独立的安装／卸载而不影响其他模块。所有这些安装
+   PHP 需要的文件可以在 OpenBSD 光盘或者在 FTP 站点上找到。
+  </p>
+  <p class="simpara">
+   需要安装的核心包是 <var class="filename">php</var>，它包含了基本的引擎（加上 fpm、gettext 和
+   iconv）并且可能有几个版本可供选择。其次，可能还需要安装一些模块包，如：<var class="filename">php-mysqli</var> 或 
+   <var class="filename">php-imap</var>。需要使用命令 
+   <strong class="command">phpxs</strong> 去激活它，并且再通过修改 <var class="filename">php.ini</var> 文件来屏蔽他们。
+  </p>
+  <div class="example" id="install.openbsd.ports.example">
+   <p><strong>示例 #1 在 OpenBSD 系统下的软件包的安装示例</strong></p>
+   <div class="example-contents">
+<div class="cdata"><pre>
+# pkg_add php
+# pkg_add php-apache
+# pkg_add php-mysqli
+  （安装 PEAR 库）
+# pkg_add pear
+
+  （按照每个包显示的说明操作！）
+
+  (移除包)
+# pkg_delete php
+# pkg_delete php-apache
+# pkg_delete php-mysqli
+# pkg_delete pear
+</pre></div>
+   </div>
+
+  </div>
+  <p class="simpara">
+   阅读用户手册中的 
+   <a href="http://www.openbsd.org/cgi-bin/man.cgi?query=packages" class="link external">&raquo;&nbsp;packages(7)</a>
+   部分，可以得到更多 OpenBSD 系统下有关二进制软件包的信息。
+  </p>
+ </div>
+ <div class="sect2" id="install.openbsd.ports">
+  <h3 class="title">使用 Ports</h3>
+  <p class="simpara">
+   同样可以使用 <a href="http://www.openbsd.org/faq/ports/ports.html" class="link external">&raquo;&nbsp;ports
+   tree</a> 来编译 PHP 的源代码。然而，这样的安装方式仅仅是建议对
+   OpenBSD 非常熟悉的高级用户去做。PHP port 分为 core
+   和 extensions。其中 extensions 产生了所有 PHP
+   所支持的子模块。如果不希望创建并且使用这些模块中的某些模块，请使用
+   <strong class="command">no_*</strong> FLAVOR。例如，如果希望跳过编译
+   imap 模块，设置 FLAVOR 为 <strong class="command">no_imap</strong> 即可。
+  </p>
+ </div>
+ <div class="sect2" id="install.openbsd.faq">
+  <h3 class="title">常见问题</h3>
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">Apache 和 Nginx 不再是 OpenBSD 上的默认服务器，但他们都可以在 ports 和包中找到。 
+    新的默认服务器也被称为 “httpd”。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     默认安装的 httpd 运行于 
+     <a href="http://www.openbsd.org/cgi-bin/man.cgi?query=chroot" class="link external">&raquo;&nbsp;chroot(2) jail</a> 内，将限制 PHP 脚本只能访问 
+     <var class="filename">/var/www</var>下面的文件。需要建立 
+     <var class="filename">/var/www/tmp</var> 目录来存放 PHP session 文件，或使用其它的
+     session 后端。此外，数据库套接字需要被放入 jail 或者侦听 
+     <var class="filename">localhost</var>接口。如果使用网络函数，某些 
+     <var class="filename">/etc</var> 下面的文件例如 
+     <var class="filename">/etc/resolv.conf</var> 和 
+     <var class="filename">/etc/services</var> 需要被移动到 
+     <var class="filename">/var/www/etc</var> 中去。OpenBSD PEAR 包会自动安装到正确的
+     chroot 目录中。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     对应于 <a href="http://www.libgd.org/" class="link external">&raquo;&nbsp;gd</a> 扩展的 OpenBSD 包需要安装
+     Xorg。除非在基本安装时通过添加 <var class="filename">xbase.tgz</var>
+     文件集已经安装，否则可以在安装后添加（参见
+     <a href="https://www.openbsd.org/faq/faq4.html#FilesNeeded" class="link external">&raquo;&nbsp;OpenBSD FAQ#4</a>）。
+    </span>
+   </li>
+  </ul>
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

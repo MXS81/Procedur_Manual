@@ -1,0 +1,321 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>foreach</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="control-structures.for.html" class="navbar__link">« for</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="control-structures.break.html" class="navbar__link">break »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.control-structures.html">流程控制</a></li>
+        <li>foreach</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="control-structures.foreach" class="sect1">
+ <h2 class="title">foreach</h2>
+ <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p>
+ <p class="para">
+  <code class="literal">foreach</code> 结构提供了一种遍历 <span class="type"><a href="language.types.array.html" class="type array">array</a></span> 和 <span class="interfacename"><a href="class.traversable.html" class="interfacename">Traversable</a></span>
+  object 的简便方式。当用于其他数据类型的变量，或未初始化的变量时，<code class="literal">foreach</code> 会触发错误。
+  <div class="informalexample">
+   <p class="simpara">
+    <code class="literal">foreach</code> 可选择性的获取每个元素的 <code class="literal">key</code>：
+   </p>
+   <div class="example-contents">
+<div class="cdata"><pre>
+foreach (iterable_expression as $value) {
+    statement_list
+}
+
+foreach (iterable_expression as $key =&gt; $value) {
+    statement_list
+}
+</pre></div>
+   </div>
+
+  </div>
+ </p>
+ <p class="simpara">
+  第一种格式遍历给定的 <code class="literal">iterable_expression</code>
+  迭代器。每次循环中，当前单元的值被赋给 <code class="literal">$value</code>。
+ </p>
+ <p class="simpara">
+  第二种格式做同样的事，只除了当前单元的键名也会在每次循环中被赋给变量
+  <code class="literal">$key</code>。
+ </p>
+ <p class="simpara">
+  注意 <code class="literal">foreach</code> 不会修改类似 <span class="function"><a href="function.current.html" class="function">current()</a></span>
+  和 <span class="function"><a href="function.key.html" class="function">key()</a></span> 函数所使用的数组内部指针。
+ </p>
+ <p class="simpara">
+  还能够自定义<a href="language.oop5.iterations.html" class="link">遍历对象</a>。
+ </p>
+
+ <div class="example" id="example-1">
+  <p><strong>示例 #1 常见的  <code class="literal">foreach</code> 用法</strong></p>
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">/* 示例：仅有值 */<br /></span><span style="color: #0000BB">$array </span><span style="color: #007700">= [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">17</span><span style="color: #007700">];<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"Current element of \$array: </span><span style="color: #0000BB">$value</span><span style="color: #DD0000">.\n"</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #FF8000">/* 示例：key 和值 */<br /></span><span style="color: #0000BB">$array </span><span style="color: #007700">= [<br />    </span><span style="color: #DD0000">"one" </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">1</span><span style="color: #007700">,<br />    </span><span style="color: #DD0000">"two" </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">2</span><span style="color: #007700">,<br />    </span><span style="color: #DD0000">"three" </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">3</span><span style="color: #007700">,<br />    </span><span style="color: #DD0000">"seventeen" </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">17<br /></span><span style="color: #007700">];<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"Key: </span><span style="color: #0000BB">$key</span><span style="color: #DD0000"> =&gt; Value: </span><span style="color: #0000BB">$value</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #FF8000">/* 示例：多维 key-value 数组 */<br /></span><span style="color: #0000BB">$grid </span><span style="color: #007700">= [];<br /></span><span style="color: #0000BB">$grid</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">][</span><span style="color: #0000BB">0</span><span style="color: #007700">] = </span><span style="color: #DD0000">"a"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$grid</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">][</span><span style="color: #0000BB">1</span><span style="color: #007700">] = </span><span style="color: #DD0000">"b"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$grid</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">][</span><span style="color: #0000BB">0</span><span style="color: #007700">] = </span><span style="color: #DD0000">"y"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$grid</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">][</span><span style="color: #0000BB">1</span><span style="color: #007700">] = </span><span style="color: #DD0000">"z"</span><span style="color: #007700">;<br /><br />foreach (</span><span style="color: #0000BB">$grid </span><span style="color: #007700">as </span><span style="color: #0000BB">$y </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$row</span><span style="color: #007700">) {<br />    foreach (</span><span style="color: #0000BB">$row </span><span style="color: #007700">as </span><span style="color: #0000BB">$x </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />        echo </span><span style="color: #DD0000">"Value at position x=</span><span style="color: #0000BB">$x</span><span style="color: #DD0000"> and y=</span><span style="color: #0000BB">$y</span><span style="color: #DD0000">: </span><span style="color: #0000BB">$value</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #FF8000">/* 示例：动态数组 */<br /></span><span style="color: #007700">foreach (</span><span style="color: #0000BB">range</span><span style="color: #007700">(</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">5</span><span style="color: #007700">) as </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$value</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+ </div>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   <code class="literal">foreach</code> 不支持使用 <a href="language.operators.errorcontrol.html" class="link"><code class="literal">@</code></a> 运算符来抑制错误消息。
+  </p>
+ </p></blockquote>
+
+ <div class="sect2" id="control-structures.foreach.list">
+  <h3 class="title">解包嵌套数组</h3>
+  <p class="verinfo">(PHP 5 &gt;= 5.5.0, PHP 7, PHP 8)</p>
+  <p class="para">
+   可以通过遍历数组中的数组，在 value 的位置使用<a href="language.types.array.html#language.types.array.syntax.destructuring" class="link">数组解构</a>（<code class="literal">[]</code>）或
+   <span class="function"><a href="function.list.html" class="function">list()</a></span> 语言结构将嵌套数组解包到循环变量中。
+
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     请注意，通过 <code class="literal">[]</code> 进行<a href="language.types.array.html#language.types.array.syntax.destructuring" class="link">数组解构</a>仅在 PHP 7.1.0 及以上版本中可用。
+    </span>
+   </p></blockquote>
+  </p>
+
+  <p class="para">
+   <div class="informalexample">
+    <p class="simpara">
+     在以下两个示例中，将设 <code class="literal">$a</code> 为嵌套数组的第一个元素，<code class="literal">$b</code> 将包含第二个元素：
+    </p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$array </span><span style="color: #007700">= [<br />    [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">],<br />    [</span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">],<br />];<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as [</span><span style="color: #0000BB">$a</span><span style="color: #007700">, </span><span style="color: #0000BB">$b</span><span style="color: #007700">]) {<br />    echo </span><span style="color: #DD0000">"A: </span><span style="color: #0000BB">$a</span><span style="color: #DD0000">; B: </span><span style="color: #0000BB">$b</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as list(</span><span style="color: #0000BB">$a</span><span style="color: #007700">, </span><span style="color: #0000BB">$b</span><span style="color: #007700">)) {<br />    echo </span><span style="color: #DD0000">"A: </span><span style="color: #0000BB">$a</span><span style="color: #DD0000">; B: </span><span style="color: #0000BB">$b</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <p class="para">以上示例会输出：</p>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+A: 1; B: 2
+A: 3; B: 4
+</pre></div>
+    </div>
+   </div>
+  </p>
+
+   <p class="para">
+   当提供的变量数量少于数组中的元素数量时，将会忽略多余的元素。类似地，可通过使用逗号跳过某些元素：
+   <div class="informalexample">
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$array </span><span style="color: #007700">= [<br />    [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">5</span><span style="color: #007700">],<br />    [</span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">, </span><span style="color: #0000BB">6</span><span style="color: #007700">],<br />];<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as [</span><span style="color: #0000BB">$a</span><span style="color: #007700">, </span><span style="color: #0000BB">$b</span><span style="color: #007700">]) {<br />    </span><span style="color: #FF8000">// 注意此处没有 $c<br />    </span><span style="color: #007700">echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$a</span><span style="color: #DD0000"> </span><span style="color: #0000BB">$b</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as [, , </span><span style="color: #0000BB">$c</span><span style="color: #007700">]) {<br />    </span><span style="color: #FF8000">// 跳过 $a 和 $b<br />    </span><span style="color: #007700">echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$c</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <p class="para">以上示例会输出：</p>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+1 2
+3 4
+5
+6
+</pre></div>
+    </div>
+   </div>
+  </p>
+
+  <p class="para">
+   如果数组元素数量不足以填充 <span class="function"><a href="function.list.html" class="function">list()</a></span>，将生成一条 notice 级别的错误消息。
+
+   <div class="informalexample">
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$array </span><span style="color: #007700">= [<br />    [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">],<br />    [</span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">],<br />];<br /><br />foreach (</span><span style="color: #0000BB">$array </span><span style="color: #007700">as [</span><span style="color: #0000BB">$a</span><span style="color: #007700">, </span><span style="color: #0000BB">$b</span><span style="color: #007700">, </span><span style="color: #0000BB">$c</span><span style="color: #007700">]) {<br />    echo </span><span style="color: #DD0000">"A: </span><span style="color: #0000BB">$a</span><span style="color: #DD0000">; B: </span><span style="color: #0000BB">$b</span><span style="color: #DD0000">; C: </span><span style="color: #0000BB">$c</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <p class="para">以上示例会输出：</p>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+Notice: Undefined offset: 2 in example.php on line 7
+A: 1; B: 2; C:
+
+Notice: Undefined offset: 2 in example.php on line 7
+A: 3; B: 4; C:
+</pre></div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+ <div class="sect2" id="control-structures.foreach.reference">
+  <h3 class="title">foreach 和引用</h3>
+  <p class="para">
+   可以通过在 <code class="literal">$value</code> 前加上
+   <code class="literal">&amp;</code>，就可以在循环中直接修改数组元素。此时，值将以<a href="language.references.html" class="link">引用</a>的方式赋值。
+   <div class="informalexample">
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$arr </span><span style="color: #007700">= [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">];<br />foreach (</span><span style="color: #0000BB">$arr </span><span style="color: #007700">as &amp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">$value </span><span style="color: #007700">* </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br />}<br /></span><span style="color: #FF8000">// $arr is now [2, 4, 6, 8]<br /></span><span style="color: #007700">unset(</span><span style="color: #0000BB">$value</span><span style="color: #007700">); </span><span style="color: #FF8000">// 断开与最后一个元素的引用<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    对数组最后一个元素的 <code class="literal">$value</code> 的引用在 <code class="literal">foreach</code>
+    循环结束后仍然存在。建议使用 <span class="function"><a href="function.unset.html" class="function">unset()</a></span> 将其销毁，否则将出现以下行为：
+   </p>
+   <div class="informalexample">
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$arr </span><span style="color: #007700">= [</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">];<br />foreach (</span><span style="color: #0000BB">$arr </span><span style="color: #007700">as &amp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">$value </span><span style="color: #007700">* </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br />}<br /></span><span style="color: #FF8000">// $arr 现在是 [2, 4, 6, 8]<br /><br />// 如果没有使用 unset(value)，$value 仍会引用最后一个元素：$arr[3]<br /><br /></span><span style="color: #007700">foreach (</span><span style="color: #0000BB">$arr </span><span style="color: #007700">as </span><span style="color: #0000BB">$key </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    </span><span style="color: #FF8000">// $arr[3] 会随着 $arr 中的每个值而更新……<br />    </span><span style="color: #007700">echo </span><span style="color: #DD0000">"</span><span style="color: #007700">{</span><span style="color: #0000BB">$key</span><span style="color: #007700">}</span><span style="color: #DD0000"> =&gt; </span><span style="color: #007700">{</span><span style="color: #0000BB">$value</span><span style="color: #007700">}</span><span style="color: #DD0000"> "</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$arr</span><span style="color: #007700">);<br />}<br /></span><span style="color: #FF8000">// ……最终会复制倒数第二个值到最后一个值上<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <p class="para">以上示例会输出：</p>
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+0 =&gt; 2 Array ( [0] =&gt; 2, [1] =&gt; 4, [2] =&gt; 6, [3] =&gt; 2 )
+1 =&gt; 4 Array ( [0] =&gt; 2, [1] =&gt; 4, [2] =&gt; 6, [3] =&gt; 4 )
+2 =&gt; 6 Array ( [0] =&gt; 2, [1] =&gt; 4, [2] =&gt; 6, [3] =&gt; 6 )
+3 =&gt; 6 Array ( [0] =&gt; 2, [1] =&gt; 4, [2] =&gt; 6, [3] =&gt; 6 )
+</pre></div>
+    </div>
+   </div>
+  </div>
+  <div class="example" id="example-2">
+  <p><strong>示例 #2 通过引用遍历常量数组的值</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">foreach ([</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">4</span><span style="color: #007700">] as &amp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">$value </span><span style="color: #007700">* </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><a href="language.types.array.html" class="link">array</a></li>
+   <li><span class="interfacename"><a href="class.traversable.html" class="interfacename">Traversable</a></span></li>
+   <li><a href="language.types.iterable.html" class="link">iterable</a></li>
+   <li><span class="function"><a href="function.list.html" class="function">list()</a></span></li>
+  </ul>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

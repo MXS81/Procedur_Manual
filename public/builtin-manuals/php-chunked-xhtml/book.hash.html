@@ -1,0 +1,225 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>散列消息摘要框架</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="refs.crypto.html" class="navbar__link">« 加密扩展</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="hash.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.crypto.html">加密扩展</a></li>
+        <li>散列消息摘要框架</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.hash" class="book">
+ 
+ <h1 class="title">散列消息摘要框架</h1>
+ 
+ 
+ 
+ <div id="intro.hash" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="para">
+   该扩展提供了一些函数，可用于使用多种散列算法对任意长度的消息进行直接或增量处理，包括生成
+   <abbr title="Hash-based Message Authentication Code">HMAC</abbr> 值以及包括 <abbr title="HMAC Key Definition Function">HKDF</abbr> 和
+   <abbr title="Password-Based Key Derivation Function 2">PBKDF2</abbr> 在内的密钥派生。
+  </p>
+  <p class="para">
+   散列算法大致分为三类，完整算法列表可在 <span class="function"><a href="function.hash-algos.html" class="function">hash_algos()</a></span> 的文档中找到。
+
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      校验和算法（例如 <code class="literal">&quot;crc32b&quot;</code> 或 <code class="literal">&quot;adler32&quot;</code>）：用于计算校验和，适用于检测传输错误等场景。这类算法通常速度非常快。但其生成的值往往容易被“猜测”或操纵以制造冲突，因此完全不适合用于加密用途。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      非加密算法（例如 xxHash 系列）：这些算法通常用于计算散列表的散列值，因为它们旨在为任意字符串输入提供良好的分布性。这些算法通常速度较快，但同样不适合用于加密用途。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      加密算法（例如 SHA-2 系列）：这些算法旨在生成能够反映输入特征但不可猜测且不易发生冲突的散列值。性能通常是次要考虑因素，但现代硬件通常对这些算法提供专门支持，在可用时 PHP 会尝试利用这些支持。
+     </span>
+     <span class="simpara">
+      NIST（美国国家标准与技术研究院）的计算机安全资源中心提供了<a href="https://csrc.nist.gov/projects/hash-functions" class="link external">&raquo;&nbsp;关于美国联邦信息处理标准当前批准算法的说明</a>。
+     </span>
+     <div class="caution"><strong class="caution">警告</strong>
+      <p class="para">
+       一些早期的加密算法，例如 <code class="literal">&quot;md4&quot;</code>、<code class="literal">&quot;md5&quot;</code> 和
+       <code class="literal">&quot;sha1&quot;</code>，已证明容易受到碰撞攻击，通常建议不再将其用于加密应用。
+      </p>
+     </div>
+    </li>
+   </ul>
+  </p>
+
+  <p class="para">
+   另请参阅<a href="faq.passwords.html" class="link">关于安全密码散列的常见问题解答</a>，以获取在处理密码时使用散列函数的最佳实践信息。
+  </p>
+ </div>
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="hash.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="hash.installation.html">安装</a></li><li><a href="hash.resources.html">资源类型</a></li></ul></li><li><a href="hash.constants.html">预定义常量</a></li><li><a href="class.hashcontext.html">HashContext</a> — HashContext 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="hashcontext.construct.html">HashContext::__construct</a> — 私有构造方法以禁止直接实例化</li><li><a href="hashcontext.serialize.html">HashContext::__serialize</a> — 序列化 HashContext 对象</li><li><a href="hashcontext.unserialize.html">HashContext::__unserialize</a> — 反序列化 data 参数为 HashContext 对象</li></ul></li><li><a href="ref.hash.html">Hash 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.hash.html">hash</a> — 生成散列值（消息摘要）</li><li><a href="function.hash-algos.html">hash_algos</a> — 返回已注册的散列算法列表</li><li><a href="function.hash-copy.html">hash_copy</a> — 拷贝哈希运算上下文</li><li><a href="function.hash-equals.html">hash_equals</a> — 可防止时序攻击的字符串比较</li><li><a href="function.hash-file.html">hash_file</a> — 给指定文件的内容生成散列值</li><li><a href="function.hash-final.html">hash_final</a> — 结束增量散列且返回摘要结果</li><li><a href="function.hash-hkdf.html">hash_hkdf</a> — Generate a HKDF key derivation of a supplied key input</li><li><a href="function.hash-hmac.html">hash_hmac</a> — 使用 HMAC 方法生成带有密钥的散列值</li><li><a href="function.hash-hmac-algos.html">hash_hmac_algos</a> — 返回适用于 hash_hmac 的已注册散列算法列表</li><li><a href="function.hash-hmac-file.html">hash_hmac_file</a> — 使用 HMAC 方法和给定文件的内容生成带密钥的散列值</li><li><a href="function.hash-init.html">hash_init</a> — 初始化增量散列运算上下文</li><li><a href="function.hash-pbkdf2.html">hash_pbkdf2</a> — 生成所提供密码的 PBKDF2 密钥导出</li><li><a href="function.hash-update.html">hash_update</a> — 向活跃的哈希运算上下文中填充数据</li><li><a href="function.hash-update-file.html">hash_update_file</a> — 从文件向活跃的散列运算上下文中填充数据</li><li><a href="function.hash-update-stream.html">hash_update_stream</a> — 从打开的流向活跃的散列运算上下文中填充数据</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

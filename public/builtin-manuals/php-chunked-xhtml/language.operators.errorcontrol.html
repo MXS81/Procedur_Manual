@@ -1,0 +1,208 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>错误控制运算符</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.operators.comparison.html" class="navbar__link">« 比较</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.operators.execution.html" class="navbar__link">执行 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.operators.html">运算符</a></li>
+        <li>错误控制运算符</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.operators.errorcontrol" class="sect1">
+ <h2 class="title">错误控制运算符</h2>
+ 
+ <p class="simpara">
+  PHP 支持一个错误控制运算符：<code class="literal">@</code>。当将其放置在一个 PHP
+  表达式之前，该表达式可能产生的任何错误诊断都被抑制。
+ </p>
+ <p class="para">
+  如果用 <span class="function"><a href="function.set-error-handler.html" class="function">set_error_handler()</a></span>
+  设定了自定义的错误处理函数，即使诊断信息被抑制，也仍然会被调用。
+ </p>
+
+ <div class="warning"><strong class="warning">警告</strong>
+  <p class="para">
+   PHP 8.0.0 之前，如果错误被 <code class="literal">@</code> 运算符抑制，则在自定义错误处理程序中调用 <span class="function"><a href="function.error-reporting.html" class="function">error_reporting()</a></span> 将始终返回
+   <code class="literal">0</code>。PHP 8.0.0 起，返回（按位）表达式的值：<code class="literal">E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR | E_PARSE</code>。
+  </p>
+ </div>
+
+ <p class="simpara">
+  <span class="function"><a href="function.error-get-last.html" class="function">error_get_last()</a></span> 返回数组中的 <code class="literal">&quot;message&quot;</code> 元素储存了表达式产生的任意错误信息。
+  此函数的返回结果会随着每次错误的发生而相应变化，所以需要尽早检查。
+ </p>
+ <p class="para">
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 故意文件错误</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$my_file </span><span style="color: #007700">= @</span><span style="color: #0000BB">file </span><span style="color: #007700">(</span><span style="color: #DD0000">'non_existent_file'</span><span style="color: #007700">) or<br />    die (</span><span style="color: #DD0000">"Failed opening file: error was '" </span><span style="color: #007700">. </span><span style="color: #0000BB">error_get_last</span><span style="color: #007700">()[</span><span style="color: #DD0000">'message'</span><span style="color: #007700">] . </span><span style="color: #DD0000">"'"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </p>
+ <p class="para">
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 表达式抑制</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 这适用于所有表达式，而不仅仅是函数：<br /></span><span style="color: #0000BB">$value </span><span style="color: #007700">= @</span><span style="color: #0000BB">$cache</span><span style="color: #007700">[</span><span style="color: #0000BB">$key</span><span style="color: #007700">];<br /></span><span style="color: #FF8000">// 如果索引 $key 不存在，则不会发出通知。<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </p>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <span class="simpara">
+   <code class="literal">@</code> 运算符只对 <a href="language.expressions.html" class="link">表达式</a> 有效。
+   对新手来说一个简单的规则就是：如果能从某处获得值，就能在它前面加上
+   <code class="literal">@</code> 运算符。例如，可以把它放在变量，函数调用，某些语言构造调用（例如 <span class="function"><a href="function.include.html" class="function">include</a></span> ）等等之前。
+   不能把它放在函数或类的定义之前，也不能用于条件结构例如 <code class="literal">if</code> 和 <a href="control-structures.foreach.html" class="link"><code class="literal">foreach</code></a> 等。
+  </span>
+ </p></blockquote>
+ <div class="warning"><strong class="warning">警告</strong>
+  <p class="para">
+   PHP 8.0.0 之前，<code class="literal">@</code> 运算符会禁用导致脚本停止运行的严重错误。
+   例如在调用一个不存在的函数前添加 <code class="literal">@</code>，由于函数不可用或者输入错误，
+   将会导致脚本终止，而不会说明原因。
+  </p>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.error-reporting.html" class="function">error_reporting()</a></span></li>
+    <li><a href="ref.errorfunc.html" class="link">错误处理与日志记录函数</a></li>
+   </ul>
+  </p>
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

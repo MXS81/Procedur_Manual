@@ -1,0 +1,254 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>魔术常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.constants.predefined.html" class="navbar__link">« 预定义常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.expressions.html" class="navbar__link">表达式 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.constants.html">常量</a></li>
+        <li>魔术常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.constants.magic" class="sect1">
+  <h2 class="title">魔术常量</h2>
+   <p class="para">
+    一些魔术常量会根据使用位置而变化。例如 <strong><code><a href="language.constants.magic.html#constant.line">__LINE__</a></code></strong>
+    的值取决于它在脚本中使用的行。所有这些“魔术”常量都在编译时解析，而常规常量则在运行时解析。这些特殊的常量不区分大小写，如下：
+   </p>
+   <p class="para">
+    <table class="doctable table">
+     <caption><strong>PHP 的魔术常量</strong></caption>
+     
+      <thead>
+       <tr>
+        <th>名字</th>
+        <th>说明</th>
+       </tr>
+
+      </thead>
+
+      <tbody class="tbody">
+       <tr id="constant.line">
+        <td><strong><code><a href="language.constants.magic.html#constant.line">__LINE__</a></code></strong></td>
+        <td>
+         文件中的当前行号。
+        </td>
+       </tr>
+
+       <tr id="constant.file">
+        <td><strong><code><a href="language.constants.magic.html#constant.file">__FILE__</a></code></strong></td>
+        <td>
+         文件的完整路径和文件名。如果用在被包含文件中，则返回被包含的文件名。
+        </td>
+       </tr>
+
+       <tr id="constant.dir">
+        <td><strong><code><a href="language.constants.magic.html#constant.dir">__DIR__</a></code></strong></td>
+        <td>
+         文件所在的目录。如果用在被包括文件中，则返回被包括的文件所在的目录。它等价于
+         <code class="literal">dirname(__FILE__)</code>。除非是根目录，否则目录中名不包括末尾的斜杠。
+        </td>
+       </tr>
+       
+       <tr id="constant.function">
+        <td><strong><code><a href="language.constants.magic.html#constant.function">__FUNCTION__</a></code></strong></td>
+        <td>
+         当前函数的名称。匿名函数则为 <code class="literal">{closure}</code>。
+        </td>
+       </tr>
+
+       <tr id="constant.class">
+        <td><strong><code><a href="language.constants.magic.html#constant.class">__CLASS__</a></code></strong></td>
+        <td>
+         当前类的名称。类名包括其被声明的作用域（例如
+         <code class="literal">Foo\Bar</code>）。当用在 trait 方法中时，<strong><code><a href="language.constants.magic.html#constant.class">__CLASS__</a></code></strong>
+         是调用 trait 方法的类的名字。
+        </td>
+       </tr>
+
+       <tr id="constant.trait">
+        <td><strong><code><a href="language.constants.magic.html#constant.trait">__TRAIT__</a></code></strong></td>
+        <td>
+         Trait 的名字。Trait 名包括其被声明的作用域（例如
+         <code class="literal">Foo\Bar</code>）。
+        </td>
+       </tr>
+
+       <tr id="constant.method">
+        <td><strong><code><a href="language.constants.magic.html#constant.method">__METHOD__</a></code></strong></td>
+        <td>
+         类的方法名。
+        </td>
+       </tr>
+
+       <tr id="constant.property">
+        <td><strong><code><a href="language.constants.magic.html#constant.property">__PROPERTY__</a></code></strong></td>
+        <td>
+         仅在<a href="language.oop5.property-hooks.html" class="link">属性挂钩</a>内有效。等同于属性的名称。
+        </td>
+       </tr>
+
+       <tr id="constant.namespace">
+        <td><strong><code><a href="language.constants.magic.html#constant.namespace">__NAMESPACE__</a></code></strong></td>
+        <td>
+         当前命名空间的名称。
+        </td>
+       </tr>
+
+       <tr id="constant.coloncolonclass">
+        <td><strong><code><span class="replaceable">ClassName</span>::class</code></strong></td>
+        <td>
+          完整的类名。
+        </td>
+       </tr>
+
+      </tbody>
+     
+    </table>
+
+   </p>
+
+   <div class="sect2">
+   <h3 class="title">参见</h3>
+    <p class="para">
+     <ul class="simplelist">
+      <li><a href="language.oop5.basic.html#language.oop5.basic.class.class" class="link">::class</a></li>
+      <li><span class="function"><a href="function.get-class.html" class="function">get_class()</a></span></li>
+      <li><span class="function"><a href="function.get-object-vars.html" class="function">get_object_vars()</a></span></li>
+      <li><span class="function"><a href="function.file-exists.html" class="function">file_exists()</a></span></li>
+      <li><span class="function"><a href="function.function-exists.html" class="function">function_exists()</a></span></li>
+     </ul>
+    </p>
+   </div>
+
+  </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

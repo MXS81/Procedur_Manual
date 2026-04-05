@@ -1,0 +1,316 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>pthreads</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="parallel-sync.invoke.html" class="navbar__link">« parallel\Sync::__invoke</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="pthreads.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.fileprocess.process.html">进程控制扩展</a></li>
+        <li>pthreads</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.pthreads" class="book">
+ 
+ <h1 class="title">pthreads</h1>
+ 
+
+ <div id="intro.pthreads" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="simpara">
+   pthreads 是一组允许用户在 PHP 中使用多线程技术的面向对象的 API。
+   它提供了创建多线程应用所需的全套工具。
+   通过使用 Thread， Worker 以及 Threaded 对象，PHP 应用可以创建、读取、写入以及执行多线程应用，并可以在多个线程之间进行同步控制。
+  </p>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    此扩展已被声明为停止维护状态。
+   </p>
+  </div>
+  <div class="tip"><strong class="tip">小技巧</strong>
+   <p class="simpara">
+    建议使用 <a href="book.parallel.html" class="link">parallel</a> 作为替代。
+   </p>
+  </div>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    不可以在 web 服务器环境中使用 pthreads 扩展，
+    PHP 多线程开发仅限于命令行模式的应用。
+   </p>
+  </div>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    只能在 PHP 7.2+ 版本中使用 pthreads (v3) 扩展，
+    在 PHP 7.0 和 7.1 版本中，ZTS 模式是不安全的。
+   </p>
+  </div>
+  <p class="simpara">
+   Threaded 对象：
+   <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 对象提供支持 pthreads 操作的基本功能，包括同步方法以及其他对程序员很有帮助的接口。
+  </p>
+  <p class="simpara">
+   Thread 对象：
+   通过继承 pthreads 中提供的 <span class="classname"><a href="class.thread.html" class="classname">Thread</a></span> 对象并实现 <code class="literal">run</code> 方法，用户可以创建自己的 Thread 对象。
+   只要线程上下文中持有某个 Thread 对象的引用，就可以读/写该对象的属性，也可以调用该对象的公有（public）或者受保护（protected）的方法。
+   当在创建 Thread 对象的上下文中调用该对象的 <span class="methodname"><a href="thread.start.html" class="methodname">Thread::start()</a></span> 方法时，pthreads 扩展会在另外的独立线程中执行该对象的 run 方法。
+   仅有创建 Thread 对象的线程/进程方可开始（start）或者加入（join）这个 Thread 对象。
+  </p>
+  <p class="simpara">
+   Worker 对象：
+   <span class="classname"><a href="class.worker.html" class="classname">Worker</a></span> 是有状态的线程对象，它在线程开始（通过调用 <span class="methodname"><a href="thread.start.html" class="methodname">Thread::start()</a></span> 方法）之后就可用，
+   除非代码中显式地关闭线程（通过调用 <span class="methodname"><a href="worker.shutdown.html" class="methodname">Worker::shutdown()</a></span> 方法），
+   否则该对象在线程对象超出作用范围之后才会失效。
+   持有 Worker 对象引用的线程上下文可以向 Worker 中入栈（通过调用 <span class="methodname"><a href="worker.stack.html" class="methodname">Worker::stack()</a></span> 方法）其他线程对象，Worker 对象将在独立线程中执行入栈对象的代码。
+   Woker 对象的 <code class="literal">run</code> 方法会在它的栈中入栈对象之前执行，这样就可以进行一些必需的资源初始化工作。
+  </p>
+  <p class="simpara">
+   Pool 对象：
+   <span class="classname"><a href="class.pool.html" class="classname">Pool</a></span> 对象是 Worker 线程对象池，可以用来在多个 Worker 对象之间分发 <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 对象，
+   这是最易用且高效的多线程编程方式。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+  <p class="simpara">
+   <span class="classname"><a href="class.pool.html" class="classname">Pool</a></span> 是标准的 PHP 对象，它并没有继承 <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 类，所以不可以在多个线程上下文中共享同一个 Pool 对象。
+  </p>
+  </div>
+  <p class="simpara">
+   <span class="classname"><a href="class.volatile.html" class="classname">Volatile</a></span> 类是在 pthreads v3 中新增加的，
+   用来表示可变的 <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 类中的
+   <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 属性（默认情况下是不可变的）。
+   它也可以被用来在 <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 上下文中存储数组。
+  </p>
+  <p class="simpara">
+   线程间同步：
+   由 pthreads 扩展创建的所有对象拥有内置的线程间同步机制，
+   和 Java 语言很类似，
+   使用 <span class="methodname"><a href="threaded.wait.html" class="methodname">Threaded::wait()</a></span>
+   和 <span class="methodname"><a href="threaded.notify.html" class="methodname">Threaded::notify()</a></span> 方法来实现线程间同步。
+   调用某一个对象的 <span class="methodname"><a href="threaded.wait.html" class="methodname">Threaded::wait()</a></span> 方法
+   会导致当前线程上下文进入等待状态，
+   等待另外一个线程上下文调用同一个对象的
+   <span class="methodname"><a href="threaded.notify.html" class="methodname">Threaded::notify()</a></span> 方法。
+   为 PHP <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 对象提供了强有力的线程间同步控制机制。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+  <p class="simpara">
+   应用中会用在多线程场景中的对象都应该从 <span class="classname"><a href="class.threaded.html" class="classname">Threaded</a></span> 类继承。
+  </p>
+  </div>
+  <p class="simpara">
+   数据存储：
+   一般来说，任何可以序列化的数据类型都可以作为 Threaded 对象的属性，它可以从持有该对象引用的任何线程上下文读/写。
+   并不是所有的数据都采用序列化方式存储，比如基本类型就是以其真实形态存储的。
+   对于不是 Threaded 派生的对象，例如复杂类型、数组以及对象等，都是序列化存储的，可以从持有 Threaded 对象引用的任何线程上下文中读取和写入，
+   区别就在于对于 Threaed 的派生对象，设置它的成员变量的过程是在独立线程上下文中执行的。
+   对于 Threaded 派生对象，在同一时间，不同的线程上下文都可以从该对象中读取到同样的数据。
+  </p>
+  <p class="simpara">
+   静态成员：
+   当创建新的线程上下文（Thread 或 Worker 对象）的时候，静态成员会被拷贝到新的上下文中。出于安全考虑，资源类型以及包含内部状态的对象类型的静态成员会被置空。
+   实际上这个特性实现了类似线程本地存储的功能。举例说明，假设某个类拥有包含数据库连接信息以及数据库连接对象静态成员，
+   那么当新的线程上下文启动的时候，仅有数据库连接信息会被复制到新上下文中，而数据库连接对象并不会被复制。
+   所以，需要在新的上下文中根据复制过来的数据库连接基本信息来初始化数据库连接对象，新创建的数据库连接对象是独立的，
+   不影响在原上下文中的数据库连接对象。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+  <p class="simpara">
+   当使用 print_r, var_dump 或者其他函数来进行对象调试的时候，是没有递归保护机制的。
+  </p>
+  </div>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    资源类型：
+    PHP 中很多使用到 Resource 资源类型的扩展或函数并未针对多线程场景进行特殊设计，也就是说，虽然 pthreads 扩展提供了
+    在多个线程上下文中共享资源类型变量的能力，但是通常来说，你应该把它们视为非线程安全的。
+    所以，如果要在多个线程上下文中共享资源类型的变量，你应该特别谨慎对待。
+   </span>
+  </p></blockquote>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    为了提供一个稳定的运行环境，pthreads 扩展在执行过程中会有一些必需的额外限制。
+   </p>
+  </div>
+ </div>
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="pthreads.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="pthreads.requirements.html">需求</a></li><li><a href="pthreads.installation.html">安装</a></li></ul></li><li><a href="pthreads.constants.html">预定义常量</a></li><li><a href="class.threaded.html">Threaded</a> — Threaded 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="threaded.chunk.html">Threaded::chunk</a> — 操作</li><li><a href="threaded.count.html">Threaded::count</a> — 操作</li><li><a href="threaded.extend.html">Threaded::extend</a> — Runtime Manipulation</li><li><a href="thread.isrunning.html">Threaded::isRunning</a> — 状态检测</li><li><a href="threaded.isterminated.html">Threaded::isTerminated</a> — 状态检测</li><li><a href="threaded.merge.html">Threaded::merge</a> — 操作</li><li><a href="threaded.notify.html">Threaded::notify</a> — 同步控制</li><li><a href="threaded.notifyone.html">Threaded::notifyOne</a> — Synchronization</li><li><a href="threaded.pop.html">Threaded::pop</a> — 操作</li><li><a href="threaded.run.html">Threaded::run</a> — 执行</li><li><a href="threaded.shift.html">Threaded::shift</a> — Manipulation</li><li><a href="threaded.synchronized.html">Threaded::synchronized</a> — 同步控制</li><li><a href="threaded.wait.html">Threaded::wait</a> — Synchronization</li></ul></li><li><a href="class.thread.html">Thread</a> — Thread 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="thread.getcreatorid.html">Thread::getCreatorId</a> — 识别</li><li><a href="thread.getcurrentthread.html">Thread::getCurrentThread</a> — 识别</li><li><a href="thread.getcurrentthreadid.html">Thread::getCurrentThreadId</a> — 识别</li><li><a href="thread.getthreadid.html">Thread::getThreadId</a> — 识别</li><li><a href="thread.isjoined.html">Thread::isJoined</a> — 状态监测</li><li><a href="thread.isstarted.html">Thread::isStarted</a> — 状态检测</li><li><a href="thread.join.html">Thread::join</a> — 同步</li><li><a href="thread.start.html">Thread::start</a> — 执行</li></ul></li><li><a href="class.worker.html">Worker</a> — Worker 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="worker.collect.html">Worker::collect</a> — Collect references to completed tasks</li><li><a href="worker.getstacked.html">Worker::getStacked</a> — 获取剩余的栈大小</li><li><a href="worker.isshutdown.html">Worker::isShutdown</a> — 状态检测</li><li><a href="worker.shutdown.html">Worker::shutdown</a> — 关闭 Worker</li><li><a href="worker.stack.html">Worker::stack</a> — 将要执行的任务入栈</li><li><a href="worker.unstack.html">Worker::unstack</a> — 将要执行的任务出栈</li></ul></li><li><a href="class.collectable.html">Collectable</a> — The Collectable interface<ul class="chunklist chunklist_book chunklist_children"><li><a href="collectable.isgarbage.html">Collectable::isGarbage</a> — Determine whether an object has been marked as garbage</li></ul></li><li><a href="class.pool.html">Pool</a> — Pool 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="pool.collect.html">Pool::collect</a> — 回收已完成任务的引用</li><li><a href="pool.construct.html">Pool::__construct</a> — 创建新的 Worker 对象池</li><li><a href="pool.resize.html">Pool::resize</a> — 改变 Pool 对象的可容纳 Worker 对象的数量</li><li><a href="pool.shutdown.html">Pool::shutdown</a> — 停止所有的 Worker 对象</li><li><a href="pool.submit.html">Pool::submit</a> — 提交对象以执行</li><li><a href="pool.submitTo.html">Pool::submitTo</a> — 提交一个任务到特定的 Worker 以执行</li></ul></li><li><a href="class.volatile.html">Volatile</a> — The Volatile class</li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

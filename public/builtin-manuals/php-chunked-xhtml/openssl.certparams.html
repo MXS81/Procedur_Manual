@@ -1,0 +1,232 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>密钥/证书参数</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="openssl.constants.other.html" class="navbar__link">« 其它常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="openssl.cert.verification.html" class="navbar__link">证书验证 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.openssl.html">OpenSSL</a></li>
+        <li>密钥/证书参数</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="openssl.certparams" class="appendix">
+ <h1 class="title">密钥/证书参数</h1>
+
+ <p class="para">
+  相当一部分的 openssl 函数需要密钥或者证书参数。可通过以下途径获取这些参数。
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <p class="para">
+     证书
+     <ol type="1">
+      <li class="listitem">
+       <span class="simpara">
+        从 <span class="function"><a href="function.openssl-x509-read.html" class="function">openssl_x509_read()</a></span> 返回的 <span class="classname"><a href="class.opensslcertificate.html" class="classname">OpenSSLCertificate</a></span>
+        实例（在 PHP 8.0.0 之前为类型 <code class="literal">OpenSSL X.509</code> 的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>）
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">如下格式的字符串 <var class="filename">file://path/to/cert.pem</var>；命名文件必须包含一个 <abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码的证书
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        包含了证书内容的字符串，<abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码，应该以 <code class="literal">-----BEGIN CERTIFICATE-----</code> 开头。
+       </span>
+      </li>
+     </ol>
+    </p>
+   </li>
+
+   <li class="listitem">
+    <p class="para">
+     证书签名请求 (CSRs)
+     <ol type="1">
+      <li class="listitem">
+       <span class="simpara">
+        从 <span class="function"><a href="function.openssl-csr-new.html" class="function">openssl_csr_new()</a></span> 返回的 <span class="classname"><a href="class.opensslcertificatesigningrequest.html" class="classname">OpenSSLCertificateSigningRequest</a></span>
+        实例（在 PHP 8.0.0 之前为类型 <code class="literal">OpenSSL X.509 CSR</code> 的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>）
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">如下格式的字符串 <var class="filename">file://path/to/csr.pem</var>；命名文件必须包含 <abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码的 <abbr title="Certificate Signing Request">CSR</abbr>
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        包含 <abbr title="Certificate Signing Request">CSR</abbr> 内容的字符串，<abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码，应该以 <code class="literal">-----BEGIN CERTIFICATE REQUEST-----</code> 开头。
+       </span>
+      </li>
+     </ol>
+    </p>
+   </li>
+
+   
+   <li class="listitem">
+    <p class="para">
+     公钥/私钥 Key
+     <ol type="1">
+      <li class="listitem">
+       <span class="simpara">
+        从 <span class="function"><a href="function.openssl-get-publickey.html" class="function">openssl_get_publickey()</a></span> 或 <span class="function"><a href="function.openssl-get-privatekey.html" class="function">openssl_get_privatekey()</a></span> 返回的
+        <span class="classname"><a href="class.opensslasymmetrickey.html" class="classname">OpenSSLAsymmetricKey</a></span> 实例（在 PHP 8.0.0 之前为类型 <code class="literal">OpenSSL key</code> 的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>）
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        仅限公钥：<span class="classname"><a href="class.opensslcertificate.html" class="classname">OpenSSLCertificate</a></span> 实例（或在 PHP 8.0.0 之前，<code class="literal">OpenSSL X.509</code> 类型的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>）
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">如下格式的字符串
+        <var class="filename">file://path/to/file.pem</var> - 命名文件必须包含 <abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码的证书/私钥（必须包含二者）
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        包含证书/私钥内容的字符串，<abbr title="Privacy-Enhanced Mail">PEM</abbr> 编码，应该以 <code class="literal">-----BEGIN PUBLIC KEY-----</code> 开头。
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        对于私钥，应该使用<code class="literal">array($key, $passphrase)</code> 的语法格式，这里的 <var class="varname">$key</var> 代表由file://格式的文件或者文本字符表示的密钥, 而
+        <var class="varname">$passphrase</var> 表示一个包含该私钥的密码的字符串。
+       </span>
+      </li>
+     </ol>
+    </p> 
+   </li>
+  </ul>
+ </p>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,342 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>类与对象</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="functions.first_class_callable_syntax.html" class="navbar__link">« 一级可调用语法</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="oop5.intro.html" class="navbar__link">简介 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="langref.html">语言参考</a></li>
+        <li>类与对象</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.oop5" class="chapter">
+ <h1 class="title">类与对象</h1>
+<h2>目录</h2><ul class="chunklist chunklist_chapter"><li><a href="oop5.intro.html">简介</a></li><li><a href="language.oop5.basic.html">基本概念</a></li><li><a href="language.oop5.properties.html">属性</a></li><li><a href="language.oop5.property-hooks.html">Property Hooks</a></li><li><a href="language.oop5.constants.html">类常量</a></li><li><a href="language.oop5.autoload.html">类的自动加载</a></li><li><a href="language.oop5.decon.html">构造函数和析构函数</a></li><li><a href="language.oop5.visibility.html">访问控制（可见性）</a></li><li><a href="language.oop5.inheritance.html">对象继承</a></li><li><a href="language.oop5.paamayim-nekudotayim.html">范围解析操作符 （::）</a></li><li><a href="language.oop5.static.html">静态（static）关键字</a></li><li><a href="language.oop5.abstract.html">抽象类</a></li><li><a href="language.oop5.interfaces.html">对象接口</a></li><li><a href="language.oop5.traits.html">Trait</a></li><li><a href="language.oop5.anonymous.html">匿名类</a></li><li><a href="language.oop5.overloading.html">重载</a></li><li><a href="language.oop5.iterations.html">遍历对象</a></li><li><a href="language.oop5.magic.html">魔术方法</a></li><li><a href="language.oop5.final.html">Final 关键字</a></li><li><a href="language.oop5.cloning.html">对象复制</a></li><li><a href="language.oop5.object-comparison.html">对象比较</a></li><li><a href="language.oop5.late-static-bindings.html">后期静态绑定</a></li><li><a href="language.oop5.references.html">对象和引用</a></li><li><a href="language.oop5.serialization.html">对象序列化</a></li><li><a href="language.oop5.variance.html">协变与逆变</a></li><li><a href="language.oop5.lazy-objects.html">延迟对象</a></li><li><a href="language.oop5.changelog.html">OOP 变更日志</a></li></ul>
+
+
+ 
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+ 
+
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+
+ 
+ 
+
+
+  
+
+
+
+ 
+ 
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+ 
+
+
+  
+
+
+ 
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+ 
+
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

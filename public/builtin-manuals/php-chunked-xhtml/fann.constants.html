@@ -1,0 +1,718 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="fann.resources.html" class="navbar__link">« 资源类型</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="fann.examples.html" class="navbar__link">示例 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.fann.html">FANN</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="fann.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">下列常量由此扩展定义，且仅在此扩展编译入 PHP 或在运行时动态载入时可用。</p>
+ <p class="para">
+  <dl id="constants.fann-train">
+   <strong class="title">训练算法</strong>
+   
+    <dt id="constant.fann-train-incremental">
+     <strong><code><a href="fann.constants.html#constant.fann-train-incremental">FANN_TRAIN_INCREMENTAL</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      标准反向传播算法，每次训练匹配后权重都会更新。这意味着在每个单历元中权重会被更新很多次。因为这个原因，很多问题使用这个算法将会训练的非常快，然而其他更高级的问题的训练效果不是很好。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-train-batch">
+     <strong><code><a href="fann.constants.html#constant.fann-train-batch">FANN_TRAIN_BATCH</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      标准反向传播算法，计算均方差误差后权重值将会更新。 这意味着每个单历元只会更新一次。因为这个原因，很多问题使用这个算法会训练的很慢。但是计算出的均方差误差比增量训练的效果更好，使用这个算法某些问题将会得到更好的解决方案。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-train-rprop">
+     <strong><code><a href="fann.constants.html#constant.fann-train-rprop">FANN_TRAIN_RPROP</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      一个更高级的批训练算法，对于很多问题该算法还会获得很好的结果。RPROP 训练算法是自适应的，因此不需要使用 learning_rate. 其他一些参数用来设置 RPROP 算法工作的方式，只推荐给那些知道 RPROP 算法如何工作的人来设置。RPROP 训练算法是被 Riedmiller 和 BraunSome 在1993年提出来的，实际上此处使用的是由 Igel 和 Husken 在2000年提出来的 iRPROP 训练算法，它是标准 RPROP 训练算法的一个变种。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-train-quickprop">
+     <strong><code><a href="fann.constants.html#constant.fann-train-quickprop">FANN_TRAIN_QUICKPROP</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      一个更高级的批训练算法，对于很多问题该算法还会获得很好的结果。quickprop 训练算法使用 learning_rate 参数和其他更高级的参数，
+      但是只有当用户真正明白 quickprop 训练算法如何工作的时候才建议修改这些高级参数。 quickprop 训练算法是被 Fahlman 在1988年描述的。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-train-sarprop">
+     <strong><code><a href="fann.constants.html#constant.fann-train-sarprop">FANN_TRAIN_SARPROP</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      更高级的训练算法，只在2.2版本中可用。
+     </span>
+    </dd>
+   
+  </dl>
+  <dl id="constants.fann-activation-funcs">
+   <strong class="title">Activation functions</strong>
+   
+    <dt id="constant.fann-linear">
+     <strong><code><a href="fann.constants.html#constant.fann-linear">FANN_LINEAR</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      线性激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-threshold">
+     <strong><code><a href="fann.constants.html#constant.fann-threshold">FANN_THRESHOLD</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      阈值激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-threshold-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-threshold-symmetric">FANN_THRESHOLD_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      阈值激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sigmoid">
+     <strong><code><a href="fann.constants.html#constant.fann-sigmoid">FANN_SIGMOID</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      Sigmoid激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sigmoid-stepwise">
+     <strong><code><a href="fann.constants.html#constant.fann-sigmoid-stepwise">FANN_SIGMOID_STEPWISE</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      逐步线性逼近 Sigmoid 激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sigmoid-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-sigmoid-symmetric">FANN_SIGMOID_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      对称 Sigmoid 激励函数， 又名：tanh.
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sigmoid-symmetric-stepwise">
+     <strong><code><a href="fann.constants.html#constant.fann-sigmoid-symmetric-stepwise">FANN_SIGMOID_SYMMETRIC_STEPWISE</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      逐步线性逼近对称 Sigmoid 激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-gaussian">
+     <strong><code><a href="fann.constants.html#constant.fann-gaussian">FANN_GAUSSIAN</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      Gaussian (高斯) 激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-gaussian-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-gaussian-symmetric">FANN_GAUSSIAN_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      对称 gaussian (高斯)激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-gaussian-stepwise">
+     <strong><code><a href="fann.constants.html#constant.fann-gaussian-stepwise">FANN_GAUSSIAN_STEPWISE</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      逐步 gaussian (高斯)激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-elliot">
+     <strong><code><a href="fann.constants.html#constant.fann-elliot">FANN_ELLIOT</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      快速(类sigmoid)激励函数，由 David Elliott 定义的。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-elliot-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-elliot-symmetric">FANN_ELLIOT_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      快速(类对称sigmoid)激励函数，由 David Elliott定义的。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-linear-piece">
+     <strong><code><a href="fann.constants.html#constant.fann-linear-piece">FANN_LINEAR_PIECE</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      有界线性激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-linear-piece-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-linear-piece-symmetric">FANN_LINEAR_PIECE_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      有界线性激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sin-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-sin-symmetric">FANN_SIN_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      周期sin(正弦)激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-cos-symmetric">
+     <strong><code><a href="fann.constants.html#constant.fann-cos-symmetric">FANN_COS_SYMMETRIC</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      周期cos(余弦)激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-sin">
+     <strong><code><a href="fann.constants.html#constant.fann-sin">FANN_SIN</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      周期sin(正弦)激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-cos">
+     <strong><code><a href="fann.constants.html#constant.fann-cos">FANN_COS</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      周期cos(余弦)激励函数。
+     </span>
+    </dd>
+   
+  </dl>
+  <dl id="constants.fann-errorfunc">
+   <strong class="title">Error function used during training</strong>
+   
+    <dt id="constant.fann-errorfunc-linear">
+     <strong><code><a href="fann.constants.html#constant.fann-errorfunc-linear">FANN_ERRORFUNC_LINEAR</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      标准线性误差函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-errorfunc-tanh">
+     <strong><code><a href="fann.constants.html#constant.fann-errorfunc-tanh">FANN_ERRORFUNC_TANH</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      Tanh 误差函数；通常更好但是要求更低的学习率。该误差函数当有目标输出时将会和期望值有很大的不同，然而没有目标输出时略有不同。不推荐用于级联或增量训练。
+     </span>
+    </dd>
+   
+  </dl>
+  <dl id="constants.fann-stopfunc">
+   <strong class="title">Stop criteria used during training</strong>
+   
+    <dt id="constant.fann-stopfunc-mse">
+     <strong><code><a href="fann.constants.html#constant.fann-stopfunc-mse">FANN_STOPFUNC_MSE</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      停止准则是均方误差(MSE)值。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-stopfunc-bit">
+     <strong><code><a href="fann.constants.html#constant.fann-stopfunc-bit">FANN_STOPFUNC_BIT</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      停止准则是失败时的比特位数。比特位数意味着输出神经元的个数超过了失败时的比特位数 (参考 fann_get_bit_fail_limit, fann_set_bit_fail_limit). 位数在所有的训练数据中都会被计数，所以这个数组将会比训练数据的数量更高。
+     </span>
+    </dd>
+   
+  </dl>
+  <dl id="constants.fann-nettype">
+   <strong class="title"> <span class="function"><a href="function.fann-get-network-type.html" class="function">fann_get_network_type()</a></span> 是用来定义网络类型</strong>
+   
+    <dt id="constant.fann-nettype-layer">
+     <strong><code><a href="fann.constants.html#constant.fann-nettype-layer">FANN_NETTYPE_LAYER</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      每一层只能连接下一层。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-nettype-shortcut">
+     <strong><code><a href="fann.constants.html#constant.fann-nettype-shortcut">FANN_NETTYPE_SHORTCUT</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      每一层与所有以下层有连接。
+     </span>
+    </dd>
+   
+   </dl>
+  <dl id="constants.fann-e">
+   <strong class="title">Errors</strong>
+   
+    <dt id="constant.fann-e-no-error">
+     <strong><code><a href="fann.constants.html#constant.fann-e-no-error">FANN_E_NO_ERROR</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无误差。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-open-config-r">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-open-config-r">FANN_E_CANT_OPEN_CONFIG_R</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法打开读取配置文件。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-open-config-w">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-open-config-w">FANN_E_CANT_OPEN_CONFIG_W</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法打开写入配置文件。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-wrong-config-version">
+     <strong><code><a href="fann.constants.html#constant.fann-e-wrong-config-version">FANN_E_WRONG_CONFIG_VERSION</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      配置文件的错误版本。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-read-config">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-read-config">FANN_E_CANT_READ_CONFIG</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      从配置文件读取信息的错误。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-read-neuron">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-read-neuron">FANN_E_CANT_READ_NEURON</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      从配置文件读取神经元信息的错误。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-read-connections">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-read-connections">FANN_E_CANT_READ_CONNECTIONS</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      从配置文件读取连接的错误。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-wrong-num-connections">
+     <strong><code><a href="fann.constants.html#constant.fann-e-wrong-num-connections">FANN_E_WRONG_NUM_CONNECTIONS</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      连接数和期望的值不相等。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-open-td-w">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-open-td-w">FANN_E_CANT_OPEN_TD_W</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法打开训练数据文件写入内容。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-open-td-r">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-open-td-r">FANN_E_CANT_OPEN_TD_R</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法打开训练数据文件读取内容。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-read-td">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-read-td">FANN_E_CANT_READ_TD</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      从文件读取训练数据错误。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-allocate-mem">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-allocate-mem">FANN_E_CANT_ALLOCATE_MEM</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法分配内存。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-train-activation">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-train-activation">FANN_E_CANT_TRAIN_ACTIVATION</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法使用已选的激励函数训练。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-use-activation">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-use-activation">FANN_E_CANT_USE_ACTIVATION</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      无法使用已选的激励函数。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-train-data-mismatch">
+     <strong><code><a href="fann.constants.html#constant.fann-e-train-data-mismatch">FANN_E_TRAIN_DATA_MISMATCH</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      两个 fann_train_data 结构体之间存在不可调和的差异。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-cant-use-train-alg">
+     <strong><code><a href="fann.constants.html#constant.fann-e-cant-use-train-alg">FANN_E_CANT_USE_TRAIN_ALG</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      不能使用已选的训练算法。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-train-data-subset">
+     <strong><code><a href="fann.constants.html#constant.fann-e-train-data-subset">FANN_E_TRAIN_DATA_SUBSET</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      尝试获取不在训练集内的子集。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-index-out-of-bound">
+     <strong><code><a href="fann.constants.html#constant.fann-e-index-out-of-bound">FANN_E_INDEX_OUT_OF_BOUND</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      索引超出了界限。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-scale-not-present">
+     <strong><code><a href="fann.constants.html#constant.fann-e-scale-not-present">FANN_E_SCALE_NOT_PRESENT</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      标定参数不存在。
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-input-no-match">
+     <strong><code><a href="fann.constants.html#constant.fann-e-input-no-match">FANN_E_INPUT_NO_MATCH</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      在人工神经网络和 data 中的输入神经元个数不匹配
+     </span>
+    </dd>
+   
+   
+    <dt id="constant.fann-e-output-no-match">
+     <strong><code><a href="fann.constants.html#constant.fann-e-output-no-match">FANN_E_OUTPUT_NO_MATCH</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+    </dt>
+    <dd>
+     <span class="simpara">
+      在人工神经网络和数据中的输出神经元个数不匹配。
+     </span>
+    </dd>
+   
+  </dl>
+ </p>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

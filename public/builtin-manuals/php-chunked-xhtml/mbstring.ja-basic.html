@@ -1,0 +1,194 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>日文字符多字节编码基础</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="mbstring.encodings.html" class="navbar__link">« 支持编码的摘要</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="mbstring.http.html" class="navbar__link">HTTP 输入和输出 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.mbstring.html">多字节字符串</a></li>
+        <li>日文字符多字节编码基础</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="mbstring.ja-basic" class="chapter">
+ <h1 class="title">日文字符多字节编码基础</h1>
+
+ <p class="para">
+  日文字符只能使用多字节编码，而且，编码规范取决于平台和字符的使用
+  目的（text purpose)。跟糟糕的是，编码规范之间还稍有差异。为了开发
+  出适应日文环境的Web应用，开发人员必须对编码规范有个清晰的认识，确保
+  使用了合适的编码规范。
+ </p>
+ <p class="para">
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">存储一个日文字符最大需要6个字节空间</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     多数日文多字节字符是单字节字符出现频率的两倍。这些字符被称为
+     &quot;zen-kaku&quot;，在日文中代表的意思是&quot;full width&quot;。
+     其它窄一些的字符被称作&quot;han-kaku&quot;，意思是&quot;half width&quot;。
+     字符实际显示的宽度，取决于显示时使用的字体。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     有些字符编码采用ISO-2022定义的转码序列（shift sequences) 来转换特殊的编码
+     空间(<code class="literal">00h</code> to <code class="literal">7fh</code>)。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     在SMTP/NNTP协议应用中 建议 采用ISO-2022-JP编码，并且头部和实体部分，应该按照
+     RFC要求重新编码。虽然这些并不是强制性要求，但最好还是按这个建议做，因为几款
+     流行的客户端不支持其他的编码方式。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     手机服务页面，例如<a href="http://www.nttdocomo.com/services/imode/" class="link external">&raquo;&nbsp;i-mode</a>或者<a href="http://www.au.kddi.com/english/service/ezweb/index.html" class="link external">&raquo;&nbsp;EZweb</a>
+     应该 使用Shift_JIS编码。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+      Emoji 已经可以支持像
+      <a href="http://www.nttdocomo.com/services/imode/" class="link external">&raquo;&nbsp;i-mode</a>
+      或者 <a href="http://www.au.kddi.com/english/service/ezweb/index.html" class="link external">&raquo;&nbsp;EZweb</a>
+      这样的手机服务。
+    </span>
+   </li>
+  </ul>
+ </p>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

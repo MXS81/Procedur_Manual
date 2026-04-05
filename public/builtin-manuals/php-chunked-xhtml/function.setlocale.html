@@ -1,0 +1,353 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>设置区域信息</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.rtrim.html" class="navbar__link">« rtrim</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.sha1.html" class="navbar__link">sha1 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.strings.html">字符串 函数</a></li>
+        <li>设置区域信息</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.setlocale" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">setlocale</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">setlocale</span> &mdash; <span class="dc-title">设置区域信息</span></p>
+
+ </div>
+ 
+ <div class="refsect1 description" id="refsect1-function.setlocale-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>setlocale</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$category</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$locales</code></span>, <span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.string.html" class="type string">string</a></span></span> <code class="parameter">$locales</code></span>): <span class="type"><span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="simpara">替代签名（不支持命名参数）：</p>
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>setlocale</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$category</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$locale_array</code></span>): <span class="type"><span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   设置区域信息。
+  </p>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+    区域信息是按进程维护的，而不是线程。如果在多线程服务器 API 上运行 PHP，区域设置可能在脚本运行时突然变化，尽管脚本本身并没有调用
+    <span class="function"><strong>setlocale()</strong></span>。这是因为其它脚本在同一时刻的同一进程的不同线程中运行，使用 <span class="function"><strong>setlocale()</strong></span>
+    改变了进程级别的区域。在 Windows 上，自 PHP 7.0.5 起，每个线程都维护自己的区域信息。
+   </p>
+  </div>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.setlocale-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">category</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">category</code> 命名常量指定的受区域设置的功能类别:
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-all">LC_ALL</a></code></strong> 所有的设置
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-collate">LC_COLLATE</a></code></strong> 字符串比较, 详见
+          <span class="function"><a href="function.strcoll.html" class="function">strcoll()</a></span>
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-ctype">LC_CTYPE</a></code></strong> 字符串的分类与转换, 参见例子
+          <span class="function"><a href="function.ctype-alpha.html" class="function">ctype_alpha()</a></span>
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-monetary">LC_MONETARY</a></code></strong> 等同 <span class="function"><a href="function.localeconv.html" class="function">localeconv()</a></span>
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-numeric">LC_NUMERIC</a></code></strong> 对于小数点的分隔（另请参见
+          <span class="function"><a href="function.localeconv.html" class="function">localeconv()</a></span>）
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-time">LC_TIME</a></code></strong> 时间与格式
+          <span class="function"><a href="function.strftime.html" class="function">strftime()</a></span>
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="string.constants.html#constant.lc-messages">LC_MESSAGES</a></code></strong> 系统响应（如果 PHP 使用 <code class="literal">libintl</code> 编译）
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">locales</code></dt>
+     <dd>
+      <p class="para">
+       如果 <code class="parameter">locales</code> 是空字符串
+       <code class="literal">&quot;&quot;</code> 或 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>，则区域名将从跟上述类别同名的环境变量的值或“LANG”中设置。
+      </p>
+      <p class="para">
+       如果 <code class="parameter">locales</code> 是 <code class="literal">&quot;0&quot;</code>，则区域设置不受影响，仅返回当前设置。
+      </p>
+      <p class="para">
+       如果 <code class="parameter">locales</code>
+       后跟附加参数，则每个参数都会尝试设置为新的区域，直至成功。对于以下情况非常有用：不同的系统已知的区域名称不同；为可能无效的区域提供后备。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">rest</code></dt>
+     <dd>
+      <p class="para">
+       可选的字符串参数，尝试作为区域设置，直至成功。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">locale_array</code></dt>
+     <dd>
+      <p class="para">
+       尝试将数组中的每个元素设置为新的区域，直至成功。对于以下情况非常有用：不同的系统已知的区域名称不同；为可能无效的区域提供后备。
+      </p>
+     </dd>
+    
+   </dl>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <p class="para">
+     在 Windows 中，setlocale(LC_ALL, &#039;&#039;) 从系统中的区域/语言设置（通过控制面板访问）中设置区域设置信息。
+    </p>
+   </p></blockquote>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.setlocale-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   返回新的当前区域，如果区域功能没有在当前平台实现、指定区域不存在或类别名无效时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+  <p class="para">
+   无效的类别名也会导致警告消息。类别/区域名可以在 <a href="https://datatracker.ietf.org/doc/html/rfc1766" class="link external">&raquo;&nbsp;RFC 1766</a>
+   和 <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php" class="link external">&raquo;&nbsp;ISO 639</a> 中找到。不同的系统有不同的区域命名方案。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    <span class="function"><strong>setlocale()</strong></span> 的返回值依赖运行 PHP 的系统。它准确返回系统
+    <code class="literal">setlocale</code> 函数返回的内容。
+   </p>
+  </p></blockquote>
+ </div>
+
+ <div class="refsect1 changelog" id="refsect1-function.setlocale-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.5.0</td>
+      <td>
+       将整数 <code class="literal">0</code> 作为 <code class="parameter">locales</code> 参数传递给
+        <span class="function"><strong>setlocale()</strong></span> 不再受支持，现会抛出 <span class="exceptionname"><a href="class.typeerror.html" class="exceptionname">TypeError</a></span>。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ <div class="refsect1 examples" id="refsect1-function.setlocale-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>setlocale()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-non-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">/* 设置区域为荷兰 */<br /></span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_ALL</span><span style="color: #007700">, </span><span style="color: #DD0000">'nl_NL'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/* 输出：vrijdag 22 december 1978 */<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">strftime</span><span style="color: #007700">(</span><span style="color: #DD0000">"%A %e %B %Y"</span><span style="color: #007700">, </span><span style="color: #0000BB">mktime</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">12</span><span style="color: #007700">, </span><span style="color: #0000BB">22</span><span style="color: #007700">, </span><span style="color: #0000BB">1978</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">/* 尝试为德语设置不同的可能区域 */<br /></span><span style="color: #0000BB">$loc_de </span><span style="color: #007700">= </span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_ALL</span><span style="color: #007700">, </span><span style="color: #DD0000">'de_DE@euro'</span><span style="color: #007700">, </span><span style="color: #DD0000">'de_DE'</span><span style="color: #007700">, </span><span style="color: #DD0000">'de'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ge'</span><span style="color: #007700">);<br />echo </span><span style="color: #DD0000">"Preferred locale for german on this system is '</span><span style="color: #0000BB">$loc_de</span><span style="color: #DD0000">'"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 <span class="function"><strong>setlocale()</strong></span> 读取当前设置</strong></p>
+    <div class="example-contents">
+<div class="annotation-non-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">/* Retrieve current setting */<br /></span><span style="color: #0000BB">$current </span><span style="color: #007700">= </span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_ALL</span><span style="color: #007700">, </span><span style="color: #0000BB">null</span><span style="color: #007700">);<br /><br />echo </span><span style="color: #DD0000">"Current locale '</span><span style="color: #0000BB">$current</span><span style="color: #DD0000">'"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 Windows 的 <span class="function"><strong>setlocale()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-non-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">/* 设置区域为荷兰 */<br /></span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_ALL</span><span style="color: #007700">, </span><span style="color: #DD0000">'nld_nld'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/* 输出：vrijdag 22 december 1978 */<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">strftime</span><span style="color: #007700">(</span><span style="color: #DD0000">"%A %d %B %Y"</span><span style="color: #007700">, </span><span style="color: #0000BB">mktime</span><span style="color: #007700">(</span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">12</span><span style="color: #007700">, </span><span style="color: #0000BB">22</span><span style="color: #007700">, </span><span style="color: #0000BB">1978</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">/* 尝试为德语设置不同的可能区域 */<br /></span><span style="color: #0000BB">$loc_de </span><span style="color: #007700">= </span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_ALL</span><span style="color: #007700">, </span><span style="color: #DD0000">'de_DE@euro'</span><span style="color: #007700">, </span><span style="color: #DD0000">'de_DE'</span><span style="color: #007700">, </span><span style="color: #DD0000">'deu_deu'</span><span style="color: #007700">);<br />echo </span><span style="color: #DD0000">"Preferred locale for german on this system is '</span><span style="color: #0000BB">$loc_de</span><span style="color: #DD0000">'"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.setlocale-notes">
+  <h3 class="title">注释</h3>
+  <div class="tip"><strong class="tip">小技巧</strong>
+   <p class="para">
+    Windows 用户可以在 Microsoft 的 <abbr title="Microsoft Developer Network">MSDN</abbr> 网站上找到有关
+    <code class="parameter">locales</code> 字符串的有用信息。支持的语言字符串可在<a href="http://msdn.microsoft.com/en-us/library/39cwe7zf.aspx" class="link external">&raquo;&nbsp;语言字符串文档</a>中找到，支持的国家/区域字符串可在<a href="http://msdn.microsoft.com/en-us/library/cdax410z.aspx" class="link external">&raquo;&nbsp;国家/区域文档</a>中找到。
+
+   </p>
+  </div>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,295 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>等待信号</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.pcntl-sigtimedwait.html" class="navbar__link">« pcntl_sigtimedwait</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.pcntl-strerror.html" class="navbar__link">pcntl_strerror »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pcntl.html">PCNTL 函数</a></li>
+        <li>等待信号</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.pcntl-sigwaitinfo" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">pcntl_sigwaitinfo</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.3.0, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">pcntl_sigwaitinfo</span> &mdash; <span class="dc-title">等待信号</span></p>
+
+ </div>
+ 
+ <div class="refsect1 description" id="refsect1-function.pcntl-sigwaitinfo-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>pcntl_sigwaitinfo</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$signals</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter reference">&$info</code><span class="initializer"> = []</span></span>): <span class="type"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>pcntl_sigwaitinfo()</strong></span> 函数暂停调用脚本的执行直到接收到 <code class="parameter">signals</code>
+   参数中列出的某个信号。只要其中的一个信号已经在等待状态（比如：通过 <span class="function"><a href="function.pcntl-sigprocmask.html" class="function">pcntl_sigprocmask()</a></span>
+   函数阻塞），<span class="function"><strong>pcntl_sigwaitinfo()</strong></span> 就回立刻返回。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.pcntl-sigwaitinfo-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">signals</code></dt>
+     <dd>
+      <p class="para">
+       要等待的信号数组。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">info</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">info</code> 参数设置为数组，包含信号信息。
+      </p>
+      <p class="para">
+       以下元素会为所有信号设置：
+       <ul class="simplelist">
+        <li>signo：信号编号</li>
+        <li>errno：错误编号</li>
+        <li>code：信号代码</li>
+       </ul>
+      </p>
+      <p class="para">
+       下面元素可能会为 <strong><code><a href="pcntl.constants.html#constant.sigchld">SIGCHLD</a></code></strong> 信号设置：
+       <ul class="simplelist">
+        <li>status：退出的值或信号</li>
+        <li>utime：用户消耗的时间</li>
+        <li>stime：系统（内核）消耗的时间</li>
+        <li>pid：发送进程ID</li>
+        <li>uid：发送进程的实际用户ID</li>
+       </ul>
+      </p>
+      <p class="para">
+       信号 <strong><code><a href="pcntl.constants.html#constant.sigill">SIGILL</a></code></strong>,
+       <strong><code><a href="pcntl.constants.html#constant.sigfpe">SIGFPE</a></code></strong>, <strong><code><a href="pcntl.constants.html#constant.sigsegv">SIGSEGV</a></code></strong> 和
+       <strong><code><a href="pcntl.constants.html#constant.sigbus">SIGBUS</a></code></strong> 可能会被设置的元素:
+       <ul class="simplelist">
+        <li>addr：发生故障的内存位置</li>
+       </ul>
+      </p>
+      <p class="para">
+       可能会为 <strong><code><a href="pcntl.constants.html#constant.sigpoll">SIGPOLL</a></code></strong>
+       信号设置的元素：
+       <ul class="simplelist">
+        <li>band：Band event</li>
+        <li>fd：文件描述符</li>
+       </ul>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.pcntl-sigwaitinfo-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回信号编号， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.pcntl-sigwaitinfo-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       如果 <code class="parameter">signal</code> 为空，则抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       如果 <code class="parameter">signal</code> 的值不是 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，则抛出 <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       如果 <code class="parameter">signal</code> 的值无效，则抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span>。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.pcntl-sigwaitinfo-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>pcntl_sigwaitinfo()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">"Blocking SIGHUP signal\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">pcntl_sigprocmask</span><span style="color: #007700">(</span><span style="color: #0000BB">SIG_BLOCK</span><span style="color: #007700">, array(</span><span style="color: #0000BB">SIGHUP</span><span style="color: #007700">));<br /><br />echo </span><span style="color: #DD0000">"Sending SIGHUP to self\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">posix_kill</span><span style="color: #007700">(</span><span style="color: #0000BB">posix_getpid</span><span style="color: #007700">(), </span><span style="color: #0000BB">SIGHUP</span><span style="color: #007700">);<br /><br />echo </span><span style="color: #DD0000">"Waiting for signals\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$info </span><span style="color: #007700">= array();<br /></span><span style="color: #0000BB">pcntl_sigwaitinfo</span><span style="color: #007700">(array(</span><span style="color: #0000BB">SIGHUP</span><span style="color: #007700">), </span><span style="color: #0000BB">$info</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.pcntl-sigwaitinfo-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.pcntl-sigprocmask.html" class="function" rel="rdfs-seeAlso">pcntl_sigprocmask()</a> - 设置或检索阻塞信号</span></li>
+    <li><span class="function"><a href="function.pcntl-sigtimedwait.html" class="function" rel="rdfs-seeAlso">pcntl_sigtimedwait()</a> - 带超时机制的信号等待</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

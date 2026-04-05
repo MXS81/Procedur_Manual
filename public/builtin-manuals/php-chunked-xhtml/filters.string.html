@@ -1,0 +1,207 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>字符串过滤器</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="filters.html" class="navbar__link">« 可用过滤器列表</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="filters.convert.html" class="navbar__link">转换过滤器 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="filters.html">可用过滤器列表</a></li>
+        <li>字符串过滤器</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="filters.string" class="section">
+  <h2 class="title">字符串过滤器</h2>
+
+  <p class="simpara">
+   每个过滤器都正如其名字暗示的那样工作并与内置的 PHP 字符串函数的行为相对应。对于指定过滤器的更多信息，请参考该函数的手册页。
+  </p>
+
+  <div class="section" id="filters.string.rot13">
+   <h2 class="title">string.rot13</h2>
+   <p class="simpara">
+    使用该过滤器也就是用 <span class="function"><a href="function.str-rot13.html" class="function">str_rot13()</a></span> 函数处理所有的流数据。
+   </p>
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 string.rot13</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$fp </span><span style="color: #007700">= </span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">'php://output'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">stream_filter_append</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">'string.rot13'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fwrite</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">"This is a test.\n"</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">/* 输出： Guvf vf n grfg.   */<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </div>
+
+   <div class="section" id="filters.string.toupper">
+    <h2 class="title">string.toupper</h2>
+    <p class="simpara">
+     使用此过滤器等同于用 <span class="function"><a href="function.strtoupper.html" class="function">strtoupper()</a></span> 函数处理所有的流数据。
+    </p>
+    <div class="example" id="example-2">
+      <p><strong>示例 #2 string.toupper</strong></p>
+      <div class="example-contents">
+        <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$fp </span><span style="color: #007700">= </span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">'php://output'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">stream_filter_append</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">'string.toupper'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fwrite</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">"This is a test.\n"</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">/* 输出： THIS IS A TEST.   */<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+</div>
+
+    </div>
+  </div>
+
+   <div class="section" id="filters.string.tolower">
+    <h2 class="title">string.tolower</h2>
+    <p class="simpara">
+    使用此过滤器等同于用 <span class="function"><a href="function.strtolower.html" class="function">strtolower()</a></span> 函数处理所有的流数据。</p>
+    <div class="example" id="example-3">
+      <p><strong>示例 #3 string.tolower</strong></p>
+      <div class="example-contents">
+        <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$fp </span><span style="color: #007700">= </span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">'php://output'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">stream_filter_append</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">'string.tolower'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fwrite</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">"This is a test.\n"</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">/* 输出： this is a test.   */<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="section" id="filters.string.strip_tags">
+   <h2 class="title">string.strip_tags</h2>
+   <p class="simpara">
+    使用此过滤器等同于用 
+    <span class="function"><a href="function.strip-tags.html" class="function">strip_tags()</a></span> 函数处理所有的流数据。可以用两种格式接收参数：一种是和 
+    <span class="function"><a href="function.strip-tags.html" class="function">strip_tags()</a></span> 函数第二个参数相似的一个包含有标记列表的字符串，一种是一个包含有标记名的数组。
+   </p>
+   <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 7.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   <div class="example" id="example-4">
+    <p><strong>示例 #4 string.strip_tags</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$fp </span><span style="color: #007700">= </span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">'php://output'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">stream_filter_append</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">'string.strip_tags'</span><span style="color: #007700">, </span><span style="color: #0000BB">STREAM_FILTER_WRITE</span><span style="color: #007700">, </span><span style="color: #DD0000">"&lt;b&gt;&lt;i&gt;&lt;u&gt;"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fwrite</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">"&lt;b&gt;bolded text&lt;/b&gt; enlarged to a &lt;h1&gt;level 1 heading&lt;/h1&gt;\n"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fclose</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">/* 输出： bolded text enlarged to a level 1 heading   */<br /><br /></span><span style="color: #0000BB">$fp </span><span style="color: #007700">= </span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">'php://output'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">stream_filter_append</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">'string.strip_tags'</span><span style="color: #007700">, </span><span style="color: #0000BB">STREAM_FILTER_WRITE</span><span style="color: #007700">, array(</span><span style="color: #DD0000">'b'</span><span style="color: #007700">,</span><span style="color: #DD0000">'i'</span><span style="color: #007700">,</span><span style="color: #DD0000">'u'</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">fwrite</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">, </span><span style="color: #DD0000">"&lt;b&gt;bolded text&lt;/b&gt; enlarged to a &lt;h1&gt;level 1 heading&lt;/h1&gt;\n"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">fclose</span><span style="color: #007700">(</span><span style="color: #0000BB">$fp</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">/* 输出： bolded text enlarged to a level 1 heading   */<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </div>
+  </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

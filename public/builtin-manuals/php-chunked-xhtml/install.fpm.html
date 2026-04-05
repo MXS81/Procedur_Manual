@@ -1,0 +1,225 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>FastCGI 进程管理器（FPM）</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="install.cloud.digitalocean.html" class="navbar__link">« DigitalOcean</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="install.fpm.install.html" class="navbar__link">安装 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="install.html">安装与配置</a></li>
+        <li>FastCGI 进程管理器（FPM）</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="install.fpm" class="chapter">
+   <h1 class="title">FastCGI 进程管理器（FPM）</h1>
+<h2>目录</h2><ul class="chunklist chunklist_chapter"><li><a href="install.fpm.install.html">安装</a></li><li><a href="install.fpm.configuration.html">配置</a></li></ul>
+
+   <p class="para">FPM（FastCGI 进程管理器）是 
+PHP FastCGI 的主要实现，包含大部分对高负载网站有用的功能。
+</p>
+   <p class="para">
+    它的功能包括：
+    <ul class="itemizedlist">
+     <li class="listitem">
+      <p class="para">
+       支持平滑停止/启动的高级进程管理功能；
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       进程池可以工作于不同的 uid/gid/chroot 环境下，并监听不同的端口和使用不同的 php.ini 配置文件（可取代 safe_mode 的设置）；
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       可配置的 stdout 和 stderr 日志记录;
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       在发生意外情况的时候能够重新启动并缓存被破坏的 opcode;
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       文件上传优化支持;
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       &quot;慢日志&quot; - 记录脚本（不仅记录文件名，还记录 PHP backtrace 信息，可以使用
+       ptrace 或者类似工具读取和分析远程进程的运行数据）运行所导致的异常缓慢;
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       <span class="function"><a href="function.fastcgi-finish-request.html" class="function">fastcgi_finish_request()</a></span> - 
+       特殊功能：用于在请求完成和刷新数据后，继续在后台执行耗时的工作（录入视频转换、统计处理等）；
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       动态（dynamic）/按需（ondemand）/静态（static）子进程产生；
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       基础和扩展运行状态信息（类似 Apache 的 mod_status），支持各种格式，如：
+       json， xml 和 openmetrics；
+      </p>
+     </li>
+     <li class="listitem">
+      <p class="para">
+       基于 php.ini 的配置文件。
+      </p>
+     </li>
+    </ul>
+   </p>
+   
+   
+
+
+
+  
+
+
+
+   
+
+
+
+
+
+
+
+  </div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

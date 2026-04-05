@@ -1,0 +1,200 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>枚举方法</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.enumerations.backed.html" class="navbar__link">« 带值（回退）枚举</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.enumerations.static-methods.html" class="navbar__link">枚举静态方法 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.enumerations.html">枚举</a></li>
+        <li>枚举方法</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.enumerations.methods" class="sect1">
+  <h2 class="title">枚举方法</h2>
+
+  <p class="para">
+   枚举（包括纯粹枚举、回退枚举）还能包含方法，
+   也能实现 interface。
+   如果 Enum 实现了 interface，则其中的条目也能接受 interface 的类型检测。
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">interface </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string</span><span style="color: #007700">;<br />}<br /><br />enum </span><span style="color: #0000BB">Suit </span><span style="color: #007700">implements </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    case </span><span style="color: #0000BB">Hearts</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Diamonds</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Clubs</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Spades</span><span style="color: #007700">;<br /><br />    </span><span style="color: #FF8000">// 满足 interface 契约。<br />    </span><span style="color: #007700">public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return match(</span><span style="color: #0000BB">$this</span><span style="color: #007700">) {<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Hearts</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Diamonds </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Red'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Clubs</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Black'</span><span style="color: #007700">,<br />        };<br />    }<br /><br />    </span><span style="color: #FF8000">// 不是 interface 的一部分；也没问题<br />    </span><span style="color: #007700">public function </span><span style="color: #0000BB">shape</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return </span><span style="color: #DD0000">"Rectangle"</span><span style="color: #007700">;<br />    }<br />}<br /><br />function </span><span style="color: #0000BB">paint</span><span style="color: #007700">(</span><span style="color: #0000BB">Colorful $c</span><span style="color: #007700">)<br />{<br />   </span><span style="color: #FF8000">/* ... */<br /></span><span style="color: #007700">}<br /><br /></span><span style="color: #0000BB">paint</span><span style="color: #007700">(</span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Clubs</span><span style="color: #007700">);  </span><span style="color: #FF8000">// 正常<br /><br /></span><span style="color: #007700">print </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Diamonds</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">shape</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 输出 "Rectangle"<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   在这例子中，<code class="literal">Suit</code> 所有的四个实例具有两个方法：
+   <code class="literal">color()</code>、<code class="literal">shape()</code>。
+   目前的调用代码和类型检查，和其他对象实例的行为完全一致。
+  </p>
+
+  <p class="para">
+   在回退枚举中，interface 的声明紧跟回退类型的声明之后。
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">interface </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string</span><span style="color: #007700">;<br />}<br /><br />enum </span><span style="color: #0000BB">Suit</span><span style="color: #007700">: </span><span style="color: #0000BB">string </span><span style="color: #007700">implements </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    case </span><span style="color: #0000BB">Hearts </span><span style="color: #007700">= </span><span style="color: #DD0000">'H'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Diamonds </span><span style="color: #007700">= </span><span style="color: #DD0000">'D'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Clubs </span><span style="color: #007700">= </span><span style="color: #DD0000">'C'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Spades </span><span style="color: #007700">= </span><span style="color: #DD0000">'S'</span><span style="color: #007700">;<br /><br />    </span><span style="color: #FF8000">// 满足 interface 的契约。<br />    </span><span style="color: #007700">public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return match(</span><span style="color: #0000BB">$this</span><span style="color: #007700">) {<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Hearts</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Diamonds </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Red'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Clubs</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Black'</span><span style="color: #007700">,<br />        };<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   在方法中，定义了 <code class="literal">$this</code> 变量，它引用到了条目实例。
+  </p>
+
+  <p class="para">
+   方法中可以任意复杂，但一般的实践中，往往会返回静态的值，
+   或者为 <code class="literal">$this</code> <a href="control-structures.match.html" class="link">match</a> 各种情况并返回不同的值。
+  </p>
+
+  <p class="para">
+   注意，在本示例中，更好的数据模型实践是再定一个包含 Red 和 Black
+   枚举值的 <code class="literal">SuitColor</code> 枚举，并且返回它作为代替。
+   然而这会让本示例复杂化。
+  </p>
+
+  <p class="para">
+   以上的层次在逻辑中类似于下面的 class 结构（虽然这不是它实际运行的代码）：
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">interface </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string</span><span style="color: #007700">;<br />}<br /><br />final class </span><span style="color: #0000BB">Suit </span><span style="color: #007700">implements </span><span style="color: #0000BB">UnitEnum</span><span style="color: #007700">, </span><span style="color: #0000BB">Colorful<br /></span><span style="color: #007700">{<br />    public const </span><span style="color: #0000BB">Hearts </span><span style="color: #007700">= new </span><span style="color: #0000BB">self</span><span style="color: #007700">(</span><span style="color: #DD0000">'Hearts'</span><span style="color: #007700">);<br />    public const </span><span style="color: #0000BB">Diamonds </span><span style="color: #007700">= new </span><span style="color: #0000BB">self</span><span style="color: #007700">(</span><span style="color: #DD0000">'Diamonds'</span><span style="color: #007700">);<br />    public const </span><span style="color: #0000BB">Clubs </span><span style="color: #007700">= new </span><span style="color: #0000BB">self</span><span style="color: #007700">(</span><span style="color: #DD0000">'Clubs'</span><span style="color: #007700">);<br />    public const </span><span style="color: #0000BB">Spades </span><span style="color: #007700">= new </span><span style="color: #0000BB">self</span><span style="color: #007700">(</span><span style="color: #DD0000">'Spades'</span><span style="color: #007700">);<br /><br />    private function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">(public readonly </span><span style="color: #0000BB">string $name</span><span style="color: #007700">) {}<br /><br />    public function </span><span style="color: #0000BB">color</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return match(</span><span style="color: #0000BB">$this</span><span style="color: #007700">) {<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Hearts</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Diamonds </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Red'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Clubs</span><span style="color: #007700">, </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Black'</span><span style="color: #007700">,<br />        };<br />    }<br /><br />    public function </span><span style="color: #0000BB">shape</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return </span><span style="color: #DD0000">"Rectangle"</span><span style="color: #007700">;<br />    }<br /><br />    public static function </span><span style="color: #0000BB">cases</span><span style="color: #007700">(): array<br />    {<br />        </span><span style="color: #FF8000">// 不合法的方法，Enum 中不允许手动定义 cases() 方法<br />        // 参考 “枚举值清单” 章节<br />    </span><span style="color: #007700">}<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   尽管 enum 可以包括 public、private、protected 的方法，
+   但由于它不支持继承，因此在实践中 private 和 protected 效果是相同的。
+  </p>
+
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

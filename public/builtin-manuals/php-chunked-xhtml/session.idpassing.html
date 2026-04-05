@@ -1,0 +1,208 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>传送会话ID</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="session.examples.basic.html" class="navbar__link">« 基本用法</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="session.customhandler.html" class="navbar__link">自定义会话处理程序 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="session.examples.html">示例</a></li>
+        <li>传送会话ID</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="session.idpassing" class="section">
+  <h2 class="title">传送会话ID</h2>
+  <p class="para">
+   有两种方式用来传送会话 ID：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      Cookies
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      URL 参数
+     </span>
+    </li>
+   </ul>
+  </p>
+  <p class="para">
+   会话模块支持这两种方式。
+   Cookie 方式相对好一些，但是用户可能在浏览器中关闭 Cookie，所以
+   第二种方案就是把会话 ID 直接并入到 URL 中，以保证会话 ID 的传送。
+  </p>
+  <p class="para">
+   无需开发人员干预，PHP 就可以自动处理 URL 传送会话 ID 的场景。
+   如果启用了 <code class="literal">session.use_trans_sid</code> 选项，
+   PHP 将会自动在相对 URI 中包含会话 ID。
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <p class="para">
+    <a href="ini.core.html#ini.arg-separator.output" class="link">arg_separator.output</a>
+    <var class="filename">php.ini</var> 配置指令允许你自定义会话 ID 参数分隔符。
+    可以设定为 &amp; 来保持和 XHTML 的一致性。
+    </p>
+   </p></blockquote>
+  </p>
+  <p class="para">
+   会话开始之后，可以使用 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong> 常量。
+   如果客户端未提供会话 cookie，该常量的展开形式为 <code class="literal">session_name=session_id</code>，
+   反之，该常量为空字符串。因此，可以直接在 URL 中包含此常量的展开字符串而无需考虑会话 ID 的实际传送方式。
+  </p>
+  <p class="para">
+   下例演示了如何在会话中注册变量以及如何使用 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong>
+   常量正确的链接到另一页面。
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 某单一用户的点击数</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />session_start</span><span style="color: #007700">();<br /><br />if (empty(</span><span style="color: #0000BB">$_SESSION</span><span style="color: #007700">[</span><span style="color: #DD0000">'count'</span><span style="color: #007700">])) {<br />   </span><span style="color: #0000BB">$_SESSION</span><span style="color: #007700">[</span><span style="color: #DD0000">'count'</span><span style="color: #007700">] = </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br />} else {<br />   </span><span style="color: #0000BB">$_SESSION</span><span style="color: #007700">[</span><span style="color: #DD0000">'count'</span><span style="color: #007700">]++;<br />}<br /></span><span style="color: #0000BB">?&gt;<br /></span><br />&lt;p&gt;<br />Hello visitor, you have seen this page <span style="color: #0000BB">&lt;?php </span><span style="color: #007700">echo </span><span style="color: #0000BB">$_SESSION</span><span style="color: #007700">[</span><span style="color: #DD0000">'count'</span><span style="color: #007700">]; </span><span style="color: #0000BB">?&gt;</span> times.<br />&lt;/p&gt;<br /><br />&lt;p&gt;<br />To continue, &lt;a href="nextpage.php?<span style="color: #0000BB">&lt;?php </span><span style="color: #007700">echo </span><span style="color: #0000BB">htmlspecialchars</span><span style="color: #007700">(</span><span style="color: #0000BB">SID</span><span style="color: #007700">); </span><span style="color: #0000BB">?&gt;</span>"&gt;click<br />here&lt;/a&gt;.<br />&lt;/p&gt;</span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   可以使用 <span class="function"><a href="function.htmlspecialchars.html" class="function">htmlspecialchars()</a></span> 来打印 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong>
+   常量的展开字符串以避免 XSS 相关的攻击。
+  </p>
+  <p class="para">
+   如果使用 <a href="session.configuration.html#ini.session.use-trans-sid" class="link">
+   --enable-trans-sid</a> 参数编译的 PHP，
+   上例中打印 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong> 常量部分就可以省略。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    非相对 URL 将被视为指向外部站点的链接，
+    从安全角度考虑，外站的链接 URL 中将
+    不包含 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong> 常量，以避免将 <strong><code><a href="session.constants.html#constant.sid">SID</a></code></strong> 泄露到外部服务器的风险。
+   </p>
+  </p></blockquote>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

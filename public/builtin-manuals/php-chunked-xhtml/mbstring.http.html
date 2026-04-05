@@ -1,0 +1,222 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>HTTP 输入和输出</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="mbstring.ja-basic.html" class="navbar__link">« 日文字符多字节编码基础</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="mbstring.supported-encodings.html" class="navbar__link">支持的字符编码 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.mbstring.html">多字节字符串</a></li>
+        <li>HTTP 输入和输出</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="mbstring.http" class="chapter">
+ <h1 class="title">HTTP 输入和输出</h1>
+
+ <p class="para">
+  HTTP 输入/输出字符编码转换同样也适用于二进制数据。
+  如果 HTTP 输入/输出用到了二进制数据，用户应当控制字符的编码转换。
+ </p>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   如果 HTML 表单的 <code class="literal">enctype</code> 属性设置为 <code class="literal">multipart/form-data</code>，并且 <var class="filename">php.ini</var> 里的 <code class="literal">mbstring.encoding_translation</code> 设置为 On，
+   POST 的变量以及上传文件的名称也将会被转换到内部字符编码。
+   不过，转换不会应用于查询（query）的键。
+  </p>
+ </p></blockquote>
+ <p class="para">
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">
+     HTTP 输入
+    </span>
+    <p class="para"> 
+     在 PHP 脚本里无法控制 HTTP 输入字符的转换。
+     要禁用 HTTP 输入字符的转换，必须要在 <var class="filename">php.ini</var> 里设置。
+     <div class="example" id="example-1">
+      <p><strong>示例 #1 
+       在 <var class="filename">php.ini</var> 中禁用 HTTP 输入转换
+      </strong></p>
+      <div class="example-contents">
+<div class="annotation-interactive php.inicode"><pre class="php.inicode">;; 禁用 HTTP 输入转换
+mbstring.http_input = pass
+;;禁用 HTTP 输入转换 
+mbstring.encoding_translation = Off</pre>
+</div>
+      </div>
+
+     </div>
+    </p>
+    <p class="para">
+     当 PHP 以 Apache 模块运行。这些设置还可以通过 <var class="filename">httpd.conf</var> 内每个虚拟主机（Virtual Host）指令或每个目录下的 <var class="filename">.htaccess</var> 来覆盖（override）。
+     详情参见<a href="configuration.html" class="link">配置</a>这一节，以及 Apache 手册。
+    </p>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     HTTP 输出
+    </span>
+    <p class="para">
+     输出字符编码转换的使用有几种方式。
+     一种是使用 <var class="filename">php.ini</var>，另一种是使用 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span>，以 <span class="function"><a href="function.mb-output-handler.html" class="function">mb_output_handler()</a></span> 作为 <code class="literal">ob_start</code> 的回调函数。
+    </p>
+   </li>
+  </ul>
+ </p>
+ <p class="para">
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 <var class="filename">php.ini</var> 设置例子</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive cdata"><pre>
+;; 为所有 PHP 页面启用输出字符编码的转换
+
+;; 启用输出缓冲
+output_buffering    = On
+
+;; 设置 mb_output_handler 来进行输出的转换
+output_handler      = mb_output_handler
+</pre></div>
+   </div>
+
+  </div>
+ </p>
+ <p class="para">
+  <div class="example" id="example-3">
+   <p><strong>示例 #3 脚本例子</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">// 仅为此页面启用输出字符编码的转换<br /><br />// 设置 HTTP 输出字符编码为 SJIS<br /></span><span style="color: #0000BB">mb_http_output</span><span style="color: #007700">(</span><span style="color: #DD0000">'SJIS'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 开始缓冲并指定 "mb_output_handler" 为回调函数<br /></span><span style="color: #0000BB">ob_start</span><span style="color: #007700">(</span><span style="color: #DD0000">'mb_output_handler'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </p>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

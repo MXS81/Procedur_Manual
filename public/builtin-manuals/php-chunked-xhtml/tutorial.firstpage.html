@@ -1,0 +1,253 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>第一个 PHP 页面</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="tutorial.html" class="navbar__link">« 简明教程</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="tutorial.useful.html" class="navbar__link">实用的脚本 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="tutorial.html">简明教程</a></li>
+        <li>第一个 PHP 页面</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="tutorial.firstpage" class="section">
+  <div class="info"><h1 class="title">第一个 PHP 页面</h1></div>
+   <p class="simpara">
+    本教程假设 PHP 已经安装。安装说明可以在<a href="https://www.php.net/downloads.php" class="link external">&raquo;&nbsp;下载页面</a>找到。
+   </p>
+   <p class="para">
+    建立名为 <var class="filename">hello.php</var> 的文件，并带着如下内容：
+   </p>
+   <p class="para">
+    <div class="example" id="example-1">
+     <div class="info"><p><strong>示例 #1 第一个 PHP 脚本：<var class="filename">hello.php</var></strong></p></div>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">"Hello World!"</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+     <div class="example-contents"><p>
+      通过终端导航至包含该文件的目录，并使用以下命令启动开发服务器：
+     </p></div>
+     <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">php -S localhost:8000</pre>
+</div>
+     </div>
+
+     <div class="example-contents"><p>
+      通过浏览器使用 Web 服务器的 URL 访问该文件，URL 以 <code class="literal">/hello.php</code>
+      文件名结尾。根据之前执行的命令，URL将是 <code class="literal">http://localhost:8000/hello.php</code>。如果所有配置均正确，该文件将由
+      PHP 解析，并在浏览器中显示“Hello World!”的输出内容。
+     </p></div>
+     <div class="example-contents"><p>
+      PHP 可以嵌入到普通 HTML 网页中。这意味着可以在 HTML 文档中编写 PHP 语句，如下例所示：
+     </p></div>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000">&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />    &lt;head&gt;<br />        &lt;title&gt;PHP Test&lt;/title&gt;<br />    &lt;/head&gt;<br />    &lt;body&gt;<br />        <span style="color: #0000BB">&lt;?php </span><span style="color: #007700">echo </span><span style="color: #DD0000">'&lt;p&gt;Hello World&lt;/p&gt;'</span><span style="color: #007700">; </span><span style="color: #0000BB">?&gt;<br /></span>    &lt;/body&gt;<br />&lt;/html&gt;</span></code></div>
+     </div>
+
+    <div class="example-contents"><p>
+     这会产生以下输出：
+    </p></div>
+     <div class="example-contents screen">
+<div class="cdata"><pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;PHP Test&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;Hello World&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+     </div>
+   </div>
+  </p>
+  <p class="para">
+   该程序非常的简单，它仅仅只是利用了 PHP 的 <span class="function"><a href="function.echo.html" class="function">echo</a></span> 语句显示了
+   <code class="literal">Hello World</code>。用户一定不会满足于此。请注意该文件<em>无需被执行</em>或以任何方式指定。服务器会找到该文件并提供给
+   PHP 进行解释，因为使用了“.php”的扩展名，服务器已被配置成自动传递有着“.php”扩展名的文件给
+   PHP。一个普通的 HTML 文件，加上了几个特别的标签，就可以做很多非常有趣的事情！
+  </p>
+  <p class="para">
+   以上例子的目的是为了显示 PHP 特殊标识符的格式。在这个例子中，用
+   <code class="literal">&lt;?php</code> 来表示 PHP 标识符的起始，然后放入
+   PHP 语句并通过加上一个终止标识符 <code class="literal">?&gt;</code> 来退出
+   PHP 模式。可以根据自己的需要在 HTML 文件中像这样开启或关闭
+   PHP 模式。请参阅手册中“<a href="language.basic-syntax.html" class="link">PHP 基本语法</a>”以获取更多信息。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="info"><strong>关于换行</strong><br /></span>
+   <p class="para">
+   尽管换行在 HTML 中的实际意义不是很大，但适当地使用换行可以使 HTML
+   代码易读且美观。PHP 会在输出时自动删除其结束符 <code class="literal">?&gt;</code>
+   后的一个换行。该功能主要是针对在一个页面中嵌入多段 PHP
+   代码或者包含了无实质性输出的 PHP 文件而设计，与此同时也造成了一些疑惑。如果需要在
+   PHP 结束符 <code class="literal">?&gt;</code> 之后输出换行的话，可以在其后加一个空格，或者在最后的一个
+   echo/print 语句中加入一个换行。
+   </p>
+  </p></blockquote>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="info"><strong>关于文本编辑器</strong><br /></span>
+   <p class="para">
+    有很多文本编辑器以及集成开发环境（IDE）可以被用来建立、编辑和管理
+    PHP 文件。这些工具中的一部分被列在 <a href="http://en.wikipedia.org/wiki/List_of_PHP_editors" class="link external">&raquo;&nbsp;PHP 编辑器列表</a>中。如果希望推荐其它的编辑器，请访问以上页面，并要求该页面的维护者将你推荐的编辑器加入到该列表中。使用支持语法高亮功能的编辑器会给开发带来很多帮助。
+   </p>
+  </p></blockquote>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="info"><strong>关于文字处理器</strong><br /></span>
+   <p class="para">
+    诸如 StarOffice Writer、Microsoft Word 和 Abiword
+    的文字处理器不适合用来编辑 PHP
+    程序。如果希望用以上这些工具的某一种来处理脚本，必须保证将结果存成了<em>纯文本</em>格式，否则
+    PHP 将无法读取并运行这些脚本。
+   </p>
+  </p></blockquote>
+
+  <p class="para">
+   现在已经成功建立了一个简单的 PHP 脚本，那么再来建立一个最著名的
+   PHP 脚本！调用函数 <span class="function"><a href="function.phpinfo.html" class="function">phpinfo()</a></span>，将会看到很多有关自己系统的有用信息，例如<a href="language.variables.predefined.html" class="link">预定义变量</a>、已经加载的
+   PHP 模块和<a href="configuration.html" class="link">配置</a>信息。请花一些时间来查看这些重要的信息。
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <div class="info"><p><strong>示例 #2 从 PHP 获取系统信息</strong></p></div>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />phpinfo</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,204 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>数据过滤器</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.ctype-xdigit.html" class="navbar__link">« ctype_xdigit</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="filter.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.basic.vartype.html">变量与类型相关扩展</a></li>
+        <li>数据过滤器</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.filter" class="book">
+ 
+ <h1 class="title">数据过滤器</h1>
+ 
+
+ <div id="intro.filter" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="simpara">
+   该扩展提供过滤器，用于验证或清理数据。当数据源包含像用户提供的输入数据等未知（或外部）数据时，这尤其有用。例如，这些数据可能来自 <abbr title="Hyper Text Markup Language">HTML</abbr> 表单。
+  </p>
+  <p class="simpara">
+   有两种主要的过滤类型：<em>验证（validation）</em>和<em>清理（sanitization）</em>。
+  </p>
+  <p class="simpara">
+   验证过滤器用于检查数据是否符合某些标准。这些过滤器通过 <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_<span class="replaceable">*</span></a></code></strong>
+   常量区分。例如，<strong><code><a href="filter.constants.html#constant.filter-validate-email">FILTER_VALIDATE_EMAIL</a></code></strong> 过滤器可用于确定数据是否为有效的电子邮件地址。但是，它永远不会更改输入数据。
+  </p>
+  <p class="simpara">
+   另一方面，清理将“清洁”数据，因此可能会通过添加或移除字符来更改输入数据。这些过滤器通过 <strong><code><a href="filter.constants.html#constant.filter-sanitize-string">FILTER_SANITIZE_<span class="replaceable">*</span></a></code></strong>
+   常量区分。例如，<strong><code><a href="filter.constants.html#constant.filter-sanitize-email">FILTER_SANITIZE_EMAIL</a></code></strong> 过滤器将删除电子邮件地址中不应该存在的字符。但是，清理后的数据不会验证是否是有效的电子邮件地址。
+  </p>
+  <p class="simpara">
+   大多数过滤器都支持可选的 <em>flag</em>，这些 flag 可以调整过滤器的行为。这些标记通过 <strong><code><a href="filter.constants.html#constant.filter-flag-none">FILTER_FLAG_<span class="replaceable">*</span></a></code></strong>
+   常量区分。例如，将 <strong><code><a href="filter.constants.html#constant.filter-flag-path-required">FILTER_FLAG_PATH_REQUIRED</a></code></strong> 与 <strong><code><a href="filter.constants.html#constant.filter-validate-url">FILTER_VALIDATE_URL</a></code></strong> 验证过滤器一起使用，可以要求 URL
+   存在路径（例如 <code class="literal">https://example.org/foo</code> 中的 <code class="literal">/foo</code>）。
+  </p>
+ </div>
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="filter.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="filter.installation.html">安装</a></li><li><a href="filter.configuration.html">运行时配置</a></li></ul></li><li><a href="filter.constants.html">预定义常量</a></li><li><a href="filter.examples.html">示例</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="filter.examples.validation.html">验证</a></li><li><a href="filter.examples.sanitization.html">清理</a></li></ul></li><li><a href="ref.filter.html">过滤器函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.filter-has-var.html">filter_has_var</a> — 检测是否存在指定类型的变量</li><li><a href="function.filter-id.html">filter_id</a> — 返回与某个特定名称的过滤器相关联的id</li><li><a href="function.filter-input.html">filter_input</a> — 通过名称获取特定的外部变量，并且可以通过过滤器处理它</li><li><a href="function.filter-input-array.html">filter_input_array</a> — 获取一系列外部变量，并且可以通过过滤器处理它们</li><li><a href="function.filter-list.html">filter_list</a> — 返回所支持的过滤器列表</li><li><a href="function.filter-var.html">filter_var</a> — 使用特定的过滤器过滤一个变量</li><li><a href="function.filter-var-array.html">filter_var_array</a> — 获取多个变量并且过滤它们</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

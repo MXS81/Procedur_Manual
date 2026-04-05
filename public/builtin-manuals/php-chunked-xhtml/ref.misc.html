@@ -1,0 +1,366 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>杂项 函数</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="misc.constants.html" class="navbar__link">« 预定义常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.connection-aborted.html" class="navbar__link">connection_aborted »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.misc.html">杂项</a></li>
+        <li>杂项 函数</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="ref.misc" class="reference">
+ <h1 class="title">杂项 函数</h1>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>目录</h2><ul class="chunklist chunklist_reference"><li><a href="function.connection-aborted.html">connection_aborted</a> — 检查客户端是否已经断开</li><li><a href="function.connection-status.html">connection_status</a> — 返回连接的状态位</li><li><a href="function.constant.html">constant</a> — 返回一个常量的值</li><li><a href="function.define.html">define</a> — 定义一个常量</li><li><a href="function.defined.html">defined</a> — 检查给定名称的常量是否存在</li><li><a href="function.die.html">die</a> — 别名 exit</li><li><a href="function.eval.html">eval</a> — 把字符串作为PHP代码执行</li><li><a href="function.exit.html">exit</a> — 使用状态 code 或消息终止当前脚本</li><li><a href="function.get-browser.html">get_browser</a> — 获取浏览器具有的功能</li><li><a href="function.halt-compiler.html">__halt_compiler</a> — 中断编译器的执行</li><li><a href="function.highlight-file.html">highlight_file</a> — 语法高亮一个文件</li><li><a href="function.highlight-string.html">highlight_string</a> — 字符串的语法高亮</li><li><a href="function.hrtime.html">hrtime</a> — 获取系统的高精度时间</li><li><a href="function.ignore-user-abort.html">ignore_user_abort</a> — 设置客户端断开连接时是否中断脚本的执行</li><li><a href="function.pack.html">pack</a> — 将数据打包成二进制字符串</li><li><a href="function.php-strip-whitespace.html">php_strip_whitespace</a> — 返回删除注释和空格后的PHP源码</li><li><a href="function.sapi-windows-cp-conv.html">sapi_windows_cp_conv</a> — Convert string from one codepage to another</li><li><a href="function.sapi-windows-cp-get.html">sapi_windows_cp_get</a> — Get current codepage</li><li><a href="function.sapi-windows-cp-is-utf8.html">sapi_windows_cp_is_utf8</a> — Indicates whether the codepage is UTF-8 compatible</li><li><a href="function.sapi-windows-cp-set.html">sapi_windows_cp_set</a> — Set process codepage</li><li><a href="function.sapi-windows-generate-ctrl-event.html">sapi_windows_generate_ctrl_event</a> — Send a CTRL event to another process</li><li><a href="function.sapi-windows-set-ctrl-handler.html">sapi_windows_set_ctrl_handler</a> — Set or remove a CTRL event handler</li><li><a href="function.sapi-windows-vt100-support.html">sapi_windows_vt100_support</a> — Get or set VT100 support for the specified stream associated to an output buffer of a Windows console.</li><li><a href="function.show-source.html">show_source</a> — 别名 highlight_file</li><li><a href="function.sleep.html">sleep</a> — 延缓执行</li><li><a href="function.sys-getloadavg.html">sys_getloadavg</a> — 获取系统的负载（load average）</li><li><a href="function.time-nanosleep.html">time_nanosleep</a> — 延缓执行若干秒和纳秒</li><li><a href="function.time-sleep-until.html">time_sleep_until</a> — 使脚本睡眠到指定的时间为止</li><li><a href="function.uniqid.html">uniqid</a> — 生成基于时间的标识符</li><li><a href="function.unpack.html">unpack</a> — Unpack data from binary string</li><li><a href="function.usleep.html">usleep</a> — 以指定的微秒数延迟执行</li></ul>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

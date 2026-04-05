@@ -1,0 +1,219 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>从服务器检索元素</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="memcache.flush.html" class="navbar__link">« Memcache::flush</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="memcache.getextendedstats.html" class="navbar__link">Memcache::getExtendedStats »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.memcache.html">Memcache</a></li>
+        <li>从服务器检索元素</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="memcache.get" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">Memcache::get</h1>
+  <h1 class="refname">memcache_get</h1>
+  <p class="verinfo">(PECL memcache &gt;= 0.2.0)</p><p class="refpurpose"><span class="refname">Memcache::get</span> -- <span class="refname">memcache_get</span> &mdash; <span class="dc-title">从服务器检索元素</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-memcache.get-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>Memcache::get</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$key</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter reference">&$flags</code><span class="initializer"> = ?</span></span>): <span class="type"><a href="language.types.string.html" class="type string">string</a></span></div>
+
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>Memcache::get</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$keys</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter reference">&$flags</code><span class="initializer"> = ?</span></span>): <span class="type"><a href="language.types.array.html" class="type array">array</a></span></div>
+
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>memcache_get</strong></span>(<span class="methodparam"><span class="type"><a href="class.memcache.html" class="type Memcache">Memcache</a></span> <code class="parameter">$memcache</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$key</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter reference">&$flags</code><span class="initializer"> = ?</span></span>): <span class="type"><a href="language.types.string.html" class="type string">string</a></span></div>
+
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>memcache_get</strong></span>(<span class="methodparam"><span class="type"><a href="class.memcache.html" class="type Memcache">Memcache</a></span> <code class="parameter">$memcache</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$keys</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter reference">&$flags</code><span class="initializer"> = ?</span></span>): <span class="type"><a href="language.types.array.html" class="type array">array</a></span></div>
+
+
+  <p class="simpara">
+   如果此时服务器上存在这样的 <code class="parameter">key</code>，<span class="function"><strong>Memcache::get()</strong></span> 返回先前存储的元素数据。
+  </p>
+
+  <p class="simpara">
+   可以给 <span class="function"><strong>Memcache::get()</strong></span> 传递 key 数组来获取元素值数组，返回的数组仅仅包含查找到的 key-value 对。
+  </p>
+
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-memcache.get-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">key</code></dt>
+    <dd>
+     <span class="simpara">
+      要获取值的key或key数组。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">flags</code></dt>
+    <dd>
+     <span class="simpara">
+     如果给定这个参数（以引用方式传递），该参数会被写入一些key对应的信息。这些标记和<span class="function"><a href="memcache.set.html" class="function">Memcache::set()</a></span>方法中的同名参数
+     意义相同。用int值的低位保留了pecl/memcache的内部用法（比如：用来说明压缩和序列化状态）。（译注：最后一位表明是否序列化，倒数第二位表明是否经过压缩，
+     比如：如果此值为1表示经过序列化，但未经过压缩，2表明压缩而未序列化，3表明压缩并且序列化，0表明未经过压缩和序列化，具体算法可查找linux文件权限算法相关资料）
+     </span>
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-memcache.get-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   返回与 <code class="parameter">key</code> 关联的值或当 <code class="parameter">key</code> 为 <span class="type"><a href="language.types.array.html" class="type array">array</a></span> 时找到的键值对数组。失败时返回
+   <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，未找到 <code class="parameter">key</code> 或 <code class="parameter">key</code> 为空 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-memcache.get-examples">
+  <h3 class="title">示例</h3>
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 <span class="function"><strong>Memcache::get()</strong></span> 示例</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">/* procedural API */<br /></span><span style="color: #0000BB">$memcache_obj </span><span style="color: #007700">= </span><span style="color: #0000BB">memcache_connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$var </span><span style="color: #007700">= </span><span style="color: #0000BB">memcache_get</span><span style="color: #007700">(</span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">, </span><span style="color: #DD0000">'some_key'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/* OO API */<br /></span><span style="color: #0000BB">$memcache_obj </span><span style="color: #007700">= new </span><span style="color: #0000BB">Memcache</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$var </span><span style="color: #007700">= </span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #DD0000">'some_key'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/*<br />你同样可以使用数组key作为参数，如果某个元素没有在服务端发现，结果数组中将不会包含这些key。<br />*/<br /><br />/* procedural API */<br /></span><span style="color: #0000BB">$memcache_obj </span><span style="color: #007700">= </span><span style="color: #0000BB">memcache_connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$var </span><span style="color: #007700">= </span><span style="color: #0000BB">memcache_get</span><span style="color: #007700">(</span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">, Array(</span><span style="color: #DD0000">'some_key'</span><span style="color: #007700">, </span><span style="color: #DD0000">'another_key'</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">/* OO API */<br /></span><span style="color: #0000BB">$memcache_obj </span><span style="color: #007700">= new </span><span style="color: #0000BB">Memcache</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$var </span><span style="color: #007700">= </span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get</span><span style="color: #007700">(Array(</span><span style="color: #DD0000">'some_key'</span><span style="color: #007700">, </span><span style="color: #DD0000">'second_key'</span><span style="color: #007700">));<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

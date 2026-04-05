@@ -1,0 +1,461 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>对浮点数进行四舍五入</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.rad2deg.html" class="navbar__link">« rad2deg</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.sin.html" class="navbar__link">sin »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.math.html">Math 函数</a></li>
+        <li>对浮点数进行四舍五入</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.round" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">round</h1>
+   <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">round</span> &mdash; <span class="dc-title">对浮点数进行四舍五入</span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-function.round-description">
+  <h3 class="title">说明</h3>
+   <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>round</strong></span>(<span class="methodparam"><span class="type"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span>|<span class="type"><a href="language.types.float.html" class="type float">float</a></span></span> <code class="parameter">$num</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$precision</code><span class="initializer"> = 0</span></span>, <span class="methodparam"><span class="type"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span>|<span class="type"><a href="enum.roundingmode.html" class="type RoundingMode">RoundingMode</a></span></span> <code class="parameter">$mode</code><span class="initializer"> = <strong><code>RoundingMode::HalfAwayFromZero</code></strong></span></span>): <span class="type"><a href="language.types.float.html" class="type float">float</a></span></div>
+
+  <p class="para rdfs-comment">
+   返回将 <code class="parameter">num</code> 根据指定精度
+   <code class="parameter">precision</code>（十进制小数点后数字的数目）进行四舍五入的结果。<code class="parameter">precision</code>
+   也可以是负数或零（默认值）。
+  </p>
+  
+ </div>
+
+ <div class="refsect1 parameters" id="refsect1-function.round-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">num</code></dt>
+     <dd>
+      <p class="para">
+       要处理的值。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">precision</code></dt>
+     <dd>
+      <p class="para">
+       可选的十进制小数点后数字的数目。
+      </p>
+      <p class="para">
+       如果 <code class="parameter">precision</code> 是正数，则 <code class="parameter">num</code>
+       会四舍五入到小数点后 <code class="parameter">precision</code> 位有效数字。
+      </p>
+      <p class="para">
+       如果 <code class="parameter">precision</code> 是负数，则 <code class="parameter">num</code>
+       四舍五入到小数点前 <code class="parameter">precision</code> 位有效数字。即 <code class="code">pow(10,
+       -$precision)</code> 最接近的倍数，例如，<code class="parameter">precision</code>
+       为 -1，<code class="parameter">num</code> 可以四舍五入到十位，<code class="parameter">precision</code>
+       为 -2，<code class="parameter">num</code> 可以四舍五入到百位，等等。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">mode</code></dt>
+     <dd>
+      <p class="para">
+       使用 <span class="enumname"><a href="enum.roundingmode.html" class="enumname">RoundingMode</a></span> 或以下常量之一来指定舍入模式。
+       Use <span class="enumname"><a href="enum.roundingmode.html" class="enumname">RoundingMode</a></span> or one of the following constants to specify the mode in which rounding occurs.
+       <table class="doctable informaltable">
+        
+         <thead>
+          <tr>
+           <th>常量</th>
+           <th>说明</th>
+          </tr>
+
+         </thead>
+
+         <tbody class="tbody">
+          <tr>
+           <td><strong><code><a href="math.constants.html#constant.php-round-half-up">PHP_ROUND_HALF_UP</a></code></strong></td>
+           <td>
+            当 <code class="parameter">num</code> 恰好处于中间时，将其向远离零的方向舍入，使 1.5 变为 2，-1.5 变为 -2。
+           </td>
+          </tr>
+
+          <tr>
+           <td><strong><code><a href="math.constants.html#constant.php-round-half-down">PHP_ROUND_HALF_DOWN</a></code></strong></td>
+           <td>
+            当 <code class="parameter">num</code> 恰好处于中间时，将其向靠近零的方向舍入，使 1.5 变为 1，-1.5 变为 -1。
+           </td>
+          </tr>
+
+          <tr>
+           <td><strong><code><a href="math.constants.html#constant.php-round-half-even">PHP_ROUND_HALF_EVEN</a></code></strong></td>
+           <td>
+            将 <code class="parameter">num</code> 四舍五入到最接近的偶数值，1.5 和 2.5 都变为 2。
+           </td>
+          </tr>
+
+          <tr>
+           <td><strong><code><a href="math.constants.html#constant.php-round-half-odd">PHP_ROUND_HALF_ODD</a></code></strong></td>
+           <td>
+            将 <code class="parameter">num</code> 四舍五入到最接近的奇数值，1.5 变为 1，2.5 变为 3。
+           </td>
+          </tr>
+
+         </tbody>
+        
+       </table>
+
+       然而，请注意，某些新添加的模式仅存在于 <a href="enum.roundingmode.html" class="link">RoundingMode</a> 中。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+ <div class="refsect1 returnvalues" id="refsect1-function.round-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   值是四舍五入到指定 <code class="parameter">precision</code> 精度的 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-function.round-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="simpara">
+   如果 <code class="parameter">mode</code> 是无效的，此函数将抛出 <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span> 异常。
+   在 PHP 8.4.0 之前，无效的模式会默认为 <strong><code><a href="math.constants.html#constant.php-round-half-up">PHP_ROUND_HALF_UP</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.round-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       新增了四种舍入模式。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       如果 <code class="parameter">mode</code> 是无效的，现在将抛出
+       <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span> 异常。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.0.0</td>
+      <td>
+       <code class="parameter">num</code> 不再接受支持数字转换的内部对象。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.round-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>round()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">3.4</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">3.5</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">3.6</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">3.6</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">5.045</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">5.055</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">345</span><span style="color: #007700">, -</span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">345</span><span style="color: #007700">, -</span><span style="color: #0000BB">3</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">678</span><span style="color: #007700">, -</span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">678</span><span style="color: #007700">, -</span><span style="color: #0000BB">3</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">float(3)
+float(4)
+float(4)
+float(4)
+float(5.05)
+float(5.06)
+float(300)
+float(0)
+float(700)
+float(1000)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 <code class="parameter">precision</code> 如何影响 float</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$number </span><span style="color: #007700">= </span><span style="color: #0000BB">135.79</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, -</span><span style="color: #0000BB">1</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, -</span><span style="color: #0000BB">2</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, -</span><span style="color: #0000BB">3</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">float(135.79)
+float(135.79)
+float(135.8)
+float(136)
+float(140)
+float(100)
+float(0)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 <code class="parameter">mode</code> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">'Rounding modes with 9.5' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">9.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_UP</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">9.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_DOWN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">9.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_EVEN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">9.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_ODD</span><span style="color: #007700">));<br /><br />echo </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />echo </span><span style="color: #DD0000">'Rounding modes with 8.5' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">8.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_UP</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">8.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_DOWN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">8.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_EVEN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">8.5</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_ODD</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">Rounding modes with 9.5
+float(10)
+float(9)
+float(10)
+float(9)
+
+Rounding modes with 8.5
+float(9)
+float(8)
+float(8)
+float(9)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-4">
+    <p><strong>示例 #4 带 <code class="parameter">precision</code> 的 <code class="parameter">mode</code> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">'Using PHP_ROUND_HALF_UP with 1 decimal digit precision' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">( </span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_UP</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(-</span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_UP</span><span style="color: #007700">));<br /><br />echo </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />echo </span><span style="color: #DD0000">'Using PHP_ROUND_HALF_DOWN with 1 decimal digit precision' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">( </span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_DOWN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(-</span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_DOWN</span><span style="color: #007700">));<br /><br />echo </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />echo </span><span style="color: #DD0000">'Using PHP_ROUND_HALF_EVEN with 1 decimal digit precision' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">( </span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_EVEN</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(-</span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_EVEN</span><span style="color: #007700">));<br /><br />echo </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />echo </span><span style="color: #DD0000">'Using PHP_ROUND_HALF_ODD with 1 decimal digit precision' </span><span style="color: #007700">. </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">( </span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_ODD</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">round</span><span style="color: #007700">(-</span><span style="color: #0000BB">1.55</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_ROUND_HALF_ODD</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">Using PHP_ROUND_HALF_UP with 1 decimal digit precision
+float(1.6)
+float(-1.6)
+
+Using PHP_ROUND_HALF_DOWN with 1 decimal digit precision
+float(1.5)
+float(-1.5)
+
+Using PHP_ROUND_HALF_EVEN with 1 decimal digit precision
+float(1.6)
+float(-1.6)
+
+Using PHP_ROUND_HALF_ODD with 1 decimal digit precision
+float(1.5)
+float(-1.5)</pre>
+</div>
+    </div>
+   </div>
+   <div class="example" id="example-5">
+    <p><strong>示例 #5 使用 <span class="enumname"><a href="enum.roundingmode.html" class="enumname">RoundingMode</a></span> 的示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">foreach (</span><span style="color: #0000BB">RoundingMode</span><span style="color: #007700">::</span><span style="color: #0000BB">cases</span><span style="color: #007700">() as </span><span style="color: #0000BB">$mode</span><span style="color: #007700">) {<br />    foreach ([<br />        </span><span style="color: #0000BB">8.5</span><span style="color: #007700">,<br />        </span><span style="color: #0000BB">9.5</span><span style="color: #007700">,<br />        -</span><span style="color: #0000BB">3.5</span><span style="color: #007700">,<br />    ] as </span><span style="color: #0000BB">$number</span><span style="color: #007700">) {<br />        </span><span style="color: #0000BB">printf</span><span style="color: #007700">(</span><span style="color: #DD0000">"%-17s: %+.17g -&gt; %+.17g\n"</span><span style="color: #007700">, </span><span style="color: #0000BB">$mode</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">, </span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">round</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">$mode</span><span style="color: #007700">));<br />    }<br />    echo </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">HalfAwayFromZero : +8.5 -&gt; +9
+HalfAwayFromZero : +9.5 -&gt; +10
+HalfAwayFromZero : -3.5 -&gt; -4
+
+HalfTowardsZero  : +8.5 -&gt; +8
+HalfTowardsZero  : +9.5 -&gt; +9
+HalfTowardsZero  : -3.5 -&gt; -3
+
+HalfEven         : +8.5 -&gt; +8
+HalfEven         : +9.5 -&gt; +10
+HalfEven         : -3.5 -&gt; -4
+
+HalfOdd          : +8.5 -&gt; +9
+HalfOdd          : +9.5 -&gt; +9
+HalfOdd          : -3.5 -&gt; -3
+
+TowardsZero      : +8.5 -&gt; +8
+TowardsZero      : +9.5 -&gt; +9
+TowardsZero      : -3.5 -&gt; -3
+
+AwayFromZero     : +8.5 -&gt; +9
+AwayFromZero     : +9.5 -&gt; +10
+AwayFromZero     : -3.5 -&gt; -4
+
+NegativeInfinity : +8.5 -&gt; +8
+NegativeInfinity : +9.5 -&gt; +9
+NegativeInfinity : -3.5 -&gt; -4
+
+PositiveInfinity : +8.5 -&gt; +9
+PositiveInfinity : +9.5 -&gt; +10
+PositiveInfinity : -3.5 -&gt; -3</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.round-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.ceil.html" class="function" rel="rdfs-seeAlso">ceil()</a> - 进一法取整</span></li>
+    <li><span class="function"><a href="function.floor.html" class="function" rel="rdfs-seeAlso">floor()</a> - 舍去法取整</span></li>
+    <li><span class="function"><a href="function.number-format.html" class="function" rel="rdfs-seeAlso">number_format()</a> - 以千位分隔符方式格式化一个数字</span></li>
+   </ul>
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

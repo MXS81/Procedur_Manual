@@ -1,0 +1,237 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>向服务器池增加服务器</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="memcached.addbykey.html" class="navbar__link">« Memcached::addByKey</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="memcached.addservers.html" class="navbar__link">Memcached::addServers »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.memcached.html">Memcached</a></li>
+        <li>向服务器池增加服务器</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="memcached.addserver" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">Memcached::addServer</h1>
+  <p class="verinfo">(PECL memcached &gt;= 0.1.0)</p><p class="refpurpose"><span class="refname">Memcached::addServer</span> &mdash; <span class="dc-title">向服务器池增加服务器</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-memcached.addserver-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="modifier">public</span> <span class="methodname"><strong>Memcached::addServer</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$host</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$port</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$weight</code><span class="initializer"> = 0</span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>Memcached::addServer()</strong></span> 增加指定服务器到服务器池。此时不会与服务端建立连接，但如果使用一致性
+   key 分发选项（<strong><code><a href="memcached.constants.html#memcached.constants.distribution-consistent">Memcached::DISTRIBUTION_CONSISTENT</a></code></strong> 或
+   <strong><code><a href="memcached.constants.html#memcached.constants.opt-libketama-compatible">Memcached::OPT_LIBKETAMA_COMPATIBLE</a></code></strong>），则必须更新一些内部的数据结构。 因此，如果需要增加多台服务器，最好使用
+   <span class="methodname"><a href="memcached.addservers.html" class="methodname">Memcached::addServers()</a></span> 以确保这种更新只发生一次。
+  </p>
+  <p class="para">
+   同一台服务器可以在服务器池中多次出现，因为没有做重复检测。但并不推荐这样做，对于期望提高某台服务器的权重，请使用
+   <code class="parameter">weight</code> 参数。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-memcached.addserver-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">host</code></dt>
+     <dd>
+      <p class="para">
+       memcached 服务端主机名。如果主机名无效，相关的数据操作的结果代码将被设置为
+       <strong><code><a href="memcached.constants.html#memcached.constants.res-host-lookup-failure">Memcached::RES_HOST_LOOKUP_FAILURE</a></code></strong>。从 2.0.0b1 版本开始，这个参数还可以指定 unix
+       套接字文件的路径。例如：<code class="literal">/path/to/memcached.sock</code> 使用 UNIX 域套接字，在这种情况下
+       <code class="parameter">port</code> 也必须设置为 <code class="literal">0</code>。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">port</code></dt>
+     <dd>
+      <p class="para">
+       运行 memcached 的端口号，通常是 <code class="literal">11211</code>。从版本 2.0.0b1
+       开始，在使用 UNIX 域套接字时将此参数设置为 <code class="literal">0</code>。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">weight</code></dt>
+     <dd>
+      <p class="para">
+       此服务器相对于服务器池中所有服务器的权重。此参数用来控制服务器在操作时被选中的概率。这个仅用于一致性分布选项，并且这个值通常是由服务端分配的内存来设置的。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-memcached.addserver-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-memcached.addserver-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>Memcached::addServer()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$m </span><span style="color: #007700">= new </span><span style="color: #0000BB">Memcached</span><span style="color: #007700">();<br /><br /></span><span style="color: #FF8000">/* Add 2 servers, so that the second one<br />   is twice as likely to be selected. */<br /></span><span style="color: #0000BB">$m</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addServer</span><span style="color: #007700">(</span><span style="color: #DD0000">'mem1.domain.com'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">, </span><span style="color: #0000BB">33</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$m</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addServer</span><span style="color: #007700">(</span><span style="color: #DD0000">'mem2.domain.com'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">, </span><span style="color: #0000BB">67</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-memcached.addserver-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="methodname"><a href="memcached.addservers.html" class="methodname" rel="rdfs-seeAlso">Memcached::addServers()</a> - 向服务器池中增加多台服务器</span></li>
+    <li><span class="methodname"><a href="memcached.resetserverlist.html" class="methodname" rel="rdfs-seeAlso">Memcached::resetServerList()</a> - Clears all servers from the server list</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

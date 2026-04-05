@@ -1,0 +1,512 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="json.installation.html" class="navbar__link">« 安装</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="class.jsonexception.html" class="navbar__link">JsonException »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.json.html">JSON</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="json.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">下列常量由此扩展定义，且仅在此扩展编译入 PHP 或在运行时动态载入时可用。</p>
+ <p class="para">
+  以下常量表示了 <span class="function"><a href="function.json-last-error.html" class="function">json_last_error()</a></span> 函数，或
+  <span class="classname"><a href="class.jsonexception.html" class="classname">JsonException</a></span> 类中的
+  <var class="varname">code</var> 变量所返回的错误类型。
+ </p>
+ <dl>
+  
+   <dt id="constant.json-error-none">
+    <strong><code><a href="json.constants.html#constant.json-error-none">JSON_ERROR_NONE</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     没有错误发生。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-depth">
+    <strong><code><a href="json.constants.html#constant.json-error-depth">JSON_ERROR_DEPTH</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     到达了最大堆栈深度。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-state-mismatch">
+    <strong><code><a href="json.constants.html#constant.json-error-state-mismatch">JSON_ERROR_STATE_MISMATCH</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     出现了下溢（underflow）或者模式不匹配。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-ctrl-char">
+    <strong><code><a href="json.constants.html#constant.json-error-ctrl-char">JSON_ERROR_CTRL_CHAR</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     控制字符错误，可能是编码不对。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-syntax">
+    <strong><code><a href="json.constants.html#constant.json-error-syntax">JSON_ERROR_SYNTAX</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     语法错误。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-utf8">
+    <strong><code><a href="json.constants.html#constant.json-error-utf8">JSON_ERROR_UTF8</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     异常的 UTF-8 字符，也许是因为不正确的编码。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-recursion">
+    <strong><code><a href="json.constants.html#constant.json-error-recursion">JSON_ERROR_RECURSION</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+      传递给 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 函数的对象或数组包含了递归引用，导致无法被编码。如果打开了
+      <strong><code><a href="json.constants.html#constant.json-partial-output-on-error">JSON_PARTIAL_OUTPUT_ON_ERROR</a></code></strong> 选项，则牵涉到递归引用的数据会转换成
+      <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 后返回。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-inf-or-nan">
+    <strong><code><a href="json.constants.html#constant.json-error-inf-or-nan">JSON_ERROR_INF_OR_NAN</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     传递给 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 函数的参数中包含了
+     <a href="language.types.float.html#language.types.float.nan" class="link"><strong><code><a href="math.constants.html#constant.nan">NAN</a></code></strong></a>
+     或 <a href="function.is-infinite.html" class="link"><strong><code><a href="math.constants.html#constant.inf">INF</a></code></strong></a>，导致编码出错。如果打开了
+     <strong><code><a href="json.constants.html#constant.json-partial-output-on-error">JSON_PARTIAL_OUTPUT_ON_ERROR</a></code></strong> 选项，则牵涉到对应不可编码的数字，会转换成数字
+     <code class="literal">0</code> 后返回。
+    </span>
+   </dd>
+  
+   
+   <dt id="constant.json-error-unsupported-type">
+    <strong><code><a href="json.constants.html#constant.json-error-unsupported-type">JSON_ERROR_UNSUPPORTED_TYPE</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+      传递了不支持的数据类型给 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 函数，比如 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。如果打开了
+      <strong><code><a href="json.constants.html#constant.json-partial-output-on-error">JSON_PARTIAL_OUTPUT_ON_ERROR</a></code></strong> 选项，则对于不支持的数据类型，会转换成
+      <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 后返回。
+    </span>
+   </dd>
+  
+  
+  
+   <dt id="constant.json-error-invalid-property-name">
+    <strong><code><a href="json.constants.html#constant.json-error-invalid-property-name">JSON_ERROR_INVALID_PROPERTY_NAME</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当 JSON 对象解码为 PHP 对象时，传递给 <span class="function"><a href="function.json-decode.html" class="function">json_decode()</a></span> 的字符串包含以 \u0000 字符开头的 key。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-utf16">
+    <strong><code><a href="json.constants.html#constant.json-error-utf16">JSON_ERROR_UTF16</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     传递给 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 的 JSON 字符串包含 Unicode 转义，其中含有单个未配对的 UTF-16 代理字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-error-non-backed-enum">
+    <strong><code><a href="json.constants.html#constant.json-error-non-backed-enum">JSON_ERROR_NON_BACKED_ENUM</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     传递给 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 的值包含了无法序列化的非支持的枚举。
+     自 PHP 8.1.0 起生效。
+    </span>
+   </dd>
+  
+ </dl>
+
+ <p class="para">
+  下面的常量可以和 <span class="function"><a href="function.json-decode.html" class="function">json_decode()</a></span> 的 form 选项结合使用。
+ </p>
+ <dl>
+  
+   <dt id="constant.json-bigint-as-string">
+    <strong><code><a href="json.constants.html#constant.json-bigint-as-string">JSON_BIGINT_AS_STRING</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     将大数字编码成原始字符原来的值。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-object-as-array">
+    <strong><code><a href="json.constants.html#constant.json-object-as-array">JSON_OBJECT_AS_ARRAY</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     将 JSON 对象作为数组解码。当调用 <span class="function"><a href="function.json-decode.html" class="function">json_decode()</a></span> 且第二个参数为
+     <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 时此选项会自动添加。
+    </span>
+   </dd>
+  
+ </dl>
+ 
+ <p class="para">
+  下面的常量可以和 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 的 form 选项结合使用。
+  
+ </p>
+ <dl>
+  
+   <dt id="constant.json-hex-tag">
+    <strong><code><a href="json.constants.html#constant.json-hex-tag">JSON_HEX_TAG</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     所有的 &lt; 和 &gt; 转换成 \u003C 和 \u003E。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-hex-amp">
+    <strong><code><a href="json.constants.html#constant.json-hex-amp">JSON_HEX_AMP</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     所有的 &amp; 转换成 \u0026。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-hex-apos">
+    <strong><code><a href="json.constants.html#constant.json-hex-apos">JSON_HEX_APOS</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     所有的 &#039; 转换成 \u0027。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-hex-quot">
+    <strong><code><a href="json.constants.html#constant.json-hex-quot">JSON_HEX_QUOT</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     所有的 &quot; 转换成 \u0022。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-force-object">
+    <strong><code><a href="json.constants.html#constant.json-force-object">JSON_FORCE_OBJECT</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     使一个非关联数组输出一个类（Object）而非数组。
+     在数组为空而接受者需要一个类（Object）的时候尤其有用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-numeric-check">
+    <strong><code><a href="json.constants.html#constant.json-numeric-check">JSON_NUMERIC_CHECK</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     将所有数字字符串编码成数字（numbers）。
+    </span>
+   </dd>
+  
+  
+  
+   <dt id="constant.json-pretty-print">
+    <strong><code><a href="json.constants.html#constant.json-pretty-print">JSON_PRETTY_PRINT</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用空白字符格式化返回的数据。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-unescaped-slashes">
+    <strong><code><a href="json.constants.html#constant.json-unescaped-slashes">JSON_UNESCAPED_SLASHES</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     不要编码 <code class="literal">/</code>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-unescaped-unicode">
+    <strong><code><a href="json.constants.html#constant.json-unescaped-unicode">JSON_UNESCAPED_UNICODE</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     以字面编码多字节 Unicode 字符（默认是编码成 \uXXXX）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-partial-output-on-error">
+    <strong><code><a href="json.constants.html#constant.json-partial-output-on-error">JSON_PARTIAL_OUTPUT_ON_ERROR</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用不可编码的值来代替失败。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-preserve-zero-fraction">
+    <strong><code><a href="json.constants.html#constant.json-preserve-zero-fraction">JSON_PRESERVE_ZERO_FRACTION</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     确保 <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 值始终编码为为 float 值。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-unescaped-line-terminators">
+    <strong><code><a href="json.constants.html#constant.json-unescaped-line-terminators">JSON_UNESCAPED_LINE_TERMINATORS</a></code></strong>
+      (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     The line terminators are kept unescaped when
+     <strong><code><a href="json.constants.html#constant.json-unescaped-unicode">JSON_UNESCAPED_UNICODE</a></code></strong> is supplied. It uses the same
+     behaviour as it was before PHP 7.1 without this constant.
+     Available since PHP 7.1.0.
+    </span>
+   </dd>
+  
+ </dl>
+
+
+ <p class="para">
+  下面的常量可以和 <span class="function"><a href="function.json-decode.html" class="function">json_decode()</a></span> 及 <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 的 form 选项结合使用。
+ </p>
+ <dl>
+  
+   <dt id="constant.json-invalid-utf8-ignore">
+    <strong><code><a href="json.constants.html#constant.json-invalid-utf8-ignore">JSON_INVALID_UTF8_IGNORE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     忽略无效的 UTF-8 字符。自 PHP 7.2.0 起生效。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-invalid-utf8-substitute">
+    <strong><code><a href="json.constants.html#constant.json-invalid-utf8-substitute">JSON_INVALID_UTF8_SUBSTITUTE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     将无效 UTF-8 字符转换为 \0xfffd（Unicode 字符“虚缺号”）。自 PHP 7.2.0 起生效。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.json-throw-on-error">
+    <strong><code><a href="json.constants.html#constant.json-throw-on-error">JSON_THROW_ON_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     如果发生错误则会抛出 <span class="classname"><a href="class.jsonexception.html" class="classname">JsonException</a></span>，而不是通过 <span class="function"><a href="function.json-last-error.html" class="function">json_last_error()</a></span>
+     和 <span class="function"><a href="function.json-last-error-msg.html" class="function">json_last_error_msg()</a></span> 检索设置到全局的错误状态。<strong><code><a href="json.constants.html#constant.json-partial-output-on-error">JSON_PARTIAL_OUTPUT_ON_ERROR</a></code></strong>
+     优先于 <strong><code><a href="json.constants.html#constant.json-throw-on-error">JSON_THROW_ON_ERROR</a></code></strong>。自 PHP 7.3.0 起生效。
+    </span>
+   </dd>
+  
+ </dl>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

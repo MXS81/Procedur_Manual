@@ -1,0 +1,455 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Math 函数</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="enum.roundingmode.html" class="navbar__link">« RoundingMode</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.abs.html" class="navbar__link">abs »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.math.html">Math</a></li>
+        <li>Math 函数</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="ref.math" class="reference">
+ <h1 class="title">Math 函数</h1>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>目录</h2><ul class="chunklist chunklist_reference"><li><a href="function.abs.html">abs</a> — 绝对值</li><li><a href="function.acos.html">acos</a> — 反余弦</li><li><a href="function.acosh.html">acosh</a> — 反双曲余弦</li><li><a href="function.asin.html">asin</a> — 反正弦</li><li><a href="function.asinh.html">asinh</a> — 反双曲正弦</li><li><a href="function.atan.html">atan</a> — 反正切</li><li><a href="function.atan2.html">atan2</a> — 两个参数的反正切</li><li><a href="function.atanh.html">atanh</a> — 反双曲正切</li><li><a href="function.base-convert.html">base_convert</a> — 在任意进制之间转换数字</li><li><a href="function.bindec.html">bindec</a> — 二进制转换为十进制</li><li><a href="function.ceil.html">ceil</a> — 进一法取整</li><li><a href="function.cos.html">cos</a> — 余弦</li><li><a href="function.cosh.html">cosh</a> — 双曲余弦</li><li><a href="function.decbin.html">decbin</a> — 十进制转换为二进制</li><li><a href="function.dechex.html">dechex</a> — 十进制转换为十六进制</li><li><a href="function.decoct.html">decoct</a> — 十进制转换为八进制</li><li><a href="function.deg2rad.html">deg2rad</a> — 将角度转换为弧度</li><li><a href="function.exp.html">exp</a> — 计算 e 的指数</li><li><a href="function.expm1.html">expm1</a> — 返回 exp($num) - 1，甚至当 number 的值接近零也能计算出准确结果</li><li><a href="function.fdiv.html">fdiv</a> — Divides two numbers, according to IEEE 754</li><li><a href="function.floor.html">floor</a> — 舍去法取整</li><li><a href="function.fmod.html">fmod</a> — 返回除法的浮点数余数</li><li><a href="function.fpow.html">fpow</a> — Raise one number to the power of another, according to IEEE 754</li><li><a href="function.hexdec.html">hexdec</a> — 十六进制转换为十进制</li><li><a href="function.hypot.html">hypot</a> — 计算直角三角形的斜边长度</li><li><a href="function.intdiv.html">intdiv</a> — 对除法结果取整</li><li><a href="function.is-finite.html">is_finite</a> — 判断浮点数是否是有效的有限值</li><li><a href="function.is-infinite.html">is_infinite</a> — 判断浮点数是否为无限值</li><li><a href="function.is-nan.html">is_nan</a> — 判断浮点数是否是否为 NAN</li><li><a href="function.log.html">log</a> — 自然对数</li><li><a href="function.log10.html">log10</a> — 以 10 为底的对数</li><li><a href="function.log1p.html">log1p</a> — 返回 log(1 + number)，甚至当 number 的值接近零也能计算出准确结果</li><li><a href="function.max.html">max</a> — 找出最大值</li><li><a href="function.min.html">min</a> — 找出最小值</li><li><a href="function.octdec.html">octdec</a> — 八进制转换为十进制</li><li><a href="function.pi.html">pi</a> — 得到圆周率值</li><li><a href="function.pow.html">pow</a> — 指数表达式</li><li><a href="function.rad2deg.html">rad2deg</a> — 将弧度数转换为相应的角度数</li><li><a href="function.round.html">round</a> — 对浮点数进行四舍五入</li><li><a href="function.sin.html">sin</a> — 正弦</li><li><a href="function.sinh.html">sinh</a> — 双曲正弦</li><li><a href="function.sqrt.html">sqrt</a> — 平方根</li><li><a href="function.tan.html">tan</a> — 正切</li><li><a href="function.tanh.html">tanh</a> — 双曲正切</li></ul>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

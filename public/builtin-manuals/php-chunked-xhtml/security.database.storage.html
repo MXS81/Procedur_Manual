@@ -1,0 +1,178 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>加密存储模型</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="security.database.connection.html" class="navbar__link">« 连接数据库</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="security.database.sql-injection.html" class="navbar__link">SQL 注入 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="security.database.html">数据库安全</a></li>
+        <li>加密存储模型</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="security.database.storage" class="sect1">
+    <h2 class="title">加密存储模型</h2>
+    <p class="simpara">
+     SSL/SSH 能保护客户端和服务器端交换的数据，但 SSL/SSH
+     并不能保护数据库中已有的数据。SSL 只是一个加密网络数据流的协议。
+    </p>
+    <p class="simpara">
+     如果攻击者取得了直接访问数据库的许可（绕过 web
+     服务器），敏感数据就可能暴露或者被滥用，除非数据库自己保护了这些信息。对数据库内的数据加密是减少这类风险的有效途径，但是只有很少的数据库提供这些加密功能。
+    </p>
+    <p class="simpara">
+     解决这个问题最简单的方法是创建自己的加密包，然后在 <abbr title="PHP: Hypertext Preprocessor">PHP</abbr> 脚本中使用它。<abbr title="PHP: Hypertext Preprocessor">PHP</abbr>
+     可以通过一些扩展来帮助你解决这个问题，比如 <a href="book.openssl.html" class="link">OpenSSL</a> 和 <a href="book.sodium.html" class="link">Sodium</a>，涵盖了多种加密算法。脚本在将数据插入数据库之前对其进行加密，并在检索时对其进行解密。更多关于加密工作的例子请参见参考文献。
+    </p>
+
+    <div class="sect2" id="security.database.storage.hashing">
+    <h3 class="title">散列</h3>
+     <p class="simpara">
+      对于真正隐藏的数据，如果不需要其原始表示形式（即不需要显示），应该考虑使用散列。
+      散列的典型例子是将密码的加密散列值存储在数据库中，而不是存储密码本身。
+     </p>
+     <p class="simpara">
+      <a href="ref.password.html" class="link">password</a> 函数提供了一种便捷的方式来对敏感数据进行散列处理，并使用这些散列值进行验证。
+     </p>
+     <p class="simpara">
+      <span class="function"><a href="function.password-hash.html" class="function">password_hash()</a></span> 用于使用当前可用的最强算法对给定字符串进行散列，
+      <span class="function"><a href="function.password-verify.html" class="function">password_verify()</a></span> 用于检查给定密码是否与存储在数据库中的散列值匹配。
+     </p>
+     <div class="example" id="example-1">
+      <p><strong>示例 #1 对密码字段进行散列</strong></p>
+      <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">// 存储密码散列<br /></span><span style="color: #0000BB">$query  </span><span style="color: #007700">= </span><span style="color: #0000BB">sprintf</span><span style="color: #007700">(</span><span style="color: #DD0000">"INSERT INTO users(name,pwd) VALUES('%s','%s');"</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">pg_escape_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$username</span><span style="color: #007700">),<br />            </span><span style="color: #0000BB">password_hash</span><span style="color: #007700">(</span><span style="color: #0000BB">$password</span><span style="color: #007700">, </span><span style="color: #0000BB">PASSWORD_DEFAULT</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_query</span><span style="color: #007700">(</span><span style="color: #0000BB">$connection</span><span style="color: #007700">, </span><span style="color: #0000BB">$query</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 发送请求来验证用户密码<br /></span><span style="color: #0000BB">$query </span><span style="color: #007700">= </span><span style="color: #0000BB">sprintf</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT pwd FROM users WHERE name='%s';"</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">pg_escape_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$username</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_fetch_assoc</span><span style="color: #007700">(</span><span style="color: #0000BB">pg_query</span><span style="color: #007700">(</span><span style="color: #0000BB">$connection</span><span style="color: #007700">, </span><span style="color: #0000BB">$query</span><span style="color: #007700">));<br /><br />if (</span><span style="color: #0000BB">$row </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">password_verify</span><span style="color: #007700">(</span><span style="color: #0000BB">$password</span><span style="color: #007700">, </span><span style="color: #0000BB">$row</span><span style="color: #007700">[</span><span style="color: #DD0000">'pwd'</span><span style="color: #007700">])) {<br />    echo </span><span style="color: #DD0000">'Welcome, ' </span><span style="color: #007700">. </span><span style="color: #0000BB">htmlspecialchars</span><span style="color: #007700">(</span><span style="color: #0000BB">$username</span><span style="color: #007700">) . </span><span style="color: #DD0000">'!'</span><span style="color: #007700">;<br />} else {<br />    echo </span><span style="color: #DD0000">'Authentication failed for ' </span><span style="color: #007700">. </span><span style="color: #0000BB">htmlspecialchars</span><span style="color: #007700">(</span><span style="color: #0000BB">$username</span><span style="color: #007700">) . </span><span style="color: #DD0000">'.'</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+      </div>
+
+     </div>
+    </div>
+   </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

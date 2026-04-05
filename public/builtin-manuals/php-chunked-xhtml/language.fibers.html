@@ -1,0 +1,203 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>纤程</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.exceptions.extending.html" class="navbar__link">« 扩展（extend）异常处理类</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.generators.html" class="navbar__link">生成器 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="langref.html">语言参考</a></li>
+        <li>纤程</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.fibers" class="chapter">
+ <h1 class="title">纤程</h1>
+
+
+ <div class="simplesect" id="language.fibers.overview">
+  <h3 class="title">纤程概述</h3>
+  <p class="verinfo">(PHP 8 &gt;= 8.1.0)</p>
+  <p class="para">
+   纤程（Fiber）表示一组有完整栈、可中断的功能。
+   纤程可以在调用堆栈中的任何位置被挂起，在纤程内暂停执行，直到稍后恢复。
+  </p>
+  <p class="para">
+   纤程可以暂停整个执行堆栈，所以该函数的直接调用者不需要改变调用这个函数的方式。
+  </p>
+  <p class="para">
+   你可以在调用堆栈的任意地方使用 <span class="methodname"><a href="fiber.suspend.html" class="methodname">Fiber::suspend()</a></span> 
+   中断执行（也就是说，<span class="methodname"><a href="fiber.suspend.html" class="methodname">Fiber::suspend()</a></span> 
+   的调用位置可以在一个深度嵌套的函数中，甚至可以不存在）。
+  </p>
+  <p class="para">
+   与无栈的 <span class="classname"><a href="class.generator.html" class="classname">Generator</a></span> 不同, 每一个
+   <span class="classname"><a href="class.fiber.html" class="classname">Fiber</a></span> 拥有自己的调用栈，并允许在一个深度前度的函数调用中将它们暂停。
+   声明了中断（interruption）点的函数（即调用 <span class="methodname"><a href="fiber.suspend.html" class="methodname">Fiber::suspend()</a></span>）
+   不需要改变自己的返回类型，不像使用 <a href="language.generators.syntax.html#control-structures.yield" class="link"><code class="literal">yield</code></a> 一样需要返回一个
+   <span class="classname"><a href="class.generator.html" class="classname">Generator</a></span> 实例。
+  </p>
+  <p class="para">
+   纤程可以在任意函数调用中被暂停，包括那些在 PHP VM 中被调用的函数。
+   例如被用于 <span class="function"><a href="function.array-map.html" class="function">array_map()</a></span> 的函数或者提供
+   <span class="classname"><a href="class.iterator.html" class="classname">Iterator</a></span> 对象以被 <a href="control-structures.foreach.html" class="link"><code class="literal">foreach</code></a> 调用的方法。
+  </p>
+  <p class="para">
+   纤程一旦被暂停，可以使用 <span class="methodname"><a href="fiber.resume.html" class="methodname">Fiber::resume()</a></span> 
+   传递任意值、或者使用 <span class="methodname"><a href="fiber.throw.html" class="methodname">Fiber::throw()</a></span> 
+   向纤程抛出一个异常以恢复运行。这个值或者异常将会在
+   <span class="methodname"><a href="fiber.suspend.html" class="methodname">Fiber::suspend()</a></span> 中被返回（抛出）。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    在 PHP 8.4.0 之前，不允许在对象<a href="language.oop5.decon.html#language.oop5.decon.destructor" class="link">析构方法</a>执行期间切换纤程。
+   </span>
+  </p></blockquote>
+
+  <div class="example" id="language.fiber.example.basic">
+   <p><strong>示例 #1 基础用法</strong></p>
+   <div class="example-contents">
+    <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$fiber </span><span style="color: #007700">= new </span><span style="color: #0000BB">Fiber</span><span style="color: #007700">(function (): </span><span style="color: #0000BB">void </span><span style="color: #007700">{<br />   </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">Fiber</span><span style="color: #007700">::</span><span style="color: #0000BB">suspend</span><span style="color: #007700">(</span><span style="color: #DD0000">'fiber'</span><span style="color: #007700">);<br />   echo </span><span style="color: #DD0000">"Value used to resume fiber: "</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />});<br /><br /></span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">$fiber</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">start</span><span style="color: #007700">();<br /><br />echo </span><span style="color: #DD0000">"Value from fiber suspending: "</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$fiber</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">resume</span><span style="color: #007700">(</span><span style="color: #DD0000">'test'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+    <div class="cdata"><pre>
+Value from fiber suspending: fiber
+Value used to resume fiber: test
+</pre></div>
+   </div>
+  </div>
+
+ </div>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

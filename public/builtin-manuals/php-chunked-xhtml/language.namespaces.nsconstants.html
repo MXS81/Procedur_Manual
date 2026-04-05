@@ -1,0 +1,193 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>namespace 关键字和 __NAMESPACE__ 魔术常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.namespaces.dynamic.html" class="navbar__link">« 命名空间和动态语言特征</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.namespaces.importing.html" class="navbar__link">别名和导入 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.namespaces.html">概述</a></li>
+        <li>namespace 关键字和 __NAMESPACE__ 魔术常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.namespaces.nsconstants" class="sect1">
+  <h2 class="title">namespace 关键字和 __NAMESPACE__ 魔术常量</h2>
+  
+  <p class="verinfo">(PHP 5 &gt;= 5.3.0, PHP 7, PHP 8)</p>
+  <p class="para">
+   PHP支持两种抽象的访问当前命名空间内部元素的方法，<strong><code><a href="language.constants.magic.html#constant.namespace">__NAMESPACE__</a></code></strong>
+   魔术常量和 <code class="literal">namespace</code> 关键字。
+  </p>
+  <p class="para">
+   常量 <strong><code><a href="language.constants.magic.html#constant.namespace">__NAMESPACE__</a></code></strong> 的值是包含当前命名空间名称的字符串。在全局的，不包括在任何命名空间中的代码，它包含一个空的字符串。
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 __NAMESPACE__ 示例, 在命名空间中的代码</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">MyProject</span><span style="color: #007700">;<br /><br />echo </span><span style="color: #DD0000">'"'</span><span style="color: #007700">, </span><span style="color: #0000BB">__NAMESPACE__</span><span style="color: #007700">, </span><span style="color: #DD0000">'"'</span><span style="color: #007700">; </span><span style="color: #FF8000">// 输出 "MyProject"<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 __NAMESPACE__ 示例，全局代码</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">'"'</span><span style="color: #007700">, </span><span style="color: #0000BB">__NAMESPACE__</span><span style="color: #007700">, </span><span style="color: #DD0000">'"'</span><span style="color: #007700">; </span><span style="color: #FF8000">// 输出 ""<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+   常量 <strong><code><a href="language.constants.magic.html#constant.namespace">__NAMESPACE__</a></code></strong> 在动态创建名称时很有用，例如：
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 使用 __NAMESPACE__ 动态创建名称</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">MyProject</span><span style="color: #007700">;<br /><br />function </span><span style="color: #0000BB">get</span><span style="color: #007700">(</span><span style="color: #0000BB">$classname</span><span style="color: #007700">)<br />{<br />    </span><span style="color: #0000BB">$a </span><span style="color: #007700">= </span><span style="color: #0000BB">__NAMESPACE__ </span><span style="color: #007700">. </span><span style="color: #DD0000">'\\' </span><span style="color: #007700">. </span><span style="color: #0000BB">$classname</span><span style="color: #007700">;<br />    return new </span><span style="color: #0000BB">$a</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   关键字 <code class="literal">namespace</code> 可用来显式访问当前命名空间或子命名空间中的元素。它等价于类中的
+   <code class="literal">self</code> 操作符。
+   <div class="example" id="example-4">
+    <p><strong>示例 #4 namespace 操作符，命名空间中的代码</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">MyProject</span><span style="color: #007700">;<br /><br />use </span><span style="color: #0000BB">blah\blah </span><span style="color: #007700">as </span><span style="color: #0000BB">mine</span><span style="color: #007700">; </span><span style="color: #FF8000">// 参考 "使用命名空间：别名/导入"<br /><br /></span><span style="color: #0000BB">blah\mine</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 MyProject\blah\mine()<br /></span><span style="color: #0000BB">namespace\blah\mine</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 MyProject\blah\mine()<br /><br /></span><span style="color: #0000BB">namespace\func</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 MyProject\func()<br /></span><span style="color: #0000BB">namespace\sub\func</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 MyProject\sub\func()<br /></span><span style="color: #0000BB">namespace\cname</span><span style="color: #007700">::</span><span style="color: #0000BB">method</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用 class MyProject\cname 的静态方法 "method"<br /></span><span style="color: #0000BB">$a </span><span style="color: #007700">= new </span><span style="color: #0000BB">namespace\sub\cname</span><span style="color: #007700">(); </span><span style="color: #FF8000">// class MyProject\sub\cname 的实例对象<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">namespace\CONSTANT</span><span style="color: #007700">; </span><span style="color: #FF8000">// 设置 $b 的值为常量 MyProject\CONSTANT<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+   <div class="example" id="example-5">
+    <p><strong>示例 #5 namespace 操作符, 全局代码</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />namespace\func</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 func()<br /></span><span style="color: #0000BB">namespace\sub\func</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用函数 sub\func()<br /></span><span style="color: #0000BB">namespace\cname</span><span style="color: #007700">::</span><span style="color: #0000BB">method</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 调用 class cname 的静态方法 "method"<br /></span><span style="color: #0000BB">$a </span><span style="color: #007700">= new </span><span style="color: #0000BB">namespace\sub\cname</span><span style="color: #007700">(); </span><span style="color: #FF8000">// class sub\cname 的实例对象<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">namespace\CONSTANT</span><span style="color: #007700">; </span><span style="color: #FF8000">// 设置 $b 的值为常量 CONSTANT<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

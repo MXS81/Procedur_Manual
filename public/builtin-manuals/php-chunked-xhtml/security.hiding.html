@@ -1,0 +1,190 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>隐藏 PHP</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="security.variables.html" class="navbar__link">« 用户提交的数据</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="security.current.html" class="navbar__link">保持更新 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="security.html">安全</a></li>
+        <li>隐藏 PHP</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="security.hiding" class="chapter">
+   <h1 class="title">隐藏 PHP</h1>
+
+   <p class="para">
+    一般而言，通过隐藏来实现安全是最脆弱的安全方式之一。但在某些情况下，每一点额外的安全都是值得的。
+   </p>
+   <p class="para">
+    一些简单的方法可以帮助隐藏 <abbr title="PHP: Hypertext Preprocessor">PHP</abbr>，这可能会减慢攻击者试图找到系统弱点的速度。
+    通过在 <var class="filename">php.ini</var> 文件中设置 expose_php 为 <code class="literal">off</code>，
+    可以减少能获得的有用信息。
+   </p>
+   <p class="para">
+    另一个策略是配置 web 服务器（例如 apache）通过 <abbr title="PHP: Hypertext Preprocessor">PHP</abbr> 解析不同的文件类型，
+    无论是通过 <var class="filename">.htaccess</var> 文件还是 apache 的配置文件，都可以设置能误导攻击者的文件扩展名：
+    <div class="example" id="example-1">
+     <p><strong>示例 #1 把 PHP 隐藏为另一种语言</strong></p>
+     <div class="example-contents">
+<div class="apache-confcode"><pre class="apache-confcode"># 使 PHP 代码看起来像其他代码类型
+AddType application/x-httpd-php .asp .py .pl</pre>
+</div>
+     </div>
+
+    </div>
+    或者干脆彻底隐藏它：
+    <div class="example" id="example-2">
+     <p><strong>示例 #2 使用未知的扩展名作为 PHP 的扩展名</strong></p>
+     <div class="example-contents">
+<div class="apache-confcode"><pre class="apache-confcode"># 使 PHP 代码看起来像未知的类型
+AddType application/x-httpd-php .bop .foo .133t</pre>
+</div>
+     </div>
+
+    </div>
+    或者隐藏它为 <abbr title="Hyper Text Markup Language">HTML</abbr> 代码，这样会有轻微的性能影响，因为所有的
+    <abbr title="Hyper Text Markup Language">HTML</abbr> 都将通过 <abbr title="PHP: Hypertext Preprocessor">PHP</abbr> 引擎进行解析：
+    <div class="example" id="example-3">
+     <p><strong>示例 #3 使用 <abbr title="Hyper Text Markup Language">HTML</abbr> 作为 PHP 扩展名</strong></p>
+     <div class="example-contents">
+<div class="apache-confcode"><pre class="apache-confcode"># 使所有的 PHP 代码看起来像 HTML
+AddType application/x-httpd-php .htm .html</pre>
+</div>
+     </div>
+
+    </div>
+    要让此方法生效，必须把 <abbr title="PHP: Hypertext Preprocessor">PHP</abbr>
+    文件的扩展名改为以上的扩展名。这样就通过隐藏来提高了安全性，这是一个小的预防措施，几乎没有缺点。
+   </p>
+  </div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

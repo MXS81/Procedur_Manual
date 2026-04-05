@@ -1,0 +1,185 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>其他问题</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="faq.com.html" class="navbar__link">« PHP 和 COM</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="appendices.html" class="navbar__link">附录 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li>其他问题</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="faq.misc" class="chapter">
+  <h1 class="title">其他问题</h1>
+
+  
+  <p class="para">有些问题没法归到其它类中，可以在这里找到。</p>
+  <div class="qandaset"><ol class="qandaset_questions"><li><a href="#faq.misc.bz2">
+        在 Windows 中怎样处理 bz2 压缩的文档？
+      </a></li></ol></div>
+    <dl class="qandaentry" id="faq.misc.bz2">
+      <dt><strong>
+        在 Windows 中怎样处理 bz2 压缩的文档？
+      </strong></dt>
+      <dd class="answer">
+        <p class="para">如果没有能处理 bz2 文件的压缩工具，从 Redhat 
+        <a href="https://www.sourceware.org/bzip2/" class="link external">&raquo;&nbsp;下载</a>一个命令行工具（进一步信息见下面）。</p>
+        <p class="para">如果不喜欢用命令行工具，可以试试免费工具例如 
+        <a href="http://www.stuffit.com/" class="link external">&raquo;&nbsp;Stuffit Expander</a>，
+        <a href="http://www.ultimatezip.com/" class="link external">&raquo;&nbsp;UltimateZip</a>，
+        <a href="http://www.7-zip.org/" class="link external">&raquo;&nbsp;7-Zip</a>或者 
+        <a href="http://www.quickzip.org/" class="link external">&raquo;&nbsp;Quick Zip</a>。如果有像 
+        <a href="http://www.rarlab.com/" class="link external">&raquo;&nbsp;WinRAR</a>或者 
+        <a href="http://www.powerarchiver.com/" class="link external">&raquo;&nbsp;Power Archiver</a>之类的工具，可以很容易用它解压缩 bz2 文件。如果用 Total Commander（前身为 Windows Commander），可以从 
+        <a href="http://www.ghisler.com/" class="link external">&raquo;&nbsp;Total Commander</a>网站免费得到一个 bz2 插件。</p>
+        <p class="para">来自 Redhat 的 bzip2 命令行工具：</p>
+        <p class="para">Win2K Sp2 用户下载最新版本 1.0.2，所有其它 Windows 用户应该用版本 1.00。下载后重命名可执行文件为 bzip2.exe。为方便起见将其放到一个在你路径中的目录，例如 C:\Windows，C 表示你安装 Windows 的盘符。</p>
+        <p class="para">注意：lang 指的是你的语种，x 是想要的格式，例如：pdf。要解压缩 php_manual_lang.x.bz2，按照下面的简单说明进行： 
+        <ul class="itemizedlist">
+          <li class="listitem">
+            <span class="simpara">打开一个命令行窗口</span>
+          </li>
+          <li class="listitem">
+            <span class="simpara">进入存放已下载的 php_manual_lang.x.bz2 的目录</span>
+          </li>
+          <li class="listitem">
+            <span class="simpara">调用 bzip2 -d php_manual_lang.x.bz2，将 php_manual_lang.x 释放到同一个目录</span>
+          </li>
+        </ul></p>
+        <p class="para">在下载了包含很多 html 文件的 php_manual_lang.tar.bz2 的情况下，过程是一样的。唯一区别是得到了一个 php_manual_lang.tar 文件。tar 格式可以被大多数 Windows 下流行的压缩工具所处理，例如 
+        <a href="http://www.winzip.com/" class="link external">&raquo;&nbsp;WinZip</a>。</p>
+      </dd>
+    </dl>
+  
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

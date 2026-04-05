@@ -1,0 +1,260 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>mysqli 扩展和持久化连接</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="mysqli.configuration.html" class="navbar__link">« 运行时配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="mysqli.constants.html" class="navbar__link">预定义常量 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.mysqli.html">MySQLi</a></li>
+        <li>mysqli 扩展和持久化连接</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="mysqli.persistconns" class="chapter">
+
+ <h1 class="title">mysqli 扩展和持久化连接</h1>
+
+ <p class="para">
+  持久化连接的目的在于重用客户端到服务器之间的连接，
+  而不是每次在需要的时候都重新建立一个连接。
+  由于持久化连接可以将已经建立的连接缓存起来，以备后续的使用，
+  所以省去了建立新的连接的开销，
+  因此可以带来性能上的提升。
+ </p>
+ 
+ <p class="para">
+  不像 mysql 扩展，mysqli 没有提供一个特殊的方法用于打开持久化连接。
+  需要打开一个持久化连接时，你必须在
+  连接时在主机名前增加<code class="literal">p:</code>。
+ </p>
+
+ <p class="para">
+  使用持久化连接也会存在一些风险，
+  因为在缓存中的连接可能处于一种不可预测的状态。
+  例如，如果客户端未能正常关闭连接，
+  可能在这个连接上残留了对库表的锁，
+  那么当这个连接被其他请求重用的时候，这个连接还是处于 <q class="quote">有锁的状态</q>。
+  所以，如果要很好的使用持久化连接，那么要求代码在和数据库进行交互的时候，
+  确保做好清理工作，保证被缓存的连接是一个干净的，没有残留的状态。
+ </p>
+
+ <p class="para">
+    <code class="literal">mysqli</code> 扩展的持久化连接提供了内建的清理处理代码。
+    <code class="literal">mysqli</code>
+    所做的清理工作包括：
+ </p>
+
+ <ul class="itemizedlist">
+
+  <li class="listitem">
+   <p class="para">
+   回滚处于活动状态的事务
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+   关闭并且删除临时表
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+   对表解锁
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+   重置会话变量
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+   关闭预编译 SQL 语句（在PHP中经常发生）
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+    关闭处理程序
+   </p>
+  </li>
+
+  <li class="listitem">
+   <p class="para">
+   释放通过 <span class="function"><strong>GET_LOCK()</strong></span> 获得的锁
+   </p>
+  </li>
+
+ </ul>
+
+ <p class="para">
+    这确保了将连接返回到连接池的时候，
+    它处于一种“干净”的状态，可以被其他客户端进程所使用。
+ </p>
+
+ <p class="para">
+   <code class="literal">mysqli</code> 扩展
+   通过自动调用 C-API 函数
+   <code class="literal">mysql_change_user()</code> 来完成这个清理工作。
+ </p>
+
+ <p class="para">
+   自动清理的特性有优点也有缺点。
+   优点是程序员不再需要担心附加的清理代码，
+   因为它们会自动调用。
+   然而缺点就是
+   性能 <em>可能会</em> 慢一点，
+   因为每次从连接池返回一个连接都需要执行这些清理代码。
+ </p>
+
+ <p class="para">
+    这个自动清理的代码可以通过在编译 php 时定义
+  
+    <strong><code>MYSQLI_NO_CHANGE_USER_ON_PCONNECT</code></strong>
+  
+  
+    来关闭。
+ </p>
+
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+  <code class="literal">mysqli</code> 扩展在使用 
+   MySQL Native Driver 或 
+   Mysql Client Library（libmysql）时都支持持久化连接。
+  </p>
+ </p></blockquote>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

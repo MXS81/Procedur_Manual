@@ -1,0 +1,276 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Session 处理</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="refs.basic.session.html" class="navbar__link">« Session 扩展</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="session.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.basic.session.html">Session 扩展</a></li>
+        <li>Session 处理</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.session" class="book">
+ 
+ <h1 class="title">Session 处理</h1>
+ 
+
+ 
+ <div id="intro.session" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="para">
+   会话支持在 PHP 中是在并发访问时由一个方法来保存某些数据。
+  </p>
+  <p class="para">
+   一个访问者访问你的 web 网站将被分配一个唯一的 id，就是所谓的会话 id。
+   这个 id 可以存储在用户端的一个 cookie 中，也可以通过 URL 进行传递。
+  </p>
+  <p class="para">
+   会话支持允许你将请求中的数据保存在超全局数组<var class="varname"><a href="reserved.variables.session.html" class="classname">$_SESSION</a></var>中。
+   当一个访问者访问你的网站，PHP 将自动检查(如果 <a href="session.configuration.html#ini.session.auto-start" class="link">session.auto_start</a>
+   被设置为 1）或者在你要求下检查(明确通过 
+   <span class="function"><a href="function.session-start.html" class="function">session_start()</a></span>) 当前会话 id 是否是先前发送的请求创建。如果是这种情况，
+   那么先前保存的环境将被重建。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="para">
+    如果你打开了 <a href="session.configuration.html#ini.session.auto-start" class="link">session.auto_start</a> 那么
+    将对象放入会话的唯一方法是使用 <a href="ini.core.html#ini.auto-prepend-file" class="link">auto_prepend_file</a>
+    来加载定义这个对象的类，其中，在加载的定义的类时，你不得不使用 <span class="function"><a href="function.serialize.html" class="function">serialize()</a></span>
+    你得对象，并且事后 <span class="function"><a href="function.unserialize.html" class="function">unserialize()</a></span> 它。
+   </p>
+  </div>
+  <p class="para">
+   <var class="varname"><a href="reserved.variables.session.html" class="classname">$_SESSION</a></var> (和所有已注册得变量) 将被 PHP 使用内置的序列化方法在请求完成时
+   进行序列化。序列化方法可以通过 <a href="session.configuration.html#ini.session.serialize-handler" class="link">session.serialize_handler</a> 
+   这个 PHP 配置选项中来设置一个指定的方法。注册的变量未定义将被标记为未定义。在并发访问时，这些变量不会被会话模块
+   定义除非用户后来定义了它们。
+  </p>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+    因为会话数据是被序列化的，<span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span> 变量不能被存储在会话中。
+   </p>
+   <p class="para">
+    序列化句柄 (<code class="literal">php</code>
+    和 <code class="literal">php_binary</code>) 会受到 register_globals 的限制。
+    而且，数字索引或者字符串索引包含的特殊字符(<code class="literal">|</code>
+    和 <code class="literal">!</code>) 不能被使用。使用这些字符将脚本执行关闭时的最后出现错误。
+    <code class="literal">php_serialize</code> 没有这样的限制。
+   </p>
+  </div>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    请注意当会话工作时，会话的记录并没有被创建
+    直到一个变量已经被添加一个新元素到 <var class="varname"><a href="reserved.variables.session.html" class="classname">$_SESSION</a></var> 全局数组中。
+    这点一直有效，无论是否使用 <span class="function"><a href="function.session-start.html" class="function">session_start()</a></span> 函数
+    来开始会话。
+   </p>
+  </p></blockquote>
+ </div>
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="session.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="session.requirements.html">需求</a></li><li><a href="session.installation.html">安装</a></li><li><a href="session.configuration.html">运行时配置</a></li></ul></li><li><a href="session.constants.html">预定义常量</a></li><li><a href="session.examples.html">示例</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="session.examples.basic.html">基本用法</a></li><li><a href="session.idpassing.html">传送会话ID</a></li><li><a href="session.customhandler.html">自定义会话处理程序</a></li></ul></li><li><a href="session.upload-progress.html">Session 上传进度</a></li><li><a href="session.security.html">会话和安全</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="features.session.security.management.html">会话管理基础</a></li><li><a href="session.security.ini.html">和会话安全相关的配置项</a></li></ul></li><li><a href="ref.session.html">Session 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.session-abort.html">session_abort</a> — Discard session array changes and finish session</li><li><a href="function.session-cache-expire.html">session_cache_expire</a> — 返回/设置当前缓存的到期时间</li><li><a href="function.session-cache-limiter.html">session_cache_limiter</a> — 读取/设置缓存限制器</li><li><a href="function.session-commit.html">session_commit</a> — session_write_close 的别名</li><li><a href="function.session-create-id.html">session_create_id</a> — Create new session id</li><li><a href="function.session-decode.html">session_decode</a> — 解码会话数据</li><li><a href="function.session-destroy.html">session_destroy</a> — 销毁一个会话中的全部数据</li><li><a href="function.session-encode.html">session_encode</a> — 将当前会话数据编码为字符串</li><li><a href="function.session-gc.html">session_gc</a> — Perform session data garbage collection</li><li><a href="function.session-get-cookie-params.html">session_get_cookie_params</a> — 获取会话 cookie 参数</li><li><a href="function.session-id.html">session_id</a> — 获取/设置当前会话 ID</li><li><a href="function.session-module-name.html">session_module_name</a> — 获取/设置会话模块名称</li><li><a href="function.session-name.html">session_name</a> — 读取/设置会话名称</li><li><a href="function.session-regenerate-id.html">session_regenerate_id</a> — 使用新生成的会话 ID 更新现有会话 ID</li><li><a href="function.session-register-shutdown.html">session_register_shutdown</a> — 关闭会话</li><li><a href="function.session-reset.html">session_reset</a> — Re-initialize session array with original values</li><li><a href="function.session-save-path.html">session_save_path</a> — 读取/设置当前会话的保存路径</li><li><a href="function.session-set-cookie-params.html">session_set_cookie_params</a> — 设置会话 cookie 参数</li><li><a href="function.session-set-save-handler.html">session_set_save_handler</a> — 设置用户自定义会话存储函数</li><li><a href="function.session-start.html">session_start</a> — 启动新会话或者重用现有会话</li><li><a href="function.session-status.html">session_status</a> — 返回当前会话状态</li><li><a href="function.session-unset.html">session_unset</a> — 释放所有的会话变量</li><li><a href="function.session-write-close.html">session_write_close</a> — Write session data and end session</li></ul></li><li><a href="class.sessionhandler.html">SessionHandler</a> — The SessionHandler class<ul class="chunklist chunklist_book chunklist_children"><li><a href="sessionhandler.close.html">SessionHandler::close</a> — Close the session</li><li><a href="sessionhandler.create-sid.html">SessionHandler::create_sid</a> — Return a new session ID</li><li><a href="sessionhandler.destroy.html">SessionHandler::destroy</a> — Destroy a session</li><li><a href="sessionhandler.gc.html">SessionHandler::gc</a> — Cleanup old sessions</li><li><a href="sessionhandler.open.html">SessionHandler::open</a> — Initialize session</li><li><a href="sessionhandler.read.html">SessionHandler::read</a> — Read session data</li><li><a href="sessionhandler.write.html">SessionHandler::write</a> — Write session data</li></ul></li><li><a href="class.sessionhandlerinterface.html">SessionHandlerInterface</a> — The SessionHandlerInterface class<ul class="chunklist chunklist_book chunklist_children"><li><a href="sessionhandlerinterface.close.html">SessionHandlerInterface::close</a> — Close the session</li><li><a href="sessionhandlerinterface.destroy.html">SessionHandlerInterface::destroy</a> — Destroy a session</li><li><a href="sessionhandlerinterface.gc.html">SessionHandlerInterface::gc</a> — Cleanup old sessions</li><li><a href="sessionhandlerinterface.open.html">SessionHandlerInterface::open</a> — Initialize session</li><li><a href="sessionhandlerinterface.read.html">SessionHandlerInterface::read</a> — Read session data</li><li><a href="sessionhandlerinterface.write.html">SessionHandlerInterface::write</a> — Write session data</li></ul></li><li><a href="class.sessionidinterface.html">SessionIdInterface</a> — The SessionIdInterface interface<ul class="chunklist chunklist_book chunklist_children"><li><a href="sessionidinterface.create-sid.html">SessionIdInterface::create_sid</a> — Create session ID</li></ul></li><li><a href="class.sessionupdatetimestamphandlerinterface.html">SessionUpdateTimestampHandlerInterface</a> — The SessionUpdateTimestampHandlerInterface interface<ul class="chunklist chunklist_book chunklist_children"><li><a href="sessionupdatetimestamphandlerinterface.updatetimestamp.html">SessionUpdateTimestampHandlerInterface::updateTimestamp</a> — Update timestamp</li><li><a href="sessionupdatetimestamphandlerinterface.validateid.html">SessionUpdateTimestampHandlerInterface::validateId</a> — Validate ID</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

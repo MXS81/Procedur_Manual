@@ -1,0 +1,348 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>打开输出控制缓冲</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.ob-list-handlers.html" class="navbar__link">« ob_list_handlers</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.output-add-rewrite-var.html" class="navbar__link">output_add_rewrite_var »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.outcontrol.html">输出控制 函数</a></li>
+        <li>打开输出控制缓冲</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.ob-start" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">ob_start</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">ob_start</span> &mdash; <span class="dc-title">打开输出控制缓冲</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.ob-start-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>ob_start</strong></span>(<span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span></span> <code class="parameter">$callback</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$chunk_size</code><span class="initializer"> = 0</span></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-stdflags">PHP_OUTPUT_HANDLER_STDFLAGS</a></code></strong></span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   此函数将打开输出缓冲。当输出缓冲激活后，脚本将不会输出内容，相反需要输出的内容被存储在内部缓冲区中。参阅<a href="outcontrol.what-output-is-buffered.html" class="xref">什么输出会被缓冲？</a>以了解哪些输出受到影响。
+  </p>
+  <p class="para">
+   输出缓冲区是可堆叠的，也就是说，当一个缓冲区处于活动状态时也可以调用
+   <span class="function"><strong>ob_start()</strong></span>。如果有多重输出缓冲区是活跃的，输出内容会一直按嵌套的顺序依次过滤。参阅<a href="outcontrol.nesting-output-buffers.html" class="xref">嵌套输出缓冲区</a>获取更多详情。
+  </p>
+  <p class="para">
+   有关输出缓冲区的详细信息，请参阅<a href="outcontrol.user-level-output-buffers.html" class="xref">用户级输出缓冲区</a>
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.ob-start-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">callback</code></dt>
+     <dd>
+      <p class="para">
+       可以指定可选的 <code class="parameter">callback</code> <span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span>。也可以通过传递 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 来绕过它。
+      </p>
+      <p class="para">
+       当冲刷（发送）、清理输出缓冲区或在脚本末尾冲刷输出缓冲区时，将调用 <code class="parameter">callback</code>。
+      </p>
+      <p class="para">
+       <code class="parameter">callback</code> 的签名如下：
+      </p>
+      <p class="para">
+       <div class="methodsynopsis dc-description">
+        <span class="methodname"><span class="replaceable">handler</span></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$buffer</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$phase</code><span class="initializer"> = ?</span></span>): <span class="type"><a href="language.types.string.html" class="type string">string</a></span></div>
+
+       <dl>
+        
+         <dt><code class="parameter">buffer</code></dt>
+         <dd>
+          <span class="simpara">
+           输出缓冲区中的内容。
+          </span>
+         </dd>
+        
+        
+         <dt><code class="parameter">phase</code></dt>
+         <dd>
+          <span class="simpara">
+           <a href="outcontrol.constants.html" class="link"><strong><code>PHP_OUTPUT_HANDLER_*</code></strong> 常量</a>。<a href="outcontrol.constants.html#constant.php-output-handler-start" class="link"><strong><code><a href="outcontrol.constants.html#constant.php-output-handler-start">PHP_OUTPUT_HANDLER_<span class="replaceable">*</span></a></code></strong>
+           常量</a>的位掩码。有关更多详细信息，请参阅<a href="outcontrol.flags-passed-to-output-handlers.html" class="xref">传递给输出处理程序的 flag</a>。
+          </span>
+         </dd>
+        
+       </dl>
+      </p>
+      <p class="para">
+       如果 <code class="parameter">callback</code> 返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，则返回缓冲区的内容。有关更多详细信息，请参阅 <a href="outcontrol.output-handler-return-values.html" class="xref">输出处理程序的返回值</a>。
+      </p>
+      <div class="warning"><strong class="warning">警告</strong>
+       <p class="simpara">
+        从输出处理程序中调用以下任何函数都将导致 fatal 错误 
+        <span class="function"><a href="function.ob-clean.html" class="function">ob_clean()</a></span>、<span class="function"><a href="function.ob-end-clean.html" class="function">ob_end_clean()</a></span>、<span class="function"><a href="function.ob-end-flush.html" class="function">ob_end_flush()</a></span>、<span class="function"><a href="function.ob-flush.html" class="function">ob_flush()</a></span>、<span class="function"><a href="function.ob-get-clean.html" class="function">ob_get_clean()</a></span>、<span class="function"><a href="function.ob-get-flush.html" class="function">ob_get_flush()</a></span>、<span class="function"><strong>ob_start()</strong></span>。
+       </p>
+      </div>
+      <p class="para">
+       有关 <code class="parameter">callback</code>（输出处理程序）的更多详细信息，请参阅<a href="outcontrol.output-handlers.html" class="xref">输出处理程序</a>和<a href="outcontrol.working-with-output-handlers.html" class="xref">使用输出处理程序</a>。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">chunk_size</code></dt>
+     <dd>
+      <p class="para">
+       如果传递了可选参数 chunk_size，则在任何导致缓冲区长度等于或大于 <code class="parameter">chunk_size</code>
+       的代码块的输出之后，都会冲刷缓冲区。默认值 <code class="literal">0</code>
+       表示缓冲所有输出，直到缓冲区关闭。更多详细信息，请参阅<a href="outcontrol.buffer-size.html" class="xref">缓冲区大小</a>。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">flags</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">flags</code>
+       参数是位掩码，用于控制可以在输出缓冲区上执行的操作。默认是允许清理、冲刷和移除输出缓冲区，可以通过<a href="outcontrol.constants.html#outcontrol.constants.buffer-control-flags" class="link">缓冲区控制 flag</a>手动设置。参阅<a href="outcontrol.operations-on-buffers.html" class="xref">缓冲区中允许的操作</a>获取更多详细信息。
+      </p>
+      <p class="para">
+       每个标志都控制着对一组功能的访问，详细介绍如下：
+       <table class="doctable informaltable">
+        
+         <thead>
+          <tr>
+           <th>常量</th>
+           <th>函数</th>
+          </tr>
+
+         </thead>
+
+         <tbody class="tbody">
+          <tr>
+           <td><strong><code><a href="outcontrol.constants.html#constant.php-output-handler-cleanable">PHP_OUTPUT_HANDLER_CLEANABLE</a></code></strong></td>
+           <td>
+            <span class="function"><a href="function.ob-clean.html" class="function">ob_clean()</a></span>
+           </td>
+          </tr>
+
+          <tr>
+           <td><strong><code><a href="outcontrol.constants.html#constant.php-output-handler-flushable">PHP_OUTPUT_HANDLER_FLUSHABLE</a></code></strong></td>
+           <td>
+            <span class="function"><a href="function.ob-flush.html" class="function">ob_flush()</a></span>
+           </td>
+          </tr>
+
+          <tr>
+           <td><strong><code><a href="outcontrol.constants.html#constant.php-output-handler-removable">PHP_OUTPUT_HANDLER_REMOVABLE</a></code></strong></td>
+           <td>
+            <span class="function"><a href="function.ob-end-clean.html" class="function">ob_end_clean()</a></span>、<span class="function"><a href="function.ob-end-flush.html" class="function">ob_end_flush()</a></span>、<span class="function"><a href="function.ob-get-clean.html" class="function">ob_get_clean()</a></span>、<span class="function"><a href="function.ob-get-flush.html" class="function">ob_get_flush()</a></span>
+           </td>
+          </tr>
+
+         </tbody>
+        
+       </table>
+
+       <blockquote class="note"><p><strong class="note">注意</strong>: 
+        <span class="simpara">
+         在 PHP 8.4.0 之前，flags 参数还可以设置
+         <a href="outcontrol.constants.html#outcontrol.constants.flags-returned-by-handler" class="link">输出处理程序状态标志</a>。
+        </span>
+       </p></blockquote>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.ob-start-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.ob-start-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 用户自定义回调函数的示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">function </span><span style="color: #0000BB">callback</span><span style="color: #007700">(</span><span style="color: #0000BB">$buffer</span><span style="color: #007700">)<br />{<br />  </span><span style="color: #FF8000">// replace all the apples with oranges<br />  </span><span style="color: #007700">return (</span><span style="color: #0000BB">str_replace</span><span style="color: #007700">(</span><span style="color: #DD0000">"apples"</span><span style="color: #007700">, </span><span style="color: #DD0000">"oranges"</span><span style="color: #007700">, </span><span style="color: #0000BB">$buffer</span><span style="color: #007700">));<br />}<br /><br /></span><span style="color: #0000BB">ob_start</span><span style="color: #007700">(</span><span style="color: #DD0000">"callback"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;<br /></span>&lt;html&gt;<br />&lt;body&gt;<br />&lt;p&gt;It's like comparing apples to oranges.&lt;/p&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;<br /><span style="color: #0000BB">&lt;?php<br /><br />ob_end_flush</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;It&#039;s like comparing oranges to oranges.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+
+ <p class="para">
+   <div class="example" id="function.ob-start.flags-bc">
+    <p><strong>示例 #2 创建不可擦除的输出缓冲区</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />ob_start</span><span style="color: #007700">(</span><span style="color: #0000BB">null</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_OUTPUT_HANDLER_STDFLAGS </span><span style="color: #007700">^ </span><span style="color: #0000BB">PHP_OUTPUT_HANDLER_REMOVABLE</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.ob-start-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.ob-get-contents.html" class="function" rel="rdfs-seeAlso">ob_get_contents()</a> - 返回输出缓冲区的内容</span></li>
+    <li><span class="function"><a href="function.ob-end-clean.html" class="function" rel="rdfs-seeAlso">ob_end_clean()</a> - 清空（擦除）活动缓冲区的内容并关闭它</span></li>
+    <li><span class="function"><a href="function.ob-end-flush.html" class="function" rel="rdfs-seeAlso">ob_end_flush()</a> - 冲刷（发送）活动输出处理程序的返回值，并关闭活动输出缓冲区</span></li>
+    <li><span class="function"><a href="function.ob-implicit-flush.html" class="function" rel="rdfs-seeAlso">ob_implicit_flush()</a> - 打开/关闭绝对刷送</span></li>
+    <li><span class="function"><a href="function.ob-gzhandler.html" class="function" rel="rdfs-seeAlso">ob_gzhandler()</a> - ob_start 回调函数压缩输出缓冲区</span></li>
+    <li><span class="function"><a href="function.ob-iconv-handler.html" class="function" rel="rdfs-seeAlso">ob_iconv_handler()</a> - 以输出缓冲处理程序转换字符编码</span></li>
+    <li><span class="function"><a href="function.mb-output-handler.html" class="function" rel="rdfs-seeAlso">mb_output_handler()</a> - 在输出缓冲中转换字符编码的回调函数</span></li>
+    <li><span class="function"><a href="function.ob-tidyhandler.html" class="function" rel="rdfs-seeAlso">ob_tidyhandler()</a> - ob_start callback function to repair the buffer</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

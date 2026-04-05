@@ -1,0 +1,454 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>延迟对象</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.oop5.variance.html" class="navbar__link">« 协变与逆变</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.oop5.changelog.html" class="navbar__link">OOP 变更日志 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.oop5.html">类与对象</a></li>
+        <li>延迟对象</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.oop5.lazy-objects" class="sect1">
+ <h2 class="title">延迟对象</h2>
+
+ <p class="simpara">
+  延迟对象是指其初始化推迟到状态被观察或修改时才进行的对象。一些用例示例包括依赖项注入组件（仅在需要时提供完全初始化的延迟服务）、<abbr>ORM</abbr>（提供仅在访问时才从数据库获取数据的延迟实体）或
+  JSON 解析器（延迟解析直到访问元素）。
+ </p>
+
+ <p class="simpara">
+  支持两种延迟对象策略：幽灵对象（Ghost Object）和虚拟代理（Virtual Proxies），以下称为&quot;延迟幽灵&quot;和&quot;延迟代理&quot;。
+  在这两种策略中，延迟对象都附加到初始化程序或工厂，当第一次观察或修改其状态时会自动调用。从抽象的角度来看，延迟幽灵对象与非延迟幽灵对象没有区别：都可以在不知道自己是延迟的情况下使用，从而允许将其传递给不知道延迟的代码并由其使用。延迟代理同样是透明的，但在使用它们的标识（identity）时必须小心，因为代理和其真实实例具有不同的标识。
+ </p>
+
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <strong>版本信息</strong><br />
+  <span class="simpara">
+   延迟对象在 PHP 8.4 中引入。
+  </span>
+ </p></blockquote>
+
+ <div class="sect2" id="language.oop5.lazy-objects.creation">
+  <h3 class="title">创建延迟对象</h3>
+
+  <p class="simpara">
+   可以创建任何用户定义类或 <span class="classname"><a href="class.stdclass.html" class="classname">stdClass</a></span> 类的延迟实例（不支持其他内部类），或重置这些类的实例以使其成为延迟实例。创建延迟对象的入口点是
+   <span class="methodname"><a href="reflectionclass.newlazyghost.html" class="methodname">ReflectionClass::newLazyGhost()</a></span> 和 <span class="methodname"><a href="reflectionclass.newlazyproxy.html" class="methodname">ReflectionClass::newLazyProxy()</a></span> 方法。
+  </p>
+
+  <p class="simpara">
+   这两种方法都接受函数，在对象需要初始化时调用该函数。该函数的预期行为因所使用的策略而异，如每种方法的参考文档中所述。
+  </p>
+
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 创建延迟幽灵</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">Example<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">(public </span><span style="color: #0000BB">int $prop</span><span style="color: #007700">)<br />    {<br />        echo </span><span style="color: #0000BB">__METHOD__</span><span style="color: #007700">, </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$reflector </span><span style="color: #007700">= new </span><span style="color: #0000BB">ReflectionClass</span><span style="color: #007700">(</span><span style="color: #0000BB">Example</span><span style="color: #007700">::class);<br /></span><span style="color: #0000BB">$lazyObject </span><span style="color: #007700">= </span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">newLazyGhost</span><span style="color: #007700">(function (</span><span style="color: #0000BB">Example $object</span><span style="color: #007700">) {<br />    </span><span style="color: #FF8000">// 在这里初始化对象<br />    </span><span style="color: #0000BB">$object</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">(</span><span style="color: #0000BB">1</span><span style="color: #007700">);<br />});<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">get_class</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 触发初始化<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">prop</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="annotation-interactive cdata"><pre>
+lazy ghost object(Example)#3 (0) {
+[&quot;prop&quot;]=&gt;
+uninitialized(int)
+}
+string(7) &quot;Example&quot;
+Example::__construct
+int(1)
+</pre></div>
+   </div>
+  </div>
+
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 创建延迟代理</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">Example<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">(public </span><span style="color: #0000BB">int $prop</span><span style="color: #007700">)<br />    {<br />        echo </span><span style="color: #0000BB">__METHOD__</span><span style="color: #007700">, </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$reflector </span><span style="color: #007700">= new </span><span style="color: #0000BB">ReflectionClass</span><span style="color: #007700">(</span><span style="color: #0000BB">Example</span><span style="color: #007700">::class);<br /></span><span style="color: #0000BB">$lazyObject </span><span style="color: #007700">= </span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">newLazyProxy</span><span style="color: #007700">(function (</span><span style="color: #0000BB">Example $object</span><span style="color: #007700">) {<br />    </span><span style="color: #FF8000">// 创建并返回真实实例<br />    </span><span style="color: #007700">return new </span><span style="color: #0000BB">Example</span><span style="color: #007700">(</span><span style="color: #0000BB">1</span><span style="color: #007700">);<br />});<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">get_class</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 触发器初始化<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$lazyObject</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">prop</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="annotation-interactive cdata"><pre>
+lazy proxy object(Example)#3 (0) {
+  [&quot;prop&quot;]=&gt;
+  uninitialized(int)
+}
+string(7) &quot;Example&quot;
+Example::__construct
+int(1)
+</pre></div>
+   </div>
+  </div>
+
+  <p class="simpara">
+   对延迟对象属性的任何访问都会触发其初始化（包括通过 <span class="classname"><a href="class.reflectionproperty.html" class="classname">ReflectionProperty</a></span>
+   访问）。但是，某些属性可能是预先知道的，并且在访问时不应触发初始化：
+  </p>
+
+  <div class="example" id="example-3">
+   <p><strong>示例 #3 立即初始化属性</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">BlogPost<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">(<br />        public </span><span style="color: #0000BB">int $id</span><span style="color: #007700">,<br />        public </span><span style="color: #0000BB">string $title</span><span style="color: #007700">,<br />        public </span><span style="color: #0000BB">string $content</span><span style="color: #007700">,<br />    ) { }<br />}<br /><br /></span><span style="color: #0000BB">$reflector </span><span style="color: #007700">= new </span><span style="color: #0000BB">ReflectionClass</span><span style="color: #007700">(</span><span style="color: #0000BB">BlogPost</span><span style="color: #007700">::class);<br /><br /></span><span style="color: #0000BB">$post </span><span style="color: #007700">= </span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">newLazyGhost</span><span style="color: #007700">(function (</span><span style="color: #0000BB">$post</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$data </span><span style="color: #007700">= </span><span style="color: #0000BB">fetch_from_store</span><span style="color: #007700">(</span><span style="color: #0000BB">$post</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">id</span><span style="color: #007700">);<br />    </span><span style="color: #0000BB">$post</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">(</span><span style="color: #0000BB">$data</span><span style="color: #007700">[</span><span style="color: #DD0000">'id'</span><span style="color: #007700">], </span><span style="color: #0000BB">$data</span><span style="color: #007700">[</span><span style="color: #DD0000">'title'</span><span style="color: #007700">], </span><span style="color: #0000BB">$data</span><span style="color: #007700">[</span><span style="color: #DD0000">'content'</span><span style="color: #007700">]);<br />});<br /><br /></span><span style="color: #FF8000">// 如果没有这行，下面调用 ReflectionProperty::setValue() 时将触发初始化<br /></span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getProperty</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">skipLazyInitialization</span><span style="color: #007700">(</span><span style="color: #0000BB">$post</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getProperty</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">setValue</span><span style="color: #007700">(</span><span style="color: #0000BB">$post</span><span style="color: #007700">, </span><span style="color: #0000BB">123</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 或者直接使用它：<br /></span><span style="color: #0000BB">$reflector</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getProperty</span><span style="color: #007700">(</span><span style="color: #DD0000">'id'</span><span style="color: #007700">)-&gt;</span><span style="color: #0000BB">setRawValueWithoutLazyInitialization</span><span style="color: #007700">(</span><span style="color: #0000BB">$post</span><span style="color: #007700">, </span><span style="color: #0000BB">123</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 无需触发初始化即可访问 id 属性<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$post</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">id</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+
+  <p class="simpara">
+   <span class="methodname"><a href="reflectionproperty.skiplazyinitialization.html" class="methodname">ReflectionProperty::skipLazyInitialization()</a></span> 和 <span class="methodname"><a href="reflectionproperty.setrawvaluewithoutlazyinitialization.html" class="methodname">ReflectionProperty::setRawValueWithoutLazyInitialization()</a></span>
+   方法提供了在访问属性时绕过延迟初始化的方法。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.patterns">
+  <h3 class="title">关于延迟对象策略</h3>
+
+  <p class="simpara">
+   <em>延迟幽灵</em>，就地初始化的对象，并且一旦初始化，就跟从未延迟化的对象没有区别。当需要控制对象的实例化和初始化时，此策略是合适的，如果是其中任何一个由另一方管理，则不适合。
+  </p>
+
+  <p class="simpara">
+   <em>延迟代理</em>一旦初始化，便充当真实实例的代理：对已初始化延迟代理的任何操作都将转发给真实实例。真实实例的创建可以委托给另一方，这使得此策略在延迟幽灵不适合的情况下非常有用。尽管延迟代理几乎与延迟幽灵一样透明，但在使用其身份时需要谨慎，因为代理和真实实例具有不同的身份。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.lifecycle">
+  <h3 class="title">延迟对象的生命周期</h3>
+
+  <p class="simpara">
+   对象可以使用 <span class="methodname"><a href="reflectionclass.newlazyghost.html" class="methodname">ReflectionClass::newLazyGhost()</a></span> 或
+   <span class="methodname"><a href="reflectionclass.newlazyproxy.html" class="methodname">ReflectionClass::newLazyProxy()</a></span> 在实例化时设置为延迟，或者使用
+   <span class="methodname"><a href="reflectionclass.resetaslazyghost.html" class="methodname">ReflectionClass::resetAsLazyGhost()</a></span> 或
+   <span class="methodname"><a href="reflectionclass.resetaslazyproxy.html" class="methodname">ReflectionClass::resetAsLazyProxy()</a></span> 在实例化后设置为延迟。之后可以通过下列操作之一初始化延迟对象：
+  </p>
+
+  <ul class="simplelist">
+   <li>
+    以触发自动初始化的方式与对象进行交互。参阅<a href="language.oop5.lazy-objects.html#language.oop5.lazy-objects.initialization-triggers" class="link">初始化触发器</a>。
+   </li>
+   <li>
+    使用 <span class="methodname"><a href="reflectionproperty.skiplazyinitialization.html" class="methodname">ReflectionProperty::skipLazyInitialization()</a></span> 或
+    <span class="methodname"><a href="reflectionproperty.setrawvaluewithoutlazyinitialization.html" class="methodname">ReflectionProperty::setRawValueWithoutLazyInitialization()</a></span>
+    将其所有属性标注为非延迟。
+   </li>
+   <li>
+    明确调用 <span class="methodname"><a href="reflectionclass.initializelazyobject.html" class="methodname">ReflectionClass::initializeLazyObject()</a></span>
+    或 <span class="methodname"><a href="reflectionclass.marklazyobjectasinitialized.html" class="methodname">ReflectionClass::markLazyObjectAsInitialized()</a></span>。
+   </li>
+  </ul>
+
+  <p class="simpara">
+   由于延迟对象在所有属性均标记为非惰性时才会初始化，因此如果没有属性可以标记为延迟，则上述方法不会将对象标记为延迟。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.initialization-triggers">
+  <h3 class="title">初始化触发器</h3>
+
+  <p class="simpara">
+   延迟对象设计为对其使用者完全透明，因此观察或修改对象状态的常规操作将在执行操作之前自动触发初始化。这包括但不限于以下操作：
+  </p>
+
+  <ul class="simplelist">
+   <li>
+    读取或写入属性。
+   </li>
+   <li>
+    测试属性是否已设置或已清除。
+   </li>
+   <li>
+    通过 <span class="methodname"><a href="reflectionproperty.getvalue.html" class="methodname">ReflectionProperty::getValue()</a></span>、<span class="methodname"><a href="reflectionproperty.getrawvalue.html" class="methodname">ReflectionProperty::getRawValue()</a></span>、<span class="methodname"><a href="reflectionproperty.setvalue.html" class="methodname">ReflectionProperty::setValue()</a></span>,
+    或 <span class="methodname"><a href="reflectionproperty.setrawvalue.html" class="methodname">ReflectionProperty::setRawValue()</a></span> 访问或修改属性。
+   </li>
+   <li>
+    使用 <span class="methodname"><strong>ReflectionObject::getProperties()</strong></span>、<span class="methodname"><strong>ReflectionObject::getProperty()</strong></span>、<span class="function"><a href="function.get-object-vars.html" class="function">get_object_vars()</a></span>
+    列出属性。
+   </li>
+   <li>
+    使用 <a href="control-structures.foreach.html" class="link">foreach</a> 迭代未实现 <span class="interfacename"><a href="class.iterator.html" class="interfacename">Iterator</a></span> 或
+    <span class="interfacename"><a href="class.iteratoraggregate.html" class="interfacename">IteratorAggregate</a></span> 的对象属性。
+   </li>
+   <li>
+    使用 <span class="function"><a href="function.serialize.html" class="function">serialize()</a></span>、<span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 等序列化对象。
+   </li>
+   <li>
+    <a href="language.oop5.lazy-objects.html#language.oop5.lazy-objects.cloning" class="link">克隆</a>对象。
+   </li>
+  </ul>
+
+  <p class="simpara">
+   方法调用不访问对象状态的话不会触发初始化。同样，如果这些方法或函数不访问对象的状态，则调用魔术方法或挂钩函数与对象的交互也不会触发初始化。
+  </p>
+
+  <div class="sect3">
+   <h4 class="title">非触发操作</h4>
+
+   <p class="simpara">
+    以下特定方法或低级操作允许访问或修改延迟对象而无需触发初始化：
+   </p>
+
+   <ul class="simplelist">
+    <li>
+     使用 <span class="methodname"><a href="reflectionproperty.skiplazyinitialization.html" class="methodname">ReflectionProperty::skipLazyInitialization()</a></span> 或
+     <span class="methodname"><a href="reflectionproperty.setrawvaluewithoutlazyinitialization.html" class="methodname">ReflectionProperty::setRawValueWithoutLazyInitialization()</a></span>
+     将属性标注为非延迟。
+    </li>
+    <li>
+     使用 <span class="function"><a href="function.get-mangled-object-vars.html" class="function">get_mangled_object_vars()</a></span> 或将<a href="language.types.array.html#language.types.array.casting" class="link">对象转换为数组</a>来检索属性的内部表示。
+    </li>
+    <li>
+     当设置了 <strong><code><a href="class.reflectionclass.html#reflectionclass.constants.skip-initialization-on-serialize">ReflectionClass::SKIP_INITIALIZATION_ON_SERIALIZE</a></code></strong> 时使用
+     <span class="function"><a href="function.serialize.html" class="function">serialize()</a></span>，除非使用 <a href="language.oop5.magic.html#object.serialize" class="link">__serialize()</a>
+     或 <a href="language.oop5.magic.html#object.sleep" class="link">__sleep()</a> 触发初始化。
+    </li>
+    <li>
+     调用 <span class="methodname"><strong>ReflectionObject::__toString()</strong></span>。
+    </li>
+    <li>
+     使用 <span class="function"><a href="function.var-dump.html" class="function">var_dump()</a></span> 或 <span class="function"><a href="function.debug-zval-dump.html" class="function">debug_zval_dump()</a></span>，除非使用
+     <a href="language.oop5.magic.html#object.debuginfo" class="link">__debugInfo()</a> 触发初始化。
+    </li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.initialization-sequence">
+  <h3 class="title">初始化序列</h3>
+
+  <p class="simpara">
+   本节概述了根据所使用的执行策略触发初始化时的操作顺序。
+  </p>
+
+  <div class="sect3">
+   <h4 class="title">幽灵对象</h4>
+   <ul class="simplelist">
+    <li>
+     对象标记为非延迟。
+    </li>
+    <li>
+     没有使用 <span class="methodname"><a href="reflectionproperty.skiplazyinitialization.html" class="methodname">ReflectionProperty::skipLazyInitialization()</a></span> 或
+     <span class="methodname"><a href="reflectionproperty.setrawvaluewithoutlazyinitialization.html" class="methodname">ReflectionProperty::setRawValueWithoutLazyInitialization()</a></span>
+     初始化的属性将设置为他们的默认值（如果有）。在此阶段，该对象类似于使用
+     <span class="methodname"><a href="reflectionclass.newinstancewithoutconstructor.html" class="methodname">ReflectionClass::newInstanceWithoutConstructor()</a></span>
+     创建的对象，但排除已初始化的属性。
+    </li>
+    <li>
+     然后，将对象作为第一个参数调用其初始化函数。该函数需要（但不是必须）初始化对象状态，并且必须返回
+     <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 或没有值。此时对象不再是延迟，因此该函数可以直接访问其属性。
+    </li>
+   </ul>
+   <p class="simpara">
+    初始化后，该对象与从未延迟过的对象没有区别。
+   </p>
+  </div>
+
+  <div class="sect3">
+   <h4 class="title">代理对象</h4>
+   <ul class="simplelist">
+    <li>
+     对象标记为非延迟。
+    </li>
+    <li>
+     与幽灵对象不同，在此阶段不会修改对象的属性。
+    </li>
+    <li>
+     会将对象作为工厂函数的第一个参数进行调用，并且必须返回兼容类的非延迟实例（参见
+     <span class="methodname"><a href="reflectionclass.newlazyproxy.html" class="methodname">ReflectionClass::newLazyProxy()</a></span>）。
+    </li>
+    <li>
+     返回的实例称为<em>真实实例</em>，并附加到代理对象上。
+    </li>
+    <li>
+     会丢弃代理对象的属性值，如同调用了 <span class="function"><a href="function.unset.html" class="function">unset()</a></span>。
+    </li>
+   </ul>
+   <p class="simpara">
+    初始化后，访问代理对象上的任何属性将得到与访问真实实例上对应属性相同的结果；访问代理对象上的所有属性都会转发到真实实例，包括已声明、动态、不存在的属性，或使用
+    <span class="methodname"><a href="reflectionproperty.skiplazyinitialization.html" class="methodname">ReflectionProperty::skipLazyInitialization()</a></span> 或
+    <span class="methodname"><a href="reflectionproperty.setrawvaluewithoutlazyinitialization.html" class="methodname">ReflectionProperty::setRawValueWithoutLazyInitialization()</a></span> 标记的属性。
+   </p>
+   <p class="simpara">
+    代理对象本身<em>不会</em>替换（replaced）或替代（substituted）为真实实例。
+   </p>
+   <p class="simpara">
+    虽然工厂函数会将代理对象作为第一个参数接收，但并不期望对代理对象进行修改（尽管允许修改，但在最终初始化步骤中这些修改将会丢失）。不过，代理对象可以用于根据已初始化属性的值、类、对象本身或其标识来做出决策。例如，在创建真实实例时，初始化程序可能会使用某个已初始化属性的值。
+   </p>
+  </div>
+
+  <div class="sect3">
+   <h4 class="title">通用行为</h4>
+
+   <p class="simpara">
+    初始化程序或工厂函数的作用域和 <var class="varname">$this</var> 上下文保持不变，同时适用常规的可见性约束。
+   </p>
+
+   <p class="simpara">
+    初始化成功后，对象将不再引用初始化程序或工厂函数，如果它没有其他引用，就可以将对象释放。
+   </p>
+
+   <p class="simpara">
+    如果初始化程序抛出异常，对象状态将恢复到初始化前的状态，并且该对象再次被标记为延迟初始化。换句话说，对象自身的所有影响都将会撤销。其他副作用（例如对其他对象的影响），则不会撤销。这可防止在出现故障的情况下暴露部分初始化的实例。
+   </p>
+  </div>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.cloning">
+  <h3 class="title">克隆</h3>
+
+  <p class="simpara">
+   <a href="language.oop5.cloning.html" class="link">克隆</a>延迟对象会在创建克隆之前触发其初始化，从而产生已初始化的对象。
+  </p>
+
+  <p class="simpara">
+   对于代理对象，代理及其真实实例都会克隆，并返回代理的克隆。<a href="language.oop5.cloning.html#object.clone" class="link"><code class="literal">__clone</code></a>
+   方法会在真实实例上调用，而不是在代理上调用。克隆的代理和真实实例在初始化时会保持连接，因此对代理克隆的访问将转发到克隆的真实实例。
+  </p>
+
+  <p class="simpara">
+   此行为可确保克隆对象和原始对象保持不同的状态。克隆后对原始对象或其初始化程序状态的更改不会影响克隆。克隆代理及其真实实例（而不是仅返回真实实例的克隆），可确保克隆操作始终返回同一类的对象。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.oop5.lazy-objects.destructors">
+  <h3 class="title">析构方法</h3>
+
+  <p class="simpara">
+   对于延迟幽灵，只有对象初始化后才会调用析构方法。对于延迟代理，只有存在真实实例时才会调用析构方法。
+  </p>
+
+  <p class="simpara">
+   <span class="methodname"><a href="reflectionclass.resetaslazyghost.html" class="methodname">ReflectionClass::resetAsLazyGhost()</a></span> 和
+   <span class="methodname"><a href="reflectionclass.resetaslazyproxy.html" class="methodname">ReflectionClass::resetAsLazyProxy()</a></span> 方法可能会调用已重置对象的析构方法。
+  </p>
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

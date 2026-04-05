@@ -1,0 +1,201 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>BCMath 任意精度数学</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="refs.math.html" class="navbar__link">« 数学扩展</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="bc.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.math.html">数学扩展</a></li>
+        <li>BCMath 任意精度数学</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.bc" class="book">
+ 
+ <h1 class="title">BCMath 任意精度数学</h1>
+ 
+
+ 
+ <div id="intro.bc" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="para">
+    对于任意精度的数学， 如果有足够多的内存，PHP 提供的 BCMath 支持用字符串的形式表示任意大小和精度的数字，最大尺寸为
+   <code class="literal">2147483647</code>（即 <code class="literal">0x7FFFFFFF</code>）。
+  </p>
+  <p class="para">
+   有效（即格式良好）的 BCMath 数字是匹配正则表达式
+   <code class="literal">/^[+-]?[0-9]*(\.[0-9]*)?$/</code> 的字符串。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="para">
+    BCMath 函数想要操作的是 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>，如果传入了 <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 可能无法达到想要的效果，
+    因为 PHP 会将 <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 的值转换为 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。
+    也就意味着 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 可能会带科学计数法符号（BCMath 并不支持），
+    另外在 PHP 8.0.0 之前，小数点分隔符也不支持本地化（BCMath 只能识别英文句号小数点）。
+   </p>
+   <div class="informalexample">
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$num1 </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">; </span><span style="color: #FF8000">// (string) 0 =&gt; '0'<br /></span><span style="color: #0000BB">$num2 </span><span style="color: #007700">= -</span><span style="color: #0000BB">0.000005</span><span style="color: #007700">; </span><span style="color: #FF8000">// (string) -0.000005 =&gt; '-5.05E-6'<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">bcadd</span><span style="color: #007700">(</span><span style="color: #0000BB">$num1</span><span style="color: #007700">, </span><span style="color: #0000BB">$num2</span><span style="color: #007700">, </span><span style="color: #0000BB">6</span><span style="color: #007700">); </span><span style="color: #FF8000">// =&gt; '0.000000'<br /><br /></span><span style="color: #0000BB">setlocale</span><span style="color: #007700">(</span><span style="color: #0000BB">LC_NUMERIC</span><span style="color: #007700">, </span><span style="color: #DD0000">'de_DE'</span><span style="color: #007700">); </span><span style="color: #FF8000">// 使用逗号小数点<br /></span><span style="color: #0000BB">$num2 </span><span style="color: #007700">= </span><span style="color: #0000BB">1.2</span><span style="color: #007700">; </span><span style="color: #FF8000">// (string) 1.2 =&gt; '1,2'<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">bcsub</span><span style="color: #007700">(</span><span style="color: #0000BB">$num1</span><span style="color: #007700">, </span><span style="color: #0000BB">$num2</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">); </span><span style="color: #FF8000">// =&gt; '0.0'<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </div>
+ </div>
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="bc.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="bc.installation.html">安装</a></li><li><a href="bc.configuration.html">运行时配置</a></li></ul></li><li><a href="ref.bc.html">BC 数学 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.bcadd.html">bcadd</a> — 两个任意精度数字的加法计算</li><li><a href="function.bcceil.html">bcceil</a> — Round up arbitrary precision number</li><li><a href="function.bccomp.html">bccomp</a> — 比较两个任意精度的数字</li><li><a href="function.bcdiv.html">bcdiv</a> — 两个任意精度的数字除法计算</li><li><a href="function.bcdivmod.html">bcdivmod</a> — Get the quotient and modulus of an arbitrary precision number</li><li><a href="function.bcfloor.html">bcfloor</a> — Round down arbitrary precision number</li><li><a href="function.bcmod.html">bcmod</a> — 任意精度数字取模</li><li><a href="function.bcmul.html">bcmul</a> — 两个任意精度数字乘法计算</li><li><a href="function.bcpow.html">bcpow</a> — 任意精度数字的乘方</li><li><a href="function.bcpowmod.html">bcpowmod</a> — Raise an arbitrary precision number to another, reduced by a specified modulus</li><li><a href="function.bcround.html">bcround</a> — Round arbitrary precision number</li><li><a href="function.bcscale.html">bcscale</a> — 设置/获取所有 bc math 函数的默认小数点保留位数</li><li><a href="function.bcsqrt.html">bcsqrt</a> — 任意精度数字的二次方根</li><li><a href="function.bcsub.html">bcsub</a> — 两个任意精度数字的减法</li></ul></li><li><a href="class.bcmath-number.html">BcMath\Number</a> — The BcMath\Number class<ul class="chunklist chunklist_book chunklist_children"><li><a href="bcmath-number.add.html">BcMath\Number::add</a> — Adds an arbitrary precision number</li><li><a href="bcmath-number.ceil.html">BcMath\Number::ceil</a> — Rounds up an arbitrary precision number</li><li><a href="bcmath-number.compare.html">BcMath\Number::compare</a> — Compares two arbitrary precision numbers</li><li><a href="bcmath-number.construct.html">BcMath\Number::__construct</a> — Creates a BcMath\Number object</li><li><a href="bcmath-number.div.html">BcMath\Number::div</a> — Divides by an arbitrary precision number</li><li><a href="bcmath-number.divmod.html">BcMath\Number::divmod</a> — Gets the quotient and modulus of an arbitrary precision number</li><li><a href="bcmath-number.floor.html">BcMath\Number::floor</a> — Rounds down an arbitrary precision number</li><li><a href="bcmath-number.mod.html">BcMath\Number::mod</a> — Gets the modulus of an arbitrary precision number</li><li><a href="bcmath-number.mul.html">BcMath\Number::mul</a> — Multiplies an arbitrary precision number</li><li><a href="bcmath-number.pow.html">BcMath\Number::pow</a> — Raises an arbitrary precision number</li><li><a href="bcmath-number.powmod.html">BcMath\Number::powmod</a> — Raises an arbitrary precision number, reduced by a specified modulus</li><li><a href="bcmath-number.round.html">BcMath\Number::round</a> — Rounds an arbitrary precision number</li><li><a href="bcmath-number.serialize.html">BcMath\Number::__serialize</a> — Serializes a BcMath\Number object</li><li><a href="bcmath-number.sqrt.html">BcMath\Number::sqrt</a> — Gets the square root of an arbitrary precision number</li><li><a href="bcmath-number.sub.html">BcMath\Number::sub</a> — Subtracts an arbitrary precision number</li><li><a href="bcmath-number.tostring.html">BcMath\Number::__toString</a> — Converts BcMath\Number to string</li><li><a href="bcmath-number.unserialize.html">BcMath\Number::__unserialize</a> — Deserializes a data parameter into a BcMath\Number object</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

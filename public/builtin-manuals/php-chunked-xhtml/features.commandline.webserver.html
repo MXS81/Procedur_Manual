@@ -1,0 +1,315 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>内置 Web Server</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="features.commandline.interactive.html" class="navbar__link">« 交互式 shell</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="features.commandline.ini.html" class="navbar__link">INI 配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="features.commandline.html">PHP 的命令行模式</a></li>
+        <li>内置 Web Server</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="features.commandline.webserver" class="section">
+  <h2 class="title">内置 Web Server</h2>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+    该 Web 服务器目的是帮助应用程序开发。还可用于测试目的或在受控环境中运行的应用程序演示。但并不是一个功能齐全的 Web 服务器。不应该在公共网络上使用。
+   </p>
+  </div>
+
+  <p class="para">
+   <abbr title="Command Line Interpreter/Interface">CLI</abbr> <abbr title="Server Application Programming Interface">SAPI</abbr> 提供了内置的 Web 服务器。
+  </p>
+
+  <p class="para">
+   Web 服务器仅运行一个单线程进程，因此如果堵塞了请求，PHP 应用程序将停止运行。
+  </p>
+
+  <p class="para">
+    URI 请求将从启动 PHP 的当前工作目录提供服务，除非使用 -t 选项指定文档根目录。如果 URI 请求未指定文件，则返回指定目录中的 index.php 或
+    index.html。如果两个文件都不存在，则将在父目录中继续查找 index.php 和 index.html，依此类推，直到找到一个文件或到达文档根目录。如果找到
+    index.php 或 index.html，则将其返回，并将 $_SERVER[&#039;PATH_INFO&#039;] 设置为 URI 的尾部部分。否则将返回 404 响应代码。
+  </p>
+
+  <p class="para">
+    如果在命令行上启动 Web 服务器时指定了 PHP 文件，则会将其视为“router”脚本。该脚本在每个 HTTP 请求开始时运行。如果此脚本返回
+    <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，则按原样返回所请求的资源。否则脚本的输出将返回到浏览器。
+  </p>
+
+  <p class="para">
+   对于有扩展名的文件，将返回标准的 MIME 类型：
+   <span class="simplelist"><code class="literal">.3gp</code>, <code class="literal">.apk</code>, <code class="literal">.avi</code>, <code class="literal">.bmp</code>, <code class="literal">.css</code>, <code class="literal">.csv</code>, <code class="literal">.doc</code>, <code class="literal">.docx</code>, <code class="literal">.flac</code>, <code class="literal">.gif</code>, <code class="literal">.gz</code>, <code class="literal">.gzip</code>, <code class="literal">.htm</code>, <code class="literal">.html</code>, <code class="literal">.ics</code>, <code class="literal">.jpe</code>, <code class="literal">.jpeg</code>, <code class="literal">.jpg</code>, <code class="literal">.js</code>, <code class="literal">.kml</code>, <code class="literal">.kmz</code>, <code class="literal">.m4a</code>, <code class="literal">.mov</code>, <code class="literal">.mp3</code>, <code class="literal">.mp4</code>, <code class="literal">.mpeg</code>, <code class="literal">.mpg</code>, <code class="literal">.odp</code>, <code class="literal">.ods</code>, <code class="literal">.odt</code>, <code class="literal">.oga</code>, <code class="literal">.ogg</code>, <code class="literal">.ogv</code>, <code class="literal">.pdf</code>, <code class="literal">.png</code>, <code class="literal">.pps</code>, <code class="literal">.pptx</code>, <code class="literal">.qt</code>, <code class="literal">.svg</code>, <code class="literal">.swf</code>, <code class="literal">.tar</code>, <code class="literal">.text</code>, <code class="literal">.tif</code>, <code class="literal">.txt</code>, <code class="literal">.wav</code>, <code class="literal">.webm</code>, <code class="literal">.wmv</code>, <code class="literal">.xls</code>, <code class="literal">.xlsx</code>, <code class="literal">.xml</code>, <code class="literal">.xsl</code>, <code class="literal">.xsd</code>, <code class="literal">.zip</code></span>
+   。
+  </p>
+
+  <p class="simpara">
+   从 PHP 7.4.0 开始，内置 Web 服务器可以配置为派生多个工作线程，以便测试需要向内置 Web 服务器发出多个并发请求的代码。在启动服务器之前，将
+   <var class="envar">PHP_CLI_SERVER_WORKERS</var> 环境变量设置为所需的 worker 数量。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">此功能不支持 Windows。</span>
+  </p></blockquote>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+    此<em>实验</em>功能<em>不</em>适用于生产用途。通常，内置 Web 服务器<em>不</em>适合生产用途。
+   </p>
+  </div>
+
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 启动 Web 服务器</strong></p> 
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ cd ~/public_html
+$ php -S localhost:8000</pre>
+</div>
+   </div>
+
+   <div class="example-contents"><p>
+     终端将显示:
+   </p></div>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+PHP 5.4.0 Development Server started at Thu Jul 21 10:43:28 2011
+Listening on localhost:8000
+Document root is /home/me/public_html
+Press Ctrl-C to quit
+</pre></div>
+   </div>
+   <div class="example-contents"><p>
+    在 URI 请求 http://localhost:8000/ 和 http://localhost:8000/myscript.html 之后，终端会显示类似以下的内容：
+   </p></div>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+PHP 5.4.0 Development Server started at Thu Jul 21 10:43:28 2011
+Listening on localhost:8000
+Document root is /home/me/public_html
+Press Ctrl-C to quit.
+[Thu Jul 21 10:48:48 2011] ::1:39144 GET /favicon.ico - Request read
+[Thu Jul 21 10:48:50 2011] ::1:39146 GET / - Request read
+[Thu Jul 21 10:48:50 2011] ::1:39147 GET /favicon.ico - Request read
+[Thu Jul 21 10:48:52 2011] ::1:39148 GET /myscript.html - Request read
+[Thu Jul 21 10:48:52 2011] ::1:39149 GET /favicon.ico - Request read
+</pre></div>
+   </div>
+   <div class="example-contents"><p>
+    请注意，在 PHP 7.4.0 之前，在 Windows 上无法访问符号链接的静态资源，除非 router 脚本可以处理这些资源。
+   </p></div>
+  </div>
+
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 启动时指定文档根目录</strong></p> 
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ cd ~/public_html
+$ php -S localhost:8000 -t foo/</pre>
+</div>
+   </div>
+
+   <div class="example-contents"><p>
+     终端将显示：
+   </p></div>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+PHP 5.4.0 Development Server started at Thu Jul 21 10:50:26 2011
+Listening on localhost:8000
+Document root is /home/me/public_html/foo
+Press Ctrl-C to quit
+</pre></div>
+   </div>
+  </div>
+
+  <div class="example" id="example-3">
+   <p><strong>示例 #3 使用 router 脚本</strong></p> 
+<div class="example-contents"><p>
+ 在此示例中，请求图像将显示图片，但对 HTML 文件的请求将显示“Welcome to PHP”：
+</p></div>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// router.php<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">preg_match</span><span style="color: #007700">(</span><span style="color: #DD0000">'/\.(?:png|jpg|jpeg|gif)$/'</span><span style="color: #007700">, </span><span style="color: #0000BB">$_SERVER</span><span style="color: #007700">[</span><span style="color: #DD0000">"REQUEST_URI"</span><span style="color: #007700">])) {<br />    return </span><span style="color: #0000BB">false</span><span style="color: #007700">;    </span><span style="color: #FF8000">// 原样提供所请求的资源<br /></span><span style="color: #007700">} else { <br />    echo </span><span style="color: #DD0000">"&lt;p&gt;Welcome to PHP&lt;/p&gt;"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ php -S localhost:8000 router.php</pre>
+</div>
+   </div>
+
+  </div>
+
+  <div class="example" id="example-4">
+   <p><strong>示例 #4 检查 CLI Web 服务器的使用</strong></p> 
+<div class="example-contents"><p>
+  要在使用 CLI Web 服务器开发期间以及稍后使用生产 Web 服务器重复使用的框架 router 脚本：
+</p></div>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// router.php<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">php_sapi_name</span><span style="color: #007700">() == </span><span style="color: #DD0000">'cli-server'</span><span style="color: #007700">) {<br />    </span><span style="color: #FF8000">/* 发送静态资源并返回 false */<br /></span><span style="color: #007700">}<br /></span><span style="color: #FF8000">/* 继续正常的 index.php 操作 */<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ php -S localhost:8000 router.php</pre>
+</div>
+   </div>
+
+  </div>
+
+  <div class="example" id="example-5">
+   <p><strong>示例 #5 处理不支持的文件类型</strong></p> 
+<div class="example-contents"><p>
+  如果需要提供不由 CLI Web 服务器处理的静态资源的 MIME 类型，请使用：
+</p></div>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// router.php<br /></span><span style="color: #0000BB">$path </span><span style="color: #007700">= </span><span style="color: #0000BB">pathinfo</span><span style="color: #007700">(</span><span style="color: #0000BB">$_SERVER</span><span style="color: #007700">[</span><span style="color: #DD0000">"SCRIPT_FILENAME"</span><span style="color: #007700">]);<br />if (</span><span style="color: #0000BB">$path</span><span style="color: #007700">[</span><span style="color: #DD0000">"extension"</span><span style="color: #007700">] == </span><span style="color: #DD0000">"el"</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">"Content-Type: text/x-script.elisp"</span><span style="color: #007700">);<br />    </span><span style="color: #0000BB">readfile</span><span style="color: #007700">(</span><span style="color: #0000BB">$_SERVER</span><span style="color: #007700">[</span><span style="color: #DD0000">"SCRIPT_FILENAME"</span><span style="color: #007700">]);<br />}<br />else {<br />    return </span><span style="color: #0000BB">FALSE</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ php -S localhost:8000 router.php</pre>
+</div>
+   </div>
+
+  </div>
+
+  <div class="example" id="example-6">
+   <p><strong>示例 #6 从远程计算机访问 CLI Web 服务器</strong></p> 
+   <div class="example-contents"><p>
+    可以通过以下方式使 Web 服务器可通过端口 8000 接受任何链接：
+   </p></div>
+   <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">$ php -S 0.0.0.0:8000</pre>
+</div>
+   </div>
+
+   <div class="warning"><strong class="warning">警告</strong>
+    <p class="para">
+      内置 Web 服务器不应该在公共网络上使用。
+    </p>
+   </div>
+  </div>
+
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

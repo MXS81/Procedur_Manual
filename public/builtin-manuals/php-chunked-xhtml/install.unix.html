@@ -1,0 +1,234 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>在 Unix 系统上安装 PHP</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="install.general.html" class="navbar__link">« 安装前需要考虑的事项</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="install.unix.debian.html" class="navbar__link">Debian GNU/Linux 及其相关发行版上从软件包中安装 PHP »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="install.html">安装与配置</a></li>
+        <li>在 Unix 系统上安装 PHP</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="install.unix" class="chapter">
+ <h1 class="title">在 Unix 系统上安装 PHP</h1>
+<h2>目录</h2><ul class="chunklist chunklist_chapter"><li><a href="install.unix.debian.html">Debian GNU/Linux 及其相关发行版上从软件包中安装 PHP</a></li><li><a href="install.unix.dnf.html">在使用 DNF 的 GNU/Linux 发行版上通过软件包安装</a></li><li><a href="install.unix.openbsd.html">OpenBSD 上从软件包或者 ports 中安装 PHP</a></li><li><a href="install.unix.source.html">在 Unix 和 macOS 系统上以源码安装</a></li><li><a href="install.unix.commandline.html">CGI 和命令行设置</a></li><li><a href="install.unix.apache2.html">Unix 系统下的 Apache 2.x</a></li><li><a href="install.unix.nginx.html">Unix 系统下的 Nginx 1.4.x</a></li><li><a href="install.unix.lighttpd-14.html">Unix 平台的 Lighttpd 1.4</a></li><li><a href="install.unix.litespeed.html">Unix 系统下的 LiteSpeed、OpenLiteSpeed Web 服务器</a></li><li><a href="install.unix.solaris.html">针对 Solaris 的安装提示</a></li></ul>
+
+ <p class="simpara">
+  大多数 Unix（和 Linux）操作系统和发行版都通过其打包系统提供 PHP
+  和扩展的打包版本。其中有部分章节介绍了使用这些系统安装 PHP 的基本信息。
+ </p>
+ <p class="simpara">
+  对于某些发行版，还有第三方软件包存储库，通常包含更多可用的版本和扩展。
+ </p>
+ <p class="simpara">
+  PHP 还可以作为某些第三方应用服务器的组件进行安装。
+ </p>
+ <p class="simpara">
+  最后，PHP 始终可以从源码中安装，这样可以最大程度地灵活选择要启用的功能、扩展和服务器
+  API。其中有部分章节介绍了编译和配置 PHP 以及与不同的服务器 API 配合使用的信息。
+ </p>
+
+ 
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+ 
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

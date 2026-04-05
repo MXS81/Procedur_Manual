@@ -1,0 +1,252 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>以 C 语言风格使用反斜线转义字符串中的字符</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="ref.strings.html" class="navbar__link">« 字符串 函数</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.addslashes.html" class="navbar__link">addslashes »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.strings.html">字符串 函数</a></li>
+        <li>以 C 语言风格使用反斜线转义字符串中的字符</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.addcslashes" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">addcslashes</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">addcslashes</span> &mdash; <span class="dc-title">以 C 语言风格使用反斜线转义字符串中的字符</span></p>
+
+ </div>
+ 
+  <div class="refsect1 description" id="refsect1-function.addcslashes-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>addcslashes</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$string</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$characters</code></span>): <span class="type"><a href="language.types.string.html" class="type string">string</a></span></div>
+
+  <p class="para rdfs-comment">
+   返回字符串，该字符串在属于参数 <code class="parameter">characters</code>
+   列表中的字符前都加上了反斜线。
+  </p>
+ </div>
+
+ 
+ <div class="refsect1 parameters" id="refsect1-function.addcslashes-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">string</code></dt>
+     <dd>
+      <p class="para">
+       要转义的字符。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">characters</code></dt>
+     <dd>
+      <p class="para">
+       如果 <code class="parameter">characters</code> 中包含有 <code class="literal">\n</code>，<code class="literal">\r</code>
+       等字符，将以 C 语言风格转换，而其它非字母数字且 ASCII 码低于 32 以及高于 126 
+       的字符均转换成使用八进制表示。
+      </p>
+      <p class="para">
+       当定义 <code class="parameter">characters</code> 参数中的字符序列时，需要确保知道设置为开始及结束范围之内的字符都是什么。
+       <div class="example" id="example-1">
+        <p><strong>示例 #1 带范围的 <span class="function"><strong>addcslashes()</strong></span></strong></p>
+        <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">addcslashes</span><span style="color: #007700">(</span><span style="color: #DD0000">'foo[ ]'</span><span style="color: #007700">, </span><span style="color: #DD0000">'A..z'</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// 输出：\f\o\o\[ \]<br />// 所有大小写字母均被转义<br />// ... 但 [\]^_` 以及分隔符、换行符、回车符等也一并被转义了。<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+        </div>
+
+       </div>
+       另外，如果设置范围中的结束字符 ASCII 
+       码高于开始字符，则不会创建范围，只是将开始字符、结束字符以及其间的字符逐个转义。可使用
+       <span class="function"><a href="function.ord.html" class="function">ord()</a></span> 函数获取字符的 ASCII 码值。
+       <div class="example" id="example-2">
+        <p><strong>示例 #2 <span class="function"><strong>addcslashes()</strong></span> 中的字符顺序错误</strong></p>
+        <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">addcslashes</span><span style="color: #007700">(</span><span style="color: #DD0000">"zoo['.']"</span><span style="color: #007700">, </span><span style="color: #DD0000">'z..A'</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// 输出：\zoo['\.']<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+        </div>
+
+       </div>
+      </p>
+      <p class="para">
+       当选择对字符 0，a，b，f，n，r，t 和 v 进行转义时需要小心。它们将被转换成
+       \0，\a，\b，\f，\n，\r，\t 和 \v，这些在 C 中都是预定义的转义序列。其中一些序列也在其它
+       C 派生语言（包含 PHP）中定义，这意味着如果使用 <span class="function"><strong>addcslashes()</strong></span>
+       和 <code class="parameter">characters</code> 中定义的字符输出生成语言的代码，将不会得到预期的结果。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+ 
+  <div class="refsect1 returnvalues" id="refsect1-function.addcslashes-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   返回转义后的字符。
+  </p>
+ </div>
+
+
+  <div class="refsect1 examples" id="refsect1-function.addcslashes-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+    <code class="parameter">characters</code> 参数，如“\0..\37”，将转义所有
+   ASCII 码介于 0 和 31 之间的字符。
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 <span class="function"><strong>addcslashes()</strong></span> 例子</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$not_escaped </span><span style="color: #007700">= </span><span style="color: #DD0000">"PHP isThirty\nYears Old!\tYay to the Elephant!\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$escaped </span><span style="color: #007700">= </span><span style="color: #0000BB">addcslashes</span><span style="color: #007700">(</span><span style="color: #0000BB">$not_escaped</span><span style="color: #007700">, </span><span style="color: #DD0000">"\0..\37!@\177..\377"</span><span style="color: #007700">);<br />echo </span><span style="color: #0000BB">$escaped</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.addcslashes-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.stripcslashes.html" class="function" rel="rdfs-seeAlso">stripcslashes()</a> - 反引用一个使用 addcslashes 转义的字符串</span></li>
+    <li><span class="function"><a href="function.stripslashes.html" class="function" rel="rdfs-seeAlso">stripslashes()</a> - 反引用一个引用字符串</span></li>
+    <li><span class="function"><a href="function.addslashes.html" class="function" rel="rdfs-seeAlso">addslashes()</a> - 使用反斜线引用字符串</span></li>
+    <li><span class="function"><a href="function.htmlspecialchars.html" class="function" rel="rdfs-seeAlso">htmlspecialchars()</a> - 将特殊字符转换为 HTML 实体</span></li>
+    <li><span class="function"><a href="function.quotemeta.html" class="function" rel="rdfs-seeAlso">quotemeta()</a> - 转义元字符集</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

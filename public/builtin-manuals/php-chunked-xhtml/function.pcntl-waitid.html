@@ -1,0 +1,495 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>等待子进程改变状态</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.pcntl-wait.html" class="navbar__link">« pcntl_wait</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.pcntl-waitpid.html" class="navbar__link">pcntl_waitpid »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pcntl.html">PCNTL 函数</a></li>
+        <li>等待子进程改变状态</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.pcntl-waitid" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">pcntl_waitid</h1>
+  <p class="verinfo">(PHP 8 &gt;= 8.4.0)</p><p class="refpurpose"><span class="refname">pcntl_waitid</span> &mdash; <span class="dc-title">等待子进程改变状态</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.pcntl-waitid-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>pcntl_waitid</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$idtype</code><span class="initializer"> = <strong><code><a href="pcntl.constants.html#constant.p-all">P_ALL</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.integer.html" class="type int">int</a></span></span> <code class="parameter">$id</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter reference">&$info</code><span class="initializer"> = []</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = <strong><code><a href="pcntl.constants.html#constant.wexited">WEXITED</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter reference">&$resource_usage</code><span class="initializer"> = []</span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   获取与终止、停止和/或继续事件有关的状态信息，这些事件发生在调用者的一个子进程中。
+  </p>
+
+  <p class="para">
+   除非传递了 <strong><code><a href="pcntl.constants.html#constant.wnohang">WNOHANG</a></code></strong> 标志，否则调用进程将被阻塞，直到发生错误，
+   或者满足以下所有条件的状态信息变得可用：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      由 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数指定的一组子进程中的一个子进程的状态信息。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      状态信息的状态更改与在 <code class="parameter">flags</code> 参数中设置的状态更改标志之一匹配。
+     </span>
+    </li>
+   </ul>
+  </p>
+
+  <p class="para">
+   如果在调用 <span class="function"><strong>pcntl_waitid()</strong></span> 之前有匹配的状态信息可用，则返回将是立即的。
+   如果有两个或两个以上的子进程的匹配状态信息可用，则其状态报告的顺序是未指定的。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    本文档涵盖了 POSIX 规范中 <code class="literal">waitid</code> 函数的说明，以及在 Linux、NetBSD 和 FreeBSD 上的实现中的一些额外参数。
+    请查看您系统的 <code class="literal">waitid(2)</code> man 手册，以获取有关 <code class="literal">waitid</code> 在您系统上的工作方式的具体细节。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.pcntl-waitid-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">idtype</code></dt>
+    <dt><code class="parameter">id</code></dt>
+    <dd>
+     <span class="simpara">
+      <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数用于指定要等待的子进程。
+     </span>
+     <table class="doctable table">
+      <caption><strong>POSIX 标准 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数</strong></caption>
+      
+       <tbody class="tbody">
+        <tr>
+         <td>如果 <code class="parameter">idtype</code> 是 <code class="literal">P_ALL</code></td>
+         <td>
+          等待任何子进程，<code class="parameter">id</code> 被忽略。
+         </td>
+        </tr>
+
+        <tr>
+         <td>如果 <code class="parameter">idtype</code> 是 <code class="literal">P_PID</code></td>
+         <td>
+          等待进程 ID 等于 <code class="parameter">id</code> 的子进程。
+         </td>
+        </tr>
+
+        <tr>
+         <td>如果 <code class="parameter">idtype</code> 是 <code class="literal">P_PGID</code></td>
+         <td>
+          等待进程组 ID 等于 <code class="parameter">id</code> 的任何子进程。
+         </td>
+        </tr>
+
+       </tbody>
+      
+     </table>
+
+     <table class="doctable table">
+      <caption><strong>Linux 特定 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数</strong></caption>
+      
+       <tbody class="tbody">
+        <tr>
+         <td>如果 <code class="parameter">idtype</code> 是 <code class="literal">P_PIDFD</code>（自 Linux 5.4 起）</td>
+         <td>
+          等待由 <code class="parameter">id</code> 中指定的 PID 文件描述符引用的子进程。
+          （有关 PID 文件描述符的详细信息，请参见 Linux <code class="literal">pidfd_open(2)</code> man 手册）
+         </td>
+        </tr>
+
+       </tbody>
+      
+     </table>
+
+     <table class="doctable table">
+      <caption><strong>NetBSD 和 FreeBSD 特定 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数</strong></caption>
+      
+       <tbody class="tbody">
+        <tr>
+         <td>
+          如果 <code class="parameter">idtype</code> 是 <code class="literal">P_UID</code>
+         </td>
+         <td>
+          等待有效用户 ID 等于 <code class="parameter">id</code> 的进程。
+         </td>
+        </tr>
+
+        <tr>
+         <td>
+          如果 <code class="parameter">idtype</code> 是 <code class="literal">P_GID</code>
+         </td>
+         <td>
+          等待有效组 ID 等于 <code class="parameter">id</code> 的进程。
+         </td>
+        </tr>
+
+        <tr>
+         <td>
+          如果 <code class="parameter">idtype</code> 是 <code class="literal">P_SID</code>
+         </td>
+         <td>
+          等待会话 ID 等于 <code class="parameter">id</code> 的进程。
+          如果子进程启动了自己的会话，其会话 ID 将与其进程 ID 相同。
+          否则，子进程的会话 ID 将与调用者的会话 ID 匹配。
+         </td>
+        </tr>
+
+       </tbody>
+      
+     </table>
+
+     <table class="doctable table">
+      <caption><strong>FreeBSD 特定 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 参数</strong></caption>
+      
+       <tbody class="tbody">
+        <tr>
+         <td>
+          如果 <code class="parameter">idtype</code> 是 <code class="literal">P_JAILID</code>
+         </td>
+         <td>
+          等待在其 jail 标识符等于 <code class="parameter">id</code> 的 jail 中的进程。
+         </td>
+        </tr>
+
+       </tbody>
+      
+     </table>
+
+    </dd>
+   
+   
+    <dt><code class="parameter">info</code></dt>
+    <dd>
+     <p class="para">
+      <code class="parameter">info</code> 参数设置为一个包含有关信号的信息的数组。
+     </p>
+     <p class="para">
+      <code class="parameter">info</code> 数组可能包含以下键：
+      <ul class="simplelist">
+       <li><code class="literal">signo</code>：信号量</li>
+       <li><code class="literal">errno</code>：系统错误号</li>
+       <li><code class="literal">code</code>：信号代码</li>
+       <li><code class="literal">status</code>：退出值或信号</li>
+       <li><code class="literal">pid</code>：发送进程 ID</li>
+       <li><code class="literal">uid</code>：发送进程的真实用户 ID</li>
+       <li><code class="literal">utime</code>：用户消耗的时间</li>
+       <li><code class="literal">stime</code>：系统消耗的时间</li>
+      </ul>
+     </p>
+    </dd>
+   
+   
+    <dt><code class="parameter">flags</code></dt>
+    <dd>
+     <p class="para">
+      <code class="parameter">flags</code> 的值是零个或多个以下常量的值，这些常量通过 OR 运算在一起：
+      <table class="doctable table">
+       <caption><strong><code class="parameter">flags</code> 的可能值</strong></caption>
+       
+        <tbody class="tbody">
+         <tr>
+          <td><strong><code><a href="pcntl.constants.html#constant.wcontinued">WCONTINUED</a></code></strong></td>
+          <td>
+           为任何继续自作业控制停止的子进程返回状态。
+           控制停止后，要么没有报告过其状态，要么只有通过设置了 <strong><code><a href="pcntl.constants.html#constant.wnowait">WNOWAIT</a></code></strong>
+           标志的 <span class="function"><strong>pcntl_waitid()</strong></span> 调用报告过其状态。
+          </td>
+         </tr>
+
+         <tr>
+          <td><strong><code><a href="pcntl.constants.html#constant.wexited">WEXITED</a></code></strong></td>
+          <td>
+           返回已退出的子进程的状态。
+          </td>
+         </tr>
+
+         <tr>
+          <td><strong><code><a href="pcntl.constants.html#constant.wnohang">WNOHANG</a></code></strong></td>
+          <td>
+           如果没有可用的状态，则不挂起；立即返回。
+          </td>
+         </tr>
+
+         <tr>
+          <td><strong><code><a href="pcntl.constants.html#constant.wnowait">WNOWAIT</a></code></strong></td>
+          <td>
+           保持状态返回在 <code class="parameter">info</code> 中的进程处于可等待状态。
+           这不会影响进程的状态；在此调用完成后，可以再次等待该进程。
+          </td>
+         </tr>
+
+         <tr>
+          <td><strong><code><a href="pcntl.constants.html#constant.wstopped">WSTOPPED</a></code></strong></td>
+          <td>
+           返回已停止的子进程的状态。
+           控制停止后，要么没有报告过其状态，要么只有通过设置了 <strong><code><a href="pcntl.constants.html#constant.wnowait">WNOWAIT</a></code></strong>
+           标志的 <span class="function"><strong>pcntl_waitid()</strong></span> 调用报告过其状态。
+          </td>
+         </tr>
+
+        </tbody>
+       
+      </table>
+
+     </p>
+    </dd>
+   
+   
+    <dt><code class="parameter">resource_usage</code></dt>
+    <dd>
+     <p class="para">
+      <code class="parameter">resource_usage</code> 参数设置为数组，包含子进程的资源使用统计信息。
+
+      此功能在以下两种情况下受支持：一是系统提供 wait6 系统调用（例如 FreeBSD），二是在 Linux 系统上通过原始的 waitid 系统调用实现。
+     </p>
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.pcntl-waitid-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   <span class="function"><strong>pcntl_waitid()</strong></span> 如果指定了 <strong><code><a href="pcntl.constants.html#constant.wnohang">WNOHANG</a></code></strong> 并且状态对于由
+   <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 指定的任何进程都不可用，则返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+  </p>
+
+  <p class="para">
+   如果由于其一个子进程的状态更改而返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，则 <span class="function"><strong>pcntl_waitid()</strong></span> 返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+  </p>
+
+  <p class="para">
+   否则，返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，并且可以使用 <span class="function"><a href="function.pcntl-get-last-error.html" class="function">pcntl_get_last_error()</a></span> 来获取 <code class="literal">errno</code> 错误号。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    一旦获得了一个 <code class="literal">errno</code> 错误号，可以使用 <span class="function"><a href="function.pcntl-strerror.html" class="function">pcntl_strerror()</a></span> 来获取与之关联的文本消息。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+  <div class="refsect1 errors" id="refsect1-function.pcntl-waitid-errors">
+  <h3 class="title">错误／异常</h3>
+  <table class="doctable table">
+   <caption><strong>错误号 (<code class="literal">errno</code>) 值</strong></caption>
+   
+    <tbody class="tbody">
+     <tr>
+      <td><strong><code>ECHILD</code></strong></td>
+      <td>
+       调用进程没有未等待的子进程。
+      </td>
+     </tr>
+
+     <tr>
+      <td><strong><code>EINTR</code></strong></td>
+      <td>
+       <span class="function"><strong>pcntl_waitid()</strong></span> 被一个信号中断。
+      </td>
+     </tr>
+
+     <tr>
+      <td><strong><code>EINVAL</code></strong></td>
+      <td>
+       为 <code class="parameter">flags</code> 指定了一个无效值，
+       或者 <code class="parameter">idtype</code> 和 <code class="parameter">id</code> 指定了一组无效的进程。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.pcntl-waitid-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.5.0</td>
+      <td>
+       增加了 <code class="parameter">resource_usage</code>。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.pcntl-waitid-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.pcntl-waitpid.html" class="function" rel="rdfs-seeAlso">pcntl_waitpid()</a> - 等待或返回 fork 的子进程状态</span></li>
+    <li><span class="function"><a href="function.pcntl-wait.html" class="function" rel="rdfs-seeAlso">pcntl_wait()</a> - 等待或返回 fork 的子进程状态</span></li>
+    <li><span class="function"><a href="function.pcntl-fork.html" class="function" rel="rdfs-seeAlso">pcntl_fork()</a> - 在当前进程当前位置产生分叉（fork）</span></li>
+    <li><span class="function"><a href="function.pcntl-signal.html" class="function" rel="rdfs-seeAlso">pcntl_signal()</a> - 安装信号处理程序</span></li>
+    <li><span class="function"><a href="function.pcntl-wifexited.html" class="function" rel="rdfs-seeAlso">pcntl_wifexited()</a> - 检查状态代码是否代表一个正常的退出</span></li>
+    <li><span class="function"><a href="function.pcntl-wifstopped.html" class="function" rel="rdfs-seeAlso">pcntl_wifstopped()</a> - 检查子进程当前是否已经停止</span></li>
+    <li><span class="function"><a href="function.pcntl-wifsignaled.html" class="function" rel="rdfs-seeAlso">pcntl_wifsignaled()</a> - 检查子进程状态码是否代表由于某个信号而中断</span></li>
+    <li><span class="function"><a href="function.pcntl-wexitstatus.html" class="function" rel="rdfs-seeAlso">pcntl_wexitstatus()</a> - 返回一个中断的子进程的返回代码</span></li>
+    <li><span class="function"><a href="function.pcntl-wtermsig.html" class="function" rel="rdfs-seeAlso">pcntl_wtermsig()</a> - 返回导致子进程中断的信号</span></li>
+    <li><span class="function"><a href="function.pcntl-wstopsig.html" class="function" rel="rdfs-seeAlso">pcntl_wstopsig()</a> - 返回导致子进程停止的信号</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,209 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>进程控制</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.expect-popen.html" class="navbar__link">« expect_popen</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="pcntl.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.fileprocess.process.html">进程控制扩展</a></li>
+        <li>进程控制</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.pcntl" class="book">
+ 
+ <h1 class="title">进程控制</h1>
+ 
+ 
+ 
+ <div id="intro.pcntl" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="para">
+   PHP 的进程控制支持实现了 Unix 方式的进程创建, 程序执行, 信号处理以及进程的中断。进程控制不能被应用在
+   Web 服务器环境，当其被用于 Web 服务环境时可能会带来意外的结果。
+  </p>
+  <p class="para">
+   这份文档用于阐述每个进程控制函数的通常用法。关于 Unix 进程控制的更多信息建议查阅系统文档中关于
+   fork（2）、waitpid（2）、signal（2）等的部分或更全面的参考资料比如《Unix
+   环境高级编程》（作者：W. Richard Stevens、Addison-Wesley 出版）。
+  </p>
+  <p class="para">
+   PCNTL 现在使用了 ticks 作为信号处理的回调机制，ticks 在速度上远远超过了之前的处理机制。这个变化与“用户
+   ticks”遵循了相同的语义。您可以使用 <span class="function"><strong>declare()</strong></span>
+   语句在程序中指定允许发生回调的位置。这使得我们对异步事件处理的开销最小化。在编译 PHP 时启用
+   pcntl 将始终承担这种开销，不论脚本中是否真正使用了 pcntl。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: <span class="simpara">此扩展在 Windows 平台上不可用。</span></p></blockquote>
+ </div>
+ 
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="pcntl.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="pcntl.installation.html">安装</a></li></ul></li><li><a href="pcntl.constants.html">预定义常量</a></li><li><a href="pcntl.examples.html">示例</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="pcntl.example.html">基本用法</a></li></ul></li><li><a href="enum.pcntl-qosclass.html">Pcntl\QosClass</a> — The Pcntl\QosClass Enum</li><li><a href="ref.pcntl.html">PCNTL 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.pcntl-alarm.html">pcntl_alarm</a> — 为进程设置 alarm 闹钟信号</li><li><a href="function.pcntl-async-signals.html">pcntl_async_signals</a> — Enable/disable asynchronous signal handling or return the old setting</li><li><a href="function.pcntl-errno.html">pcntl_errno</a> — 别名 pcntl_get_last_error</li><li><a href="function.pcntl-exec.html">pcntl_exec</a> — 在当前进程空间执行指定程序</li><li><a href="function.pcntl-fork.html">pcntl_fork</a> — 在当前进程当前位置产生分叉（fork）</li><li><a href="function.pcntl-get-last-error.html">pcntl_get_last_error</a> — Retrieve the error number set by the last pcntl function which failed</li><li><a href="function.pcntl-getcpuaffinity.html">pcntl_getcpuaffinity</a> — Get the cpu affinity of a process</li><li><a href="function.pcntl-getpriority.html">pcntl_getpriority</a> — 获取任意进程的优先级</li><li><a href="function.pcntl-rfork.html">pcntl_rfork</a> — Manipulates process resources</li><li><a href="function.pcntl-setcpuaffinity.html">pcntl_setcpuaffinity</a> — Set the cpu affinity of a process</li><li><a href="function.pcntl-setpriority.html">pcntl_setpriority</a> — 修改任意进程的优先级</li><li><a href="function.pcntl-signal.html">pcntl_signal</a> — 安装信号处理程序</li><li><a href="function.pcntl-signal-dispatch.html">pcntl_signal_dispatch</a> — 调用等待信号的处理程序</li><li><a href="function.pcntl-signal-get-handler.html">pcntl_signal_get_handler</a> — Get the current handler for specified signal</li><li><a href="function.pcntl-sigprocmask.html">pcntl_sigprocmask</a> — 设置或检索阻塞信号</li><li><a href="function.pcntl-sigtimedwait.html">pcntl_sigtimedwait</a> — 带超时机制的信号等待</li><li><a href="function.pcntl-sigwaitinfo.html">pcntl_sigwaitinfo</a> — 等待信号</li><li><a href="function.pcntl-strerror.html">pcntl_strerror</a> — Retrieve the system error message associated with the given errno</li><li><a href="function.pcntl-unshare.html">pcntl_unshare</a> — Dissociates parts of the process execution context</li><li><a href="function.pcntl-wait.html">pcntl_wait</a> — 等待或返回 fork 的子进程状态</li><li><a href="function.pcntl-waitid.html">pcntl_waitid</a> — 等待子进程改变状态</li><li><a href="function.pcntl-waitpid.html">pcntl_waitpid</a> — 等待或返回 fork 的子进程状态</li><li><a href="function.pcntl-wexitstatus.html">pcntl_wexitstatus</a> — 返回一个中断的子进程的返回代码</li><li><a href="function.pcntl-wifexited.html">pcntl_wifexited</a> — 检查状态代码是否代表一个正常的退出</li><li><a href="function.pcntl-wifsignaled.html">pcntl_wifsignaled</a> — 检查子进程状态码是否代表由于某个信号而中断</li><li><a href="function.pcntl-wifstopped.html">pcntl_wifstopped</a> — 检查子进程当前是否已经停止</li><li><a href="function.pcntl-wstopsig.html">pcntl_wstopsig</a> — 返回导致子进程停止的信号</li><li><a href="function.pcntl-wtermsig.html">pcntl_wtermsig</a> — 返回导致子进程中断的信号</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

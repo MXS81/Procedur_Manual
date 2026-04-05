@@ -1,0 +1,336 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="outcontrol.configuration.html" class="navbar__link">« 运行时配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="outcontrol.output-buffering.html" class="navbar__link">输出缓冲 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.outcontrol.html">输出控制</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="outcontrol.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">
+下列常量作为 PHP 核心的一部分总是可用的。
+</p>
+ <dl id="outcontrol.constants.flags-passed-to-handler">
+  <strong class="title">传递给输出处理程序的状态 flag</strong>
+  <p class="para">
+   下列 flag 作为位掩码的一部分传递给由 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 设置的输出处理程序的第二个（<code class="parameter">phase</code>）参数：
+  </p>
+  
+   <dt id="constant.php-output-handler-start">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-start">PHP_OUTPUT_HANDLER_START</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出缓冲已经开始。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-write">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-write">PHP_OUTPUT_HANDLER_WRITE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出缓冲区正在刷新，并且有数据要输出。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-flush">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-flush">PHP_OUTPUT_HANDLER_FLUSH</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示缓冲区已清空。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-clean">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-clean">PHP_OUTPUT_HANDLER_CLEAN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出缓冲已清空。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-final">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-final">PHP_OUTPUT_HANDLER_FINAL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示这是最后一次输出缓冲操作。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-cont">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-cont">PHP_OUTPUT_HANDLER_CONT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示缓冲区已清空，但输出缓冲将继续。
+    </p>
+    <p class="para">
+     这是 <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-write">PHP_OUTPUT_HANDLER_WRITE</a></code></strong> 的别名。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-end">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-end">PHP_OUTPUT_HANDLER_END</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出缓冲已结束。
+    </p>
+    <p class="para">
+     这是 <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-final">PHP_OUTPUT_HANDLER_FINAL</a></code></strong> 的别名。
+    </p>
+   </dd>
+  
+ </dl>
+ <dl id="outcontrol.constants.buffer-control-flags">
+  <strong class="title">输出缓冲区控制 flag</strong>
+  <p class="para">
+   下列 flag 作为位掩码的一部分传递给由 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 设置的输出处理程序的第三个（<code class="parameter">flags</code>）参数：
+  </p>
+  
+   <dt id="constant.php-output-handler-cleanable">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-cleanable">PHP_OUTPUT_HANDLER_CLEANABLE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     控制 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 创建的输出缓冲区是否可以由 <span class="function"><a href="function.ob-clean.html" class="function">ob_clean()</a></span> 清除。这个 flag
+     不能控制 <span class="function"><a href="function.ob-end-clean.html" class="function">ob_end_clean()</a></span> 或 <span class="function"><a href="function.ob-get-clean.html" class="function">ob_get_clean()</a></span> 的行为。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-flushable">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-flushable">PHP_OUTPUT_HANDLER_FLUSHABLE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     控制 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 创建的输出缓冲区是否可以由 <span class="function"><a href="function.ob-flush.html" class="function">ob_flush()</a></span> 刷新。这个 flag
+     不能控制 <span class="function"><a href="function.ob-end-flush.html" class="function">ob_end_flush()</a></span> 或 <span class="function"><a href="function.ob-get-flush.html" class="function">ob_get_flush()</a></span> 的行为。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-removable">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-removable">PHP_OUTPUT_HANDLER_REMOVABLE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     控制 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 创建的输出缓冲区是否可以在脚本结束前或者调用
+     <span class="function"><a href="function.ob-end-clean.html" class="function">ob_end_clean()</a></span>、<span class="function"><a href="function.ob-end-flush.html" class="function">ob_end_flush()</a></span>、<span class="function"><a href="function.ob-get-clean.html" class="function">ob_get_clean()</a></span> 或 <span class="function"><a href="function.ob-get-flush.html" class="function">ob_get_flush()</a></span> 移除。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-stdflags">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-stdflags">PHP_OUTPUT_HANDLER_STDFLAGS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     输出缓冲区 flag 的默认设置；当前等同于
+     <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-cleanable">PHP_OUTPUT_HANDLER_CLEANABLE</a></code></strong> |
+     <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-flushable">PHP_OUTPUT_HANDLER_FLUSHABLE</a></code></strong> |
+     <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-removable">PHP_OUTPUT_HANDLER_REMOVABLE</a></code></strong>.
+    </p>
+   </dd>
+  
+ </dl>
+ <dl id="outcontrol.constants.flags-returned-by-handler">
+  <strong class="title">输出处理程序状态 flag</strong>
+  <p class="para">
+   下列 flag 是由 <span class="function"><a href="function.ob-get-status.html" class="function">ob_get_status()</a></span> 返回的 <code class="literal">flags</code> 位掩码的一部分：
+  </p>
+  
+   <dt id="constant.php-output-handler-started">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-started">PHP_OUTPUT_HANDLER_STARTED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出处理程序已调用。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-disabled">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-disabled">PHP_OUTPUT_HANDLER_DISABLED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出处理程序已禁用。当输出处理程序返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong> 
+     或者处理缓冲区失败时设置此 flag。
+     在 PHP 8.4.0 之前，此 flag 可以在启动输出缓冲区时设置。
+    </p>
+   </dd>
+  
+  
+   <dt id="constant.php-output-handler-processed">
+    <strong><code><a href="outcontrol.constants.html#constant.php-output-handler-processed">PHP_OUTPUT_HANDLER_PROCESSED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     表示输出处理程序已经成功处理了缓冲区。
+     自 PHP 8.4.0 起可用。
+    </p>
+   </dd>
+  
+ </dl>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

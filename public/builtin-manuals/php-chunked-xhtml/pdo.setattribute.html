@@ -1,0 +1,403 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>设置属性</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="pdo.rollback.html" class="navbar__link">« PDO::rollBack</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="class.pdostatement.html" class="navbar__link">PDOStatement »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.pdo.html">PDO</a></li>
+        <li>设置属性</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="pdo.setattribute" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">PDO::setAttribute</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.1.0, PHP 7, PHP 8, PECL pdo &gt;= 0.1.0)</p><p class="refpurpose"><span class="refname">PDO::setAttribute</span> &mdash; <span class="dc-title">
+   设置属性
+  </span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-pdo.setattribute-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="modifier">public</span> <span class="methodname"><strong>PDO::setAttribute</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$attribute</code></span>, <span class="methodparam"><span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span> <code class="parameter">$value</code></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+
+  <p class="para rdfs-comment">
+   设置数据库句柄属性。下面列出了一些可用的通用属性；有些驱动可能使用另外的特定属性。
+   请注意，特定的驱动程序属性<em>不得</em>用于其他驱动程序。
+   <dl>
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-case">PDO::ATTR_CASE</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       强制列名为指定的大小写。可以采用以下某个值：
+      </p>
+      <dl>
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.case-lower">PDO::CASE_LOWER</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          强制列名小写。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.case-natural">PDO::CASE_NATURAL</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          保留数据库驱动返回的列名。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.case-upper">PDO::CASE_UPPER</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          强制列名大写。
+         </span>
+        </dd>
+       
+      </dl>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-errmode">PDO::ATTR_ERRMODE</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       PDO 的报错方式。可以采用以下某个值：
+      </p>
+      <dl>
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.errmode-silent">PDO::ERRMODE_SILENT</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          仅设置错误代码。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.errmode-warning">PDO::ERRMODE_WARNING</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          引发 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong> 警告。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.errmode-exception">PDO::ERRMODE_EXCEPTION</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          抛出 <span class="classname"><a href="class.pdoexception.html" class="classname">PDOException</a></span>。
+         </span>
+        </dd>
+       
+      </dl>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-oracle-nulls">PDO::ATTR_ORACLE_NULLS</a></code></strong></dt>
+     <dd>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        此属性适用于所有驱动程序，而不仅仅是 Oracle。
+       </span>
+      </p></blockquote>
+      <p class="para">
+       确定是否以及如何转换 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 和空字符串。可以采用以下值之一：
+      </p>
+      <dl>
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.null-natural">PDO::NULL_NATURAL</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          不发生转换。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.null-empty-string">PDO::NULL_EMPTY_STRING</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          空字符串转换为 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>。
+         </span>
+        </dd>
+       
+       
+        <dt><strong><code><a href="pdo.constants.html#pdo.constants.null-to-string">PDO::NULL_TO_STRING</a></code></strong></dt>
+        <dd>
+         <span class="simpara">
+          <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 被转换为空字符串。
+         </span>
+        </dd>
+       
+      </dl>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-stringify-fetches">PDO::ATTR_STRINGIFY_FETCHES</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       控制是否将获取的值（<strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 除外）转换为字符串。采用 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型的值：<strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 表示启用，<strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>
+       表示禁用（默认）。除非将 <strong><code><a href="pdo.constants.html#pdo.constants.attr-oracle-nulls">PDO::ATTR_ORACLE_NULLS</a></code></strong> 设置为
+       <strong><code><a href="pdo.constants.html#pdo.constants.null-to-string">PDO::NULL_TO_STRING</a></code></strong>，否则 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 值保持不变。
+      </p>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-statement-class">PDO::ATTR_STATEMENT_CLASS</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       设置从 PDOStatement 派生的用户提供的语句类。
+       
+       需要 <code class="literal">array(string classname, array(mixed constructor_args))</code>。
+      </p>
+      <div class="caution"><strong class="caution">警告</strong>
+       <p class="simpara">
+        不能用于持久 PDO 实例。
+       </p>
+      </div>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-timeout">PDO::ATTR_TIMEOUT</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       指定超时的秒数。需要 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 类型的值。
+      </p>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <p class="para">
+        并非所有驱动都支持此选项，这意味着驱动和驱动之间可能会有差异。比如，SQLite 等待的时间达到此值后就放弃获取可写锁，但其他驱动可能会将此值解释为一个连接或读取超时的间隔。 
+       </p>
+      </p></blockquote>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-autocommit">PDO::ATTR_AUTOCOMMIT</a></code></strong></dt>
+     <dd>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        仅适用于 OCI、Firebird 和 MySQL 驱动程序。
+       </span>
+      </p></blockquote>
+      <p class="para">
+       是否自动提交每个单独的语句。采用 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型的值：<strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 表示启用，<strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong> 表示禁用。默认为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+      </p>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-emulate-prepares">PDO::ATTR_EMULATE_PREPARES</a></code></strong></dt>
+     <dd>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        仅适用于 OCI、Firebird 和 MySQL 驱动程序。
+       </span>
+      </p></blockquote>
+      <p class="para">
+       是否启用或禁用预处理语句的模拟。有些驱动天然不支持或有限度地支持预处理语句。如果设置为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，PDO
+       始终模拟预处理语句，否则 PDO 将会尝试使用本地预处理语句。如果驱动不能成功预处理当前查询，PDO 将始终回退到模拟预处理语句上。
+      </p>
+     </dd>
+    
+    
+     <dt><strong><code><a href="ref.pdo-mysql.html#pdo.constants.mysql-attr-use-buffered-query">PDO::MYSQL_ATTR_USE_BUFFERED_QUERY</a></code></strong></dt>
+     <dd>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        仅适用于 MySQL 驱动程序。
+       </span>
+      </p></blockquote>
+      <p class="para">
+       是否使用缓冲查询。采用 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型的值：<strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 表示启用，<strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong> 表示禁用。默认情况下，默认为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+      </p>
+     </dd>
+    
+    
+     <dt><strong><code><a href="pdo.constants.html#pdo.constants.attr-default-fetch-mode">PDO::ATTR_DEFAULT_FETCH_MODE</a></code></strong></dt>
+     <dd>
+      <p class="para">
+       设置默认获取模式。关于模式的说明以及如何使用可以在 <span class="methodname"><a href="pdostatement.fetch.html" class="methodname">PDOStatement::fetch()</a></span> 文档找到。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-pdo.setattribute-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">attribute</code></dt>
+     <dd>
+      <p class="para">
+       要修改的属性。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">value</code></dt>
+     <dd>
+      <p class="para">
+       设置 <code class="parameter">attribute</code> 的值，属性的不同导致需要的类型也会不同。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-pdo.setattribute-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-pdo.setattribute-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="pdo.getattribute.html" class="function" rel="rdfs-seeAlso">PDO::getAttribute()</a> - 取回一个数据库连接的属性</span></li>
+    <li><span class="function"><a href="pdostatement.getattribute.html" class="function" rel="rdfs-seeAlso">PDOStatement::getAttribute()</a> - 检索语句属性</span></li>
+    <li><span class="function"><a href="pdostatement.setattribute.html" class="function" rel="rdfs-seeAlso">PDOStatement::setAttribute()</a> - 设置一个语句属性</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

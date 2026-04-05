@@ -1,0 +1,191 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>示例</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.enumerations.object-differences.inheritance.html" class="navbar__link">« 为什么枚举不可扩展</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.errors.html" class="navbar__link">错误 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.enumerations.html">枚举</a></li>
+        <li>示例</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.enumerations.examples" class="sect1">
+  <h2 class="title">示例</h2>
+
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 值受限的基本用法</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">enum </span><span style="color: #0000BB">SortOrder<br /></span><span style="color: #007700">{<br />    case </span><span style="color: #0000BB">Asc</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Desc</span><span style="color: #007700">;<br />}<br /><br />function </span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">, </span><span style="color: #0000BB">$filter</span><span style="color: #007700">, </span><span style="color: #0000BB">SortOrder $order </span><span style="color: #007700">= </span><span style="color: #0000BB">SortOrder</span><span style="color: #007700">::</span><span style="color: #0000BB">Asc</span><span style="color: #007700">)<br />{<br />     </span><span style="color: #FF8000">/* ... */<br /></span><span style="color: #007700">}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>
+    由于确保 <code class="literal">$order</code> 不是 <code class="literal">SortOrder::Asc</code>
+    就是 <code class="literal">SortOrder::Desc</code>，所以 <code class="literal">query()</code> 函数能安全处理。
+    因为其他任意值都会导致 <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>，
+    所以不需要额外的错误检查。
+    </p></div>
+   </div>
+  </p>
+
+  <p class="para">
+
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 值排他的高级用法</strong></p>
+
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">enum </span><span style="color: #0000BB">UserStatus</span><span style="color: #007700">: </span><span style="color: #0000BB">string<br /></span><span style="color: #007700">{<br />    case </span><span style="color: #0000BB">Pending </span><span style="color: #007700">= </span><span style="color: #DD0000">'P'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Active </span><span style="color: #007700">= </span><span style="color: #DD0000">'A'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Suspended </span><span style="color: #007700">= </span><span style="color: #DD0000">'S'</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">CanceledByUser </span><span style="color: #007700">= </span><span style="color: #DD0000">'C'</span><span style="color: #007700">;<br /><br />    public function </span><span style="color: #0000BB">label</span><span style="color: #007700">(): </span><span style="color: #0000BB">string<br />    </span><span style="color: #007700">{<br />        return match(</span><span style="color: #0000BB">$this</span><span style="color: #007700">) {<br />            </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">Pending </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Pending'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">Active </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Active'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">Suspended </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Suspended'</span><span style="color: #007700">,<br />            </span><span style="color: #0000BB">self</span><span style="color: #007700">::</span><span style="color: #0000BB">CanceledByUser </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'Canceled by user'</span><span style="color: #007700">,<br />        };<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+
+    <div class="example-contents"><p>
+     这个例子中，用户的状态是 <code class="literal">UserStatus::Pending</code>、
+     <code class="literal">UserStatus::Active</code>、<code class="literal">UserStatus::Suspended</code>、
+     <code class="literal">UserStatus::CanceledByUser</code> 中的一个，具有独占性。
+     函数可以根据 <code class="literal">UserStatus</code> 设置参数类型，仅支持这四种值。
+    </p></div>
+
+    <div class="example-contents"><p>
+     所有四个值都有一个 <code class="literal">label()</code> 方法，返回了人类可读的字符串。
+     它独立于等同于标量的“机器名”。
+     机器名用于类似数据库字段或 HTML 选择框这样的地方。
+    </p></div>
+
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">foreach (</span><span style="color: #0000BB">UserStatus</span><span style="color: #007700">::</span><span style="color: #0000BB">cases</span><span style="color: #007700">() as </span><span style="color: #0000BB">$case</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">printf</span><span style="color: #007700">(</span><span style="color: #DD0000">'&lt;option value="%s"&gt;%s&lt;/option&gt;\n'</span><span style="color: #007700">, </span><span style="color: #0000BB">$case</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">value</span><span style="color: #007700">, </span><span style="color: #0000BB">$case</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">label</span><span style="color: #007700">());<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,865 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="reserved.classes.html" class="navbar__link">« 预定义类</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="reserved.other-reserved-words.html" class="navbar__link">其他保留字列表 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="reserved.html">保留字列表</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="reserved.constants" class="sect1">
+  <h2 class="title">预定义常量</h2>
+  
+
+
+
+<div class="sect2" id="reserved.constants.core">
+ <h3 class="title">内核预定义常量</h3>
+ <p class="simpara">
+  这些常量在 PHP 的内核中定义。它包含 PHP、Zend 引擎和 SAPI 模块。
+ </p>
+ <dl>
+  
+   <dt id="constant.php-version">
+    <strong><code><a href="reserved.constants.html#constant.php-version">PHP_VERSION</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的字符串，“主版本号.子版本号.阶段版本号[扩展信息]”形式。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-major-version">
+    <strong><code><a href="reserved.constants.html#constant.php-major-version">PHP_MAJOR_VERSION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的主版本号，为整数形式（例如：“5.2.7-extra” 版本是 int(5) ）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-minor-version">
+    <strong><code><a href="reserved.constants.html#constant.php-minor-version">PHP_MINOR_VERSION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的子版本号，为整数形式（例如：“5.2.7-extra” 版本是 int(2) ）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-release-version">
+    <strong><code><a href="reserved.constants.html#constant.php-release-version">PHP_RELEASE_VERSION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的阶段版本号，为整数形式（例如：“5.2.7-extra” 版本是 int(7) ）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-version-id">
+    <strong><code><a href="reserved.constants.html#constant.php-version-id">PHP_VERSION_ID</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的整数，用于版本比较（例如：“5.2.7-extra” 版本是 int(50207) ）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-extra-version">
+    <strong><code><a href="reserved.constants.html#constant.php-extra-version">PHP_EXTRA_VERSION</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的&quot;扩展信息&quot;信息，为字符串形式（例如：“5.2.7-extra” 版本是 &#039;-extra&#039; ）。
+     通常由发行版供应商用来指示包的版本。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-build-date">
+    <strong><code><a href="reserved.constants.html#constant.php-build-date">PHP_BUILD_DATE</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     PHP 的构建日期和时间，格式为 <code class="literal">&quot;M d Y H:i:s&quot;</code>。自 PHP 8.5.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-build-provider">
+    <strong><code><a href="reserved.constants.html#constant.php-build-provider">PHP_BUILD_PROVIDER</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     构建 PHP 的提供方。自 PHP 8.5.0 起可用。
+    </span>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      该常量并非在所有 PHP 构建版本中都存在（例如，从源码构建时若未在配置阶段指定值，则不会设置此常量）。
+     </span>
+    </p></blockquote>
+   </dd>
+  
+  
+   <dt id="constant.zend-thread-safe">
+    <strong><code><a href="reserved.constants.html#constant.zend-thread-safe">ZEND_THREAD_SAFE</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     指示当前 PHP 版本是否是线程安全。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.zend-debug-build">
+    <strong><code><a href="reserved.constants.html#constant.zend-debug-build">ZEND_DEBUG_BUILD</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     表示当前 PHP 版本是否为调试版本。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-zts">
+    <strong><code><a href="reserved.constants.html#constant.php-zts">PHP_ZTS</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+    别名 <strong><code><a href="reserved.constants.html#constant.zend-thread-safe">ZEND_THREAD_SAFE</a></code></strong>
+   </dt>
+   <dd>
+    <span class="simpara">
+     表示 PHP 的当前版本是否为线程安全版本。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-debug">
+    <strong><code><a href="reserved.constants.html#constant.php-debug">PHP_DEBUG</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+    别名 <strong><code><a href="reserved.constants.html#constant.zend-debug-build">ZEND_DEBUG_BUILD</a></code></strong>
+   </dt>
+   <dd>
+    <span class="simpara">
+     表示当前 PHP 版本是否为调试版本。
+    </span>
+   </dd>
+  
+  
+  <dt id="constant.debug-backtrace-provide-object">
+   <strong><code><a href="reserved.constants.html#constant.debug-backtrace-provide-object">DEBUG_BACKTRACE_PROVIDE_OBJECT</a></code></strong>
+   (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+  </dt>
+  <dd>
+   <span class="simpara">
+    填充 object 的索引。
+   </span>
+  </dd>
+ 
+ 
+  <dt id="constant.debug-backtrace-ignore-args">
+   <strong><code><a href="reserved.constants.html#constant.debug-backtrace-ignore-args">DEBUG_BACKTRACE_IGNORE_ARGS</a></code></strong>
+   (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+  </dt>
+  <dd>
+   <span class="simpara">
+    不要在堆跟踪中包含函数的参数信息。
+   </span>
+  </dd>
+ 
+ 
+   <dt id="constant.php-maxpathlen">
+    <strong><code><a href="reserved.constants.html#constant.php-maxpathlen">PHP_MAXPATHLEN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本支持的最大文件名（包括路径）长度。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-os">
+    <strong><code><a href="reserved.constants.html#constant.php-os">PHP_OS</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行 PHP 的操作系统。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-os-family">
+    <strong><code><a href="reserved.constants.html#constant.php-os-family">PHP_OS_FAMILY</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行 PHP 的操作系统家族。
+     <code class="literal">&#039;Windows&#039;</code>、 <code class="literal">&#039;BSD&#039;</code>、
+     <code class="literal">&#039;Darwin&#039;</code>、 <code class="literal">&#039;Solaris&#039;</code>、
+     <code class="literal">&#039;Linux&#039;</code> 或 <code class="literal">&#039;Unknown&#039;</code> 中的一个。
+     从 PHP 7.2.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-sapi">
+    <strong><code><a href="reserved.constants.html#constant.php-sapi">PHP_SAPI</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行 PHP 的服务器接口类型（Server API）。参见 <span class="function"><a href="function.php-sapi-name.html" class="function">php_sapi_name()</a></span>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-eol">
+    <strong><code><a href="reserved.constants.html#constant.php-eol">PHP_EOL</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前平台中对于换行符的定义。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-int-max">
+    <strong><code><a href="reserved.constants.html#constant.php-int-max">PHP_INT_MAX</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本支持的最大整型数字。在 32 位系统中通常为 int(2147483647)，64 位系统中为 int(9223372036854775807)。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-int-min">
+    <strong><code><a href="reserved.constants.html#constant.php-int-min">PHP_INT_MIN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本支持的最小整型数字。在 32 位系统中通常为 int(-2147483648)，64 系统中为 int(-9223372036854775808)。通常情况下 PHP_INT_MIN === ~PHP_INT_MAX。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-int-size">
+    <strong><code><a href="reserved.constants.html#constant.php-int-size">PHP_INT_SIZE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     当前 PHP 版本的整数大小（以字节为单位）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-float-dig">
+    <strong><code><a href="reserved.constants.html#constant.php-float-dig">PHP_FLOAT_DIG</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     可以返回四舍五入为浮点数后不会造成精度损失的小数位数。
+     从 PHP 7.2.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-float-epsilon">
+    <strong><code><a href="reserved.constants.html#constant.php-float-epsilon">PHP_FLOAT_EPSILON</a></code></strong>
+    (<span class="type"><a href="language.types.float.html" class="type float">float</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     最小的可表示正数 x，使 <code class="literal">x + 1.0 != 1.0</code>。
+     从 PHP 7.2.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-float-min">
+    <strong><code><a href="reserved.constants.html#constant.php-float-min">PHP_FLOAT_MIN</a></code></strong>
+    (<span class="type"><a href="language.types.float.html" class="type float">float</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     最小可表示的<em>正</em>浮点数。
+     如果你需要最小的可表示<em>负</em>浮点数，可以使用 <code class="literal">- PHP_FLOAT_MAX</code>。
+     从 PHP 7.2.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-float-max">
+    <strong><code><a href="reserved.constants.html#constant.php-float-max">PHP_FLOAT_MAX</a></code></strong>
+    (<span class="type"><a href="language.types.float.html" class="type float">float</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     最大的可表示浮点数。
+     从 PHP 7.2.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.default-include-path">
+    <strong><code><a href="reserved.constants.html#constant.default-include-path">DEFAULT_INCLUDE_PATH</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.pear-install-dir">
+    <strong><code><a href="reserved.constants.html#constant.pear-install-dir">PEAR_INSTALL_DIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.pear-extension-dir">
+    <strong><code><a href="reserved.constants.html#constant.pear-extension-dir">PEAR_EXTENSION_DIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-extension-dir">
+    <strong><code><a href="reserved.constants.html#constant.php-extension-dir">PHP_EXTENSION_DIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     寻找可动态加载扩展的默认目录（除非被 <a href="ini.core.html#ini.extension-dir" class="link">extension_dir</a>覆盖）。
+     默认为 <strong><code><a href="reserved.constants.html#constant.php-prefix">PHP_PREFIX</a></code></strong> （在 Windows 上是 <code class="code">PHP_PREFIX . &quot;\\ext&quot;</code>）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-prefix">
+    <strong><code><a href="reserved.constants.html#constant.php-prefix">PHP_PREFIX</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     配置（configure）时设置的 <strong class="option configure">--prefix</strong> 值。
+     在 Windows 上，它是配置（configure）时设置的 <strong class="option configure">--with-prefix</strong> 值。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-bindir">
+    <strong><code><a href="reserved.constants.html#constant.php-bindir">PHP_BINDIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     配置（configure）时设置的 <strong class="option configure">--bindir</strong> 值。
+     在 Windows 上，它是配置（configure）时设置的 <strong class="option configure">--with-prefix</strong> 值。
+    </span>
+   </dd>
+ 
+ 
+  <dt id="constant.php-sbindir">
+   <strong><code><a href="reserved.constants.html#constant.php-sbindir">PHP_SBINDIR</a></code></strong>
+   (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+  </dt>
+  <dd>
+   <span class="simpara">
+    在配置时设置 <strong class="option configure">--sbindir</strong> 的值。在 Windows 上，配置时设置
+    <strong class="option configure">--with-prefix</strong> 的值。自 PHP 8.4.0 起可用。
+   </span>
+  </dd>
+ 
+  
+   <dt id="constant.php-binary">
+    <strong><code><a href="reserved.constants.html#constant.php-binary">PHP_BINARY</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     脚本执行期间的 PHP 二进制路径。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-mandir">
+    <strong><code><a href="reserved.constants.html#constant.php-mandir">PHP_MANDIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     安装手册页的位置。
+    </span>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      该常量在 Windows 版 PHP 构建中不存在。
+     </span>
+    </p></blockquote>
+   </dd>
+  
+  
+   <dt id="constant.php-libdir">
+    <strong><code><a href="reserved.constants.html#constant.php-libdir">PHP_LIBDIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-datadir">
+    <strong><code><a href="reserved.constants.html#constant.php-datadir">PHP_DATADIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-sysconfdir">
+    <strong><code><a href="reserved.constants.html#constant.php-sysconfdir">PHP_SYSCONFDIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-localstatedir">
+    <strong><code><a href="reserved.constants.html#constant.php-localstatedir">PHP_LOCALSTATEDIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-config-file-path">
+    <strong><code><a href="reserved.constants.html#constant.php-config-file-path">PHP_CONFIG_FILE_PATH</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-config-file-scan-dir">
+    <strong><code><a href="reserved.constants.html#constant.php-config-file-scan-dir">PHP_CONFIG_FILE_SCAN_DIR</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-shlib-suffix">
+    <strong><code><a href="reserved.constants.html#constant.php-shlib-suffix">PHP_SHLIB_SUFFIX</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     构建平台的共享库后缀，例如 “so”（大多数 Unix） 或 “dll”（Windows）。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-fd-setsize">
+    <strong><code><a href="reserved.constants.html#constant.php-fd-setsize">PHP_FD_SETSIZE</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     系统调用的文件描述符的最大数目。从 PHP 7.1.0 起可用。
+    </span>
+   </dd>
+  
+  
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-parse">E_PARSE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-notice">E_NOTICE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-core-error">E_CORE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-core-warning">E_CORE_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-compile-error">E_COMPILE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-compile-warning">E_COMPILE_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-error">E_USER_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-warning">E_USER_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-notice">E_USER_NOTICE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-recoverable-error">E_RECOVERABLE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-deprecated">E_DEPRECATED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-deprecated">E_USER_DEPRECATED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-all">E_ALL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dt>
+    <strong><code><a href="errorfunc.constants.html#constant.e-strict">E_STRICT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="errorfunc.constants.html" class="link">错误报告常量</a>
+    </span>
+   </dd>
+  
+  
+   <dt>
+    <strong><code><a href="misc.constants.html#constant.compiler-halt-offset">__COMPILER_HALT_OFFSET__</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.true">
+    <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     参阅 <a href="language.types.boolean.html" class="link">布尔值</a>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.false">
+    <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     参阅 <a href="language.types.boolean.html" class="link">布尔值</a>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.null">
+    <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>
+    (<span class="type"><a href="language.types.null.html" class="type null">null</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     参阅 <a href="language.types.null.html" class="link">Null</a>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.php-windows-event-ctrl-c">
+    <strong><code><a href="reserved.constants.html#constant.php-windows-event-ctrl-c">PHP_WINDOWS_EVENT_CTRL_C</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+  </dt>
+  <dd>
+   <span class="simpara">
+    Windows <kbd class="keycombo">
+     <kbd class="keycap">CTRL</kbd>
+     +<kbd class="keycap">C</kbd>
+    </kbd> 事件。自 PHP 7.4.0 起可用（仅限 Windows）。
+   </span>
+  </dd>
+ 
+ 
+  <dt id="constant.php-windows-event-ctrl-break">
+   <strong><code><a href="reserved.constants.html#constant.php-windows-event-ctrl-break">PHP_WINDOWS_EVENT_CTRL_BREAK</a></code></strong>
+   (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+  </dt>
+  <dd>
+   <span class="simpara">
+    Windows <kbd class="keycombo">
+     <kbd class="keycap">CTRL</kbd>
+     +<kbd class="keycap">BREAK</kbd>
+    </kbd> 事件。自 PHP 7.4.0 起可用（仅限 Windows）。
+   </span>
+  </dd>
+ 
+  
+   <dt id="constant.php-cli-process-title">
+    <strong><code><a href="reserved.constants.html#constant.php-cli-process-title">PHP_CLI_PROCESS_TITLE</a></code></strong>
+    (<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     表示是否可以设置和获取流程标题。
+     仅在 CLI SAPI 下可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.stderr">
+    <strong><code><a href="reserved.constants.html#constant.stderr">STDERR</a></code></strong>
+    (<span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     已打开的数据流到 <code class="literal">stderr</code>。
+     仅在 CLI SAPI 下可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.stdin">
+    <strong><code><a href="reserved.constants.html#constant.stdin">STDIN</a></code></strong>
+    (<span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     已打开的数据流到 <code class="literal">stdin</code>。
+     仅在 CLI SAPI 下可用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.stdout">
+    <strong><code><a href="reserved.constants.html#constant.stdout">STDOUT</a></code></strong>
+    (<span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     已打开的数据流到 <code class="literal">stdout</code>。
+     仅在 CLI SAPI 下可用。
+    </span>
+   </dd>
+  
+ </dl>
+ <p class="simpara">
+  参见<a href="language.constants.magic.html" class="link">魔术常量</a>。
+ </p>
+</div>
+
+
+  
+
+
+
+ <div class="sect2" id="reserved.constants.standard">
+   <h3 class="title">标准预定义常量</h3>
+   <p class="simpara">
+    <a href="extensions.membership.html#extensions.membership.core" class="link">核心扩展</a>中的所有常量都默认在 PHP 中定义。
+   </p>
+ </div>
+
+
+
+
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

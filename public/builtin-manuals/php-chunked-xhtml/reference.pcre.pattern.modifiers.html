@@ -1,0 +1,306 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>模式修饰符</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="regexp.reference.performance.html" class="navbar__link">« 性能</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="reference.pcre.pattern.differences.html" class="navbar__link">与 perl 的不同之处 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="pcre.pattern.html">PCRE模式</a></li>
+        <li>模式修饰符</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="reference.pcre.pattern.modifiers" class="article">
+ <h1 class="title">模式修饰符</h1>
+
+ 
+  <p class="para">
+   目前可用的 PCRE 修饰符如下所示。括号中的名称是这些修饰符的内部 PCRE 名称。
+   修饰符中的空格和换行符会被忽略，其他字符会引发错误。
+  </p>
+  <p class="para">
+   <blockquote class="blockquote">
+    <dl>
+     
+      <dt><em>i</em> (<code class="literal">PCRE_CASELESS</code>)</dt>
+      <dd>
+       <span class="simpara">
+        如果设置了这个修饰符，模式中的字母会匹配大小写字母。
+       </span>
+      </dd>
+     
+     
+      <dt><em>m</em> (<code class="literal">PCRE_MULTILINE</code>)</dt>
+      <dd>
+       <span class="simpara">
+        默认情况下，PCRE 将主题字符串视为由单个 &quot;行&quot; 字符组成的字符串（即使实际上包含多个换行符）。
+        &quot;行首&quot; 元字符 (^) 仅在字符串的开头匹配，而 &quot;行尾&quot; 元字符 ($) 仅在字符串的结尾或终止换行符之前匹配
+        （除非设置了 <em>D</em> 修饰符）。
+        这与 Perl 相同。
+       </span>
+       <span class="simpara">
+        当设置了这个修饰符时，&quot;行首&quot; 和 &quot;行尾&quot; 元字符会在主题字符串中的每个换行符之后或之前立即匹配。
+        这等效于 Perl 的 /m 修饰符。如果主题字符串中没有 &quot;\n&quot; 字符，或者模式中没有 &quot;^&quot; 或 &quot;$&quot; 的出现，
+        设置这个修饰符不会产生任何效果。
+       </span>
+      </dd>
+     
+     
+      <dt><em>s</em> (<code class="literal">PCRE_DOTALL</code>)</dt>
+      <dd>
+       <span class="simpara">
+        如果设置了这个修饰符，模式中的点元字符将匹配所有字符，包括换行符。如果没有设置这个修饰符，
+        换行符会被排除在外。这个修饰符等效于 Perl 的 /s 修饰符。负类（如 [^a]）总是匹配换行符，
+        与这个修饰符的设置无关。
+       </span>
+      </dd>
+     
+     
+      <dt><em>x</em> (<code class="literal">PCRE_EXTENDED</code>)</dt>
+      <dd>
+       <span class="simpara">
+        如果设置了这个修饰符，模式中的空白数据字符会被完全忽略，除非被转义或在字符类内部，
+        并且在一个未转义的 &quot;#&quot; 和下一个换行符之间的字符也会被忽略。这等效于 Perl 的 /x 修饰符，
+        并且使得在复杂模式中包含评论成为可能。然而，这仅适用于数据字符。空白字符永远不会出现在模式中的特殊字符序列中，
+        例如在引入条件子模式的序列 (?( 中。
+       </span>
+      </dd>
+     
+     
+      <dt><em>A</em> (<code class="literal">PCRE_ANCHORED</code>)</dt>
+      <dd>
+       <span class="simpara">
+        如果设置了这个修饰符，模式会被强制为 &quot;锚定&quot;，也就是说，它只能匹配主题字符串的开头。
+        这个效果也可以通过模式本身中的适当构造来实现，这是在 Perl 中唯一的方法。
+       </span>
+      </dd>
+     
+     
+      <dt><em>D</em> (<code class="literal">PCRE_DOLLAR_ENDONLY</code>)</dt>
+      <dd>
+       <span class="simpara">
+        如果设置了这个修饰符，模式中的美元元字符只能匹配主题字符串的结尾。
+        如果没有设置这个修饰符，美元元字符也会在主题字符串的最后一个字符之前立即匹配，但不会在其他换行符之前匹配。
+        如果设置了 <em>m</em> 修饰符，这个修饰符会被忽略。在 Perl 中没有这个修饰符的等效项。
+       </span>
+      </dd>
+     
+     
+      <dt><em>S</em></dt>
+      <dd>
+       <span class="simpara">
+        当一个模式将被多次使用时，值得花费更多时间来分析它，以加快匹配所需的时间。
+        如果设置了这个修饰符，那么会执行额外的分析。
+        目前，对于不具有单个固定起始字符的非锚定模式，研究模式是有用的。
+        从 PHP 7.3.0 开始，这个修饰符没有效果。
+       </span>
+      </dd>
+     
+     
+      <dt><em>U</em> (<code class="literal">PCRE_UNGREEDY</code>)</dt>
+      <dd>
+       <span class="simpara">
+        这个修饰符反转了量词的 &quot;贪婪性&quot;，使其默认情况下不贪婪，但如果后面跟着 <code class="literal">?</code>，则变为贪婪。
+        它与 Perl 不兼容。也可以通过模式内的 <code class="literal">(?U)</code><a href="regexp.reference.internal-options.html" class="link">修饰符设置</a>
+        或在量词后面加上问号（例如 <code class="literal">.*?</code>）来设置。
+       </span>
+       <blockquote class="note"><p><strong class="note">注意</strong>: 
+        <p class="para">
+         在不贪婪模式下，通常不可能匹配超过 <a href="pcre.configuration.html#ini.pcre.backtrack-limit" class="link">pcre.backtrack_limit</a>
+         个字符。
+        </p>
+       </p></blockquote>
+      </dd>
+     
+     
+      <dt><em>X</em> (<code class="literal">PCRE_EXTRA</code>)</dt>
+      <dd>
+       <span class="simpara">
+        这个修饰符打开了 PCRE 的额外功能，这些功能与 Perl 不兼容。模式中的任何反斜杠后跟一个没有特殊含义的字母的组合都会引发错误，
+        从而为将来的扩展保留这些组合。默认情况下，与 Perl 一样，反斜杠后跟一个没有特殊含义的字母会被视为字面量。
+        目前没有其他受这个修饰符控制的功能。
+       </span>
+      </dd>
+     
+     
+      <dt><em>J</em> (<code class="literal">PCRE_INFO_JCHANGED</code>)</dt>
+      <dd>
+       <span class="simpara">
+        这个内部修饰符 (?J) 改变了本地 <code class="literal">PCRE_DUPNAMES</code> 选项。
+        允许子模式名称重复。
+        从 PHP 7.2.0 开始，<code class="literal">J</code> 也作为修饰符支持。
+       </span>
+      </dd>
+     
+     
+      <dt><em>u</em> (<code class="literal">PCRE_UTF8</code>)</dt>
+      <dd>
+       <span class="simpara">
+        这个修饰符打开了 PCRE 的额外功能，这些功能与 Perl 不兼容。模式和主题字符串被视为 UTF-8。
+        无效的主题字符串会导致 preg_* 函数匹配不到任何内容；无效的模式会触发一个 E_WARNING 级别的错误。
+        五个和六个字节的 UTF-8 序列被视为无效。
+       </span>
+      </dd>
+     
+     
+      <dt><em>n</em> (<code class="literal">PCRE_NO_AUTO_CAPTURE</code>)</dt>
+      <dd>
+       <span class="simpara">
+        这个修饰符使简单的 <code class="literal">(xyz)</code> 组不捕获。
+        只有像 <code class="literal">(?&lt;name&gt;xyz)</code> 这样的命名组才会捕获。
+        这只影响哪些组是捕获的，仍然可以使用编号的子模式引用，匹配数组仍然包含编号的结果。
+        从 PHP 8.2.0 开始可用。
+       </span>
+      </dd>
+     
+     
+      <dt><em>r</em> (<code class="literal">PCRE2_EXTRA_CASELESS_RESTRICT</code>)</dt>
+      <dd>
+       <span class="simpara">
+        当 <em>u</em>（<code class="literal">PCRE_UTF8</code>） 和
+        <em>i</em>（<code class="literal">PCRE_CASELESS</code>）生效时，此修饰符可防止跨
+        ASCII 和非 ASCII 字符进行匹配。
+       </span>
+       <span class="simpara">
+        例如，<code class="code">preg_match(&#039;/\x{212A}/iu&#039;, &quot;K&quot;)</code> 匹配开尔文符号 <code class="literal">K</code>（U+212A）。当使用
+        <em>r</em>（preg_match(&#039;/\x{212A}/iur&#039;, &quot;K&quot;)）时，不会匹配。
+       </span>
+       <span class="simpara">
+        自 PHP 8.4.0 起可用。
+       </span>
+      </dd>
+     
+    </dl>
+   </blockquote>
+  </p>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

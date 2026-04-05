@@ -1,0 +1,185 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>锚</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="regexp.reference.unicode.html" class="navbar__link">« Unicode 字符属性</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="regexp.reference.dot.html" class="navbar__link">句点 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="reference.pcre.pattern.syntax.html">PCRE 正则语法</a></li>
+        <li>锚</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="regexp.reference.anchors" class="section">
+  <h2 class="title">锚</h2>
+  <p class="para">
+  在一个字符类外面，在默认匹配模式下，
+  脱字符（<code class="literal">^</code>） 是一个断言当前匹配点位于目标字符串开始处的断言。
+   在一个字符类内部，
+   脱字符（<code class="literal">^</code>） 表明这个字符类中描述的字符取反(详见下文)。
+  </p>
+  <p class="para">
+  脱字符（<code class="literal">^</code>）并不一定要是模式的第一个字符， 但是如果处于某个可选分支时，
+  它应该是该分支的首字符。如果所有选择分支都以脱字符（<code class="literal">^</code>）开头，这就是说，
+  如果模式限制为只匹配目标的开头，
+  它被称为是一个 ”紧固” 模式。(同样也有其他方式可以构造出紧固模式)
+  </p>
+  <p class="para">
+  美元符(<code class="literal">$</code>)是用于断言当前匹配点位于目标字符串末尾，
+  或当目标字符串以换行符结尾时当前匹配点位于该换行符位置(默认情况)。
+  美元符(<code class="literal">$</code>)不一定要作为模式的最后一个字符，但是如果它在某个可选分支中时，
+  就应该位于该分支的末尾。美元符在字符类中没有特殊的意义。
+  </p>
+  <p class="para">
+  <code class="literal">$</code> 的意义可以通过在编译或匹配时设置 <a href="reference.pcre.pattern.modifiers.html" class="link">PCRE_DOLLAR_ENDONLY</a> 改变为只匹配字符串末尾。
+  这不会影响 \Z 断言的行为。
+  </p>
+  <p class="para">
+  脱字符 <code class="literal">^</code> 和美元符 <code class="literal">$</code> 字符的意义在
+   <a href="reference.pcre.pattern.modifiers.html" class="link">PCRE_MULTILINE</a> 选项被设置时会发生变化。 当在这种情况下时，
+  它们匹配每一个换行符后面的和前面的字符，另外，
+  也会匹配目标字符串的开始和结束。比如,
+  模式 /^abc$/ 在多行模式下会成功匹配目标字符串 ”def\nabc”，
+  而正常情况下不会。因此，由于所有的可选分支都以 &quot;^&quot; 开始，
+  在单行模式下这成为紧固模式，然而在多行模式下，这是非紧固的。
+  <a href="reference.pcre.pattern.modifiers.html" class="link">PCRE_DOLLAR_ENDONLY</a>
+   选项在 <a href="reference.pcre.pattern.modifiers.html" class="link">PCRE_MULTILINE</a>
+   设置后失效。
+  </p>
+  <p class="para">
+  注意： \A、\Z、
+  \z 等转义序列可以在任何模式下用于匹配目标字符串的开始和结束位置。
+  并且如果模式的所有分支都以 \A 开始，它同样是紧固的，
+  而与 <a href="reference.pcre.pattern.modifiers.html" class="link">PCRE_MULTILINE</a>
+   是否设置无关。
+  </p>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

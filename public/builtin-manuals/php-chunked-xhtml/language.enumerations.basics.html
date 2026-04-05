@@ -1,0 +1,219 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>枚举基础</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.enumerations.overview.html" class="navbar__link">« 枚举概览</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.enumerations.backed.html" class="navbar__link">带值（回退）枚举 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.enumerations.html">枚举</a></li>
+        <li>枚举基础</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.enumerations.basics" class="sect1">
+  <h2 class="title">枚举基础</h2>
+
+  <p class="para">
+   Enum 类似 class，它和 class、interface、trait 共享同样的命名空间。
+   也能用同样的方式自动加载。
+   一个 Enum 定义了一种新的类型，它有固定、数量有限、可能的合法值。
+  </p>
+
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">enum </span><span style="color: #0000BB">Suit<br /></span><span style="color: #007700">{<br />    case </span><span style="color: #0000BB">Hearts</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Diamonds</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Clubs</span><span style="color: #007700">;<br />    case </span><span style="color: #0000BB">Spades</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   以上声明了新的枚举类型 <code class="literal">Suit</code>，仅有四个有效的值：
+   <code class="literal">Suit::Hearts</code>、<code class="literal">Suit::Diamonds</code>、
+   <code class="literal">Suit::Clubs</code>、<code class="literal">Suit::Spades</code>。
+   变量可以赋值为以上有效值里的其中一个。
+   函数可以检测枚举类型，这种情况下只能传入类型的值。
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">function </span><span style="color: #0000BB">pick_a_card</span><span style="color: #007700">(</span><span style="color: #0000BB">Suit $suit</span><span style="color: #007700">)<br />{<br />    </span><span style="color: #FF8000">/* ... */<br /></span><span style="color: #007700">}<br /><br /></span><span style="color: #0000BB">$val </span><span style="color: #007700">= </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Diamonds</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// OK<br /></span><span style="color: #0000BB">pick_a_card</span><span style="color: #007700">(</span><span style="color: #0000BB">$val</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// OK<br /></span><span style="color: #0000BB">pick_a_card</span><span style="color: #007700">(</span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Clubs</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// TypeError: pick_a_card(): Argument #1 ($suit) must be of type Suit, string given<br /></span><span style="color: #0000BB">pick_a_card</span><span style="color: #007700">(</span><span style="color: #DD0000">'Spades'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   一个枚举可以定义零个或多个<code class="literal">case</code>，且没有最大数量限制。
+   虽然零个 case 的 enum 没什么用处，但在语法上也是有效的。
+  </p>
+
+  <p class="para">
+    枚举条目的语法规则适用于 PHP 中的任何标签，参见<a href="language.constants.html" class="link">常量</a>。
+   </p>
+
+  <p class="para">
+   默认情况下，枚举的条目（case）本质上不是标量。
+   就是说 <code class="literal">Suit::Hearts</code> 不等同于 <code class="literal">&quot;0&quot;</code>。
+   其实，本质上每个条目是该名称对象的单例。具体来说：
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$a </span><span style="color: #007700">=== </span><span style="color: #0000BB">$b</span><span style="color: #007700">; </span><span style="color: #FF8000">// true<br /><br /></span><span style="color: #0000BB">$a </span><span style="color: #007700">instanceof </span><span style="color: #0000BB">Suit</span><span style="color: #007700">;  </span><span style="color: #FF8000">// true<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+  <p class="para">
+   由于对象间的大小比较毫无意义，这也意味着 enum 值从来不会 <code class="literal">&lt;</code> 或 <code class="literal">&gt;</code>
+   其他值。当 enum 的值用于比较时，总是返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+
+  <p class="para">
+   这类没有关联数据的条目（case），被称为“纯粹条目”（Pure Case）。
+   仅包含纯粹 Case 的 Enum 被称为纯粹枚举（Pure Enum）。
+  </p>
+
+  <p class="para">
+   枚举类型里所有的纯粹条目都是自身的实例。枚举类型在内部的实现形式是 class。
+  </p>
+
+  <p class="para">
+   所有的 case 有个只读的属性 <code class="literal">name</code>。
+   它大小写敏感，是 case 自身的名称。
+  </p>
+
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">print </span><span style="color: #0000BB">Suit</span><span style="color: #007700">::</span><span style="color: #0000BB">Spades</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">;<br /></span><span style="color: #FF8000">// 输出 "Spades"<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+
+   <p class="para">
+    如果名称是动态获取的，也可以使用 <span class="function"><a href="function.defined.html" class="function">defined()</a></span> 和 <span class="function"><a href="function.constant.html" class="function">constant()</a></span>
+    函数来检查枚举成员是否存在或读取其值。然而，这种方法并不推荐，因为对于大多数使用场景，使用<a href="language.enumerations.backed.html" class="link">带值枚举</a>即可满足需求。
+   </p>
+
+  </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,219 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>给指定的主机（域名）或者IP地址做DNS通信检查</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="ref.network.html" class="navbar__link">« 网络 函数</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.closelog.html" class="navbar__link">closelog »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.network.html">网络 函数</a></li>
+        <li>给指定的主机（域名）或者IP地址做DNS通信检查</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.checkdnsrr" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">checkdnsrr</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">checkdnsrr</span> &mdash; <span class="dc-title">给指定的主机（域名）或者IP地址做DNS通信检查</span></p>
+
+ </div>
+ 
+ <div class="refsect1 description" id="refsect1-function.checkdnsrr-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>checkdnsrr</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$hostname</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$type</code><span class="initializer"> = &quot;MX&quot;</span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   在 DNS 中搜索与 <code class="parameter">hostname</code> 对应的 <code class="parameter">type</code> 类型纪录。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.checkdnsrr-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">hostname</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">hostname</code> 可以是点分十进制的 IP 地址，也可以是主机名。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">type</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">type</code> 可能是下面这些类型中的任何一个：A、MX、NS、SOA、PTR、CNAME、AAAA、A6、SRV、NAPTR、TXT 或 ANY。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.checkdnsrr-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   如果记录能找到，就返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>；如果查找不到该 DNS 记录或者发生了错误，就返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.checkdnsrr-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    出于对低版本在 Windows 平台上的兼容性，可以试试 <a href="https://pear.php.net/" class="link external">&raquo;&nbsp;PEAR</a>
+    扩展包里面提供的 <a href="https://pear.php.net/package/Net_DNS" class="link external">&raquo;&nbsp;Net_DNS</a> 类。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.checkdnsrr-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.dns-get-record.html" class="function" rel="rdfs-seeAlso">dns_get_record()</a> - 获取指定主机名的 DNS 纪录</span></li>
+    <li><span class="function"><a href="function.getmxrr.html" class="function" rel="rdfs-seeAlso">getmxrr()</a> - 获取 Internet 主机名对应的 MX 记录</span></li>
+    <li><span class="function"><a href="function.gethostbyaddr.html" class="function" rel="rdfs-seeAlso">gethostbyaddr()</a> - 获取指定 IP 地址对应的 Internet 主机名</span></li>
+    <li><span class="function"><a href="function.gethostbyname.html" class="function" rel="rdfs-seeAlso">gethostbyname()</a> - 返回主机名对应的 IPv4地址。</span></li>
+    <li><span class="function"><a href="function.gethostbynamel.html" class="function" rel="rdfs-seeAlso">gethostbynamel()</a> - 获取互联网主机名对应的 IPv4 地址列表</span></li>
+    <li>the named(8) manual page</li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

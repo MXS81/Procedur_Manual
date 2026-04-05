@@ -1,0 +1,259 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>通过名称获取特定的外部变量，并且可以通过过滤器处理它</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.filter-id.html" class="navbar__link">« filter_id</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.filter-input-array.html" class="navbar__link">filter_input_array »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.filter.html">过滤器函数</a></li>
+        <li>通过名称获取特定的外部变量，并且可以通过过滤器处理它</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.filter-input" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">filter_input</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.2.0, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">filter_input</span> &mdash; <span class="dc-title">通过名称获取特定的外部变量，并且可以通过过滤器处理它</span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-function.filter-input-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>filter_input</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$type</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$var_name</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$filter</code><span class="initializer"> = <strong><code><a href="filter.constants.html#constant.filter-default">FILTER_DEFAULT</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.integer.html" class="type int">int</a></span></span> <code class="parameter">$options</code><span class="initializer"> = 0</span></span><br>): <span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span></div>
+
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.filter-input-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">type</code></dt>
+    <dd>
+     <span class="simpara">
+      <strong><code><a href="filter.constants.html#constant.input-post">INPUT_<span class="replaceable">*</span></a></code></strong> 常量之一。
+     </span>
+     <div class="warning"><strong class="warning">警告</strong>
+      <p class="simpara">
+       在用户对超全局变量进行任何修改之前，正在过滤的超全局变量内容是 <abbr title="Server Application Programming Interface">SAPI</abbr>
+       提供的原始“原始”内容。要过滤修改后的超全局变量，请使用 <span class="function"><a href="function.filter-var.html" class="function">filter_var()</a></span>。
+      </p>
+     </div>
+    </dd>
+   
+   
+    <dt><code class="parameter">var_name</code></dt>
+    <dd>
+     <span class="simpara">
+      在相应 <code class="parameter">type</code> 的超全局变量中要过滤的变量名称。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">filter</code></dt>
+    <dd>
+     <span class="simpara">
+      要应用的过滤器。可以使用 <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_<span class="replaceable">*</span></a></code></strong> 常量作为验证过滤器，使用
+      <strong><code><a href="filter.constants.html#constant.filter-sanitize-string">FILTER_SANITIZE_<span class="replaceable">*</span></a></code></strong> 或 <strong><code><a href="filter.constants.html#constant.filter-unsafe-raw">FILTER_UNSAFE_RAW</a></code></strong>
+      作为清理过滤器，也可以使用 <strong><code><a href="filter.constants.html#constant.filter-callback">FILTER_CALLBACK</a></code></strong> 作为自定义过滤器。
+     </span>
+     <blockquote class="note"><p><strong class="note">注意</strong>: 
+      <span class="simpara">
+       默认值为 <strong><code><a href="filter.constants.html#constant.filter-default">FILTER_DEFAULT</a></code></strong>，是 <strong><code><a href="filter.constants.html#constant.filter-unsafe-raw">FILTER_UNSAFE_RAW</a></code></strong>
+       的别名。这将导致默认情况下不进行过滤。
+      </span>
+     </p></blockquote>
+    </dd>
+   
+   
+    <dt><code class="parameter">options</code></dt>
+    <dd>
+     <span class="simpara">
+      要么是选项的关联 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>，要么是过滤器 flag 常量
+      <strong><code><a href="filter.constants.html#constant.filter-flag-none">FILTER_FLAG_<span class="replaceable">*</span></a></code></strong> 的位掩码。
+     </span>
+     <span class="simpara">
+      如果 <code class="parameter">filter</code> 接受选项（option），则可以使用数组的 <code class="literal">&quot;flags&quot;</code>
+      字段提供 flag。
+     </span>
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.filter-input-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   成功时返回过滤后的变量。如果变量未设置，则返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。失败时也返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，当使用
+   <strong><code><a href="filter.constants.html#constant.filter-null-on-failure">FILTER_NULL_ON_FAILURE</a></code></strong> flag 时返回 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.filter-input-examples">
+  <h3 class="title">示例</h3>
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 <span class="function"><strong>filter_input()</strong></span> 示例</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$search_html </span><span style="color: #007700">= </span><span style="color: #0000BB">filter_input</span><span style="color: #007700">(</span><span style="color: #0000BB">INPUT_GET</span><span style="color: #007700">, </span><span style="color: #DD0000">'search'</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_SANITIZE_SPECIAL_CHARS</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$search_url </span><span style="color: #007700">= </span><span style="color: #0000BB">filter_input</span><span style="color: #007700">(</span><span style="color: #0000BB">INPUT_GET</span><span style="color: #007700">, </span><span style="color: #DD0000">'search'</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_SANITIZE_ENCODED</span><span style="color: #007700">);<br />echo </span><span style="color: #DD0000">"You have searched for </span><span style="color: #0000BB">$search_html</span><span style="color: #DD0000">.\n"</span><span style="color: #007700">;<br />echo </span><span style="color: #DD0000">"&lt;a href='?search=</span><span style="color: #0000BB">$search_url</span><span style="color: #DD0000">'&gt;Search again.&lt;/a&gt;"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+   <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">You have searched for Me &amp;#38; son.
+&lt;a href=&#039;?search=Me%20%26%20son&#039;&gt;Search again.&lt;/a&gt;</pre>
+</div>
+   </div>
+  </div>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.filter-input-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="function.filter-input-array.html" class="function" rel="rdfs-seeAlso">filter_input_array()</a> - 获取一系列外部变量，并且可以通过过滤器处理它们</span></li>
+   <li><span class="function"><a href="function.filter-var.html" class="function" rel="rdfs-seeAlso">filter_var()</a> - 使用特定的过滤器过滤一个变量</span></li>
+   <li><span class="function"><a href="function.filter-var-array.html" class="function" rel="rdfs-seeAlso">filter_var_array()</a> - 获取多个变量并且过滤它们</span></li>
+   <li>
+    验证过滤器
+    <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_<span class="replaceable">*</span></a></code></strong>
+   </li>
+   <li>
+    清理过滤器
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-string">FILTER_SANITIZE_<span class="replaceable">*</span></a></code></strong>
+   </li>
+  </ul>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

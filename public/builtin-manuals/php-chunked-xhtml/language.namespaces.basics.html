@@ -1,0 +1,237 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>使用命名空间：基础</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.namespaces.definitionmultiple.html" class="navbar__link">« 在一个文件中定义多个命名空间</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.namespaces.dynamic.html" class="navbar__link">命名空间和动态语言特征 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.namespaces.html">概述</a></li>
+        <li>使用命名空间：基础</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.namespaces.basics" class="sect1">
+  <h2 class="title">使用命名空间：基础</h2>
+  
+  <p class="verinfo">(PHP 5 &gt;= 5.3.0, PHP 7, PHP 8)</p>
+  <p class="para">
+   在讨论如何使用命名空间之前，必须了解 PHP
+   是如何知道要使用哪一个命名空间中的元素的。可以将 PHP 
+   命名空间与文件系统作一个简单的类比。在文件系统中访问一个文件有三种方式：
+   <ol type="1">
+    <li class="listitem">
+     <span class="simpara">
+     相对文件名形式如 <code class="literal">foo.txt</code>。它会被解析为
+     <code class="literal">currentdirectory/foo.txt</code>，其中 <code class="literal">currentdirectory</code>
+     表示当前目录。因此如果当前目录是
+     <code class="literal">/home/foo</code>，则该文件名被解析为 <code class="literal">/home/foo/foo.txt</code>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      相对路径名形式如 <code class="literal">subdirectory/foo.txt</code>。它会被解析为
+      <code class="literal">currentdirectory/subdirectory/foo.txt</code>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+     绝对路径名形式如 <code class="literal">/main/foo.txt</code>。它会被解析为 <code class="literal">/main/foo.txt</code>。
+     </span>
+    </li>
+   </ol>
+   PHP 命名空间中的元素使用同样的原理。例如，类名可以通过三种方式引用：
+   <ol type="1">
+    <li class="listitem">
+     <span class="simpara">
+     非限定名称，或不包含前缀的类名称，例如
+     <code class="literal">$a=new foo();</code> 或
+     <code class="literal">foo::staticmethod();</code>。如果当前命名空间是
+     <code class="literal">currentnamespace</code>，foo 将被解析为
+     <code class="literal">currentnamespace\foo</code>。如果使用 foo
+     的代码是全局的，不包含在任何命名空间中的代码，则 foo
+     会被解析为 <code class="literal">foo</code>。
+     </span>
+     <span class="simpara">
+     警告：如果命名空间中的函数或常量未定义，则该非限定的函数名称或常量名称会被解析为全局函数名称或常量名称。详情参见
+     <a href="language.namespaces.fallback.html" class="link">使用命名空间：后备全局函数名称/常量名称</a>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+     限定名称,或包含前缀的名称，例如
+     <code class="literal">$a = new subnamespace\foo();</code> 或
+     <code class="literal">subnamespace\foo::staticmethod();</code>。如果当前的命名空间是
+     <code class="literal">currentnamespace</code>，则 foo 会被解析为
+     <code class="literal">currentnamespace\subnamespace\foo</code>。如果使用
+     foo 的代码是全局的，不包含在任何命名空间中的代码，foo
+     会被解析为 <code class="literal">subnamespace\foo</code>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+     完全限定名称，或包含了全局前缀操作符的名称，例如，
+     <code class="literal">$a = new \currentnamespace\foo();</code> 或
+     <code class="literal">\currentnamespace\foo::staticmethod();</code>。在这种情况下，foo
+     总是被解析为代码中的文字名(literal name)<code class="literal">currentnamespace\foo</code>。
+     </span>
+    </li>
+   </ol>
+  </p>
+  <p class="para">
+   下面是一个使用这三种方式的实例：
+   <div class="informalexample">
+    <p class="simpara">file1.php</p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">Foo\Bar\subnamespace</span><span style="color: #007700">;<br /><br />const </span><span style="color: #0000BB">FOO </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br />function </span><span style="color: #0000BB">foo</span><span style="color: #007700">() {}<br />class </span><span style="color: #0000BB">foo<br /></span><span style="color: #007700">{<br />    static function </span><span style="color: #0000BB">staticmethod</span><span style="color: #007700">() {}<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <p class="simpara">file2.php</p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">Foo\Bar</span><span style="color: #007700">;<br />include </span><span style="color: #DD0000">'file1.php'</span><span style="color: #007700">;<br /><br />const </span><span style="color: #0000BB">FOO </span><span style="color: #007700">= </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br />function </span><span style="color: #0000BB">foo</span><span style="color: #007700">() {}<br />class </span><span style="color: #0000BB">foo<br /></span><span style="color: #007700">{<br />    static function </span><span style="color: #0000BB">staticmethod</span><span style="color: #007700">() {}<br />}<br /><br /></span><span style="color: #FF8000">/* 非限定名称 */<br /></span><span style="color: #0000BB">foo</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为函数 Foo\Bar\foo <br /></span><span style="color: #0000BB">foo</span><span style="color: #007700">::</span><span style="color: #0000BB">staticmethod</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为类 Foo\Bar\foo 的静态方法 staticmethod<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">FOO</span><span style="color: #007700">; </span><span style="color: #FF8000">// 解析为常量 Foo\Bar\FOO<br /><br />/* 限定名称 */<br /></span><span style="color: #0000BB">subnamespace\foo</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为函数 Foo\Bar\subnamespace\foo<br /></span><span style="color: #0000BB">subnamespace\foo</span><span style="color: #007700">::</span><span style="color: #0000BB">staticmethod</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为类 Foo\Bar\subnamespace\foo,<br />                                  // 以及类的方法 staticmethod<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">subnamespace\FOO</span><span style="color: #007700">; </span><span style="color: #FF8000">// 解析为常量 Foo\Bar\subnamespace\FOO<br /><br />/* 完全限定名称 */<br /></span><span style="color: #0000BB">\Foo\Bar\foo</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为函数 Foo\Bar\foo<br /></span><span style="color: #0000BB">\Foo\Bar\foo</span><span style="color: #007700">::</span><span style="color: #0000BB">staticmethod</span><span style="color: #007700">(); </span><span style="color: #FF8000">// 解析为类 Foo\Bar\foo, 以及类的方法 staticmethod<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">\Foo\Bar\FOO</span><span style="color: #007700">; </span><span style="color: #FF8000">// 解析为常量 Foo\Bar\FOO<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如
+   <span class="function"><a href="function.strlen.html" class="function">\strlen()</a></span> 或 <span class="classname"><a href="class.exception.html" class="classname">\Exception</a></span> 或
+   \<strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong>。
+
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 在命名空间内部访问全局类、函数和常量</strong></p>
+    <div class="example-contents">
+     <div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">namespace </span><span style="color: #0000BB">Foo</span><span style="color: #007700">;<br /><br />function </span><span style="color: #0000BB">strlen</span><span style="color: #007700">() {}<br />const </span><span style="color: #0000BB">INI_ALL </span><span style="color: #007700">= </span><span style="color: #0000BB">3</span><span style="color: #007700">;<br />class </span><span style="color: #0000BB">Exception </span><span style="color: #007700">{}<br /><br /></span><span style="color: #0000BB">$a </span><span style="color: #007700">= </span><span style="color: #0000BB">\strlen</span><span style="color: #007700">(</span><span style="color: #DD0000">'hi'</span><span style="color: #007700">); </span><span style="color: #FF8000">// 调用全局函数strlen<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">\INI_ALL</span><span style="color: #007700">; </span><span style="color: #FF8000">// 访问全局常量 INI_ALL<br /></span><span style="color: #0000BB">$c </span><span style="color: #007700">= new </span><span style="color: #0000BB">\Exception</span><span style="color: #007700">(</span><span style="color: #DD0000">'error'</span><span style="color: #007700">); </span><span style="color: #FF8000">// 实例化全局类 Exception<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,302 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>发送编码过的邮件</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.mb-scrub.html" class="navbar__link">« mb_scrub</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.mb-split.html" class="navbar__link">mb_split »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.mbstring.html">多字节字符串 函数</a></li>
+        <li>发送编码过的邮件</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.mb-send-mail" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">mb_send_mail</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.0.6, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">mb_send_mail</span> &mdash; <span class="dc-title">发送编码过的邮件</span></p>
+
+ </div>
+   
+ <div class="refsect1 description" id="refsect1-function.mb-send-mail-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>mb_send_mail</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$to</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$subject</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$message</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.string.html" class="type string">string</a></span></span> <code class="parameter">$additional_headers</code><span class="initializer"> = []</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.string.html" class="type string">string</a></span></span> <code class="parameter">$additional_params</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment"> 
+   发送邮件。邮件头和内容根据 <span class="function"><a href="function.mb-language.html" class="function">mb_language()</a></span> 设置来转换编码。
+   这是 <span class="function"><a href="function.mail.html" class="function">mail()</a></span> 的一个包装器函数，所以详情参见 <span class="function"><a href="function.mail.html" class="function">mail()</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.mb-send-mail-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">to</code></dt>
+     <dd>
+      <p class="para">
+       被发送到该邮件地址。可通过逗号分隔地址的 <code class="parameter">to</code> 来指定多个收件人。
+       该参数不会被自动编码。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">subject</code></dt>
+     <dd>
+      <p class="para">
+       邮件标题。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">message</code></dt>
+     <dd>
+      <p class="para">
+       邮件消息。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">additional_headers</code>（可选）</dt>
+     <dd>
+      <p class="para">
+       要插入到电子邮件标头末尾的 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 或 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>。
+      </p>
+      <p class="para">
+       这通常用于添加额外的标头（发件人、抄送和密件抄送）。多个额外的标头应该用 CRLF（\r\n）分隔。验证参数不会被攻击者注入不需要的标头。
+      </p>
+      <p class="para">
+       如果传递 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>，则其键是标头名称，其值是相应的标头值。
+      </p>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <p class="para">
+        发送邮件时，邮件<em>必须</em>包含 <code class="literal">From</code> 标头。这可以使用
+        <code class="parameter">additional_headers</code> 参数设置，或者可以在 <var class="filename">php.ini</var> 中设置默认值。
+       </p>
+       <p class="para">
+        如果不这样做，将导致类似于 <code class="literal">Warning: mail(): &quot;sendmail_from&quot; not
+        set in php.ini or custom &quot;From:&quot; header missing</code> 的错误消息。<code class="literal">From</code> 标头还设置了 Windows 下的 <code class="literal">Return-Path</code>。
+       </p>
+      </p></blockquote>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <p class="para">
+        如果未收到消息，请尝试仅使用 LF（\n）。一些 Unix 邮件传输代理（最著名的是 <a href="http://cr.yp.to/qmail.html" class="link external">&raquo;&nbsp;qmail</a>）自动将 LF 替换为 CRLF（如果使用
+        CRLF，这会导致两个 CR）。这应该是最后的手段，因为它不符合 <a href="https://datatracker.ietf.org/doc/html/rfc2822" class="link external">&raquo;&nbsp;RFC 2822</a>。
+       </p>
+      </p></blockquote>
+     </dd>
+    
+    
+     <dt><code class="parameter">additional_params</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">additional_params</code> 是一个 MTA 命令行参数。在使用
+       sendmail 时对设置正确的返回路径头很有帮助。
+      </p>
+      <p class="para">
+       该参数由 <span class="function"><a href="function.escapeshellcmd.html" class="function">escapeshellcmd()</a></span> 内部转义以防止命令执行。<span class="function"><a href="function.escapeshellcmd.html" class="function">escapeshellcmd()</a></span> 阻止命令执行，但允许添加额外的参数。出于安全原因，应该验证此参数。
+      </p>
+      <p class="para">
+       Since <span class="function"><a href="function.escapeshellcmd.html" class="function">escapeshellcmd()</a></span> is applied automatically, some characters
+       that are allowed as email addresses by internet RFCs cannot be used. Programs
+       that are required to use these characters <span class="function"><a href="function.mail.html" class="function">mail()</a></span> cannot be used.
+      </p>
+      <p class="para">
+       Web 服务器运行的用户应作为受信任的用户添加到 sendmail 配置中，以防止在使用此方法设置信封发件人（-f）时将“X-Warning”标头添加到邮件中。对于
+       sendmail 用户，此文件为 <var class="filename">/etc/mail/trusted-users</var>。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.mb-send-mail-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.mb-send-mail-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+     <tr>
+      <td>8.0.0</td>
+      <td>
+       <code class="parameter">additional_params</code> 现在可为 null。
+      </td>
+     </tr>
+
+      <tr>
+       <td>7.2.0</td>
+       <td>
+        <code class="parameter">additional_headers</code> 参数现在也接受 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.mb-send-mail-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.mail.html" class="function" rel="rdfs-seeAlso">mail()</a> - 发送邮件</span></li>
+    <li><span class="function"><a href="function.mb-encode-mimeheader.html" class="function" rel="rdfs-seeAlso">mb_encode_mimeheader()</a> - 为 MIME 头编码字符串</span></li>
+    <li><span class="function"><a href="function.mb-language.html" class="function" rel="rdfs-seeAlso">mb_language()</a> - 设置/获取当前的语言</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,271 @@
+.pdf-js-root {
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pdf-js-row {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+/* 左侧搜索栏：仅打开时出现 */
+.pdf-search-sidebar {
+  width: min(320px, 38vw);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--color-surface, #fff);
+  border-right: 1px solid var(--color-border, #e5e7eb);
+}
+
+.pdf-search-sidebar-head {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  background: var(--color-surface, #fff);
+}
+
+.pdf-search-sidebar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #52525b);
+}
+
+.pdf-search-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md, 6px);
+  background: transparent;
+  color: var(--color-text-muted, #71717a);
+  cursor: pointer;
+}
+
+.pdf-search-close:hover {
+  background: var(--color-surface-hover, #f4f4f5);
+  color: var(--color-text, #18181b);
+}
+
+.pdf-search-sidebar-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-viewport-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-search-fab {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 6;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 50%;
+  background: var(--color-surface, #fff);
+  color: var(--color-text-secondary, #52525b);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.pdf-search-fab:hover {
+  border-color: var(--color-primary, #6366f1);
+  color: var(--color-primary, #6366f1);
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.pdf-zoom-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  z-index: 5;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted, #71717a);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.pdf-pages-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-search-inner.pm-search-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.pdf-search-field.pm-search-field {
+  font-size: 13px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.pdf-search-err {
+  font-size: 12px;
+  color: var(--color-danger, #c0392b);
+  margin-top: 8px;
+}
+
+.pdf-search-status {
+  font-size: 12px;
+  color: var(--color-text-muted, #71717a);
+  margin-top: 8px;
+}
+
+.pdf-search-status.muted {
+  opacity: 0.9;
+}
+
+.pdf-search-hint {
+  font-size: 11px;
+  color: var(--color-text-muted, #71717a);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.pdf-search-results-panel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border, #e5e7eb);
+}
+
+.pdf-search-results-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #52525b);
+  margin-bottom: 8px;
+}
+
+.pdf-search-results-sub {
+  font-weight: 400;
+  color: var(--color-text-muted, #71717a);
+  margin-left: 6px;
+}
+
+.pdf-search-results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pdf-search-hit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-md, 6px);
+  background: var(--color-surface-hover, #fafafa);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--color-text, #18181b);
+}
+
+.pdf-search-hit:hover {
+  border-color: var(--color-primary, #6366f1);
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.pdf-search-hit.active {
+  border-color: var(--color-primary, #6366f1);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25);
+}
+
+.pdf-search-hit-page {
+  font-weight: 600;
+  color: var(--color-primary, #6366f1);
+  flex-shrink: 0;
+}
+
+.pdf-search-hit-count {
+  font-size: 11px;
+  color: var(--color-text-muted, #71717a);
+  flex-shrink: 0;
+}
+
+.pdf-search-hit-snippet {
+  flex: 1 1 100%;
+  line-height: 1.45;
+  word-break: break-word;
+  color: var(--color-text-secondary, #3f3f46);
+}
+
+.pdf-search-highlight {
+  background: rgba(250, 204, 21, 0.45);
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+.pdf-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 24px;
+}
+
+.pdf-page-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 120px;
+  background: var(--color-surface-hover, #f4f4f5);
+  border-radius: var(--radius-md, 6px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.pdf-page-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

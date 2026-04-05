@@ -1,0 +1,358 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>运行时配置</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="mail.requirements.html" class="navbar__link">« 需求</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="ref.mail.html" class="navbar__link">Mail 函数 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="mail.setup.html">安装/配置</a></li>
+        <li>运行时配置</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="mail.configuration" class="section">
+ <h2 class="title">运行时配置</h2>
+ <p class="simpara">
+这些函数的行为受 <var class="filename">php.ini</var> 中的设置影响。
+</p>
+ <p class="para">
+ <table class="doctable table">
+  <caption><strong>Mail 配置选项</strong></caption>
+  
+   <thead>
+     <tr>
+      <th>名字</th>
+      <th>默认</th>
+      <th>可修改范围</th>
+      <th>更新日志</th>
+     </tr>
+
+   </thead>
+
+   <tbody class="tbody">
+    <tr>
+     <td><a href="mail.configuration.html#ini.mail.add-x-header" class="link">mail.add_x_header</a></td>
+     <td>&quot;0&quot;</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.mail.mixed_lf_and_crlf" class="link">mail.mixed_lf_and_crlf</a></td>
+     <td>&quot;0&quot;</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong>|<strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong></td>
+     <td>PHP 8.2.4 新增</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.mail.log" class="link">mail.log</a></td>
+     <td>NULL</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong>|<strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.mail.force_extra_parameters" class="link">mail.force_extra_parameters</a></td>
+     <td>NULL</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.smtp" class="link">SMTP</a></td>
+     <td>&quot;localhost&quot;</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.smtp-port" class="link">smtp_port</a></td>
+     <td>&quot;25&quot;</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.sendmail-from" class="link">sendmail_from</a></td>
+     <td>NULL</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="mail.configuration.html#ini.sendmail-path" class="link">sendmail_path</a></td>
+     <td>&quot;/usr/sbin/sendmail -t -i&quot;</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+   </tbody>
+  
+ </table>
+
+ 有关 INI_* 样式的更多详情与定义，见 <a href="configuration.changes.modes.html" class="xref">配置可被设定范围</a>。
+ </p>
+ 
+ <p class="para">这是配置指令的简短说明。</p>
+ 
+
+ <p class="para">
+ <dl>
+  
+   <dt id="ini.mail.add-x-header">
+    <code class="parameter">mail.add_x_header</code>
+    <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     添加 <code class="literal">X-PHP-Originating-Script</code>，将会包含脚本的
+     UID 以及文件名。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.mail.log">
+    <code class="parameter">mail.log</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     记录所有调用 <span class="function"><a href="function.mail.html" class="function">mail()</a></span>
+     的日志文件路径。日志条目包含脚本的完整路径、行号、<code class="literal">To</code> 地址和报头。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.mail.mixed_lf_and_crlf">
+    <code class="parameter">mail.mixed_lf_and_crlf</code>
+    <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     允许将邮件 header 和邮件正文的行分隔符还原为 LF（换行符），以模拟 PHP 7
+     的非标准行为。此选项作为兼容性措施提供，用于适配某些不符合标准的邮件传输代理（MTA），这些 MTA
+     无法正确处理邮件 header 和正文内容中作为行分隔符的 CRLF（回车符 + 换行符）。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.mail.force_extra_parameters">
+    <code class="parameter">mail.force_extra_parameters</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     强制添加指定参数作为额外参数传递给 sendmail 二进制文件。这些参数将始终代替
+     <span class="function"><a href="function.mail.html" class="function">mail()</a></span> 第五个参数的值。
+    </p>
+    <span class="simpara">
+     除了 <strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong> 的默认行为外，该值也可通过在
+     <var class="filename">httpd.conf</var> 中使用 <code class="literal">php_value</code> 进行设置（但不建议这样做）。
+    </span>
+   </dd>
+  
+
+  
+   <dt id="ini.smtp">
+    <code class="parameter">SMTP</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     仅用于 Windows：PHP 在 <span class="function"><a href="function.mail.html" class="function">mail()</a></span> 函数中用来发送邮件的
+     SMTP 服务器的主机名称或者 IP 地址。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.smtp-port">
+    <code class="parameter">smtp_port</code>
+    <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     仅用于 Windows：使用 <span class="function"><a href="function.mail.html" class="function">mail()</a></span> 发送邮件时，连接到使用
+     <code class="literal">SMTP</code> 的指定服务器的端口号，默认为 25。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.sendmail-from">
+    <code class="parameter">sendmail_from</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     通过 STMP 直接用 PHP 发送邮件时的 <code class="literal">&quot;From:&quot;</code>
+     邮件地址的值（仅限 Windows）。该选项同时设置了
+     <code class="literal">&quot;Return-Path:&quot;</code> 头。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.sendmail-path">
+    <code class="parameter">sendmail_path</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     <strong class="command">sendmail</strong> 程序的路径，通常为
+     <var class="filename">/usr/sbin/sendmail</var> 或
+     <var class="filename">/usr/lib/sendmail</var>。<strong class="command">configure</strong>
+     脚本会尝试找到该程序并设定为默认值，但是如果失败的话，可以在这里设定。
+    </p>
+    <p class="para">
+     不使用 <strong class="command">sendmail</strong> 的系统应将此指令设定为其邮件系统提供的
+     sendmail 替代程序，如果有的话。例如，<a href="http://cr.yp.to/qmail.html" class="link external">&raquo;&nbsp;Qmail</a>
+     用户通常可以设为
+     <var class="filename">/var/qmail/bin/sendmail</var> 或
+     <var class="filename">/var/qmail/bin/qmail-inject</var>。
+    </p>
+    <p class="para">
+     <strong class="command">qmail-inject</strong> 不需要任何选项就能正确处理邮件。
+    </p>
+    <p class="para">
+     此指令也可用于 Windows。如果设定，<var class="varname">smtp</var>，<var class="varname">smtp_port</var>
+     和 <var class="varname">sendmail_from</var> 都被忽略并运行指定的命令。
+    </p>
+   </dd>
+  
+ </dl>
+
+ </p>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

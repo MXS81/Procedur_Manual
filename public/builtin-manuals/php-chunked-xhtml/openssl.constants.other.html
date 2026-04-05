@@ -1,0 +1,215 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>其它常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="openssl.constsni.html" class="navbar__link">« Server Name Indication constants</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="openssl.certparams.html" class="navbar__link">密钥/证书参数 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="openssl.constants.html">预定义常量</a></li>
+        <li>其它常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="openssl.constants.other" class="section">
+  <h2 class="title">其它常量</h2>
+  <dl>
+    
+      <dt id="constant.openssl-raw-data">
+        <strong><code><a href="openssl.constants.other.html#constant.openssl-raw-data">OPENSSL_RAW_DATA</a></code></strong>
+        (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         如果在 <span class="function"><a href="function.openssl-encrypt.html" class="function">openssl_encrypt()</a></span> 或 <span class="function"><a href="function.openssl-decrypt.html" class="function">openssl_decrypt()</a></span> 中设置了
+         <strong><code><a href="openssl.constants.other.html#constant.openssl-raw-data">OPENSSL_RAW_DATA</a></code></strong>，将直接返回原始数据。若未指定该选项，则默认返回经过 Base64 编码的数据。
+        </span>
+      </dd>
+    
+    
+      <dt id="constant.openssl-dont-zero-pad-key">
+       <strong><code><a href="openssl.constants.other.html#constant.openssl-dont-zero-pad-key">OPENSSL_DONT_ZERO_PAD_KEY</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         阻止 <span class="function"><a href="function.openssl-encrypt.html" class="function">openssl_encrypt()</a></span> 对短于默认长度的密钥进行填充。
+        </span>
+      </dd>
+    
+    
+      <dt id="constant.openssl-zero-padding">
+       <strong><code><a href="openssl.constants.other.html#constant.openssl-zero-padding">OPENSSL_ZERO_PADDING</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         默认情况下，加密操作会使用标准块填充，解密时会自动检查并移除填充。如果在 <span class="function"><a href="function.openssl-encrypt.html" class="function">openssl_encrypt()</a></span>
+         或 <span class="function"><a href="function.openssl-decrypt.html" class="function">openssl_decrypt()</a></span> 的选项中设置了
+         <strong><code><a href="openssl.constants.other.html#constant.openssl-zero-padding">OPENSSL_ZERO_PADDING</a></code></strong>，则禁用填充机制，此时要求加/解密的数据总长度必须是块大小的整数倍，否则会引发错误。
+        </span>
+      </dd>
+    
+    
+      <dt id="constant.openssl-encoding-smime">
+       <strong><code><a href="openssl.constants.other.html#constant.openssl-encoding-smime">OPENSSL_ENCODING_SMIME</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         表明编码是 S/MIME。
+        </span>
+      </dd>
+    
+    
+      <dt id="constant.openssl-encoding-der">
+       <strong><code><a href="openssl.constants.other.html#constant.openssl-encoding-der">OPENSSL_ENCODING_DER</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         表明编码是 <abbr title="Distinguished Encoding Rules">DER</abbr>。
+        </span>
+      </dd>
+    
+    
+      <dt id="constant.openssl-encoding-pem">
+       <strong><code><a href="openssl.constants.other.html#constant.openssl-encoding-pem">OPENSSL_ENCODING_PEM</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+        <span class="simpara">
+         表明编码是 <abbr title="Privacy-Enhanced Mail">PEM</abbr>。
+        </span>
+      </dd>
+    
+  </dl>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

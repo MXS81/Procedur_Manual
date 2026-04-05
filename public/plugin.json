@@ -1,0 +1,39 @@
+{
+  "main": "index.html",
+  "preload": "preload/services.js",
+  "logo": "logo.png",
+  "development": {
+    "main": "http://localhost:5173"
+  },
+  "features": [
+    {
+      "code": "manual-home",
+      "explain": "打开程序员手册主界面，管理和浏览手册",
+      "cmds": ["程序员手册", "手册管理", "manual"]
+    },
+    {
+      "code": "manual-search",
+      "explain": "搜索命令、函数和关键词",
+      "cmds": [
+        "手册搜索",
+        {
+          "type": "over",
+          "label": "手册搜索"
+        }
+      ]
+    },
+    {
+      "code": "manual-file-import",
+      "explain": "导入本地手册文件（支持 HTML、Markdown、JSON、PDF、CHM）",
+      "cmds": [
+        {
+          "type": "files",
+          "fileType": "file",
+          "maxLength": 1,
+          "label": "导入手册",
+          "match": "/\\.(html?|md|markdown|json|pdf|chm)$/i"
+        }
+      ]
+    }
+  ]
+}

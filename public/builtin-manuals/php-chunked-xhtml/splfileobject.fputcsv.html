@@ -1,0 +1,346 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Write a field array as a CSV line</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="splfileobject.fpassthru.html" class="navbar__link">« SplFileObject::fpassthru</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="splfileobject.fread.html" class="navbar__link">SplFileObject::fread »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.splfileobject.html">SplFileObject</a></li>
+        <li>Write a field array as a CSV line</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="splfileobject.fputcsv" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">SplFileObject::fputcsv</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.4.0, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">SplFileObject::fputcsv</span> &mdash; <span class="dc-title">Write a field array as a CSV line</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-splfileobject.fputcsv-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="modifier">public</span> <span class="methodname"><strong>SplFileObject::fputcsv</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$fields</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$separator</code><span class="initializer"> = &quot;,&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$enclosure</code><span class="initializer"> = &quot;\&quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$escape</code><span class="initializer"> = &quot;\\&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$eol</code><span class="initializer"> = &quot;\n&quot;</span></span><br>): <span class="type"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   Writes the <code class="parameter">fields</code> array to the file
+   as a <abbr title="Comma Separated Value">CSV</abbr> line.
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-splfileobject.fputcsv-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">fields</code></dt>
+    <dd>
+     <p class="para">
+      An array of values.
+     </p>
+    </dd>
+   
+   
+     <dt><code class="parameter">separator</code></dt>
+     <dd>
+      <p class="para">
+       The field delimiter (one single-byte character only).
+       By default <code class="literal">,</code> or the value set by a prior call to
+       <span class="methodname"><a href="splfileobject.setcsvcontrol.html" class="methodname">SplFileObject::setCsvControl()</a></span>.
+      </p>
+     </dd>
+    
+   
+     <dt><code class="parameter">enclosure</code></dt>
+     <dd>
+      <p class="para">
+       The field enclosure character (one single-byte character only).
+       By default <code class="literal">&quot;</code> or the value set by a prior call to
+       <span class="methodname"><a href="splfileobject.setcsvcontrol.html" class="methodname">SplFileObject::setCsvControl()</a></span>.
+      </p>
+     </dd>
+    
+   
+     <dt><code class="parameter">escape</code></dt>
+     <dd>
+      <p class="para">
+       The escape character (at most one single-byte character).
+       By default <code class="literal">\</code> or the value set by a prior call to
+       <span class="methodname"><a href="splfileobject.setcsvcontrol.html" class="methodname">SplFileObject::setCsvControl()</a></span>.
+       An empty string (<code class="literal">&quot;&quot;</code>) disables the proprietary escape mechanism.
+      </p>
+      <div class="warning"><strong class="warning">警告</strong>
+       <p class="simpara">
+        在输入流中，<code class="parameter">enclosure</code> 字符在引号字符串内可通过重复自身进行转义，解析后结果中将只保留一个
+        <code class="parameter">enclosure</code> 字符。而 <code class="parameter">escape</code> 字符的行为有所不同：若输入中出现
+        <code class="parameter">escape</code> 字符与 <code class="parameter">enclosure</code>
+        字符的组合序列，这两个字符都会保留在解析结果中。因此，在默认参数下，类似 <code class="literal">&quot;a&quot;&quot;b&quot;,&quot;c\&quot;d&quot;</code> 的 CSV
+        行将被解析为两个字段，分别为 <code class="literal">a&quot;b</code> 和 <code class="literal">c\&quot;d</code>。
+       </p>
+      </div>
+      <div class="warning"><strong class="warning">警告</strong>
+       <p class="simpara">
+        As of PHP 8.4.0, depending on the default value of
+        <code class="parameter">escape</code> is deprecated.
+        It needs to be provided explicitly either positionally or by the use
+        of <a href="functions.arguments.html#functions.named-arguments" class="link">Named Arguments</a>,
+        or by a call to <span class="methodname"><a href="splfileobject.setcsvcontrol.html" class="methodname">SplFileObject::setCsvControl()</a></span>.
+       </p>
+      </div>
+     </dd>
+    
+   
+    <dt><code class="parameter">eol</code></dt>
+    <dd>
+     <p class="para">
+      The optional <code class="parameter">eol</code> parameter sets
+      a custom End of Line sequence.
+     </p>
+    </dd>
+   
+  </dl>
+  <div class="warning"><strong class="warning">警告</strong><p class="simpara">
+ 当 <code class="parameter">escape</code> 被设置为非空字符串（<code class="literal">&quot;&quot;</code>）时，
+ 可能导致生成的 CSV 不符合 <a href="https://datatracker.ietf.org/doc/html/rfc4180" class="link external">&raquo;&nbsp;RFC 4180</a> 的要求，
+ 或者无法通过 PHP CSV 函数的往返处理。
+ <code class="parameter">escape</code> 的默认值是 <code class="literal">&quot;\\&quot;</code>，因此建议显式地将其设置为空字符串。
+ 默认值将在未来的 PHP 版本中更改，不早于 PHP 9.0。
+</p></div>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    If an <code class="parameter">enclosure</code> character is contained in a field,
+    it will be escaped by doubling it, unless it is immediately preceded by an
+    <code class="parameter">escape</code>.
+   </p>
+  </p></blockquote> 
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-splfileobject.fputcsv-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   Returns the length of the written string 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>.
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-splfileobject.fputcsv-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="simpara">
+   如果 <code class="parameter">separator</code> 或者 <code class="parameter">enclosure</code>
+   长度不是一个字节，则抛出 <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span>。
+  </p>
+  <p class="simpara">
+   如果 <code class="parameter">escape</code> 的长度不是一个字节或者为空字符串，则抛出 <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-splfileobject.fputcsv-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>8.4.0</td>
+       <td>
+        现在已弃用依赖 escape 的默认值。
+       </td>
+      </tr>
+
+      <tr>
+       <td>8.1.0</td>
+       <td>
+        The optional <code class="parameter">eol</code> parameter has been added.
+       </td>
+      </tr>
+
+      <tr>
+       <td>7.4.0</td>
+       <td>
+        The <code class="parameter">escape</code> parameter now also accepts an empty
+        string to disable the proprietary escape mechanism.
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-splfileobject.fputcsv-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="splfileobject.fputcsv.examples.basic">
+    <p><strong>示例 #1 <span class="methodname"><strong>SplFileObject::fputcsv()</strong></span> example</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$list </span><span style="color: #007700">= array (<br />    array(</span><span style="color: #DD0000">'aaa'</span><span style="color: #007700">, </span><span style="color: #DD0000">'bbb'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ccc'</span><span style="color: #007700">, </span><span style="color: #DD0000">'dddd'</span><span style="color: #007700">),<br />    array(</span><span style="color: #DD0000">'123'</span><span style="color: #007700">, </span><span style="color: #DD0000">'456'</span><span style="color: #007700">, </span><span style="color: #DD0000">'789'</span><span style="color: #007700">),<br />    array(</span><span style="color: #DD0000">'"aaa"'</span><span style="color: #007700">, </span><span style="color: #DD0000">'"bbb"'</span><span style="color: #007700">)<br />);<br /><br /></span><span style="color: #0000BB">$file </span><span style="color: #007700">= new </span><span style="color: #0000BB">SplFileObject</span><span style="color: #007700">(</span><span style="color: #DD0000">'file.csv'</span><span style="color: #007700">, </span><span style="color: #DD0000">'w'</span><span style="color: #007700">);<br /><br />foreach (</span><span style="color: #0000BB">$list </span><span style="color: #007700">as </span><span style="color: #0000BB">$fields</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$file</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fputcsv</span><span style="color: #007700">(</span><span style="color: #0000BB">$fields</span><span style="color: #007700">);<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>The above example will write the following to <code class="literal">file.csv</code>:</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">aaa,bbb,ccc,dddd
+123,456,789
+&quot;&quot;&quot;aaa&quot;&quot;&quot;,&quot;&quot;&quot;bbb&quot;&quot;&quot;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-splfileobject.fputcsv-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="methodname"><a href="splfileobject.fgetcsv.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::fgetcsv()</a> - Gets line from file and parse as CSV fields</span></li>
+   <li><span class="methodname"><a href="splfileobject.setcsvcontrol.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::setCsvControl()</a> - Set the delimiter, enclosure and escape character for CSV</span></li>
+   <li><span class="methodname"><a href="splfileobject.getcsvcontrol.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::getCsvControl()</a> - Get the delimiter, enclosure and escape character for CSV</span></li>
+   <li><span class="function"><a href="function.fputcsv.html" class="function" rel="rdfs-seeAlso">fputcsv()</a> - 将行格式化为 CSV 并写入文件指针</span></li>
+   <li><span class="function"><a href="function.fgetcsv.html" class="function" rel="rdfs-seeAlso">fgetcsv()</a> - 从文件指针中读入一行并解析 CSV 字段</span></li>
+   <li><span class="function"><a href="function.str-getcsv.html" class="function" rel="rdfs-seeAlso">str_getcsv()</a> - 解析 CSV 字符串为一个数组</span></li>
+  </ul>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

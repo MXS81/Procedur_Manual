@@ -1,0 +1,315 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>去除字符串首尾处的空白字符（或者其他字符）</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.substr-replace.html" class="navbar__link">« substr_replace</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.ucfirst.html" class="navbar__link">ucfirst »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.strings.html">字符串 函数</a></li>
+        <li>去除字符串首尾处的空白字符（或者其他字符）</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.trim" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">trim</h1> 
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">trim</span> &mdash; <span class="dc-title">去除字符串首尾处的空白字符（或者其他字符）</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.trim-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>trim</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$string</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$characters</code><span class="initializer"> = &quot; \n\r\t\v\x00&quot;</span></span>): <span class="type"><a href="language.types.string.html" class="type string">string</a></span></div>
+
+  <p class="simpara">
+   此函数返回字符串 <code class="parameter">string</code> 去除首尾空白字符后的结果。如果不指定第二个参数，<span class="function"><strong>trim()</strong></span> 将去除这些字符：
+  </p>
+  
+ <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot; &quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>SP</abbr> 字符
+      <code class="literal">0x20</code>，一个普通的空格。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot;\t&quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>HT</abbr> 字符
+      <code class="literal">0x09</code>，一个制表符。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot;\n&quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>LF</abbr> 字符
+      <code class="literal">0x0A</code>，一个换行符。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot;\r&quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>CR</abbr> 字符
+      <code class="literal">0x0D</code>，一个回车符。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot;\0&quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>NUL</abbr> 字符
+      <code class="literal">0x00</code>，一个 NUL 字节。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&quot;\v&quot;</code>： <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr>VT</abbr> 字符
+      <code class="literal">0x0B</code>，一个垂直制表符。
+     </span>
+    </li>
+   </ul>
+
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.trim-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">string</code></dt>
+    <dd>
+     <p class="para">
+      待处理的 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。
+     </p>
+    </dd>
+   
+   
+    <dt><code class="parameter">characters</code></dt>
+    <dd>
+     
+ <span class="simpara">
+  可选，也可以使用 <code class="parameter">characters</code> 参数指定要剥离的字符。
+  只需列出所有需要剥离的字符。
+  使用 <code class="literal">..</code> 可以指定一个递增的字符范围。
+ </span>
+
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.trim-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   过滤后的字符串。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.trim-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>trim()</strong></span> 使用示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$text   </span><span style="color: #007700">= </span><span style="color: #DD0000">"\t\tThese are a few words :) ...  "</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$binary </span><span style="color: #007700">= </span><span style="color: #DD0000">"\x09Example string\x0A"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$hello  </span><span style="color: #007700">= </span><span style="color: #DD0000">"Hello World"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$text</span><span style="color: #007700">, </span><span style="color: #0000BB">$binary</span><span style="color: #007700">, </span><span style="color: #0000BB">$hello</span><span style="color: #007700">);<br /><br />print </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$trimmed </span><span style="color: #007700">= </span><span style="color: #0000BB">trim</span><span style="color: #007700">(</span><span style="color: #0000BB">$text</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$trimmed</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$trimmed </span><span style="color: #007700">= </span><span style="color: #0000BB">trim</span><span style="color: #007700">(</span><span style="color: #0000BB">$text</span><span style="color: #007700">, </span><span style="color: #DD0000">" \t."</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$trimmed</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$trimmed </span><span style="color: #007700">= </span><span style="color: #0000BB">trim</span><span style="color: #007700">(</span><span style="color: #0000BB">$hello</span><span style="color: #007700">, </span><span style="color: #DD0000">"Hdle"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$trimmed</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 清除 $binary 首位的 ASCII 控制字符<br />// （包括 0-31）<br /></span><span style="color: #0000BB">$clean </span><span style="color: #007700">= </span><span style="color: #0000BB">trim</span><span style="color: #007700">(</span><span style="color: #0000BB">$binary</span><span style="color: #007700">, </span><span style="color: #DD0000">"\x00..\x1F"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$clean</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">string(32) &quot;        These are a few words :) ...  &quot;
+string(16) &quot;    Example string
+&quot;
+string(11) &quot;Hello World&quot;
+
+string(28) &quot;These are a few words :) ...&quot;
+string(24) &quot;These are a few words :)&quot;
+string(5) &quot;o Wor&quot;
+string(14) &quot;Example string&quot;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 使用 <span class="function"><strong>trim()</strong></span> 清理数组值</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">trim_value</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$value</span><span style="color: #007700">) <br />{ <br />    </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">trim</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">); <br />}<br /><br /></span><span style="color: #0000BB">$fruit </span><span style="color: #007700">= array(</span><span style="color: #DD0000">'apple'</span><span style="color: #007700">,</span><span style="color: #DD0000">'banana '</span><span style="color: #007700">, </span><span style="color: #DD0000">' cranberry '</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$fruit</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">array_walk</span><span style="color: #007700">(</span><span style="color: #0000BB">$fruit</span><span style="color: #007700">, </span><span style="color: #DD0000">'trim_value'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$fruit</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">array(3) {
+  [0]=&gt;
+  string(5) &quot;apple&quot;
+  [1]=&gt;
+  string(7) &quot;banana &quot;
+  [2]=&gt;
+  string(11) &quot; cranberry &quot;
+}
+array(3) {
+  [0]=&gt;
+  string(5) &quot;apple&quot;
+  [1]=&gt;
+  string(6) &quot;banana&quot;
+  [2]=&gt;
+  string(9) &quot;cranberry&quot;
+}</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+
+ <div class="refsect1 notes" id="refsect1-function.trim-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <strong>可能的问题：删除中间字符</strong><br />
+   <p class="para">
+    因为 <span class="function"><strong>trim()</strong></span>
+    从字符串的开始和末尾修剪字符。所以中间是否删除字符可能会造成混淆。<code class="literal">trim(&#039;abc&#039;, &#039;bad&#039;)</code>
+    移除了“a”和“b”，是因为修剪了“a”之后，“b”移动到了开头，所以也被修剪了。所以这就是为什么能正常工作而
+    <code class="literal">trim(&#039;abc&#039;, &#039;b&#039;)</code> 看起来没有的原因。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.trim-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="function.ltrim.html" class="function" rel="rdfs-seeAlso">ltrim()</a> - 删除字符串开头的空白字符（或其他字符）</span></li>
+   <li><span class="function"><a href="function.rtrim.html" class="function" rel="rdfs-seeAlso">rtrim()</a> - 去除字符串末尾的空白字符（或者其他字符）</span></li>
+   <li><span class="function"><a href="function.str-replace.html" class="function" rel="rdfs-seeAlso">str_replace()</a> - 子字符串替换</span></li>
+  </ul>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

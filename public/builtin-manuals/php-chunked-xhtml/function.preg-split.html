@@ -1,0 +1,360 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>通过一个正则表达式分隔字符串</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.preg-replace-callback-array.html" class="navbar__link">« preg_replace_callback_array</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="book.ssdeep.html" class="navbar__link">ssdeep »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pcre.html">PCRE 函数</a></li>
+        <li>通过一个正则表达式分隔字符串</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.preg-split" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">preg_split</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">preg_split</span> &mdash; <span class="dc-title">通过一个正则表达式分隔字符串</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.preg-split-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>preg_split</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$pattern</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$subject</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$limit</code><span class="initializer"> = -1</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = 0</span></span><br>): <span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+  通过一个正则表达式分隔给定字符串.
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.preg-split-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">pattern</code></dt>
+     <dd>
+      <p class="para">
+       用于搜索的模式，字符串形式。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">subject</code></dt>
+     <dd>
+      <p class="para">
+       输入字符串
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">limit</code></dt>
+     <dd>
+      <p class="para">
+      如果指定，将限制分隔得到的子串最多只有<code class="parameter">limit</code>个，返回的最后一个
+      子串将包含所有剩余部分。<code class="parameter">limit</code>值为-1， 0或null时都代表&quot;不限制&quot;。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">flags</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">flags </code>可以是任何下面标记的组合(以位或运算 <code class="literal">|</code> 组合)：
+       <dl>
+        
+         <dt><strong><code><a href="pcre.constants.html#constant.preg-split-no-empty">PREG_SPLIT_NO_EMPTY</a></code></strong></dt>
+         <dd>
+          <span class="simpara">
+          如果这个标记被设置， <span class="function"><strong>preg_split()</strong></span> 将仅返回分隔后的非空部分。
+          </span>
+         </dd>
+        
+        
+         <dt><strong><code><a href="pcre.constants.html#constant.preg-split-delim-capture">PREG_SPLIT_DELIM_CAPTURE</a></code></strong></dt>
+         <dd>
+          <span class="simpara">
+          如果这个标记设置了，用于分隔的模式中的括号表达式将被捕获并返回。
+          </span>
+         </dd>
+        
+        
+         <dt><strong><code><a href="pcre.constants.html#constant.preg-split-offset-capture">PREG_SPLIT_OFFSET_CAPTURE</a></code></strong></dt>
+         <dd>
+          <p class="para">
+          如果这个标记被设置, 对于每一个出现的匹配返回时将会附加字符串偏移量. 
+          注意：这将会改变返回数组中的每一个元素, 使其每个元素成为一个由第<code class="literal">0</code>
+          个元素为分隔后的子串，第<code class="literal">1</code>个元素为该子串在<code class="parameter">subject</code>
+          中的偏移量组成的数组。
+          </p>
+         </dd>
+        
+       </dl>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.preg-split-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+  返回一个使用 <code class="parameter">pattern</code> 边界分隔 <code class="parameter">subject</code> 后得到
+  的子串组成的数组， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-function.preg-split-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="para">
+如果传递的正则表达式无法正常解析，会发出 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>。 
+</p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.preg-split-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>preg_split()</strong></span>示例：获取搜索字符串的部分</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">//使用逗号或空格(包含" ", \r, \t, \n, \f)分隔短语<br /></span><span style="color: #0000BB">$keywords </span><span style="color: #007700">= </span><span style="color: #0000BB">preg_split</span><span style="color: #007700">(</span><span style="color: #DD0000">"/[\s,]+/"</span><span style="color: #007700">, </span><span style="color: #DD0000">"hypertext language, programming"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$keywords</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div> 
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">Array
+(
+    [0] =&gt; hypertext
+    [1] =&gt; language
+    [2] =&gt; programming
+)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 将一个字符串分隔为组成它的字符</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$str </span><span style="color: #007700">= </span><span style="color: #DD0000">'string'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$chars </span><span style="color: #007700">= </span><span style="color: #0000BB">preg_split</span><span style="color: #007700">(</span><span style="color: #DD0000">'//'</span><span style="color: #007700">, </span><span style="color: #0000BB">$str</span><span style="color: #007700">, -</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PREG_SPLIT_NO_EMPTY</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$chars</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">Array
+(
+    [0] =&gt; s
+    [1] =&gt; t
+    [2] =&gt; r
+    [3] =&gt; i
+    [4] =&gt; n
+    [5] =&gt; g
+)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 分隔一个字符串并获取每部分的偏移量</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$str </span><span style="color: #007700">= </span><span style="color: #DD0000">'hypertext language programming'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$chars </span><span style="color: #007700">= </span><span style="color: #0000BB">preg_split</span><span style="color: #007700">(</span><span style="color: #DD0000">'/ /'</span><span style="color: #007700">, </span><span style="color: #0000BB">$str</span><span style="color: #007700">, -</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">PREG_SPLIT_OFFSET_CAPTURE</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$chars</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">Array
+(
+    [0] =&gt; Array
+        (
+            [0] =&gt; hypertext
+            [1] =&gt; 0
+        )
+
+    [1] =&gt; Array
+        (
+            [0] =&gt; language
+            [1] =&gt; 10
+        )
+
+    [2] =&gt; Array
+        (
+            [0] =&gt; programming
+            [1] =&gt; 19
+        )
+
+)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.preg-split-notes">
+  <h3 class="title">注释</h3>
+  <div class="tip"><strong class="tip">小技巧</strong>
+   <p class="para">
+   如果你不需要正则表达式功能，可以有更快(并且更简单)的选择比如 <span class="function"><a href="function.explode.html" class="function">explode()</a></span>
+    或 <span class="function"><a href="function.str-split.html" class="function">str_split()</a></span>。
+   </p>
+  </div>
+  <div class="tip"><strong class="tip">小技巧</strong>
+   <p class="para">
+    如果没有成功匹配，将会返回一个数组，包含了单个元素，即输入的字符串。
+   </p>
+  </div>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.preg-split-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><a href="pcre.pattern.html" class="link">PCRE 模式</a></li>
+    <li><span class="function"><a href="function.preg-quote.html" class="function" rel="rdfs-seeAlso">preg_quote()</a> - 转义正则表达式字符</span></li>
+    <li><span class="function"><a href="function.explode.html" class="function" rel="rdfs-seeAlso">explode()</a> - 使用一个字符串分割另一个字符串</span></li>
+    <li><span class="function"><a href="function.preg-match.html" class="function" rel="rdfs-seeAlso">preg_match()</a> - 执行匹配正则表达式</span></li>
+    <li><span class="function"><a href="function.preg-match-all.html" class="function" rel="rdfs-seeAlso">preg_match_all()</a> - 执行一个全局正则表达式匹配</span></li>
+    <li><span class="function"><a href="function.preg-replace.html" class="function" rel="rdfs-seeAlso">preg_replace()</a> - 执行一个正则表达式的搜索和替换</span></li>
+    <li><span class="function"><a href="function.preg-last-error.html" class="function" rel="rdfs-seeAlso">preg_last_error()</a> - 返回最后一个PCRE正则执行产生的错误代码</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

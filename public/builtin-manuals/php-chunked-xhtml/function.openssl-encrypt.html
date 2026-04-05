@@ -1,0 +1,321 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>加密数据</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.openssl-digest.html" class="navbar__link">« openssl_digest</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.openssl-error-string.html" class="navbar__link">openssl_error_string »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.openssl.html">OpenSSL 函数</a></li>
+        <li>加密数据</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.openssl-encrypt" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">openssl_encrypt</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.3.0, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">openssl_encrypt</span> &mdash; <span class="dc-title">加密数据</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.openssl-encrypt-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>openssl_encrypt</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="attribute"><a href="class.sensitiveparameter.html">#[\SensitiveParameter]</a> </span><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$data</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$cipher_algo</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="attribute"><a href="class.sensitiveparameter.html">#[\SensitiveParameter]</a> </span><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$passphrase</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$options</code><span class="initializer"> = 0</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$iv</code><span class="initializer"> = &quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter reference">&$tag</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$aad</code><span class="initializer"> = &quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$tag_length</code><span class="initializer"> = 16</span></span><br>): <span class="type"><span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   以指定的方式和密码短语加密数据，返回原始或 base64 编码后的字符串。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.openssl-encrypt-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">data</code></dt>
+     <dd>
+      <p class="para">
+       待加密的明文信息数据。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">cipher_algo</code></dt>
+     <dd>
+      <p class="para">
+       密码学方式。<span class="function"><a href="function.openssl-get-cipher-methods.html" class="function">openssl_get_cipher_methods()</a></span> 可获取有效密码方式列表。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">passphrase</code></dt>
+     <dd>
+      <p class="para">
+       密码短语。若 passphrase 比预期长度短，将静默用 <code class="literal">NUL</code> 填充；
+       若比预期长度更长，将静默截断。
+      </p>
+      <div class="caution"><strong class="caution">警告</strong>
+       <p class="simpara">
+        正如其名称所示，passphrase 没有用于密钥导出函数。唯一的操作是用 <code class="literal">NUL</code> 字符填充，或者如果长度与预期不同则截断。
+       </p>
+      </div>
+     </dd>
+    
+    
+      <dt><code class="parameter">options</code></dt>
+      <dd>
+        <p class="para">
+          <code class="parameter">options</code> 是以下标记的按位或：
+         <strong><code><a href="openssl.constants.other.html#constant.openssl-raw-data">OPENSSL_RAW_DATA</a></code></strong> 和
+         <strong><code><a href="openssl.constants.other.html#constant.openssl-zero-padding">OPENSSL_ZERO_PADDING</a></code></strong>
+         或 <strong><code><a href="openssl.constants.other.html#constant.openssl-dont-zero-pad-key">OPENSSL_DONT_ZERO_PAD_KEY</a></code></strong>。
+        </p>
+      </dd>
+    
+    
+     <dt><code class="parameter">iv</code></dt>
+     <dd>
+      <p class="para">
+       非 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 的初始化向量。如果 IV 比预期短，则用 <code class="literal">NUL</code> 字符填充并发出警告；如果密码短语比预期长，则将其截断并发出警告。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">tag</code></dt>
+     <dd>
+      <p class="para">
+       使用 AEAD 密码模式（GCM 或 CCM）时传引用的验证标签。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">aad</code></dt>
+     <dd>
+      <p class="para">
+       附加的验证数据。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">tag_length</code></dt>
+     <dd>
+      <p class="para">
+       验证 <code class="parameter">tag</code> 的长度。GCM 模式时，它的范围是 4 到 16。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.openssl-encrypt-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回加密后的字符串， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-function.openssl-encrypt-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="para">
+   <code class="parameter">cipher_algo</code> 传入未知算法时，产生 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong> 级别的错误。
+  </p>
+  <p class="para">
+   <code class="parameter">iv</code> 传入空字符串时产生 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong> 级别的错误。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.openssl-encrypt-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>7.1.0</td>
+      <td>增加了 <code class="parameter">tag</code>、<code class="parameter">aad</code>、<code class="parameter">tag_length</code> 参数</td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+
+ <div class="refsect1 examples" id="refsect1-function.openssl-encrypt-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 PHP 7.1 之前的 GCM 模式的 AES 认证加密示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">//$key should have been previously generated in a cryptographically safe way, like openssl_random_pseudo_bytes<br /></span><span style="color: #0000BB">$plaintext </span><span style="color: #007700">= </span><span style="color: #DD0000">"message to be encrypted"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$cipher </span><span style="color: #007700">= </span><span style="color: #DD0000">"aes-128-gcm"</span><span style="color: #007700">;<br />if (</span><span style="color: #0000BB">in_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$cipher</span><span style="color: #007700">, </span><span style="color: #0000BB">openssl_get_cipher_methods</span><span style="color: #007700">()))<br />{<br />    </span><span style="color: #0000BB">$ivlen </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_cipher_iv_length</span><span style="color: #007700">(</span><span style="color: #0000BB">$cipher</span><span style="color: #007700">);<br />    </span><span style="color: #0000BB">$iv </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_random_pseudo_bytes</span><span style="color: #007700">(</span><span style="color: #0000BB">$ivlen</span><span style="color: #007700">);<br />    </span><span style="color: #0000BB">$ciphertext </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_encrypt</span><span style="color: #007700">(</span><span style="color: #0000BB">$plaintext</span><span style="color: #007700">, </span><span style="color: #0000BB">$cipher</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$options</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">$iv</span><span style="color: #007700">, </span><span style="color: #0000BB">$tag</span><span style="color: #007700">);<br />    </span><span style="color: #FF8000">//store $cipher, $iv, and $tag for decryption later<br />    </span><span style="color: #0000BB">$original_plaintext </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_decrypt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ciphertext</span><span style="color: #007700">, </span><span style="color: #0000BB">$cipher</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$options</span><span style="color: #007700">=</span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">$iv</span><span style="color: #007700">, </span><span style="color: #0000BB">$tag</span><span style="color: #007700">);<br />    echo </span><span style="color: #0000BB">$original_plaintext</span><span style="color: #007700">.</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 PHP 5.6+ 的 AES 认证加密例子</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">//$key previously generated safely, ie: openssl_random_pseudo_bytes<br /></span><span style="color: #0000BB">$plaintext </span><span style="color: #007700">= </span><span style="color: #DD0000">"message to be encrypted"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$ivlen </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_cipher_iv_length</span><span style="color: #007700">(</span><span style="color: #0000BB">$cipher</span><span style="color: #007700">=</span><span style="color: #DD0000">"AES-128-CBC"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$iv </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_random_pseudo_bytes</span><span style="color: #007700">(</span><span style="color: #0000BB">$ivlen</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$ciphertext_raw </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_encrypt</span><span style="color: #007700">(</span><span style="color: #0000BB">$plaintext</span><span style="color: #007700">, </span><span style="color: #0000BB">$cipher</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$options</span><span style="color: #007700">=</span><span style="color: #0000BB">OPENSSL_RAW_DATA</span><span style="color: #007700">, </span><span style="color: #0000BB">$iv</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$hmac </span><span style="color: #007700">= </span><span style="color: #0000BB">hash_hmac</span><span style="color: #007700">(</span><span style="color: #DD0000">'sha256'</span><span style="color: #007700">, </span><span style="color: #0000BB">$ciphertext_raw</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$as_binary</span><span style="color: #007700">=</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$ciphertext </span><span style="color: #007700">= </span><span style="color: #0000BB">base64_encode</span><span style="color: #007700">( </span><span style="color: #0000BB">$iv</span><span style="color: #007700">.</span><span style="color: #0000BB">$hmac</span><span style="color: #007700">.</span><span style="color: #0000BB">$ciphertext_raw </span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">//decrypt later....<br /></span><span style="color: #0000BB">$c </span><span style="color: #007700">= </span><span style="color: #0000BB">base64_decode</span><span style="color: #007700">(</span><span style="color: #0000BB">$ciphertext</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$ivlen </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_cipher_iv_length</span><span style="color: #007700">(</span><span style="color: #0000BB">$cipher</span><span style="color: #007700">=</span><span style="color: #DD0000">"AES-128-CBC"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$iv </span><span style="color: #007700">= </span><span style="color: #0000BB">substr</span><span style="color: #007700">(</span><span style="color: #0000BB">$c</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">$ivlen</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$hmac </span><span style="color: #007700">= </span><span style="color: #0000BB">substr</span><span style="color: #007700">(</span><span style="color: #0000BB">$c</span><span style="color: #007700">, </span><span style="color: #0000BB">$ivlen</span><span style="color: #007700">, </span><span style="color: #0000BB">$sha2len</span><span style="color: #007700">=</span><span style="color: #0000BB">32</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$ciphertext_raw </span><span style="color: #007700">= </span><span style="color: #0000BB">substr</span><span style="color: #007700">(</span><span style="color: #0000BB">$c</span><span style="color: #007700">, </span><span style="color: #0000BB">$ivlen</span><span style="color: #007700">+</span><span style="color: #0000BB">$sha2len</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$original_plaintext </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_decrypt</span><span style="color: #007700">(</span><span style="color: #0000BB">$ciphertext_raw</span><span style="color: #007700">, </span><span style="color: #0000BB">$cipher</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$options</span><span style="color: #007700">=</span><span style="color: #0000BB">OPENSSL_RAW_DATA</span><span style="color: #007700">, </span><span style="color: #0000BB">$iv</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$calcmac </span><span style="color: #007700">= </span><span style="color: #0000BB">hash_hmac</span><span style="color: #007700">(</span><span style="color: #DD0000">'sha256'</span><span style="color: #007700">, </span><span style="color: #0000BB">$ciphertext_raw</span><span style="color: #007700">, </span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$as_binary</span><span style="color: #007700">=</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />if (</span><span style="color: #0000BB">hash_equals</span><span style="color: #007700">(</span><span style="color: #0000BB">$hmac</span><span style="color: #007700">, </span><span style="color: #0000BB">$calcmac</span><span style="color: #007700">))</span><span style="color: #FF8000">// timing attack safe comparison<br /></span><span style="color: #007700">{<br />    echo </span><span style="color: #0000BB">$original_plaintext</span><span style="color: #007700">.</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+  </p>
+ </div>
+
+
+
+ <div class="refsect1 seealso" id="refsect1-function.openssl-encrypt-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.openssl-decrypt.html" class="function" rel="rdfs-seeAlso">openssl_decrypt()</a> - 解密数据</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

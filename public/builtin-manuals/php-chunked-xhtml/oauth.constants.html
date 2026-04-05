@@ -1,0 +1,451 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="oauth.installation.html" class="navbar__link">« 安装</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="oauth.examples.html" class="navbar__link">示例 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.oauth.html">OAuth</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="oauth.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">下列常量由此扩展定义，且仅在此扩展编译入 PHP 或在运行时动态载入时可用。</p>
+ <p class="simpara">
+这些常量牵涉到的大部分问题也都在官方的 OAuth <a href="http://wiki.oauth.net/ProblemReporting" class="link external">&raquo;&nbsp;问题报告</a> 文档里有描述。但是要注意，这些常量名是特定于 PHP 的，尽管这些命名规则看上去相似。
+ </p>
+ <dl>
+  
+  
+   <dt id="constant.oauth-sig-method-rsasha1">
+    <strong><code><a href="oauth.constants.html#constant.oauth-sig-method-rsasha1">OAUTH_SIG_METHOD_RSASHA1</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     OAuth <em>RSA-SHA1</em> 签名方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-sig-method-hmacsha1">
+    <strong><code><a href="oauth.constants.html#constant.oauth-sig-method-hmacsha1">OAUTH_SIG_METHOD_HMACSHA1</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     OAuth <em>HMAC-SHA1</em> 签名方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-sig-method-hmacsha256">
+    <strong><code><a href="oauth.constants.html#constant.oauth-sig-method-hmacsha256">OAUTH_SIG_METHOD_HMACSHA256</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     OAuth <em>HMAC-SHA256</em> 签名方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-auth-type-authorization">
+    <strong><code><a href="oauth.constants.html#constant.oauth-auth-type-authorization">OAUTH_AUTH_TYPE_AUTHORIZATION</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此常量代表把 OAuth 参数放在 <code class="literal">Authorization</code> 头部。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-auth-type-none">
+    <strong><code><a href="oauth.constants.html#constant.oauth-auth-type-none">OAUTH_AUTH_TYPE_NONE</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此常量标志着一个 NoAuth OAuth 请求。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-auth-type-uri">
+    <strong><code><a href="oauth.constants.html#constant.oauth-auth-type-uri">OAUTH_AUTH_TYPE_URI</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此常量表示将 OAuth 参数放在请求中。
+     <abbr title="Uniform Resource Identifier">URI</abbr>.
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-auth-type-form">
+    <strong><code><a href="oauth.constants.html#constant.oauth-auth-type-form">OAUTH_AUTH_TYPE_FORM</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+   此常量表示将 OAuth 参数作为 HTTP POST 主体的一部分。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-http-method-get">
+    <strong><code><a href="oauth.constants.html#constant.oauth-http-method-get">OAUTH_HTTP_METHOD_GET</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     为 OAuth 请求使用 <em>GET</em> 方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-http-method-post">
+    <strong><code><a href="oauth.constants.html#constant.oauth-http-method-post">OAUTH_HTTP_METHOD_POST</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     为 OAuth 请求使用 <em>POST</em> 方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-http-method-put">
+    <strong><code><a href="oauth.constants.html#constant.oauth-http-method-put">OAUTH_HTTP_METHOD_PUT</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     为 OAuth 请求使用 <em>PUT</em> 方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-http-method-head">
+    <strong><code><a href="oauth.constants.html#constant.oauth-http-method-head">OAUTH_HTTP_METHOD_HEAD</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     为 OAuth 请求使用 <em>HEAD</em> 方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-http-method-delete">
+    <strong><code><a href="oauth.constants.html#constant.oauth-http-method-delete">OAUTH_HTTP_METHOD_DELETE</a></code></strong>
+    (<span class="type"><a href="language.types.string.html" class="type string">string</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     为 OAuth 请求使用 <em>DELETE</em> 方法。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-reqengine-streams">
+    <strong><code><a href="oauth.constants.html#constant.oauth-reqengine-streams">OAUTH_REQENGINE_STREAMS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     使用 <span class="methodname"><a href="oauth.setrequestengine.html" class="methodname">OAuth::setRequestEngine()</a></span> 来设置引擎为 <a href="book.stream.html" class="link">PHP 流</a>，与用 <strong><code><a href="oauth.constants.html#constant.oauth-reqengine-curl">OAUTH_REQENGINE_CURL</a></code></strong> 的 <a href="book.curl.html" class="link">Curl</a> 截然相反。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-reqengine-curl">
+    <strong><code><a href="oauth.constants.html#constant.oauth-reqengine-curl">OAUTH_REQENGINE_CURL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     使用 <span class="methodname"><a href="oauth.setrequestengine.html" class="methodname">OAuth::setRequestEngine()</a></span> 来设置引擎为 <a href="book.curl.html" class="link">Curl</a>，与用 <strong><code><a href="oauth.constants.html#constant.oauth-reqengine-streams">OAUTH_REQENGINE_STREAMS</a></code></strong> 的 <a href="book.stream.html" class="link">PHP 流</a> 截然相反。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-ok">
+    <strong><code><a href="oauth.constants.html#constant.oauth-ok">OAUTH_OK</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+    一切良好。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-bad-nonce">
+    <strong><code><a href="oauth.constants.html#constant.oauth-bad-nonce">OAUTH_BAD_NONCE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_nonce</em> 值已经用于上一个上一个请求，因此现在不能使用了。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-bad-timestamp">
+    <strong><code><a href="oauth.constants.html#constant.oauth-bad-timestamp">OAUTH_BAD_TIMESTAMP</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+      <em>oauth_timestamp</em> 值不能被服务提供者接受。这种情况下，响应应该也包含 <em>oauth_acceptable_timestamps</em> 参数。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-consumer-key-unknown">
+    <strong><code><a href="oauth.constants.html#constant.oauth-consumer-key-unknown">OAUTH_CONSUMER_KEY_UNKNOWN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+    <em>oauth_consumer_key</em> 暂时不能被服务提供者接受。比如，服务提供者限流了使用者。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-consumer-key-refused">
+    <strong><code><a href="oauth.constants.html#constant.oauth-consumer-key-refused">OAUTH_CONSUMER_KEY_REFUSED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     使用者密钥遭拒绝。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-invalid-signature">
+    <strong><code><a href="oauth.constants.html#constant.oauth-invalid-signature">OAUTH_INVALID_SIGNATURE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+      <em>oauth_signature</em> 无效，因为和服务提供者的签名计算不匹配。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-token-used">
+    <strong><code><a href="oauth.constants.html#constant.oauth-token-used">OAUTH_TOKEN_USED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_token</em> 已经被消费。此令牌不能再被使用，因为在上一次请求中已经使用过。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-token-expired">
+    <strong><code><a href="oauth.constants.html#constant.oauth-token-expired">OAUTH_TOKEN_EXPIRED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_token</em> 已经过期。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-token-revoked">
+    <strong><code><a href="oauth.constants.html#constant.oauth-token-revoked">OAUTH_TOKEN_REVOKED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_token</em> 已经被撤销，且将决不再接受。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-token-rejected">
+    <strong><code><a href="oauth.constants.html#constant.oauth-token-rejected">OAUTH_TOKEN_REJECTED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_token</em> 被服务提供者拒绝。原因未知，也许是因为令牌从未发布、已经消费、过期、或服务提供者忘记了。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-verifier-invalid">
+    <strong><code><a href="oauth.constants.html#constant.oauth-verifier-invalid">OAUTH_VERIFIER_INVALID</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_verifier</em> 不正确。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-parameter-absent">
+    <strong><code><a href="oauth.constants.html#constant.oauth-parameter-absent">OAUTH_PARAMETER_ABSENT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     一个必需的参数没有接收到。这种情况下，响应也应该包含 <em>oauth_parameters_absent</em> 参数。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.oauth-signature-method-rejected">
+    <strong><code><a href="oauth.constants.html#constant.oauth-signature-method-rejected">OAUTH_SIGNATURE_METHOD_REJECTED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <em>oauth_signature_method</em> 不能被服务提供者接受。
+    </span>
+   </dd>
+  
+ </dl>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

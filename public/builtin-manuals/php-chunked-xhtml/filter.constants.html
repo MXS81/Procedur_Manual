@@ -1,0 +1,1237 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="filter.configuration.html" class="navbar__link">« 运行时配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="filter.examples.html" class="navbar__link">示例 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.filter.html">过滤器</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="filter.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">下列常量由此扩展定义，且仅在此扩展编译入 PHP 或在运行时动态载入时可用。</p>
+
+ <dl>
+  <strong class="title">输入常量</strong>
+  <p class="simpara">
+   这些常量用于
+   <span class="function"><a href="function.filter-input.html" class="function">filter_input()</a></span> 和
+   <span class="function"><a href="function.filter-input-array.html" class="function">filter_input_array()</a></span>。
+  </p>
+  
+   <dt id="constant.input-post">
+    <strong><code><a href="filter.constants.html#constant.input-post">INPUT_POST</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.post.html" class="link">POST</a> 变量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-get">
+    <strong><code><a href="filter.constants.html#constant.input-get">INPUT_GET</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.get.html" class="link">GET</a> 变量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-cookie">
+    <strong><code><a href="filter.constants.html#constant.input-cookie">INPUT_COOKIE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.cookies.html" class="link">COOKIE</a> 变量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-env">
+    <strong><code><a href="filter.constants.html#constant.input-env">INPUT_ENV</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.environment.html" class="link">ENV</a> 变量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-server">
+    <strong><code><a href="filter.constants.html#constant.input-server">INPUT_SERVER</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.server.html" class="link">SERVER</a> 变量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-session">
+    <strong><code><a href="filter.constants.html#constant.input-session">INPUT_SESSION</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.session.html" class="link">SESSION</a> 变量。（自 PHP 8.0.0 起移除，之前未实现）
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.input-request">
+    <strong><code><a href="filter.constants.html#constant.input-request">INPUT_REQUEST</a></code></strong>
+     (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <a href="reserved.variables.request.html" class="link">REQUEST</a> 变量。（自 PHP 8.0.0 起移除，之前未实现）
+    </span>
+   </dd>
+  
+ </dl>
+
+ <dl id="filter.constants.flags.generic">
+  <strong class="title">普通过滤 flag</strong>
+  
+   <dt id="constant.filter-flag-none">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-none">FILTER_FLAG_NONE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     没有 flag。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-require-scalar">
+    <strong><code><a href="filter.constants.html#constant.filter-require-scalar">FILTER_REQUIRE_SCALAR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     flag 要求过滤的输入是标量。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-require-array">
+    <strong><code><a href="filter.constants.html#constant.filter-require-array">FILTER_REQUIRE_ARRAY</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     flag 要求过滤的输入是 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-force-array">
+    <strong><code><a href="filter.constants.html#constant.filter-force-array">FILTER_FORCE_ARRAY</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此 flag 将标量输入封装为包含单个元素的 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>，以供操作数组的过滤器使用。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-null-on-failure">
+    <strong><code><a href="filter.constants.html#constant.filter-null-on-failure">FILTER_NULL_ON_FAILURE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     失败时使用 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong> 而不是 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+    </span>
+    <span class="simpara">
+     可与任何验证 <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_<span class="replaceable">*</span></a></code></strong>
+     过滤器一起使用。
+    </span>
+   </dd>
+  
+ </dl>
+
+ <dl id="filter.constants.flags.sanitization">
+  <strong class="title">清理过滤器 flag</strong>
+  
+   <dt id="constant.filter-flag-strip-low">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-strip-low">FILTER_FLAG_STRIP_LOW</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     除去 ASCII 值小于 32 的字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-strip-high">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-strip-high">FILTER_FLAG_STRIP_HIGH</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     除去 ASCII 值大于 127 的字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-strip-backtick">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-strip-backtick">FILTER_FLAG_STRIP_BACKTICK</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     除去反引号（<code class="literal">`</code>）字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-encode-low">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-encode-low">FILTER_FLAG_ENCODE_LOW</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     对 ASCII 值小于 32 的字符进行编码。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-encode-high">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-encode-high">FILTER_FLAG_ENCODE_HIGH</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     对 ASCII 值大于 127 的字符进行编码。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-encode-amp">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-encode-amp">FILTER_FLAG_ENCODE_AMP</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     编码 <code class="literal">&amp;</code>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-no-encode-quotes">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-no-encode-quotes">FILTER_FLAG_NO_ENCODE_QUOTES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     单双引号（<code class="literal">&#039;</code> 和 <code class="literal">&quot;</code>）将不会编码。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-flag-empty-string-null">
+    <strong><code><a href="filter.constants.html#constant.filter-flag-empty-string-null">FILTER_FLAG_EMPTY_STRING_NULL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     
+     如果字符串清理是空字符串，则将值转换为 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>
+    </span>
+   </dd>
+  
+ </dl>
+
+ <dl id="filter.constants.validation">
+  <strong class="title">验证过滤器</strong>
+
+  
+   <dt id="constant.filter-validate-bool">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_BOOL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     对于 <code class="literal">&quot;1&quot;</code>、<code class="literal">1</code>（包括二进制、八进制和十六进制表示法）、<code class="literal">1.0</code>、<code class="literal">&quot;true&quot;</code>、<code class="literal">true</code>、<code class="literal">&quot;on&quot;</code>
+     和 <code class="literal">&quot;yes&quot;</code> 返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+    </span>
+    <span class="simpara">
+     对于 <code class="literal">&quot;0&quot;</code>、<code class="literal">0</code>（包括二进制、八进制和十六进制表示法）、<code class="literal">0.0</code>、<code class="literal">&quot;false&quot;</code>、<code class="literal">false</code>、<code class="literal">&quot;off&quot;</code>、<code class="literal">&quot;no&quot;</code>
+     和 <code class="literal">&quot;&quot;</code> 返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+    </span>
+    <span class="simpara">
+     字符串值的比较不区分大小写。非 bool 值的返回值取决于 <strong><code><a href="filter.constants.html#constant.filter-null-on-failure">FILTER_NULL_ON_FAILURE</a></code></strong>。如果设置，则返回 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>，否则返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+    </span>
+    <dl id="filter.constants.validation.bool.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+    <span class="simpara">
+     自 PHP 8.0.0 起可用。
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-boolean">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-boolean">FILTER_VALIDATE_BOOLEAN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     别名 <strong><code><a href="filter.constants.html#constant.filter-validate-bool">FILTER_VALIDATE_BOOL</a></code></strong>。该别名在 PHP 8.0.0 中引入其规范名称之前可用。
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-int">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-int">FILTER_VALIDATE_INT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     验证值是否为整数，成功时则转换为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 类型。
+    </span>
+
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      字符串值在验证之前使用 <span class="function"><a href="function.trim.html" class="function">trim()</a></span>。
+     </span>
+    </p></blockquote>
+
+    <dl id="filter.constants.validation.int.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">min_range</code></dt>
+      <dd>
+       <span class="simpara">
+        只有当值大于或等于提供的值时，才有效。
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">max_range</code></dt>
+      <dd>
+       <span class="simpara">
+        只有当该值小于或等于提供的值时，才有效。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.int.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-allow-octal">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-octal">FILTER_FLAG_ALLOW_OCTAL</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        
+        允许八进制整数（<code class="literal">0[0-7]+</code>）。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-allow-hex">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-hex">FILTER_FLAG_ALLOW_HEX</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        允许十六进制整数（<code class="literal">0x[0-9a-fA-F]+</code>）。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-float">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-float">FILTER_VALIDATE_FLOAT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     验证值是否为浮点数，成功时则转换为 <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 类型。
+    </span>
+
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      字符串值在验证之前使用 <span class="function"><a href="function.trim.html" class="function">trim()</a></span>。
+     </span>
+    </p></blockquote>
+
+    <dl id="filter.constants.validation.float.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">decimal</code></dt>
+      <dd>
+       <span class="simpara">
+        
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">min_range</code></dt>
+      <dd>
+       <span class="simpara">
+        只有当值大于或等于提供的值时，才有效。自 PHP 7.4.0 起可用。
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">max_range</code></dt>
+      <dd>
+       <span class="simpara">
+        只有当该值小于或等于提供的值时，才有效。自 PHP 7.4.0 起可用。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.float.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt>
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-thousand">FILTER_FLAG_ALLOW_THOUSAND</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        接受逗号（<code class="literal">,</code>），通常代表千位分隔符。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+  
+   <dt id="constant.filter-validate-regexp">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-regexp">FILTER_VALIDATE_REGEXP</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     根据 <code class="literal">regexp</code> 选项提供的正则表达式验证值。
+    </span>
+
+    <dl id="filter.constants.validation.regex.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+     
+      <dt><code class="literal">regexp</code></dt>
+      <dd>
+       <span class="simpara">
+        <a href="book.pcre.html" class="link">Perl 兼容</a>的正则表达式。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-url">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-url">FILTER_VALIDATE_URL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     根据 <a href="https://datatracker.ietf.org/doc/html/rfc2396" class="link external">&raquo;&nbsp;RFC 2396</a> 验证 <abbr title="Uniform Resource Locator">URL</abbr> 是否有效。
+    </span>
+    <dl id="filter.constants.validation.url.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.url.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-scheme-required">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-scheme-required">FILTER_FLAG_SCHEME_REQUIRED</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        要求 <abbr title="Uniform Resource Locator">URL</abbr> 包含协议部分。
+       </span>
+       <div class="warning"><strong class="warning">警告</strong>
+        <p class="simpara">
+         自 PHP 7.3.0 起<em>弃用</em>，自 PHP 8.0.0 起<em>移除</em>。这是因为
+         <strong><code><a href="filter.constants.html#constant.filter-validate-url">FILTER_VALIDATE_URL</a></code></strong> 过滤器始终隐含。
+        </p>
+       </div>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-host-required">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-host-required">FILTER_FLAG_HOST_REQUIRED</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        要求 <abbr title="Uniform Resource Locator">URL</abbr> 包含主机部分。
+       </span>
+       <div class="warning"><strong class="warning">警告</strong>
+        <p class="simpara">
+         自 PHP 7.3.0 起<em>弃用</em>，自 PHP 8.0.0 起<em>移除</em>。这是因为
+         <strong><code><a href="filter.constants.html#constant.filter-validate-url">FILTER_VALIDATE_URL</a></code></strong> 过滤器始终隐含。
+        </p>
+       </div>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-path-required">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-path-required">FILTER_FLAG_PATH_REQUIRED</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        要求 <abbr title="Uniform Resource Locator">URL</abbr> 包含路径部分。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-query-required">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-query-required">FILTER_FLAG_QUERY_REQUIRED</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        要求 <abbr title="Uniform Resource Locator">URL</abbr> 包含查询部分。
+       </span>
+      </dd>
+     
+    </dl>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      有效的 <abbr title="Uniform Resource Locator">URL</abbr> 可能未指定 <abbr title="Hypertext Transfer Protocol">HTTP</abbr>
+      协议（<code class="literal">http://</code>）。因此，可能需要进一步验证以确定 <abbr title="Uniform Resource Locator">URL</abbr>
+      是否使用期望的协议，例如 <code class="literal">ssh://</code> 或 <code class="literal">mailto:</code>。
+     </p>
+    </div>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      此过滤器仅适用于 <abbr title="American Standard Code for Information Interchange">ASCII</abbr> <abbr title="Uniform Resource Locator">URL</abbr>。这意味着将始终拒绝国际化域名（IDN）。
+     </p>
+    </div>
+   </dd>
+  
+  
+   <dt id="constant.filter-validate-domain">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-domain">FILTER_VALIDATE_DOMAIN</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     根据 <a href="https://datatracker.ietf.org/doc/html/rfc952" class="link external">&raquo;&nbsp;RFC 952</a>、<a href="https://datatracker.ietf.org/doc/html/rfc1034" class="link external">&raquo;&nbsp;RFC
+     1034</a>、<a href="https://datatracker.ietf.org/doc/html/rfc1035" class="link external">&raquo;&nbsp;RFC 1035</a>、<a href="https://datatracker.ietf.org/doc/html/rfc1034" class="link external">&raquo;&nbsp;RFC
+     1123</a>、<a href="https://datatracker.ietf.org/doc/html/rfc1034" class="link external">&raquo;&nbsp;RFC 2732</a> 和 <a href="https://datatracker.ietf.org/doc/html/rfc2181" class="link external">&raquo;&nbsp;RFC
+     2181</a> 验证域名是否有效。
+    </span>
+    <dl id="filter.constants.validation.domain.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.domain.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-hostname">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-hostname">FILTER_FLAG_HOSTNAME</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        要求主机名以字母数字开头，并且仅包含字母数字或连字符。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+  
+   <dt id="constant.filter-validate-email">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-email">FILTER_VALIDATE_EMAIL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     验证值是否是“有效”的电子邮件地址。
+    </span>
+
+    <span class="simpara">
+     验证是根据 <a href="https://datatracker.ietf.org/doc/html/rfc822" class="link external">&raquo;&nbsp;RFC 822</a> 中的 <code class="literal">addr-spec</code>
+     语法进行的。拒绝注释、空格折叠和无点域名。
+    </span>
+
+    <dl id="filter.constants.validation.email.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.email.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-email-unicode">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-email-unicode">FILTER_FLAG_EMAIL_UNICODE</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        接受 local 部分中的 Unicode 字符。自 PHP 7.1.0 起可用。
+       </span>
+      </dd>
+     
+    </dl>
+
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      电子邮件验证很复杂，确认电子邮件有效且存在的唯一真正方法是向该地址发送电子邮件。
+     </p>
+    </div>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-ip">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-ip">FILTER_VALIDATE_IP</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     验证值为 IP 地址。
+    </p>
+    <dl id="filter.constants.validation.ip.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+    <dl id="filter.constants.validation.ip.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-ipv4">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-ipv4">FILTER_FLAG_IPV4</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        允许 IPv4 地址。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-ipv6">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-ipv6">FILTER_FLAG_IPV6</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        允许 IPv6 地址。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-no-res-range">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-no-res-range">FILTER_FLAG_NO_RES_RANGE</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        拒绝保留地址。
+       </span>
+       <span class="simpara">
+        这些是在 <a href="https://datatracker.ietf.org/doc/html/rfc6890" class="link external">&raquo;&nbsp;RFC 6890</a>
+        中标记为<code class="literal">由协议保留</code>的范围。
+       </span>
+       <p class="para">
+        IPv4 的对应以下范围：
+        <span class="simplelist"><code class="literal">0.0.0.0/8</code>, <code class="literal">169.254.0.0/16</code>, <code class="literal">127.0.0.0/8</code>, <code class="literal">240.0.0.0/4</code></span>.
+       </p>
+       <p class="para">
+        IPv6 的对应以下范围：
+        <span class="simplelist"><code class="literal">::1/128</code>, <code class="literal">::/128</code>, <code class="literal">::FFFF:0:0/96</code>, <code class="literal">FE80::/10</code></span>.
+       </p>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-no-priv-range">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-no-priv-range">FILTER_FLAG_NO_PRIV_RANGE</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        拒绝私有地址。
+       </span>
+       <p class="para">
+        IPv4 的对应以下范围：
+        <span class="simplelist"><code class="literal">10.0.0.0/8</code>, <code class="literal">172.16.0.0/12</code>, <code class="literal">192.168.0.0/16</code></span>.
+       </p>
+       <span class="simpara">
+        IPv6 地址则以 <code class="literal">FD</code> 或 <code class="literal">FC</code> 开头。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-global-range">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-global-range">FILTER_FLAG_GLOBAL_RANGE</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        仅允许全局地址。这些可以在 <a href="https://datatracker.ietf.org/doc/html/rfc6890" class="link external">&raquo;&nbsp;RFC 6890</a>
+        中找到，其中 <code class="literal">Global</code> 属性是 <code class="literal">True</code>。自
+        PHP 8.2.0 起可用。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-validate-mac">
+    <strong><code><a href="filter.constants.html#constant.filter-validate-mac">FILTER_VALIDATE_MAC</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     验证该值是否是 MAC 地址。
+    </span>
+
+    <dl id="filter.constants.validation.mac.options">
+     <strong class="title">可用选项</strong>
+     
+      <dt><code class="literal">default</code></dt>
+      <dd>
+       <span class="simpara">
+        过滤失败时返回的值。
+       </span>
+      </dd>
+     
+    </dl>
+   </dd>
+  
+ </dl>
+
+ <dl id="filter.constants.sanitization">
+  <strong class="title">清理过滤器</strong>
+  
+   <dt id="constant.filter-unsafe-raw">
+    <strong><code><a href="filter.constants.html#constant.filter-unsafe-raw">FILTER_UNSAFE_RAW</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     过滤器不执行任何操作。
+    </span>
+    <span class="simpara">
+     但如果与 <strong><code><a href="filter.constants.html#constant.filter-flag-strip-low">FILTER_FLAG_STRIP_<span class="replaceable">*</span></a></code></strong> 和
+     <strong><code><a href="filter.constants.html#constant.filter-flag-encode-low">FILTER_FLAG_ENCODE_<span class="replaceable">*</span></a></code></strong> 过滤器清理 flag
+     一起使用，可以去除或编码特殊字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-default">
+    <strong><code><a href="filter.constants.html#constant.filter-default">FILTER_DEFAULT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     别名 <strong><code><a href="filter.constants.html#constant.filter-unsafe-raw">FILTER_UNSAFE_RAW</a></code></strong>。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-string">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-string">FILTER_SANITIZE_STRING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此过滤器会去除标签并对双引号和单引号进行 HTML 编码。
+    </span>
+    <span class="simpara">
+     如果与 <strong><code><a href="filter.constants.html#constant.filter-flag-strip-low">FILTER_FLAG_STRIP_<span class="replaceable">*</span></a></code></strong> 和
+     <strong><code><a href="filter.constants.html#constant.filter-flag-encode-low">FILTER_FLAG_ENCODE_<span class="replaceable">*</span></a></code></strong>
+     过滤器清理 flag 一起使用，可以选择性地去除或编码指定字符。
+    </span>
+    <span class="simpara">
+     可以使用 <strong><code><a href="filter.constants.html#constant.filter-flag-no-encode-quotes">FILTER_FLAG_NO_ENCODE_QUOTES</a></code></strong> 过滤器 flag 禁用编码引号的行为。
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      自 PHP 8.1.0 起<em>弃用</em>，使用 <span class="function"><a href="function.htmlspecialchars.html" class="function">htmlspecialchars()</a></span> 代替。
+     </p>
+    </div>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      此过滤器去除标签的方式不等同于 <span class="function"><a href="function.strip-tags.html" class="function">strip_tags()</a></span>。
+     </p>
+    </div>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-stripped">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-stripped">FILTER_SANITIZE_STRIPPED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     别名 <strong><code><a href="filter.constants.html#constant.filter-sanitize-string">FILTER_SANITIZE_STRING</a></code></strong>。
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      自 PHP 8.1.0 起<em>弃用</em>，使用 <span class="function"><a href="function.htmlspecialchars.html" class="function">htmlspecialchars()</a></span> 代替。
+     </p>
+    </div>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-encoded">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-encoded">FILTER_SANITIZE_ENCODED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此过滤器对字符串进行 URL 编码。
+    </span>
+    <span class="simpara">
+     如果与 <strong><code><a href="filter.constants.html#constant.filter-flag-strip-low">FILTER_FLAG_STRIP_<span class="replaceable">*</span></a></code></strong> 和
+     <strong><code><a href="filter.constants.html#constant.filter-flag-encode-low">FILTER_FLAG_ENCODE_<span class="replaceable">*</span></a></code></strong>
+     过滤器清理 flag 一起使用，可以选择性地去除或编码指定字符。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-special-chars">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-special-chars">FILTER_SANITIZE_SPECIAL_CHARS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <p class="para">
+     此过滤器对
+     <span class="simplelist"><code class="literal">&#039;</code>, <code class="literal">&quot;</code>, <code class="literal">&lt;</code>, <code class="literal">&gt;</code>, <code class="literal">&amp;</code></span>
+     和 ASCII 值小于 32 的字符进行 HTML 编码。与 <strong><code><a href="filter.constants.html#constant.filter-sanitize-full-special-chars">FILTER_SANITIZE_FULL_SPECIAL_CHARS</a></code></strong>
+     过滤器不同，<strong><code><a href="filter.constants.html#constant.filter-sanitize-special-chars">FILTER_SANITIZE_SPECIAL_CHARS</a></code></strong> 过滤器会忽略
+     <strong><code><a href="filter.constants.html#constant.filter-flag-no-encode-quotes">FILTER_FLAG_NO_ENCODE_QUOTES</a></code></strong> flag。
+    </p>
+    <span class="simpara">
+     如果与 <strong><code><a href="filter.constants.html#constant.filter-flag-strip-low">FILTER_FLAG_STRIP_<span class="replaceable">*</span></a></code></strong> 过滤器清理
+     flag 一起使用，可以选择性地去除指定字符，并且可以使用 <strong><code><a href="filter.constants.html#constant.filter-flag-encode-high">FILTER_FLAG_ENCODE_HIGH</a></code></strong>
+     对 ASCII 值大于 127 的字符进行编码。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-full-special-chars">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-full-special-chars">FILTER_SANITIZE_FULL_SPECIAL_CHARS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此过滤器相当于调用 <span class="function"><a href="function.htmlspecialchars.html" class="function">htmlspecialchars()</a></span> 并设置 <strong><code><a href="string.constants.html#constant.ent-quotes">ENT_QUOTES</a></code></strong>。
+    </span>
+    <span class="simpara">
+     可以使用 <strong><code><a href="filter.constants.html#constant.filter-flag-no-encode-quotes">FILTER_FLAG_NO_ENCODE_QUOTES</a></code></strong> 过滤器 flag 禁用编码引号的行为。
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      与 <span class="function"><a href="function.htmlspecialchars.html" class="function">htmlspecialchars()</a></span> 一样，此过滤器可识别 <a href="ini.core.html#ini.default-charset" class="link">default_charset</a>
+      INI 设置。如果检测到字节序列构成了当前字符集中的无效字符，则会拒绝整个字符串，从而返回空字符串。
+     </p>
+    </div>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-email">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-email">FILTER_SANITIZE_EMAIL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     通过移除除了拉丁字母（<code class="literal">[a-zA-Z]</code>）、数字（<code class="literal">[0-9]</code>）和特殊字符
+     <code class="literal">!#$%&amp;&#039;*+-=?^_`{|}~@.[]</code> 之外的所有字符来清理字符串。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-url">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-url">FILTER_SANITIZE_URL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     通过移除除了拉丁字母（<code class="literal">[a-zA-Z]</code>）、数字（<code class="literal">[0-9]</code>）和特殊字符
+     <code class="literal">$-_.+!*&#039;(),{}|\\^~[]`&lt;&gt;#%&quot;;/?:@&amp;=</code> 之外的所有字符来清理字符串。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-number-int">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-number-int">FILTER_SANITIZE_NUMBER_INT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     通过移除除了数字（<code class="literal">[0-9]</code>）、加号（<code class="literal">+</code>）和减号（<code class="literal">-</code>）之外的所有字符来清理字符串。
+    </span>
+   </dd>
+  
+  
+   <dt id="constant.filter-sanitize-number-float">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-number-float">FILTER_SANITIZE_NUMBER_FLOAT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     通过移除除了数字（<code class="literal">[0-9]</code>）、加号（<code class="literal">+</code>）和减号（<code class="literal">-</code>）之外的所有字符来清理字符串。
+    </span>
+
+    <dl id="filter.constants.sanitization.float.flags">
+     <strong class="title">可选 flag</strong>
+     
+      <dt id="constant.filter-flag-allow-fraction">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-fraction">FILTER_FLAG_ALLOW_FRACTION</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        接受点（<code class="literal">.</code>）字符，通常表示为整数部分和小数部分之间的分隔符。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-allow-thousand">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-thousand">FILTER_FLAG_ALLOW_THOUSAND</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        接受逗号（<code class="literal">,</code>）字符，通常代表千位分隔符。
+       </span>
+      </dd>
+     
+     
+      <dt id="constant.filter-flag-allow-scientific">
+       <strong><code><a href="filter.constants.html#constant.filter-flag-allow-scientific">FILTER_FLAG_ALLOW_SCIENTIFIC</a></code></strong>
+       (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+      </dt>
+      <dd>
+       <span class="simpara">
+        通过允许 <code class="literal">e</code> 和 <code class="literal">E</code> 字符来接受科学计数法中的数字。
+       </span>
+      </dd>
+     
+    </dl>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      如果未使用 <strong><code><a href="filter.constants.html#constant.filter-flag-allow-fraction">FILTER_FLAG_ALLOW_FRACTION</a></code></strong> flag，则会移除小数分隔符，从而改变接收到的值。
+     </p>
+     <div class="informalexample">
+      <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$number </span><span style="color: #007700">= </span><span style="color: #DD0000">'12.34'</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">filter_var</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_SANITIZE_NUMBER_FLOAT</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">filter_var</span><span style="color: #007700">(</span><span style="color: #0000BB">$number</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_SANITIZE_NUMBER_FLOAT</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_FLAG_ALLOW_FRACTION</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+      </div>
+
+      <p class="para">以上示例会输出：</p>
+      <div class="example-contents screen">
+<div class="cdata"><pre>
+string(4) &quot;1234&quot;
+string(5) &quot;12.34&quot;
+</pre></div>
+      </div>
+     </div>
+    </div>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-sanitize-add-slashes">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-add-slashes">FILTER_SANITIZE_ADD_SLASHES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     <span class="function"><a href="function.addslashes.html" class="function">addslashes()</a></span> 应用于输入。自 PHP 7.3.0 起可用。
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.filter-sanitize-magic-quotes">
+    <strong><code><a href="filter.constants.html#constant.filter-sanitize-magic-quotes">FILTER_SANITIZE_MAGIC_QUOTES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     别名 <strong><code><a href="filter.constants.html#constant.filter-sanitize-add-slashes">FILTER_SANITIZE_ADD_SLASHES</a></code></strong>。
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      自 PHP 7.3.0 起<em>弃用</em>，自 PHP 8.0.0 起<em>移除</em>。
+     </p>
+    </div>
+   </dd>
+  
+ </dl>
+
+ <dl>
+  <strong class="title">用户定义过滤器</strong>
+  
+   <dt id="constant.filter-callback">
+    <strong><code><a href="filter.constants.html#constant.filter-callback">FILTER_CALLBACK</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     此过滤器将过滤委托给用户定义的函数。<span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span> 作为与 <code class="literal">&#039;options&#039;</code>
+     key 关联的值传递给 <code class="parameter">options</code> 参数。
+    </span>
+    <p class="para">
+     callback 应具有以下签名：
+     <div class="methodsynopsis dc-description">
+      <span class="methodname"><span class="replaceable">callback</span></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$value</code></span>): <span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span></div>
+
+     <dl>
+      
+       <dt><code class="parameter">value</code></dt>
+       <dd>
+        <span class="simpara">
+         需要过滤的值。
+        </span>
+       </dd>
+      
+     </dl>
+    </p>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      callback 返回的值作为调用过滤函数返回的值。
+     </span>
+    </p></blockquote>
+    <div class="example" id="example-1">
+     <p><strong>示例 #1 
+      使用 <strong><code><a href="filter.constants.html#constant.filter-callback">FILTER_CALLBACK</a></code></strong> 验证登录名的示例
+     </strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">validate_login</span><span style="color: #007700">(</span><span style="color: #0000BB">string $value</span><span style="color: #007700">): ?</span><span style="color: #0000BB">string<br /></span><span style="color: #007700">{<br />    if (</span><span style="color: #0000BB">strlen</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">) &gt;= </span><span style="color: #0000BB">5 </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">ctype_alnum</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">)) {<br />        return </span><span style="color: #0000BB">$value</span><span style="color: #007700">;<br />    }<br />    return </span><span style="color: #0000BB">null</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">$login </span><span style="color: #007700">= </span><span style="color: #DD0000">"val1dL0gin"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$filtered_login </span><span style="color: #007700">= </span><span style="color: #0000BB">filter_var</span><span style="color: #007700">(</span><span style="color: #0000BB">$login</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_CALLBACK</span><span style="color: #007700">, [</span><span style="color: #DD0000">'options' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'validate_login'</span><span style="color: #007700">]);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$filtered_login</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$login </span><span style="color: #007700">= </span><span style="color: #DD0000">"f&amp;ke login"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$filtered_login </span><span style="color: #007700">= </span><span style="color: #0000BB">filter_var</span><span style="color: #007700">(</span><span style="color: #0000BB">$login</span><span style="color: #007700">, </span><span style="color: #0000BB">FILTER_CALLBACK</span><span style="color: #007700">, [</span><span style="color: #DD0000">'options' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'validate_login'</span><span style="color: #007700">]);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$filtered_login</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+     <div class="example-contents"><p>以上示例会输出：</p></div>
+     <div class="example-contents screen">
+<div class="cdata"><pre>
+string(10) &quot;val1dL0gin&quot;
+NULL
+</pre></div>
+     </div>
+    </div>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      此过滤器不能与其他任何过滤器 flag 一起使用，例如 <strong><code><a href="filter.constants.html#constant.filter-null-on-failure">FILTER_NULL_ON_FAILURE</a></code></strong>。
+     </p>
+    </div>
+   </dd>
+  
+ </dl>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

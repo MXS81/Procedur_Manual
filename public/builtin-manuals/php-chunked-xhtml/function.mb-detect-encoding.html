@@ -1,0 +1,342 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>检测字符的编码</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.mb-decode-numericentity.html" class="navbar__link">« mb_decode_numericentity</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.mb-detect-order.html" class="navbar__link">mb_detect_order »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.mbstring.html">多字节字符串 函数</a></li>
+        <li>检测字符的编码</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.mb-detect-encoding" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">mb_detect_encoding</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.0.6, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">mb_detect_encoding</span> &mdash; <span class="dc-title">检测字符的编码</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.mb-detect-encoding-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>mb_detect_encoding</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$string</code></span>, <span class="methodparam"><span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.null.html" class="type null">null</a></span></span> <code class="parameter">$encodings</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>, <span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$strict</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong></span></span>): <span class="type"><span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   从候选列表中检测 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">string</code> 最可能的字符编码。
+  </p>
+  <p class="para">
+   自 PHP 8.1 起，此函数使用启发式检测指定列表中最有可能正确的有效文本编码，且可能不按照提供的 <code class="parameter">encodings</code> 顺序进行检测。
+  </p>
+  <p class="para">
+   对预期（intended）字符编码的自动检测不可能永远完全可靠；没有额外的信息，就类似于在没有密钥的情况下解码已编码的字符串。最好使用与数据一起存储或传输的字符编码表示，例如“Content-Type” HTTP 头。
+  </p>
+  <p class="para">
+   此函数适用于多字节编码，但并非所有字节顺序都构成有效字符串。如果输入字符串包含这样的顺序，则将会拒绝该编码。
+  </p>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <h1 class="title">结果不准确</h1>
+   <p class="para">
+    此函数的名称具有误导性，它执行的是“猜测”而不是“检测”。
+   </p>
+   <p class="para">
+    猜测结果远非准确，因此无法使用此函数准确检测正确的字符编码。
+   </p>
+  </div>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.mb-detect-encoding-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">string</code></dt>
+     <dd>
+      <p class="para">
+       要检测的 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">encodings</code></dt>
+     <dd>
+      <p class="para">
+       尝试的字符编码列表。该列表可以指定为字符串数组，或以逗号分隔的单个字符串。
+      </p>
+      <p class="para">
+       如果省略 <code class="parameter">encodings</code> 被或为 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>，则将使用当前的 detect_order（使用
+       <a href="mbstring.configuration.html#ini.mbstring.detect-order" class="link">mbstring.detect_order</a> 配置选项或
+       <span class="function"><a href="function.mb-detect-order.html" class="function">mb_detect_order()</a></span> 函数设置）。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">strict</code></dt>
+     <dd>
+      <p class="para">
+       控制 <code class="parameter">string</code> 在列出的所有 <code class="parameter">encodings</code> 中无效时的行为。如果
+       <code class="parameter">strict</code> 设置为 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，将返回最接近的匹配编码；如果 <code class="parameter">strict</code>
+       设置为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，将返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+      </p>
+      <p class="para">
+       可以使用 <a href="mbstring.configuration.html#ini.mbstring.strict-detection" class="link">mbstring.strict_detection</a> 配置选项设置 <code class="parameter">strict</code> 的默认值。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.mb-detect-encoding-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   检测到的字符编码，如果字符串在任何列出的编码中均无效，则返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.mb-detect-encoding-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.2.0</td>
+      <td>
+       <span class="function"><strong>mb_detect_encoding()</strong></span>
+       将不再返回以下非文本编码：<code class="literal">&quot;Base64&quot;</code>、<code class="literal">&quot;QPrint&quot;</code>、<code class="literal">&quot;UUencode&quot;</code>、<code class="literal">&quot;HTML entities&quot;</code>、<code class="literal">&quot;7 bit&quot;</code> 和 <code class="literal">&quot;8 bit&quot;</code>。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.mb-detect-encoding-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>mb_detect_encoding()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$str </span><span style="color: #007700">= </span><span style="color: #DD0000">"\x95\xB6\x8E\x9A\x83\x52\x81\x5B\x83\x68"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 使用当前的 detect_order 来检测字符编码<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// “auto”将根据 mbstring.language 来扩展<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, </span><span style="color: #DD0000">"auto"</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 通过以逗号分隔的列表指定“encodings”参数<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, </span><span style="color: #DD0000">"JIS, eucjp-win, sjis-win"</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 使用数组指定“encodings”参数<br /></span><span style="color: #0000BB">$encodings </span><span style="color: #007700">= [<br />  </span><span style="color: #DD0000">"ASCII"</span><span style="color: #007700">,<br />  </span><span style="color: #DD0000">"JIS"</span><span style="color: #007700">,<br />  </span><span style="color: #DD0000">"EUC-JP"<br /></span><span style="color: #007700">];<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, </span><span style="color: #0000BB">$encodings</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">string(5) &quot;ASCII&quot;
+string(5) &quot;ASCII&quot;
+string(8) &quot;SJIS-win&quot;
+string(5) &quot;ASCII&quot;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 <code class="parameter">strict</code> 参数的影响</strong></p>
+    <div class="example-contents">
+     <div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 'áéóú' 在 ISO-8859-1 中的编码<br /></span><span style="color: #0000BB">$str </span><span style="color: #007700">= </span><span style="color: #DD0000">"\xE1\xE9\xF3\xFA"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 该字符串不是有效的 ASCII 或 UTF-8，但 UTF-8 被认为是更接近的匹配<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ASCII'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">], </span><span style="color: #0000BB">false</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ASCII'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">], </span><span style="color: #0000BB">true</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 如果找到有效编码，则严格参数不会更改结果<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ASCII'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-1'</span><span style="color: #007700">], </span><span style="color: #0000BB">false</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ASCII'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-1'</span><span style="color: #007700">], </span><span style="color: #0000BB">true</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">string(5) &quot;UTF-8&quot;
+bool(false)
+string(10) &quot;ISO-8859-1&quot;
+string(10) &quot;ISO-8859-1&quot;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   在某些情况下，相同的字节顺序可能会在多种字符编码中形成有效的字符串，并且无法知道其意图是哪种解释。例如，在众多字符编码中，字节序列“\xC4\xA2”可能是：
+  </p>
+  <p class="para">
+   <ul class="simplelist">
+    <li>
+     "Ä¢" (U+00C4 LATIN CAPITAL LETTER A WITH DIAERESIS followed by U+00A2 CENT SIGN)
+     encoded in any of ISO-8859-1, ISO-8859-15, or Windows-1252
+    </li>
+    <li>
+     "ФЂ" (U+0424 CYRILLIC CAPITAL LETTER EF followed by U+0402 CYRILLIC CAPITAL LETTER
+     DJE) encoded in ISO-8859-5
+    </li>
+    <li>
+     "Ģ" (U+0122 LATIN CAPITAL LETTER G WITH CEDILLA) encoded in UTF-8
+    </li>
+   </ul>
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 匹配多个编码时顺序的影响</strong></p>
+    <div class="example-contents">
+     <div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$str </span><span style="color: #007700">= </span><span style="color: #DD0000">"\xC4\xA2"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 该字符串在所有三种编码中均有效，但返回的可能并不总是列表中的第一个编码<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">]));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-1'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-5'</span><span style="color: #007700">])); </span><span style="color: #FF8000">// 自 php8.1 起返回 ISO-8859-1 而不是 UTF-8<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ISO-8859-1'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-5'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">]));<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">mb_detect_encoding</span><span style="color: #007700">(</span><span style="color: #0000BB">$str</span><span style="color: #007700">, [</span><span style="color: #DD0000">'ISO-8859-5'</span><span style="color: #007700">, </span><span style="color: #DD0000">'UTF-8'</span><span style="color: #007700">, </span><span style="color: #DD0000">'ISO-8859-1'</span><span style="color: #007700">]));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">string(5) &quot;UTF-8&quot;
+string(10) &quot;ISO-8859-1&quot;
+string(10) &quot;ISO-8859-1&quot;
+string(10) &quot;ISO-8859-5&quot;</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.mb-detect-encoding-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.mb-detect-order.html" class="function" rel="rdfs-seeAlso">mb_detect_order()</a> - 设置/获取 字符编码的检测顺序</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

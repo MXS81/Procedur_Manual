@@ -1,0 +1,401 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>从命令行参数列表中获取选项</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.getmyuid.html" class="navbar__link">« getmyuid</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.getrusage.html" class="navbar__link">getrusage »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.info.html">PHP 选项/信息 函数</a></li>
+        <li>从命令行参数列表中获取选项</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.getopt" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">getopt</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.3.0, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">getopt</span> &mdash; <span class="dc-title">从命令行参数列表中获取选项</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.getopt-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>getopt</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$short_options</code></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$long_options</code><span class="initializer"> = []</span></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter reference">&$rest_index</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>): <span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   解析传入脚本的选项。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.getopt-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">short_options</code></dt>
+     <dd>
+      <span class="simpara">
+       该字符串中的每个字符会被当做选项字符，匹配传入脚本的选项以单个连字符 (<code class="literal">-</code>) 开头。
+      </span>
+      <span class="simpara">
+       比如，一个选项字符串 <code class="literal">&quot;x&quot;</code> 识别了一个选项
+       <code class="literal">-x</code>。
+      </span>
+      <span class="simpara">
+       只允许 a-z、A-Z 和 0-9。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">long_options</code></dt>
+     <dd>
+      <span class="simpara">
+       选项数组。此数组中的每个元素会被作为选项字符串，匹配了以两个连字符
+       (<code class="literal">--</code>) 传入到脚本的选项。
+      </span>
+      <span class="simpara">
+       例如，长选项元素 <code class="literal">&quot;opt&quot;</code> 识别了一个选项
+       <code class="literal">--opt</code>。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">rest_index</code></dt>
+     <dd>
+      <span class="simpara">
+       如果传递了 <code class="parameter">rest_index</code>
+       参数，那么参数解析停止时的索引，将被赋值给此变量。
+      </span>
+     </dd>
+    
+   </dl>
+  </p>
+  <p class="para">
+   <code class="parameter">short_options</code> 可能包含了以下元素：
+   <ul class="simplelist">
+    <li>单独的字符（不接受值）</li>
+    <li>后面跟随冒号的字符（此选项需要值）</li>
+    <li>后面跟随两个冒号的字符（此选项的值可选）</li>
+   </ul>
+   选项的值是字符串后的第一个参数。如果需要一个值，它不介意值之前是否有前置的空格，参见以下内容。
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     选项的值不接受空格（<code class="literal">&quot; &quot;</code>）作为分隔符。
+    </span>
+   </p></blockquote>
+  </p>
+  <p class="para">
+   <code class="parameter">long_options</code> 数组可能包含了以下元素：
+    <ul class="simplelist">
+      <li>字符串（参数不接受任何值）</li>
+      <li>后面跟随冒号的字符串（此选项需要值）</li>
+      <li>后面跟随两个冒号的字符串（此选项的值可选）</li>
+    </ul>
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    <code class="parameter">short_options</code> 和 <code class="parameter">long_options</code> 的格式几乎是一样的，唯一的不同之处是
+    <code class="parameter">long_options</code> 需要是选项的数组（每个元素为一个选项），而 <code class="parameter">short_options</code>
+    需要一个字符串（每个字符是个选项）。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.getopt-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   此函数会返回选项/参数对， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    选项的解析会终止于找到的第一个非选项，之后的任何东西都会被丢弃。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.getopt-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>7.1.0</td>
+       <td>
+        添加 <code class="parameter">rest_index</code> 参数。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.getopt-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="getopt.examples-1">
+    <p><strong>示例 #1 <span class="function"><strong>getopt()</strong></span> 示例：基本用法</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// Script example.php<br /></span><span style="color: #0000BB">$options </span><span style="color: #007700">= </span><span style="color: #0000BB">getopt</span><span style="color: #007700">(</span><span style="color: #DD0000">"f:hp:"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$options</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">shell&gt; php example.php -fvalue -h</pre>
+</div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">array(2) {
+  [&quot;f&quot;]=&gt;
+  string(5) &quot;value&quot;
+  [&quot;h&quot;]=&gt;
+  bool(false)
+}</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="getopt.examples-2">
+    <p><strong>示例 #2 <span class="function"><strong>getopt()</strong></span> 示例：引入长选项</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// Script example.php<br /></span><span style="color: #0000BB">$shortopts  </span><span style="color: #007700">= </span><span style="color: #DD0000">""</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$shortopts </span><span style="color: #007700">.= </span><span style="color: #DD0000">"f:"</span><span style="color: #007700">;  </span><span style="color: #FF8000">// Required value<br /></span><span style="color: #0000BB">$shortopts </span><span style="color: #007700">.= </span><span style="color: #DD0000">"v::"</span><span style="color: #007700">; </span><span style="color: #FF8000">// Optional value<br /></span><span style="color: #0000BB">$shortopts </span><span style="color: #007700">.= </span><span style="color: #DD0000">"abc"</span><span style="color: #007700">; </span><span style="color: #FF8000">// These options do not accept values<br /><br /></span><span style="color: #0000BB">$longopts  </span><span style="color: #007700">= array(<br />    </span><span style="color: #DD0000">"required:"</span><span style="color: #007700">,     </span><span style="color: #FF8000">// Required value<br />    </span><span style="color: #DD0000">"optional::"</span><span style="color: #007700">,    </span><span style="color: #FF8000">// Optional value<br />    </span><span style="color: #DD0000">"option"</span><span style="color: #007700">,        </span><span style="color: #FF8000">// No value<br />    </span><span style="color: #DD0000">"opt"</span><span style="color: #007700">,           </span><span style="color: #FF8000">// No value<br /></span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$options </span><span style="color: #007700">= </span><span style="color: #0000BB">getopt</span><span style="color: #007700">(</span><span style="color: #0000BB">$shortopts</span><span style="color: #007700">, </span><span style="color: #0000BB">$longopts</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$options</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">shell&gt; php example.php -f &quot;value for f&quot; -v -a --required value --optional=&quot;optional value&quot; --option</pre>
+</div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">array(6) {
+  [&quot;f&quot;]=&gt;
+  string(11) &quot;value for f&quot;
+  [&quot;v&quot;]=&gt;
+  bool(false)
+  [&quot;a&quot;]=&gt;
+  bool(false)
+  [&quot;required&quot;]=&gt;
+  string(5) &quot;value&quot;
+  [&quot;optional&quot;]=&gt;
+  string(14) &quot;optional value&quot;
+  [&quot;option&quot;]=&gt;
+  bool(false)
+}</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="getopt.examples-3">
+    <p><strong>示例 #3 <span class="function"><strong>getopt()</strong></span> 示例：传递同一多个选项</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// Script example.php<br /></span><span style="color: #0000BB">$options </span><span style="color: #007700">= </span><span style="color: #0000BB">getopt</span><span style="color: #007700">(</span><span style="color: #DD0000">"abc"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$options</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">shell&gt; php example.php -aaac</pre>
+</div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">array(2) {
+  [&quot;a&quot;]=&gt;
+  array(3) {
+    [0]=&gt;
+    bool(false)
+    [1]=&gt;
+    bool(false)
+    [2]=&gt;
+    bool(false)
+  }
+  [&quot;c&quot;]=&gt;
+  bool(false)
+}</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="getopt.examples-4">
+    <p><strong>示例 #4 <span class="function"><strong>getopt()</strong></span> 示例：使用 <code class="parameter">rest_index</code></strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// Script example.php<br /></span><span style="color: #0000BB">$rest_index </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$opts </span><span style="color: #007700">= </span><span style="color: #0000BB">getopt</span><span style="color: #007700">(</span><span style="color: #DD0000">'a:b:'</span><span style="color: #007700">, [], </span><span style="color: #0000BB">$rest_index</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$pos_args </span><span style="color: #007700">= </span><span style="color: #0000BB">array_slice</span><span style="color: #007700">(</span><span style="color: #0000BB">$argv</span><span style="color: #007700">, </span><span style="color: #0000BB">$rest_index</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$pos_args</span><span style="color: #007700">);</span></span></code></div>
+    </div>
+
+    <div class="example-contents">
+<div class="shellcode"><pre class="shellcode">shell&gt; php example.php -a 1 -b 2 -- test</pre>
+</div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">array(1) {
+  [0]=&gt;
+  string(4) &quot;test&quot;
+}</pre>
+</div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.getopt-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><a href="reserved.variables.argv.html" class="link"><var class="varname"><a href="reserved.variables.argv.html" class="classname">$argv</a></var></a></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

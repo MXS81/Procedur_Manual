@@ -1,0 +1,447 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="errorfunc.configuration.html" class="navbar__link">« 运行时配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="errorfunc.examples.html" class="navbar__link">示例 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.errorfunc.html">错误处理</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="errorfunc.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">
+下列常量作为 PHP 核心的一部分总是可用的。
+</p>
+
+ <p class="simpara">
+  以下常量（相应的数值或其符号名称）用作位掩码来指定要报告的错误。可以使用<a href="language.operators.bitwise.html" class="link">按位运算符</a>来组合这些值或屏蔽某些类型的错误。
+ </p>
+
+ <div class="tip"><strong class="tip">小技巧</strong>
+  <p class="simpara">
+   常量的名称可以在 <var class="filename">php.ini</var> 中使用，而不是它们对应的原始数值。但是，<var class="filename">php.ini</var> 中只能理解
+   <code class="literal">|</code>、<code class="literal">~</code>、<code class="literal">^</code>、<code class="literal">!</code>、<code class="literal">&amp;</code>
+   运算符。
+  </p>
+ </div>
+
+ <div class="warning"><strong class="warning">警告</strong>
+  <p class="simpara">
+   无法在 PHP 之外使用符号名称。例如，在 <var class="filename">httpd.conf</var> 中，必须使用计算出的位掩码值。
+  </p>
+ </div>
+
+ <dl id="errorfunc.constants.errorlevels">
+  
+   <dt id="constant.e-error">
+    <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     致命的运行时错误。这类错误一般是不可恢复的情况，例如内存分配导致的问题。后果是导致脚本终止不再继续运行。
+    </span>
+    <span class="simpara">
+     常量值 <code class="literal">1</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-warning">
+    <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行时警告 (非致命错误)。仅给出提示信息，但是脚本不会终止运行。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">2</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-parse">
+    <strong><code><a href="errorfunc.constants.html#constant.e-parse">E_PARSE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     编译时解析错误。解析错误只由解析器产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">4</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-notice">
+    <strong><code><a href="errorfunc.constants.html#constant.e-notice">E_NOTICE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行时通知。表示脚本遇到可能会表现为错误的情况，但是在可以正常运行的脚本里面也可能会有类似的通知。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">8</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-core-error">
+    <strong><code><a href="errorfunc.constants.html#constant.e-core-error">E_CORE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     在 PHP 初始化启动过程中发生的致命错误。该错误类似
+     <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>，但是是由 PHP 引擎核心产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">16</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-core-warning">
+    <strong><code><a href="errorfunc.constants.html#constant.e-core-warning">E_CORE_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     PHP 初始化启动过程中发生的警告 (非致命错误) 。类似 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>，但是是由 PHP 引擎核心产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">32</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-compile-error">
+    <strong><code><a href="errorfunc.constants.html#constant.e-compile-error">E_COMPILE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     致命编译时错误。类似 <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>，但是是由 Zend 脚本引擎产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">64</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-compile-warning">
+    <strong><code><a href="errorfunc.constants.html#constant.e-compile-warning">E_COMPILE_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     编译时警告 (非致命错误)。类似
+     <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>，但是是由 Zend 脚本引擎产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">128</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-deprecated">
+    <strong><code><a href="errorfunc.constants.html#constant.e-deprecated">E_DEPRECATED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     运行时弃用通知。启用后将会对在未来版本中可能无法正常工作的代码给出警告。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">8192</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-user-error">
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-error">E_USER_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用户产生的错误信息。类似
+     <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>，但是是由用户自己在代码中使用 PHP
+     函数 <span class="function"><a href="function.trigger-error.html" class="function">trigger_error()</a></span> 来产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">256</code>
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      自 PHP 8.4.0 起，已弃用此常量与 <span class="function"><a href="function.trigger-error.html" class="function">trigger_error()</a></span> 一起使用的用法。建议改为
+      <a href="language.exceptions.html" class="link"><code class="literal">throw</code></a> <span class="exceptionname"><a href="class.exception.html" class="exceptionname">Exception</a></span> 或调用 <span class="function"><a href="function.exit.html" class="function">exit()</a></span>。
+     </p>
+    </div>
+   </dd>
+  
+
+  
+   <dt id="constant.e-user-warning">
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-warning">E_USER_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用户产生的警告信息。类似
+     <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>，由用户自己在代码中使用 PHP
+     函数 <span class="function"><a href="function.trigger-error.html" class="function">trigger_error()</a></span> 来产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">512</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-user-notice">
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-notice">E_USER_NOTICE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用户产生的通知信息。类似
+      <strong><code><a href="errorfunc.constants.html#constant.e-notice">E_NOTICE</a></code></strong>，由用户自己在代码中使用 PHP
+      函数 <span class="function"><a href="function.trigger-error.html" class="function">trigger_error()</a></span> 来产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">1024</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-user-deprecated">
+    <strong><code><a href="errorfunc.constants.html#constant.e-user-deprecated">E_USER_DEPRECATED</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     用户产生的警告信息。 类似
+     <strong><code><a href="errorfunc.constants.html#constant.e-deprecated">E_DEPRECATED</a></code></strong>, 由用户自己在代码中使用 PHP
+     函数 <span class="function"><a href="function.trigger-error.html" class="function">trigger_error()</a></span> 来产生。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">16384</code>
+    </span>
+   </dd>
+  
+
+  
+   <dt id="constant.e-strict">
+    <strong><code><a href="errorfunc.constants.html#constant.e-strict">E_STRICT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     PHP 发出有关执行代码的运行时建议，以确保向前兼容。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">2048</code>
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      此错误级别未使用，且自 PHP 8.4.0 起已弃用。
+     </p>
+    </div>
+   </dd>
+  
+
+  
+   <dt id="constant.e-recoverable-error">
+    <strong><code><a href="errorfunc.constants.html#constant.e-recoverable-error">E_RECOVERABLE_ERROR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     旧引擎“exception”对应于可捕获的致命错误。与 <span class="exceptionname"><a href="class.error.html" class="exceptionname">Error</a></span>
+     类似，但必须通过用户定义的错误处理程序捕获（请参阅
+     <span class="function"><a href="function.set-error-handler.html" class="function">set_error_handler()</a></span>）。如果不处理，则其行为类似于 <strong><code><a href="errorfunc.constants.html#constant.e-error">E_ERROR</a></code></strong>。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">4096</code>
+    </span>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      此错误级别实际上未使用，唯一可能发生这种情况的情况是将 <span class="type"><a href="language.types.object.html" class="type object">object</a></span> 解释为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+      失败。这只会发生在内部对象中。
+     </span>
+     <span class="simpara">
+      PHP 8.4.0 之前，最常见的示例是在条件中使用 <span class="classname"><a href="class.gmp.html" class="classname">GMP</a></span> 实例。
+     </span>
+    </p></blockquote>
+   </dd>
+  
+
+  
+   <dt id="constant.e-all">
+    <strong><code><a href="errorfunc.constants.html#constant.e-all">E_ALL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </dt>
+   <dd>
+    <span class="simpara">
+     包含每个错误、警告和通知的位掩码。
+    </span>
+    <span class="simpara">
+     常量值：<code class="literal">30719</code>
+    </span>
+    <div class="warning"><strong class="warning">警告</strong>
+     <p class="simpara">
+      在 PHP 8.4 之前，常量值是：<code class="literal">32767</code>
+     </p>
+    </div>
+   </dd>
+  
+
+ </dl>
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

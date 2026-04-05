@@ -1,0 +1,1251 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>获取模式</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="pdo.constants.html" class="navbar__link">« 预定义常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="pdo.connections.html" class="navbar__link">连接与连接管理 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="pdo.constants.html">预定义常量</a></li>
+        <li>获取模式</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="pdo.constants.fetch-modes" class="section">
+ <h2 class="title">获取模式</h2>
+
+ <p class="simpara">
+  参见 <code class="literal">PDO::FETCH_ORI_*</code> 游标常量的<a href="pdo.constants.html#pdo.constants.cursors" class="link">游标常量</a>。
+ </p>
+
+ <div class="section" id="pdo.fetch-modes.basic">
+  <h2 class="title">基本获取模式</h2>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>获取模式</th>
+      <th>摘要</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-default">PDO::FETCH_DEFAULT</a></code></strong>
+      </td>
+      <td>
+       用于当前默认获取模式的特殊值。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong>
+      </td>
+      <td>
+       仅按列名索引的数组。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-both">PDO::FETCH_BOTH</a></code></strong>（默认）
+      </td>
+      <td>
+       同时按列号和列名索引的数组。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-named">PDO::FETCH_NAMED</a></code></strong>
+      </td>
+      <td>
+       保留重复列的 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong> 变体。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-num">PDO::FETCH_NUM</a></code></strong>
+      </td>
+      <td>
+       仅按列号索引的数组。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-column">PDO::FETCH_COLUMN</a></code></strong>
+      </td>
+      <td>
+       单列。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-key-pair">PDO::FETCH_KEY_PAIR</a></code></strong>
+      </td>
+      <td>
+       键值对，按第一列索引。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-func">PDO::FETCH_FUNC</a></code></strong>
+      </td>
+      <td>
+
+       使用函数创建返回值。（仅适用于 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span>）
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-obj">PDO::FETCH_OBJ</a></code></strong>
+      </td>
+      <td>
+       匿名（<span class="classname"><a href="class.stdclass.html" class="classname">stdClass</a></span>）对象。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong>
+      </td>
+      <td>
+       指定类的对象。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ <div class="section" id="pdo.fetch-modes.class-flags">
+  <h2 class="title">PDO::FETCH_CLASS 选项</h2>
+
+  <p class="simpara">
+   这些模式用于在使用 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong> 时实现选项。
+  </p>
+
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>获取模式</th>
+      <th>摘要</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-classtype">PDO::FETCH_CLASSTYPE</a></code></strong>
+      </td>
+      <td>
+       使用第一列作为类名。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-props-late">PDO::FETCH_PROPS_LATE</a></code></strong>
+      </td>
+      <td>
+       在设置属性之前调用构造方法。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-serialize">PDO::FETCH_SERIALIZE</a></code></strong>
+      </td>
+      <td>
+       使用 PHP 序列化数据。自 PHP 8.1.0 起弃用。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ <div class="section" id="pdo.fetch-modes.single">
+  <h2 class="title">单结果模式</h2>
+
+  <p class="simpara">
+   以下模式无法与 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 一起使用。
+  </p>
+
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>获取模式</th>
+      <th>摘要</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-bound">PDO::FETCH_BOUND</a></code></strong>
+      </td>
+      <td>
+       将值绑定到指定变量。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-into">PDO::FETCH_INTO</a></code></strong>
+      </td>
+      <td>
+       更新现有对象。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-lazy">PDO::FETCH_LAZY</a></code></strong>
+      </td>
+      <td>
+       通过 <span class="classname"><a href="class.pdorow.html" class="classname">PDORow</a></span> 实现延迟获取，以支持类似数组和对象的访问方式。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ <div class="section" id="pdo.fetch-modes.grouped">
+  <h2 class="title">
+   <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 的特殊行为 flag
+  </h2>
+
+  <p class="simpara">
+   以下适用于多结果的特殊模式仅与 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 兼容，且不适用于某些其他获取模式。详情请参阅完整文档。
+  </p>
+
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>获取模式</th>
+      <th>摘要</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-group">PDO::FETCH_GROUP</a></code></strong>
+      </td>
+      <td>
+       结果按第一列分组。
+      </td>
+     </tr>
+
+     <tr>
+      <td>
+       <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-unique">PDO::FETCH_UNIQUE</a></code></strong>
+      </td>
+      <td>
+       结果按第一列（唯一）索引。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ <div class="section" id="pdo.fetch-modes.duplicate-names">
+  <h2 class="title">重复列名的处理方式</h2>
+  <p class="simpara">
+   结果中可能包含使用相同名称的多个列。例如，在连接两个表时，这两个表都包含具有相同名称的列。
+  </p>
+  <p class="simpara">
+   由于 PHP 的数组和对象等结构不支持使用相同名称的多个 key 或属性，返回的数组或对象将仅包含其中一个使用相同名称的值。
+  </p>
+  <p class="simpara">
+   对于重复名称，指定返回哪个值应视为未定义行为。
+  </p>
+  <p class="simpara">
+   为避免此问题，可以使用别名手动命名列。例如：
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="sqlcode"><pre class="sqlcode">SELECT table1.created_at AS t1_created_at,
+       table2.created_at AS t2_created_at
+FROM table1
+JOIN table2 ON table1.table2id = table2.id</pre>
+</div>
+   </div>
+
+  </div>
+  <p class="simpara">
+   参见 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-named">PDO::FETCH_NAMED</a></code></strong>、<strong><code><a href="pdo.constants.html#pdo.constants.attr-fetch-table-names">PDO::ATTR_FETCH_TABLE_NAMES</a></code></strong> 和
+   <strong><code><a href="pdo.constants.html#pdo.constants.attr-fetch-catalog-names">PDO::ATTR_FETCH_CATALOG_NAMES</a></code></strong>。
+  </p>
+ </div>
+
+ <div class="section" id="pdo.fetch-modes.default">
+  <h2 class="title">设置默认获取模式</h2>
+  <p class="simpara">
+   可以使用 <span class="methodname"><a href="pdo.construct.html" class="methodname">PDO::__construct()</a></span> 或 <span class="methodname"><a href="pdo.setattribute.html" class="methodname">PDO::setAttribute()</a></span>，通过
+   <strong><code><a href="pdo.constants.html#pdo.constants.attr-default-fetch-mode">PDO::ATTR_DEFAULT_FETCH_MODE</a></code></strong> 设置所有查询的默认获取模式。
+  </p>
+  <p class="simpara">
+   可以使用 <span class="methodname"><a href="pdostatement.setfetchmode.html" class="methodname">PDOStatement::setFetchMode()</a></span> 为特定语句设置默认获取模式。这会影响作为预处理语句的再次使用以及迭代（使用
+   <a href="control-structures.foreach.html" class="link">foreach</a>）。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    <span class="methodname"><a href="pdostatement.setattribute.html" class="methodname">PDOStatement::setAttribute()</a></span> 无法用于设置默认获取模式。它仅接受特定驱动程序的属性，并会静默忽略未识别的属性。
+   </p>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-default">
+  <h2 class="title">PDO::FETCH_DEFAULT (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   自 PHP 8.0.7 起可用。
+  </p>
+  <p class="simpara">
+   这是一个特殊值，<span class="classname"><a href="class.pdostatement.html" class="classname">PDOStatement</a></span> 是当前默认使用的获取模式。当扩展 <span class="classname"><a href="class.pdostatement.html" class="classname">PDOStatement</a></span> 以与
+   <strong><code><a href="pdo.constants.html#pdo.constants.attr-statement-class">PDO::ATTR_STATEMENT_CLASS</a></code></strong> 一起使用时，它作为方法参数的默认值非常有用。
+  </p>
+  <p class="para">
+   此值不能与 <strong><code><a href="pdo.constants.html#pdo.constants.attr-default-fetch-mode">PDO::ATTR_DEFAULT_FETCH_MODE</a></code></strong> 一起使用。
+  </p>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-assoc">
+  <h2 class="title">PDO::FETCH_ASSOC (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong> 返回仅按列名索引的数组。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_ASSOC</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [userid] =&gt; 104
+    [name] =&gt; Chris
+    [country] =&gt; Ukraine
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-both">
+  <h2 class="title">PDO::FETCH_BOTH (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   这是默认的获取模式。
+  </p>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-both">PDO::FETCH_BOTH</a></code></strong> 返回同时列号和列名索引的数组。这意味着每一行结果中的每个返回值都是重复的。
+  </p>
+  <p class="simpara">
+   列号从 0 开始，由查询结果中的列顺序决定，而不是表中定义的列顺序。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    不建议使用数字列索引，因为当查询发生更改时，或者在使用 <code class="literal">SELECT *</code>
+    时表结构发生更改，列索引可能会发生变化。
+   </span>
+  </p></blockquote>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    在多个返回列使用相同名称的情况下，按名称索引的条目数量可能与按数字索引的条目数量不匹配。
+   </span>
+  </p></blockquote>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_BOTH</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [id] =&gt; 104,
+    [0] =&gt; 104,
+    [name] =&gt; Chris,
+    [1] =&gt; Chris,
+    [country] =&gt; Ukraine,
+    [2] =&gt; Ukraine
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-named">
+  <h2 class="title">PDO::FETCH_NAMED (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-named">PDO::FETCH_NAMED</a></code></strong> 返回的结果格式与
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong> 相同，但当多个列使用相同名称时，所有值将以列表形式返回。
+  </p>
+  <p class="simpara">
+   有关重复列名的处理及其替代方法的更多信息，请参阅上文关于<a href="pdo.constants.fetch-modes.html#pdo.fetch-modes.duplicate-names" class="link">重复名称处理的部分</a>。
+  </p>
+  <p class="simpara">
+   重复值的返回顺序应视为未定义。无法确定每个值的来源。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(<br />    </span><span style="color: #DD0000">"SELECT users.*, referrer.name<br />     FROM users<br />     LEFT JOIN users AS referrer ON users.referred_by = referrer.userid<br />     WHERE userid = 109"<br /></span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_NUM</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [userid] =&gt; 109
+    [name] =&gt; Array
+        (
+            [0] =&gt; Toni
+            [1] =&gt; Chris
+        )
+    [country] =&gt; Germany
+    [referred_by] = 104
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-num">
+  <h2 class="title">PDO::FETCH_NUM (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-num">PDO::FETCH_NUM</a></code></strong> 返回的数组仅按列号索引。列号从 0
+   开始，并由查询中的结果列顺序决定，而不是（例如）表中定义的列顺序。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    不建议使用数字列索引，因为当查询发生更改时，或者在使用 <code class="literal">SELECT *</code>
+    时表结构发生更改，该索引可能会发生变化。
+   </span>
+  </p></blockquote>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_NUM</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [0] =&gt; 104
+    [1] =&gt; Chris
+    [2] =&gt; Ukraine
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-column">
+  <h2 class="title">PDO::FETCH_COLUMN (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-column">PDO::FETCH_COLUMN</a></code></strong> 用于返回单列的值。可通过 <span class="methodname"><a href="pdostatement.setfetchmode.html" class="methodname">PDOStatement::setFetchMode()</a></span>
+   或 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 的第二个参数指定要返回的列。
+  </p>
+  <p class="simpara">
+   若指定的列不存在，将抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span>。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_COLUMN</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_COLUMN</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [0] =&gt; Chris
+    [1] =&gt; Jamie
+    [2] =&gt; Robin
+)
+
+Array
+(
+    [0] =&gt; Ukraine
+    [1] =&gt; England
+    [2] =&gt; Germany
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-key-pair">
+  <h2 class="title">PDO::FETCH_KEY_PAIR (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-key-pair">PDO::FETCH_KEY_PAIR</a></code></strong> 返回以第一列为索引的键值对，结果必须仅包含两列。此获取模式仅适用于
+   <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span>。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    若第一列不唯一，将丢失部分值，具体哪些值会丢失属于未定义行为。
+   </span>
+  </p></blockquote>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_KEY_PAIR</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [Chris] =&gt; Ukraine
+    [Jamie] =&gt; England
+    [Robin] =&gt; Germany
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-func">
+  <h2 class="title">PDO::FETCH_FUNC (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   指定用于创建返回值的函数。此模式仅可用于 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span>。
+  </p>
+  <p class="simpara">
+   该函数以各列的值作为参数接收。因无法获知某个值原本关联的列名，因此必须确保查询中的列顺序与函数参数顺序一致。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-group">PDO::FETCH_GROUP</a></code></strong> 和 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-unique">PDO::FETCH_UNIQUE</a></code></strong> 的效果会在调用该函数之前应用于结果。
+   </span>
+  </p></blockquote>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">valueCreator</span><span style="color: #007700">(</span><span style="color: #0000BB">$col1</span><span style="color: #007700">, </span><span style="color: #0000BB">$col2</span><span style="color: #007700">, </span><span style="color: #0000BB">$col3</span><span style="color: #007700">)<br />{<br />    return [<br />        </span><span style="color: #DD0000">'col1' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$col1</span><span style="color: #007700">,<br />        </span><span style="color: #DD0000">'col2' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">strtoupper</span><span style="color: #007700">(</span><span style="color: #0000BB">$col2</span><span style="color: #007700">),<br />        </span><span style="color: #DD0000">'col3' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$col3</span><span style="color: #007700">,<br />        </span><span style="color: #DD0000">'customKey' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'customValue'</span><span style="color: #007700">,<br />    ];<br />}<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_FUNC</span><span style="color: #007700">, </span><span style="color: #0000BB">valueCreator</span><span style="color: #007700">(...));<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [0] =&gt; Array
+        (
+            [col1] =&gt; 104
+            [col2] =&gt; SAM
+            [col3] =&gt; Ukraine
+            [customKey] =&gt; customValue
+        )
+
+    [1] =&gt; Array
+        (
+            [col1] =&gt; 105
+            [col2] =&gt; JAMIE
+            [col3] =&gt; England
+            [customKey] =&gt; customValue
+        )
+
+    [2] =&gt; Array
+        (
+            [col1] =&gt; 107
+            [col2] =&gt; ROBIN
+            [col3] =&gt; Germany
+            [customKey] =&gt; customValue
+        )
+
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-obj">
+  <h2 class="title">PDO::FETCH_OBJ (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-obj">PDO::FETCH_OBJ</a></code></strong> 返回 <span class="classname"><a href="class.stdclass.html" class="classname">stdClass</a></span> 对象。
+  </p>
+  <p class="simpara">
+   参见 <span class="methodname"><a href="pdostatement.fetchobject.html" class="methodname">PDOStatement::fetchObject()</a></span> 和
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong>。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_OBJ</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+stdClass Object
+(
+    [userid] =&gt; 104
+    [name] =&gt; Chris
+    [country] =&gt; Ukraine
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-class">
+  <h2 class="title">PDO::FETCH_CLASS (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   返回指定类的对象。有关附加行为，请参见<a href="pdo.constants.fetch-modes.html#pdo.fetch-modes.class-flags" class="link">选项 flag</a>。
+  </p>
+  <p class="simpara">
+   如果返回的列名与对象中已存在的属性名称不匹配，将会动态声明该属性。已废弃此行为，并自 PHP 9.0 起会引发错误。
+  </p>
+  <p class="simpara">
+   参见 <span class="methodname"><a href="pdostatement.fetchobject.html" class="methodname">PDOStatement::fetchObject()</a></span>。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">TestEntity<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$userid</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$name</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$country</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$referred_by_userid</span><span style="color: #007700">;<br /><br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />    {<br />        print </span><span style="color: #DD0000">"Constructor called with "</span><span style="color: #007700">. </span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">()) .</span><span style="color: #DD0000">" args\n"</span><span style="color: #007700">;<br />        print </span><span style="color: #DD0000">"Properties set when constructor called? "<br />            </span><span style="color: #007700">. (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">) ? </span><span style="color: #DD0000">'Yes' </span><span style="color: #007700">: </span><span style="color: #DD0000">'No'</span><span style="color: #007700">) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(<br />    </span><span style="color: #DD0000">"SELECT userid, name, country, referred_by_userid FROM users"<br /></span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFetchMode</span><span style="color: #007700">(</span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_CLASS</span><span style="color: #007700">, </span><span style="color: #0000BB">TestEntity</span><span style="color: #007700">::class);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例的输出类似于：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Constructor called with 0 args
+Properties set when constructor called? Yes
+object(TestEntity)#3 (4) {
+  [&quot;userid&quot;]=&gt;
+  int(104)
+  [&quot;name&quot;]=&gt;
+  string(5) &quot;Chris&quot;
+  [&quot;country&quot;]=&gt;
+  string(7) &quot;Ukraine&quot;
+  [&quot;referred_by_userid&quot;]=&gt;
+  NULL
+}
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-classtype">
+  <h2 class="title">PDO::FETCH_CLASSTYPE (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   此获取模式仅可与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong>（及<a href="pdo.constants.fetch-modes.html#pdo.fetch-modes.class-flags" class="link">其他选项</a>）结合使用。
+  </p>
+  <p class="simpara">
+   使用此获取模式时，PDO 会将返回结果的第一列作为要实例化的类名。
+  </p>
+  <p class="simpara">
+   若指定的类未找到，将返回 <span class="classname"><a href="class.stdclass.html" class="classname">stdClass</a></span> 对象，且不产生警告或错误。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">TestEntity<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$userid</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$name</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$country</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$referred_by_userid</span><span style="color: #007700">;<br /><br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />    {<br />        print </span><span style="color: #DD0000">"Constructor called with "</span><span style="color: #007700">. </span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">()) .</span><span style="color: #DD0000">" args\n"</span><span style="color: #007700">;<br />        print </span><span style="color: #DD0000">"Properties set when constructor called? "<br />            </span><span style="color: #007700">. (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">) ? </span><span style="color: #DD0000">'Yes' </span><span style="color: #007700">: </span><span style="color: #DD0000">'No'</span><span style="color: #007700">) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(<br />    </span><span style="color: #DD0000">"SELECT 'TestEntity', userid, name, country, referred_by_userid FROM users"<br /></span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFetchMode</span><span style="color: #007700">(</span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_CLASS </span><span style="color: #007700">| </span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_CLASSTYPE</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例的输出类似于：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Constructor called with 0 args
+Properties set when constructor called? Yes
+object(TestEntity)#3 (4) {
+  [&quot;userid&quot;]=&gt;
+  int(104)
+  [&quot;name&quot;]=&gt;
+  string(5) &quot;Chris&quot;
+  [&quot;country&quot;]=&gt;
+  string(7) &quot;Ukraine&quot;
+  [&quot;referred_by_userid&quot;]=&gt;
+  NULL
+}
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-props-late">
+  <h2 class="title">PDO::FETCH_PROPS_LATE (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   此获取模式仅可与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong>（及<a href="pdo.constants.fetch-modes.html#pdo.fetch-modes.class-flags" class="link">其他选项</a>）结合使用。
+  </p>
+  <p class="simpara">
+   使用此获取模式时，会在属性赋值前调用构造方法。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">TestEntity<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$userid</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$name</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$country</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$referred_by_userid</span><span style="color: #007700">;<br /><br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />    {<br />        print </span><span style="color: #DD0000">"Constructor called with "</span><span style="color: #007700">. </span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">()) .</span><span style="color: #DD0000">" args\n"</span><span style="color: #007700">;<br />        print </span><span style="color: #DD0000">"Properties set when constructor called? "<br />            </span><span style="color: #007700">. (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">) ? </span><span style="color: #DD0000">'Yes' </span><span style="color: #007700">: </span><span style="color: #DD0000">'No'</span><span style="color: #007700">) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(<br />    </span><span style="color: #DD0000">"SELECT userid, name, country, referred_by_userid FROM users"<br /></span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFetchMode</span><span style="color: #007700">(</span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_CLASS </span><span style="color: #007700">| </span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_PROPS_LATE</span><span style="color: #007700">, </span><span style="color: #0000BB">TestEntity</span><span style="color: #007700">::class);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例的输出类似于：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Constructor called with 0 args
+Properties set when constructor called? No
+object(TestEntity)#3 (4) {
+  [&quot;userid&quot;]=&gt;
+  int(104)
+  [&quot;name&quot;]=&gt;
+  string(5) &quot;Chris&quot;
+  [&quot;country&quot;]=&gt;
+  string(7) &quot;Ukraine&quot;
+  [&quot;referred_by_userid&quot;]=&gt;
+  NULL
+}
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-serialize">
+  <h2 class="title">PDO::FETCH_SERIALIZE (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <div class="warning"><strong class="warning">警告</strong><p class="simpara">此功能自 PHP 8.1.0 
+起<em>弃用</em>。强烈建议不要应用此功能。</p></div>
+  <p class="simpara">
+   此获取模式仅可与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-class">PDO::FETCH_CLASS</a></code></strong>（及<a href="pdo.constants.fetch-modes.html#pdo.fetch-modes.class-flags" class="link">其他选项</a>）结合使用。
+  </p>
+  <p class="simpara">
+   使用此获取模式时，指定的类必须实现 <span class="interfacename"><a href="class.serializable.html" class="interfacename">Serializable</a></span>。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    此功能不支持包含完整序列化对象（通过 <span class="function"><a href="function.serialize.html" class="function">serialize()</a></span> 生成）的字符串。
+   </p>
+  </div>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    此获取模式不会调用构造方法。
+   </p>
+  </div>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">TestEntity </span><span style="color: #007700">implements </span><span style="color: #0000BB">Serializable<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$userid</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$name</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$country</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$referred_by_userid</span><span style="color: #007700">;<br /><br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />    {<br />        print </span><span style="color: #DD0000">"Constructor called with " </span><span style="color: #007700">. </span><span style="color: #0000BB">count</span><span style="color: #007700">(</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">()) . </span><span style="color: #DD0000">" args\n"</span><span style="color: #007700">;<br />        print </span><span style="color: #DD0000">"Properties set when constructor called? "<br />            </span><span style="color: #007700">. (isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">) ? </span><span style="color: #DD0000">'Yes' </span><span style="color: #007700">: </span><span style="color: #DD0000">'No'</span><span style="color: #007700">) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />    }<br /><br />    public function </span><span style="color: #0000BB">serialize</span><span style="color: #007700">()<br />    {<br />        return </span><span style="color: #0000BB">join</span><span style="color: #007700">(<br />            </span><span style="color: #DD0000">"|"</span><span style="color: #007700">,<br />            [</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">userid</span><span style="color: #007700">, </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">, </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">country</span><span style="color: #007700">, </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">referred_by_userid</span><span style="color: #007700">]<br />        );<br />    }<br /><br />    public function </span><span style="color: #0000BB">unserialize</span><span style="color: #007700">(</span><span style="color: #0000BB">string $data</span><span style="color: #007700">)<br />    {<br />        </span><span style="color: #0000BB">$parts </span><span style="color: #007700">= </span><span style="color: #0000BB">explode</span><span style="color: #007700">(</span><span style="color: #DD0000">"|"</span><span style="color: #007700">, </span><span style="color: #0000BB">$data</span><span style="color: #007700">);<br />        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">userid </span><span style="color: #007700">= (int) </span><span style="color: #0000BB">$parts</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">];<br />        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name </span><span style="color: #007700">= </span><span style="color: #0000BB">$parts</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">];<br />        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">country </span><span style="color: #007700">= </span><span style="color: #0000BB">$parts</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">];<br /><br />        </span><span style="color: #0000BB">$refId </span><span style="color: #007700">= </span><span style="color: #0000BB">$parts</span><span style="color: #007700">[</span><span style="color: #0000BB">3</span><span style="color: #007700">];<br />        </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">referred_by_userid </span><span style="color: #007700">= (</span><span style="color: #0000BB">$refId </span><span style="color: #007700">=== </span><span style="color: #DD0000">"" </span><span style="color: #007700">? </span><span style="color: #0000BB">null </span><span style="color: #007700">: (int) </span><span style="color: #0000BB">$refId</span><span style="color: #007700">);<br />    }<br />}<br /><br />print </span><span style="color: #DD0000">"Set up record (constructor called manually):\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">exec</span><span style="color: #007700">(<br />    </span><span style="color: #DD0000">"CREATE TABLE serialize (<br />        sdata TEXT<br />    )"<br /></span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$origObj </span><span style="color: #007700">= new </span><span style="color: #0000BB">TestEntity</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$origObj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">userid </span><span style="color: #007700">= </span><span style="color: #0000BB">200</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$origObj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name </span><span style="color: #007700">= </span><span style="color: #DD0000">'Seri'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$origObj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">country </span><span style="color: #007700">= </span><span style="color: #DD0000">'Syria'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$origObj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">referred_by_userid </span><span style="color: #007700">= </span><span style="color: #0000BB">null</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$insert </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">prepare</span><span style="color: #007700">(</span><span style="color: #DD0000">"INSERT INTO serialize (sdata) VALUES (:sdata)"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$insert</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">execute</span><span style="color: #007700">([</span><span style="color: #DD0000">'sdata' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$origObj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">serialize</span><span style="color: #007700">()]);<br /><br />print </span><span style="color: #DD0000">"\nRetrieve result:\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$query </span><span style="color: #007700">= </span><span style="color: #DD0000">"SELECT sdata FROM serialize"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #0000BB">$query</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// NOTE: Constructor is never called!<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFetchMode</span><span style="color: #007700">(</span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_CLASS </span><span style="color: #007700">| </span><span style="color: #0000BB">PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_SERIALIZE</span><span style="color: #007700">, </span><span style="color: #0000BB">TestEntity</span><span style="color: #007700">::class);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例的输出类似于：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Deprecated: TestEntity implements the Serializable interface, which is deprecated. Implement __serialize() and __unserialize() instead (or in addition, if support for old PHP versions is necessary) in Standard input code on line 2
+Set up record (constructor called manually):
+Constructor called with 0 args
+Properties set when constructor called? No
+
+Retrieve result:
+Deprecated: PDOStatement::setFetchMode(): The PDO::FETCH_SERIALIZE mode is deprecated in Standard input code on line 58
+
+Deprecated: PDOStatement::fetch(): The PDO::FETCH_SERIALIZE mode is deprecated in Standard input code on line 59
+object(TestEntity)#5 (4) {
+  [&quot;userid&quot;]=&gt;
+  int(200)
+  [&quot;name&quot;]=&gt;
+  string(4) &quot;Seri&quot;
+  [&quot;country&quot;]=&gt;
+  string(5) &quot;Syria&quot;
+  [&quot;referred_by_userid&quot;]=&gt;
+  NULL
+}
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-bound">
+  <h2 class="title">PDO::FETCH_BOUND (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   此获取模式无法与 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 一起使用。
+  </p>
+  <p class="simpara">
+   此获取模式不直接返回结果，而是将值绑定到通过 <span class="methodname"><a href="pdostatement.bindcolumn.html" class="methodname">PDOStatement::bindColumn()</a></span>
+   指定的变量，所调用的获取方法返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    使用预处理语句时，为确保正确运行，变量必须在查询执行后进行绑定。
+   </span>
+  </p></blockquote>
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$query </span><span style="color: #007700">= </span><span style="color: #DD0000">"SELECT users.userid, users.name, users.country, referrer.name<br />    FROM users<br />    LEFT JOIN users AS referrer ON users.referred_by_userid = referrer.userid"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">prepare</span><span style="color: #007700">(</span><span style="color: #0000BB">$query</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">execute</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">bindColumn</span><span style="color: #007700">(</span><span style="color: #DD0000">'userid'</span><span style="color: #007700">, </span><span style="color: #0000BB">$userId</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">bindColumn</span><span style="color: #007700">(</span><span style="color: #DD0000">'name'</span><span style="color: #007700">, </span><span style="color: #0000BB">$name</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">bindColumn</span><span style="color: #007700">(</span><span style="color: #DD0000">'country'</span><span style="color: #007700">, </span><span style="color: #0000BB">$country</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// Bind by column position to resolve duplicated column name<br />// To avoid this breaking if the query is changed, use an SQL alias instead<br />// For example: referrer.name AS referrer_name<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">bindColumn</span><span style="color: #007700">(</span><span style="color: #0000BB">4</span><span style="color: #007700">, </span><span style="color: #0000BB">$referrerName</span><span style="color: #007700">);<br /><br />while (</span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_BOUND</span><span style="color: #007700">)) {<br />    print </span><span style="color: #0000BB">join</span><span style="color: #007700">(</span><span style="color: #DD0000">"\t"</span><span style="color: #007700">, [</span><span style="color: #0000BB">$userId</span><span style="color: #007700">, </span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">$country</span><span style="color: #007700">, (</span><span style="color: #0000BB">$referrerName </span><span style="color: #007700">?? </span><span style="color: #DD0000">'NULL'</span><span style="color: #007700">)]) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />}</span></span></code></div>
+  </div>
+
+  <p class="para">以上示例会输出：</p>
+  <div class="example-contents screen">
+<div class="cdata"><pre>
+104	Chris	Ukraine	NULL
+105	Jamie	England	NULL
+107	Robin	Germany	Chris
+108	Sean	Ukraine	NULL
+109	Toni	Germany	NULL
+110	Toni	Germany	NULL
+</pre></div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-into">
+  <h2 class="title">PDO::FETCH_INTO (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   此获取模式无法与 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 一起使用。
+  </p>
+  <p class="simpara">
+   此获取模式会更新指定对象中的属性。成功后，将返回该对象。
+  </p>
+  <p class="simpara">
+   如果返回的列名对应的属性不存在，则会动态声明该属性。已弃用此行为，自 PHP 9.0 起会导致错误。
+  </p>
+  <p class="simpara">
+   属性必须是 <code class="literal">public</code> 并且不能是 <code class="literal">readonly</code>。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    若不在每次获取记录之间使用 <span class="methodname"><a href="pdostatement.setfetchmode.html" class="methodname">PDOStatement::setFetchMode()</a></span>，则无法更改待更新的对象。
+   </p>
+  </div>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">TestEntity<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$userid</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$name</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$country</span><span style="color: #007700">;<br /><br />    public </span><span style="color: #0000BB">$referred_by_userid</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">$obj </span><span style="color: #007700">= new </span><span style="color: #0000BB">TestEntity</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFetchMode</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_INTO</span><span style="color: #007700">, </span><span style="color: #0000BB">$obj</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country, referred_by_userid FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例的输出类似于：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+object(TestEntity)#3 (4) {
+  [&quot;userid&quot;]=&gt;
+  int(104)
+  [&quot;name&quot;]=&gt;
+  string(5) &quot;Chris&quot;
+  [&quot;country&quot;]=&gt;
+  string(7) &quot;Ukraine&quot;
+  [&quot;referred_by_userid&quot;]=&gt;
+  NULL
+}
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-lazy">
+  <h2 class="title">PDO::FETCH_LAZY (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   此获取模式无法与 <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span> 一起使用。
+  </p>
+  <p class="simpara">
+   此获取模式返回 <span class="classname"><a href="class.pdorow.html" class="classname">PDORow</a></span>
+   对象，以延迟方式检索，并同时支持类似数组和对象访问值的方式（即结合了
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-both">PDO::FETCH_BOTH</a></code></strong> 与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-obj">PDO::FETCH_OBJ</a></code></strong> 的行为）。
+  </p>
+  <p class="simpara">
+   这种方式可在 PHP 端实现对数据库服务器上非缓冲结果的内存高效访问。PDO
+   是否对结果使用客户端缓冲，取决于所使用的数据库特定驱动及其配置。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    <span class="classname"><a href="class.pdorow.html" class="classname">PDORow</a></span> 在访问未定义的属性或 key 时会返回
+    <code class="literal">NULL</code>，且不产生任何错误或警告，这可能导致拼写错误或查询未返回预期数据等问题更难发现和调试。
+   </p>
+  </div>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    返回的 <span class="classname"><a href="class.pdorow.html" class="classname">PDORow</a></span> 对象在每次获取结果时都会更新。
+   </p>
+  </div>
+  <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$db</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country, referred_by_userid FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_LAZY</span><span style="color: #007700">);<br /><br />print </span><span style="color: #DD0000">"ID: "</span><span style="color: #007700">. </span><span style="color: #0000BB">$result</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">] .</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />print </span><span style="color: #DD0000">"Name: </span><span style="color: #007700">{</span><span style="color: #0000BB">$result</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">name</span><span style="color: #007700">}</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />print </span><span style="color: #DD0000">"Country: " </span><span style="color: #007700">. </span><span style="color: #0000BB">$result</span><span style="color: #007700">[</span><span style="color: #DD0000">'country'</span><span style="color: #007700">] .</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /></span><span style="color: #FF8000">// 返回 NULL，不触发警告或错误<br /></span><span style="color: #007700">print </span><span style="color: #DD0000">"Does not exist: " </span><span style="color: #007700">. </span><span style="color: #0000BB">var_export</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">does_not_exist</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">) . </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$differentResult </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetch</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_LAZY</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// 先前检索的 PDORow 现在指向新的检索结果<br /></span><span style="color: #007700">print </span><span style="color: #DD0000">"ID: "</span><span style="color: #007700">. </span><span style="color: #0000BB">$result</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">] .</span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;</span></span></code></div>
+  </div>
+
+  <p class="para">以上示例会输出：</p>
+  <div class="example-contents screen">
+<div class="cdata"><pre>
+ID: 104
+Name: Chris
+Country: Ukraine
+Does not exist: NULL
+ID: 105
+</pre></div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-group">
+  <h2 class="title">PDO::FETCH_GROUP (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-group">PDO::FETCH_GROUP</a></code></strong> 返回以某一（非唯一）列作为索引的关联数组列表。此获取模式仅适用于
+   <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span>。
+  </p>
+  <p class="simpara">
+   当与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-unique">PDO::FETCH_UNIQUE</a></code></strong> 组合使用时，两种模式会使用同一列，导致该组合失去实际作用。
+  </p>
+  <p class="simpara">
+   此获取模式应与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-both">PDO::FETCH_BOTH</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-named">PDO::FETCH_NAMED</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-num">PDO::FETCH_NUM</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-column">PDO::FETCH_COLUMN</a></code></strong>
+   或 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-func">PDO::FETCH_FUNC</a></code></strong> 中的一种组合使用。
+  </p>
+  <p class="simpara">
+   若未指定上述列表中的获取模式，则当前的默认获取模式用于 <span class="classname"><a href="class.pdostatement.html" class="classname">PDOStatement</a></span>。
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT country, userid, name FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_GROUP </span><span style="color: #007700">| </span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_ASSOC</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [Ukraine] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 104
+                    [name] =&gt; Chris
+                )
+
+            [1] =&gt; Array
+                (
+                    [userid] =&gt; 108
+                    [name] =&gt; Sean
+                )
+
+        )
+    [England] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 105
+                    [name] =&gt; Jamie
+                )
+
+        )
+
+    [Germany] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 107
+                    [name] =&gt; Robin
+                )
+
+            [1] =&gt; Array
+                (
+                    [userid] =&gt; 109
+                    [name] =&gt; Toni
+                )
+        )
+)
+</pre></div>
+   </div>
+  </div>
+  <p class="simpara">
+   在上述示例中需注意，每行数组中会省略第一列，该列仅作为 key 存在。若要将其包含在数组中，可重复该列，如下例所示：
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT country, userid, name, country FROM users"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_GROUP </span><span style="color: #007700">| </span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_ASSOC</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [Ukraine] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 104
+                    [name] =&gt; Chris
+                    [country] =&gt; Ukraine
+                )
+
+            [1] =&gt; Array
+                (
+                    [userid] =&gt; 108
+                    [name] =&gt; Sean
+                    [country] =&gt; Ukraine
+                )
+
+        )
+    [England] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 105
+                    [name] =&gt; Jamie
+                    [country] =&gt; England
+                )
+
+        )
+
+    [Germany] =&gt; Array
+        (
+            [0] =&gt; Array
+                (
+                    [userid] =&gt; 107
+                    [name] =&gt; Robin
+                    [country] =&gt; Germany
+                )
+
+            [1] =&gt; Array
+                (
+                    [userid] =&gt; 109
+                    [name] =&gt; Toni
+                    [country] =&gt; Germany
+                )
+        )
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+ <div class="section" id="pdo.constants.fetch-unique">
+  <h2 class="title">PDO::FETCH_UNIQUE (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)</h2>
+  <p class="simpara">
+   <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-unique">PDO::FETCH_UNIQUE</a></code></strong> 使用第一列作为索引记录，每个索引值返回一条记录。此获取模式仅适用于
+   <span class="methodname"><a href="pdostatement.fetchall.html" class="methodname">PDOStatement::fetchAll()</a></span>。
+  </p>
+  <p class="simpara">
+   当与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-group">PDO::FETCH_GROUP</a></code></strong> 组合使用时，两种模式会使用同一列，导致该组合失去实际作用。
+  </p>
+  <p class="simpara">
+   此获取模式应与 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-assoc">PDO::FETCH_ASSOC</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-both">PDO::FETCH_BOTH</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-named">PDO::FETCH_NAMED</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-num">PDO::FETCH_NUM</a></code></strong>、<strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-column">PDO::FETCH_COLUMN</a></code></strong>
+   或 <strong><code><a href="pdo.constants.fetch-modes.html#pdo.constants.fetch-func">PDO::FETCH_FUNC</a></code></strong> 中的一种组合使用。
+  </p>
+  <p class="simpara">
+   若未指定上述列表中的获取模式，则当前的默认获取模式用于 <span class="classname"><a href="class.pdostatement.html" class="classname">PDOStatement</a></span>。
+  </p>
+  <p class="simpara">
+   当与已知的唯一列（例如记录 ID）一起使用时，此模式可快速返回以该值为索引的结果。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    若第一列不唯一，将丢失部分值，具体哪些值会丢失属于未定义行为。
+   </span>
+  </p></blockquote>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    应尽可能在 SQL 中进行记录过滤。数据库会利用索引优化该过程，仅返回所需记录。若从数据库中选取了超出所需的记录，可能会显著增加内存占用和查询时间，尤其在结果集较大时。
+   </p>
+  </div>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_UNIQUE </span><span style="color: #007700">| </span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_ASSOC</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [104] =&gt; Array
+        (
+            [name] =&gt; Chris
+            [country] =&gt; Ukraine
+        )
+
+    [105] =&gt; Array
+        (
+            [name] =&gt; Jamie
+            [country] =&gt; England
+        )
+
+    [107] =&gt; Array
+        (
+            [name] =&gt; Robin
+            [country] =&gt; Germany
+        )
+
+)
+</pre></div>
+   </div>
+  </div>
+  <p class="simpara">
+   在上述示例中需注意，每行数组中会省略第一列，该列仅作为 key 存在。若要将其包含在数组中，可重复该列，如下例所示：
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$stmt </span><span style="color: #007700">= </span><span style="color: #0000BB">$pdo</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">query</span><span style="color: #007700">(</span><span style="color: #DD0000">"SELECT userid, userid, name, country FROM users LIMIT 3"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$stmt</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchAll</span><span style="color: #007700">(</span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_UNIQUE </span><span style="color: #007700">| </span><span style="color: #0000BB">\PDO</span><span style="color: #007700">::</span><span style="color: #0000BB">FETCH_ASSOC</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">);</span></span></code></div>
+   </div>
+
+   <p class="para">以上示例会输出：</p>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Array
+(
+    [104] =&gt; Array
+        (
+            [userid] =&gt; 104
+            [name] =&gt; Chris
+            [country] =&gt; Ukraine
+        )
+
+    [105] =&gt; Array
+        (
+            [userid] =&gt; 105
+            [name] =&gt; Jamie
+            [country] =&gt; England
+        )
+
+    [107] =&gt; Array
+        (
+            [userid] =&gt; 107
+            [name] =&gt; Robin
+            [country] =&gt; Germany
+        )
+
+)
+</pre></div>
+   </div>
+  </div>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

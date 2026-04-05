@@ -1,0 +1,178 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>缓冲区大小</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="outcontrol.nesting-output-buffers.html" class="navbar__link">« 嵌套输出缓冲区</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="outcontrol.operations-on-buffers.html" class="navbar__link">缓冲区中允许的操作 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="outcontrol.user-level-output-buffers.html">用户级输出缓冲区</a></li>
+        <li>缓冲区大小</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="outcontrol.buffer-size" class="section">
+  <h2 class="title">缓冲区大小</h2>
+  <p class="para">
+   缓冲区大小由整数表示，表示缓冲区可以存储的字节数，而不会刷新。
+   当缓冲区中的输出大小超过缓冲区的大小时，缓冲区的内容将被发送到输出处理程序，其返回值将被刷新，缓冲区将被清除。
+  </p>
+  <p class="para">
+   除了 <code class="literal">&quot;URL-Rewriter&quot;</code> 之外，输出缓冲区的大小可以在启动缓冲区时设置。
+   如果设置为 <code class="literal">0</code>，则输出缓冲区仅受 PHP 可用内存的限制。
+   如果设置为 <code class="literal">1</code>，则在生成任何非零长度输出的代码块后，缓冲区将被刷新。
+  </p>
+  <p class="para">
+   输出缓冲区的大小可通过调用 <span class="function"><a href="function.ob-get-status.html" class="function">ob_get_status()</a></span> 来获取。
+  </p>
+  <p class="para">
+   使用 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 启动的输出缓冲区将其缓冲区大小设置为传递给函数的第二个
+   <code class="parameter">chunk_size</code> 参数的整数值。
+   如果省略，则设置为 <code class="literal">0</code>。
+  </p>
+  <p class="para">
+   以 <code class="literal">&quot;On&quot;</code> 设置 <a href="outcontrol.configuration.html#ini.output-buffering" class="link">output_buffering</a>
+   启动的输出缓冲区将其缓冲区大小设置为 <code class="literal">0</code>。
+   如果设置为整数，则缓冲区大小将与该数字对应。
+  </p>
+  <p class="para">
+   <code class="literal">&quot;URL-Rewriter&quot;</code> 的缓冲区大小设置为 <code class="literal">0</code>，
+   因此仅受 PHP 可用内存的限制。
+  </p>
+  <p class="para">
+   <code class="literal">zlib</code> 的输出缓冲区大小由
+   <a href="zlib.configuration.html#ini.zlib.output-compression" class="link">zlib.output_compression</a>
+   <var class="filename">php.ini</var> 设置控制。
+   如果设置为 <code class="literal">&quot;On&quot;</code>，缓冲区大小将为
+   <code class="literal">&quot;16K&quot;</code>/<code class="literal">16384</code>。
+   如果设置为整数，则缓冲区大小将与该数字（字节）对应。
+  </p>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

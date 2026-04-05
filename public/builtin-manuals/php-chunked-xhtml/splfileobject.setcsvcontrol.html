@@ -1,0 +1,308 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Set the delimiter, enclosure and escape character for CSV</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="splfileobject.seek.html" class="navbar__link">« SplFileObject::seek</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="splfileobject.setflags.html" class="navbar__link">SplFileObject::setFlags »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.splfileobject.html">SplFileObject</a></li>
+        <li>Set the delimiter, enclosure and escape character for CSV</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="splfileobject.setcsvcontrol" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">SplFileObject::setCsvControl</h1>
+  <p class="verinfo">(PHP 5 &gt;= 5.2.0, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">SplFileObject::setCsvControl</span> &mdash; <span class="dc-title">Set the delimiter, enclosure and escape character for CSV</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-splfileobject.setcsvcontrol-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="modifier">public</span> <span class="methodname"><strong>SplFileObject::setCsvControl</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$separator</code><span class="initializer"> = &quot;,&quot;</span></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$enclosure</code><span class="initializer"> = &quot;\&quot;&quot;</span></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$escape</code><span class="initializer"> = &quot;\\&quot;</span></span>): <span class="type"><a href="language.types.void.html" class="type void">void</a></span></div>
+
+  <p class="para rdfs-comment">
+   Sets the delimiter, enclosure and escape character for
+   parsing <abbr title="Comma Separated Value">CSV</abbr> fields.
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-splfileobject.setcsvcontrol-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+     <dt><code class="parameter">separator</code></dt>
+     <dd>
+      <p class="para">
+       可选的 <code class="parameter">separator</code> 参数，设置字段分隔符。必须是单字节字符。
+      </p>
+     </dd>
+    
+   
+     <dt><code class="parameter">enclosure</code></dt>
+     <dd>
+      <p class="para">
+       可选的 <code class="parameter">enclosure</code> 参数，设置字段环绕符。必须是单字节字符。
+      </p>
+     </dd>
+    
+   
+     <dt><code class="parameter">escape</code></dt>
+     <dd>
+      <p class="para">
+       可选的 <code class="parameter">escape</code>
+       参数，设置转义字符。必须是单字节字符或者空字符串。空字符串（<code class="literal">&quot;&quot;</code>）禁用所有的转义机制。
+      </p>
+      <div class="warning"><strong class="warning">警告</strong>
+       <p class="simpara">
+        在输入流中，<code class="parameter">enclosure</code> 字符在引号字符串内可通过重复自身进行转义，解析后结果中将只保留一个
+        <code class="parameter">enclosure</code> 字符。而 <code class="parameter">escape</code> 字符的行为有所不同：若输入中出现
+        <code class="parameter">escape</code> 字符与 <code class="parameter">enclosure</code>
+        字符的组合序列，这两个字符都会保留在解析结果中。因此，在默认参数下，类似 <code class="literal">&quot;a&quot;&quot;b&quot;,&quot;c\&quot;d&quot;</code> 的 CSV
+        行将被解析为两个字段，分别为 <code class="literal">a&quot;b</code> 和 <code class="literal">c\&quot;d</code>。
+       </p>
+      </div>
+      <div class="warning"><strong class="warning">警告</strong>
+       <p class="simpara">
+        从 PHP 8.4.0 开始，弃用依赖 <code class="parameter">escape</code> 的默认值。需要通过位置或使用<a href="functions.arguments.html#functions.named-arguments" class="link">命名参数</a>明确提供。
+       </p>
+      </div>
+     </dd>
+    
+  </dl>
+  <div class="warning"><strong class="warning">警告</strong><p class="simpara">
+ 当 <code class="parameter">escape</code> 被设置为非空字符串（<code class="literal">&quot;&quot;</code>）时，
+ 可能导致生成的 CSV 不符合 <a href="https://datatracker.ietf.org/doc/html/rfc4180" class="link external">&raquo;&nbsp;RFC 4180</a> 的要求，
+ 或者无法通过 PHP CSV 函数的往返处理。
+ <code class="parameter">escape</code> 的默认值是 <code class="literal">&quot;\\&quot;</code>，因此建议显式地将其设置为空字符串。
+ 默认值将在未来的 PHP 版本中更改，不早于 PHP 9.0。
+</p></div>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-splfileobject.setcsvcontrol-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   没有返回值。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-splfileobject.setcsvcontrol-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="simpara">
+   如果 <code class="parameter">separator</code> 或者 <code class="parameter">enclosure</code>
+   长度不是一个字节，则抛出 <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span>。
+  </p>
+  <p class="simpara">
+   如果 <code class="parameter">escape</code> 的长度不是一个字节或者为空字符串，则抛出 <span class="exceptionname"><a href="class.valueerror.html" class="exceptionname">ValueError</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-splfileobject.setcsvcontrol-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>8.4.0</td>
+       <td>
+        现在已弃用依赖 escape 的默认值。
+       </td>
+      </tr>
+
+      <tr>
+       <td>7.4.0</td>
+       <td>
+        The <code class="parameter">escape</code> parameter now also accepts an empty
+        string to disable the proprietary escape mechanism.
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-splfileobject.setcsvcontrol-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="methodname"><strong>SplFileObject::setCsvControl()</strong></span> example</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$file </span><span style="color: #007700">= new </span><span style="color: #0000BB">SplFileObject</span><span style="color: #007700">(</span><span style="color: #DD0000">"data.csv"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$file</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setFlags</span><span style="color: #007700">(</span><span style="color: #0000BB">SplFileObject</span><span style="color: #007700">::</span><span style="color: #0000BB">READ_CSV</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$file</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setCsvControl</span><span style="color: #007700">(</span><span style="color: #DD0000">'|'</span><span style="color: #007700">);<br />foreach (</span><span style="color: #0000BB">$file </span><span style="color: #007700">as </span><span style="color: #0000BB">$row</span><span style="color: #007700">) {<br />    list (</span><span style="color: #0000BB">$fruit</span><span style="color: #007700">, </span><span style="color: #0000BB">$quantity</span><span style="color: #007700">) = </span><span style="color: #0000BB">$row</span><span style="color: #007700">;<br />    </span><span style="color: #FF8000">// Do something with values<br /></span><span style="color: #007700">}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>Contents of data.csv</p></div>
+    <div class="example-contents">
+<div class="txtcode"><pre class="txtcode">&lt;?php
+apples|20
+bananas|14
+cherries|87
+?&gt;</pre>
+</div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-splfileobject.setcsvcontrol-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="methodname"><a href="splfileobject.getcsvcontrol.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::getCsvControl()</a> - Get the delimiter, enclosure and escape character for CSV</span></li>
+   <li><span class="methodname"><a href="splfileobject.fgetcsv.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::fgetcsv()</a> - Gets line from file and parse as CSV fields</span></li>
+   <li><span class="methodname"><a href="splfileobject.fputcsv.html" class="methodname" rel="rdfs-seeAlso">SplFileObject::fputcsv()</a> - Write a field array as a CSV line</span></li>
+   <li><span class="function"><a href="function.fputcsv.html" class="function" rel="rdfs-seeAlso">fputcsv()</a> - 将行格式化为 CSV 并写入文件指针</span></li>
+   <li><span class="function"><a href="function.fgetcsv.html" class="function" rel="rdfs-seeAlso">fgetcsv()</a> - 从文件指针中读入一行并解析 CSV 字段</span></li>
+   <li><span class="function"><a href="function.str-getcsv.html" class="function" rel="rdfs-seeAlso">str_getcsv()</a> - 解析 CSV 字符串为一个数组</span></li>
+  </ul>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

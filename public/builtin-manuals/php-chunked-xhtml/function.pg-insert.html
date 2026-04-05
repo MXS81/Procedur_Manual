@@ -1,0 +1,311 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>将数组插入到表中</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.pg-host.html" class="navbar__link">« pg_host</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.pg-last-error.html" class="navbar__link">pg_last_error »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pgsql.html">PostgreSQL 函数</a></li>
+        <li>将数组插入到表中</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.pg-insert" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">pg_insert</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.3.0, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">pg_insert</span> &mdash; <span class="dc-title">
+   将数组插入到表中
+  </span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.pg-insert-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>pg_insert</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="class.pgsql-connection.html" class="type PgSql\Connection">PgSql\Connection</a></span> <code class="parameter">$connection</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$table_name</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$values</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-exec">PGSQL_DML_EXEC</a></code></strong></span></span><br>): <span class="type"><span class="type"><a href="class.pgsql-result.html" class="type PgSql\Result">PgSql\Result</a></span>|<span class="type"><a href="language.types.string.html" class="type string">string</a></span>|<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>pg_insert()</strong></span> 将 <code class="parameter">values</code> 中的值插入到由
+   <code class="parameter">table_name</code> 指定的表中。
+  </p>
+  <p class="para">
+   如果指定 <code class="parameter">flags</code>，则 <span class="function"><a href="function.pg-convert.html" class="function">pg_convert()</a></span>
+   使用指定 flag 应用于 <code class="parameter">values</code>。
+  </p>
+  <p class="para">
+   默认情况下 <span class="function"><strong>pg_insert()</strong></span> 传递原始值。值必须转义或必须在 <code class="parameter">flags</code>
+   中指定 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-escape">PGSQL_DML_ESCAPE</a></code></strong> flag。<strong><code><a href="pgsql.constants.html#constant.pgsql-dml-escape">PGSQL_DML_ESCAPE</a></code></strong>
+   引用并转义参数/标识符。因此，表/列名称变得区分大小写。
+  </p>
+  <p class="para">
+   注意转义和预处理查询都不能保护 LIKE 查询、JSON、Array、Regex 等，这些参数要根据上下文来处理。即转义/验证值。
+  </p>
+ </div>
+
+
+<div class="refsect1 parameters" id="refsect1-function.pg-insert-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">connection</code></dt>
+     <dd>
+      <p class="para"><span class="classname"><a href="class.pgsql-connection.html" class="classname">PgSql\Connection</a></span> 实例。</p>
+     </dd>
+    
+    
+     <dt><code class="parameter">table_name</code></dt>
+     <dd>
+      <p class="para">
+       要插入记录的表名。表 <code class="parameter">table_name</code> 中的列必须至少要有 <code class="literal">values</code>
+       中的单元那么多。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">values</code></dt>
+     <dd>
+      <p class="para">
+       <span class="type"><a href="language.types.array.html" class="type array">array</a></span>，其键是表 <code class="parameter">table_name</code> 中的字段名称，其值是要插入的匹配行。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">flags</code></dt>
+     <dd>
+      <p class="para">
+       任意数量的 <strong><code>PGSQL_CONV_OPTS</code></strong>、<strong><code><a href="pgsql.constants.html#constant.pgsql-dml-no-conv">PGSQL_DML_NO_CONV</a></code></strong>、<strong><code><a href="pgsql.constants.html#constant.pgsql-dml-escape">PGSQL_DML_ESCAPE</a></code></strong>、<strong><code><a href="pgsql.constants.html#constant.pgsql-dml-exec">PGSQL_DML_EXEC</a></code></strong>、<strong><code><a href="pgsql.constants.html#constant.pgsql-dml-async">PGSQL_DML_ASYNC</a></code></strong>
+       或 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-string">PGSQL_DML_STRING</a></code></strong> 的组合。当 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-string">PGSQL_DML_STRING</a></code></strong> 是 <code class="parameter">flags</code>
+       的一部分，然后将返回查询字符串。当设置了 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-no-conv">PGSQL_DML_NO_CONV</a></code></strong> 或 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-escape">PGSQL_DML_ESCAPE</a></code></strong>
+       时，不会在内部调用 <span class="function"><a href="function.pg-convert.html" class="function">pg_convert()</a></span>。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.pg-insert-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。如果通过 <code class="parameter">flags</code> 传递 <strong><code><a href="pgsql.constants.html#constant.pgsql-dml-string">PGSQL_DML_STRING</a></code></strong>，成功时返回 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-function.pg-insert-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="para">
+   当指定的表无效时，会抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span>。
+  </p>
+  <p class="para">
+   当字段的值或类型不能正确匹配 PostgreSQL的类型时，会抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span> 或 <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.pg-insert-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.3.0</td>
+      <td>
+       当指定的表无效时，现在会抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span> 错误；之前触发 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.3.0</td>
+      <td>
+       当字段的值或类型不能正确匹配 PostgreSQL 的类型时，现在会抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span> 或
+       <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span> 错误；之前触发 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>。
+      </td>
+     </tr>
+
+     <tr>
+ <td>8.1.0</td>
+ <td>
+  现在返回 <span class="classname"><a href="class.pgsql-result.html" class="classname">PgSql\Result</a></span> 
+  实例，之前返回 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>
+ </td>
+</tr>
+
+     <tr>
+ <td>8.1.0</td>
+ <td>
+  现在 <code class="parameter">connection</code> 参数接受 <span class="classname"><a href="class.pgsql-connection.html" class="classname">PgSql\Connection</a></span>
+  实例，之前接受 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。
+ </td>
+</tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ 
+ <div class="refsect1 examples" id="refsect1-function.pg-insert-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>pg_insert()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php <br />  $dbconn </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'dbname=foo'</span><span style="color: #007700">);<br />  </span><span style="color: #FF8000">// 在某种程度上安全，因为所有值都转义了。<br />  // 然而 PostgreSQL 支持 JSON/Array。无论是<br />  // 转义还是预处理都不安全。<br />  </span><span style="color: #0000BB">$res </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_insert</span><span style="color: #007700">(</span><span style="color: #0000BB">$dbconn</span><span style="color: #007700">, </span><span style="color: #DD0000">'post_log'</span><span style="color: #007700">, </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">, </span><span style="color: #0000BB">PGSQL_DML_ESCAPE</span><span style="color: #007700">);<br />  if (</span><span style="color: #0000BB">$res</span><span style="color: #007700">) {<br />      echo </span><span style="color: #DD0000">"POST data is successfully logged\n"</span><span style="color: #007700">;<br />  } else {<br />      echo </span><span style="color: #DD0000">"User must have sent wrong inputs\n"</span><span style="color: #007700">;<br />  }<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.pg-insert-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.pg-convert.html" class="function" rel="rdfs-seeAlso">pg_convert()</a> - 将关联的数组值转换为适合 SQL 语句的格式</span></li>
+   </ul>
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

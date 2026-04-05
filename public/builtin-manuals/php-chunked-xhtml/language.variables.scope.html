@@ -1,0 +1,394 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>变量作用域</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.variables.predefined.html" class="navbar__link">« 预定义变量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.variables.variable.html" class="navbar__link">可变变量 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.variables.html">变量</a></li>
+        <li>变量作用域</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.variables.scope" class="sect1">
+   <h2 class="title">变量作用域</h2>
+
+   <p class="simpara">
+    变量的作用域是定义该变量的上下文。PHP 有函数作用域和全局作用域。在函数之外定义的任何变量都仅限于全局作用域。当包含文件时，该文件中的代码继承了包含语句所在行的变量作用域。
+   </p>
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 全局变量作用域示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br />include </span><span style="color: #DD0000">'b.inc'</span><span style="color: #007700">; </span><span style="color: #FF8000">// 变量 $a 将在 b.inc 内可用<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+   <p class="simpara">
+    在命名函数或<a href="functions.anonymous.html" class="link">匿名</a>函数内创建的任何变量都仅限于函数主体的作用域。然而，<a href="functions.arrow.html" class="link">箭头函数</a>会绑定父级作用域中的变量，使其在函数体内可用。如果在函数内部
+    include 文件，那么包含文件中的变量将如同在调用函数内部定义一样可用。
+   </p>
+
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 局部变量作用域的示例</strong></p>
+    <div class="example-contents"> 
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">; </span><span style="color: #FF8000">// 全局作用域<br /><br /></span><span style="color: #007700">function </span><span style="color: #0000BB">test</span><span style="color: #007700">()<br />{ <br />    echo </span><span style="color: #0000BB">$a</span><span style="color: #007700">; </span><span style="color: #FF8000">// $a 变量 $a 未定义，因为它引用了 $a 的局部版本<br /></span><span style="color: #007700">}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+   <p class="simpara">
+    下面的示例会生成未定义变量 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>（PHP 8.0.0 之前是 <strong><code><a href="errorfunc.constants.html#constant.e-notice">E_NOTICE</a></code></strong>）诊断提示。这是因为
+    echo 语句引用了局部版本的变量 <var class="varname">$a</var>，而且在这个作用域内，它并没有被赋值。注意这与
+    C 语言有一点点不同，因为 C 中的全局变量会自动提供给函数，除非被局部定义特别覆盖。这可能引起一些问题，有些人可能不小心就改变了一个全局变量。PHP
+    中全局变量在函数中使用时必须声明为 global。
+   </p>
+
+   <div class="sect2" id="language.variables.scope.global">
+    <h3 class="title"><code class="literal">global</code> 关键字</h3>
+    <p class="simpara">
+     <code class="literal">global</code> 关键字用于将变量从全局作用域绑定到局部作用域。该关键字可以与变量列表或单个变量一起使用。将创建引用同名全局变量的局部变量。如果全局变量不存在，则将在全局作用域内创建该变量并赋值为 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>。
+    </p>
+    <p class="para">
+     <div class="example" id="example-3">
+      <p><strong>示例 #3 使用 <code class="literal">global</code></strong></p>
+      <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br /><br />function </span><span style="color: #0000BB">Sum</span><span style="color: #007700">()<br />{<br />    global </span><span style="color: #0000BB">$a</span><span style="color: #007700">, </span><span style="color: #0000BB">$b</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">$a </span><span style="color: #007700">+ </span><span style="color: #0000BB">$b</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">Sum</span><span style="color: #007700">();<br />echo </span><span style="color: #0000BB">$b</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+      </div>
+
+      <div class="example-contents"><p>以上示例会输出：</p></div>
+      <div class="example-contents screen">
+<div class="cdata"><pre>
+3
+</pre></div>
+      </div>
+     </div>
+    </p>
+
+   <p class="simpara">
+    在函数中声明了全局变量
+    <var class="varname">$a</var> 和 <var class="varname">$b</var>
+    之后，对任一变量的所有引用都会指向其全局版本。对于一个函数能够声明的全局变量的最大个数，PHP 没有限制。
+   </p>
+
+   <p class="simpara">
+    在全局作用域内访问变量的第二个办法，是用特殊的 PHP 自定义
+    <var class="varname"><a href="reserved.variables.globals.html" class="classname">$GLOBALS</a></var> 数组。前面的例子可以写成：
+   </p>
+   <p class="para">
+    <div class="example" id="example-4">
+     <p><strong>示例 #4 使用 <var class="varname"><a href="reserved.variables.globals.html" class="classname">$GLOBALS</a></var> 替代 global</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br /><br />function </span><span style="color: #0000BB">Sum</span><span style="color: #007700">()<br />{<br />    </span><span style="color: #0000BB">$GLOBALS</span><span style="color: #007700">[</span><span style="color: #DD0000">'b'</span><span style="color: #007700">] = </span><span style="color: #0000BB">$GLOBALS</span><span style="color: #007700">[</span><span style="color: #DD0000">'a'</span><span style="color: #007700">] + </span><span style="color: #0000BB">$GLOBALS</span><span style="color: #007700">[</span><span style="color: #DD0000">'b'</span><span style="color: #007700">];<br />}<br /><br /></span><span style="color: #0000BB">Sum</span><span style="color: #007700">();<br />echo </span><span style="color: #0000BB">$b</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+
+   <p class="simpara">
+    <var class="varname"><a href="reserved.variables.globals.html" class="classname">$GLOBALS</a></var>
+    是一个关联数组，每一个变量为一个元素，键名对应变量名，值对应变量的内容。<var class="varname"><a href="reserved.variables.globals.html" class="classname">$GLOBALS</a></var>
+    之所以在全局作用域内存在，是因为 $GLOBALS 是一个<a href="language.variables.superglobals.html" class="link">超全局变量</a>。以下范例显示了超全局变量的用处：
+   </p>
+
+   <p class="para">
+    <div class="example" id="example-5">
+     <p><strong>示例 #5 演示超全局变量和作用域的例子</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">test_superglobal</span><span style="color: #007700">()<br />{<br />    echo </span><span style="color: #0000BB">$_POST</span><span style="color: #007700">[</span><span style="color: #DD0000">'name'</span><span style="color: #007700">];<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     在函数外部使用 <code class="literal">global</code> 关键字不是错误。如果文件是从函数内部 include 的，则可以使用它。
+    </span>
+   </p></blockquote>
+  </div>
+
+  <div class="sect2" id="language.variables.scope.static">
+   <h3 class="title">使用 <code class="literal">static</code> 变量</h3>
+
+   <p class="simpara">
+    变量作用域的另一个重要特性是 <em>static</em> 变量。静态变量仅在局部函数作用域中存在，但当程序执行离开此作用域时，其值并不丢失。看看下面的例子：
+   </p>
+
+   <p class="para">
+    <div class="example" id="example-6">
+     <p><strong>示例 #6 演示需要静态变量的例子</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">Test</span><span style="color: #007700">()<br />{<br />    </span><span style="color: #0000BB">$a </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;<br />    echo </span><span style="color: #0000BB">$a</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$a</span><span style="color: #007700">++;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+   <p class="simpara">
+    本函数没什么用处，因为每次调用时都会将
+    <var class="varname">$a</var> 的值设为 <code class="literal">0</code> 并输出
+    <code class="literal">0</code>。将变量加一的 <var class="varname">$a</var>++
+    没有作用，因为一旦退出本函数则变量
+    <var class="varname">$a</var> 就不存在了。要写一个不会丢失本次计数值的计数函数，要将变量
+    <var class="varname">$a</var> 定义为静态的：
+   </p>
+   <p class="para">
+    <div class="example" id="example-7">
+     <p><strong>示例 #7 使用静态变量的例子</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">test</span><span style="color: #007700">()<br />{<br />    static </span><span style="color: #0000BB">$a </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;<br />    echo </span><span style="color: #0000BB">$a</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$a</span><span style="color: #007700">++;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+
+   <p class="simpara">
+    现在，变量 <var class="varname">$a</var> 仅在第一次调用 test() 函数时被初始化，之后每次调用 test() 函数都会输出
+    <var class="varname">$a</var> 的值并加一。
+   </p>
+
+   <p class="simpara">
+    静态变量也提供了一种处理递归函数的方法。以下这个简单的函数递归计数到
+    10，使用静态变量 <var class="varname">$count</var> 来判断何时停止：
+   </p>
+   <p class="para">
+    <div class="example" id="example-8">
+     <p><strong>示例 #8 静态变量与递归函数</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">test</span><span style="color: #007700">()<br />{<br />    static </span><span style="color: #0000BB">$count </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">$count</span><span style="color: #007700">++;<br />    echo </span><span style="color: #0000BB">$count</span><span style="color: #007700">;<br />    if (</span><span style="color: #0000BB">$count </span><span style="color: #007700">&lt; </span><span style="color: #0000BB">10</span><span style="color: #007700">) {<br />        </span><span style="color: #0000BB">test</span><span style="color: #007700">();<br />    }<br />    </span><span style="color: #0000BB">$count</span><span style="color: #007700">--;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+
+   <p class="para">
+    在 PHP 8.3.0 之前，静态变量只能使用常量表达式进行初始化。自 PHP 8.3.0 起，还允许使用动态表达式（例如函数调用）：
+   </p>
+   <p class="para">
+    <div class="example" id="example-9">
+     <p><strong>示例 #9 声明静态变量</strong></p>
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">foo</span><span style="color: #007700">(){<br />    static </span><span style="color: #0000BB">$int </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;          </span><span style="color: #FF8000">// 正确<br />    </span><span style="color: #007700">static </span><span style="color: #0000BB">$int </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">+</span><span style="color: #0000BB">2</span><span style="color: #007700">;        </span><span style="color: #FF8000">// 正确<br />    </span><span style="color: #007700">static </span><span style="color: #0000BB">$int </span><span style="color: #007700">= </span><span style="color: #0000BB">sqrt</span><span style="color: #007700">(</span><span style="color: #0000BB">121</span><span style="color: #007700">);  </span><span style="color: #FF8000">// 自 PHP 8.3.0 起正确<br /><br />    </span><span style="color: #0000BB">$int</span><span style="color: #007700">++;<br />    echo </span><span style="color: #0000BB">$int</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+     
+   <p class="simpara">
+    匿名函数内的静态变量仅在该特定函数实例中存在。如果每次调用时都重新创建匿名函数，则静态变量将重新初始化。
+   </p>
+   <div class="example" id="example-10">
+    <p><strong>示例 #10 匿名函数内的静态变量</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">exampleFunction</span><span style="color: #007700">(</span><span style="color: #0000BB">$input</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$result </span><span style="color: #007700">= (static function () use (</span><span style="color: #0000BB">$input</span><span style="color: #007700">) {<br />        static </span><span style="color: #0000BB">$counter </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;<br />        </span><span style="color: #0000BB">$counter</span><span style="color: #007700">++;<br />        return </span><span style="color: #DD0000">"Input: </span><span style="color: #0000BB">$input</span><span style="color: #DD0000">, Counter: </span><span style="color: #0000BB">$counter</span><span style="color: #DD0000">\n"</span><span style="color: #007700">;<br />    });<br /><br />    return </span><span style="color: #0000BB">$result</span><span style="color: #007700">();<br />}<br /><br /></span><span style="color: #FF8000">// 调用 exampleFunction 将重新创建匿名函数，因此静态<br />// 变量不会保留其值。<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">exampleFunction</span><span style="color: #007700">(</span><span style="color: #DD0000">'A'</span><span style="color: #007700">); </span><span style="color: #FF8000">// 输出：Input: A, Counter: 1<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">exampleFunction</span><span style="color: #007700">(</span><span style="color: #DD0000">'B'</span><span style="color: #007700">); </span><span style="color: #FF8000">// 输出：Input: B, Counter: 1<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+   <p class="para">
+    从 PHP 8.1.0
+    开始，当继承（不是覆盖）使用有静态变量的方法时，继承的方法将会跟父级方法共享静态变量。这意味着方法中的静态变量现在跟静态属性有相同的行为。
+   </p>
+
+   <p class="simpara">
+    自 PHP 8.3.0 起，可以使用任意表达式初始化静态变量。这意味着也说，像是方法调用可用于初始化静态变量。
+   </p>
+
+   <div class="example" id="example-11">
+    <p><strong>示例 #11 在继承方法中使用静态变量</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">class </span><span style="color: #0000BB">Foo </span><span style="color: #007700">{<br />    public static function </span><span style="color: #0000BB">counter</span><span style="color: #007700">() {<br />        static </span><span style="color: #0000BB">$counter </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">;<br />        </span><span style="color: #0000BB">$counter</span><span style="color: #007700">++;<br />        return </span><span style="color: #0000BB">$counter</span><span style="color: #007700">;<br />    }<br />}<br />class </span><span style="color: #0000BB">Bar </span><span style="color: #007700">extends </span><span style="color: #0000BB">Foo </span><span style="color: #007700">{}<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">Foo</span><span style="color: #007700">::</span><span style="color: #0000BB">counter</span><span style="color: #007700">()); </span><span style="color: #FF8000">// int(1)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">Foo</span><span style="color: #007700">::</span><span style="color: #0000BB">counter</span><span style="color: #007700">()); </span><span style="color: #FF8000">// int(2)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">Bar</span><span style="color: #007700">::</span><span style="color: #0000BB">counter</span><span style="color: #007700">()); </span><span style="color: #FF8000">// int(3)，PHP 8.1.0 之前 int(1)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">Bar</span><span style="color: #007700">::</span><span style="color: #0000BB">counter</span><span style="color: #007700">()); </span><span style="color: #FF8000">// int(4)，PHP 8.1.0 之前 int(2)<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </div>
+
+   <div class="sect2" id="language.variables.scope.references">
+    <h3 class="title"><code class="literal">global</code> 和 <code class="literal">static</code> 变量的引用</h3>
+    <p class="simpara">
+     对于变量的
+     <a href="language.variables.scope.html#language.variables.scope.static" class="link">static</a> 和
+     <a href="language.variables.scope.html#language.variables.scope.global" class="link">global</a>
+     定义是以<a href="language.references.html" class="link">引用</a>的方式实现的。例如，在一个函数作用域内部用
+     <code class="literal">global</code>
+     语句导入的一个真正的全局变量实际上是建立了一个到全局变量的引用。这有可能导致预料之外的行为，如以下例子所演示的：
+    </p>
+
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">test_global_ref</span><span style="color: #007700">() {<br />    global </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$new </span><span style="color: #007700">= new </span><span style="color: #0000BB">stdClass</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$obj </span><span style="color: #007700">= &amp;</span><span style="color: #0000BB">$new</span><span style="color: #007700">;<br />}<br /><br />function </span><span style="color: #0000BB">test_global_noref</span><span style="color: #007700">() {<br />    global </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$new </span><span style="color: #007700">= new </span><span style="color: #0000BB">stdClass</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">$obj </span><span style="color: #007700">= </span><span style="color: #0000BB">$new</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">test_global_ref</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">test_global_noref</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+
+   <p class="para">以上示例会输出：</p>
+
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+NULL
+object(stdClass)#1 (0) {
+}
+</pre></div>
+    </div>
+
+    <p class="simpara">
+     类似的行为也适用于
+     <code class="literal">static</code> 语句。引用并不是静态地存储的：
+    </p>
+
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function &amp;</span><span style="color: #0000BB">get_instance_ref</span><span style="color: #007700">() {<br />    static </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br /><br />    echo </span><span style="color: #DD0000">'Static object: '</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">);<br />    if (!isset(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">)) {<br />        </span><span style="color: #0000BB">$new </span><span style="color: #007700">= new </span><span style="color: #0000BB">stdClass</span><span style="color: #007700">;<br />        </span><span style="color: #FF8000">// 将一个引用赋值给静态变量<br />        </span><span style="color: #0000BB">$obj </span><span style="color: #007700">= &amp;</span><span style="color: #0000BB">$new</span><span style="color: #007700">;<br />    }<br />    if (!isset(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property</span><span style="color: #007700">)) {<br />        </span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br />    } else {<br />        </span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property</span><span style="color: #007700">++;<br />    }<br />    return </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br />}<br /><br />function &amp;</span><span style="color: #0000BB">get_instance_noref</span><span style="color: #007700">() {<br />    static </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br /><br />    echo </span><span style="color: #DD0000">'Static object: '</span><span style="color: #007700">;<br />    </span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">);<br />    if (!isset(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">)) {<br />        </span><span style="color: #0000BB">$new </span><span style="color: #007700">= new </span><span style="color: #0000BB">stdClass</span><span style="color: #007700">;<br />        </span><span style="color: #FF8000">// 将一个对象赋值给静态变量<br />        </span><span style="color: #0000BB">$obj </span><span style="color: #007700">= </span><span style="color: #0000BB">$new</span><span style="color: #007700">;<br />    }<br />    if (!isset(</span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property</span><span style="color: #007700">)) {<br />        </span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">;<br />    } else {<br />        </span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">property</span><span style="color: #007700">++;<br />    }<br />    return </span><span style="color: #0000BB">$obj</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">$obj1 </span><span style="color: #007700">= </span><span style="color: #0000BB">get_instance_ref</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$still_obj1 </span><span style="color: #007700">= </span><span style="color: #0000BB">get_instance_ref</span><span style="color: #007700">();<br />echo </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$obj2 </span><span style="color: #007700">= </span><span style="color: #0000BB">get_instance_noref</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$still_obj2 </span><span style="color: #007700">= </span><span style="color: #0000BB">get_instance_noref</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+
+   <p class="para">以上示例会输出：</p>
+
+    <div class="example-contents screen">
+<div class="cdata"><pre>
+Static object: NULL
+Static object: NULL
+
+Static object: NULL
+Static object: object(stdClass)#3 (1) {
+  [&quot;property&quot;]=&gt;
+  int(1)
+}
+</pre></div>
+    </div>
+
+    <p class="simpara">
+     此示例说明，当把引用赋值给静态变量时，第二次调用
+     <code class="literal">&amp;get_instance_ref()</code> 函数时不会<em>记住</em>该引用。
+    </p>
+   </div>
+  </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

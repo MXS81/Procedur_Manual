@@ -1,0 +1,222 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>函数式运算符</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.operators.type.html" class="navbar__link">« 类型</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.control-structures.html" class="navbar__link">流程控制 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.operators.html">运算符</a></li>
+        <li>函数式运算符</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.operators.functional" class="sect1">
+ <h2 class="title">函数式运算符</h2>
+ 
+ <p class="para">
+  PHP 8.5 及更高版本支持可直接作用于可调用对象的操作符。<code class="literal">|&gt;</code>
+  操作符（或称为“管道”），在右侧接受单个参数的可调用对象，并将左侧的值传递给它，最终返回该可调用对象的结果。右侧的可调用对象可以是任何有效的
+  PHP 可调用对象：<span class="classname"><a href="class.closure.html" class="classname">Closure</a></span>、<a href="functions.first_class_callable_syntax.html" class="link">一等可调用对象</a>、实现了 <a href="language.oop5.magic.html#object.invoke" class="link">__invoke()</a> 方法的对象等。
+ </p>
+ <p class="para">
+  这意味着以下两行在逻辑上是等价的。
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 使用 <code class="literal">|&gt;</code></strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$result </span><span style="color: #007700">= </span><span style="color: #DD0000">"Hello World" </span><span style="color: #007700">|&gt; </span><span style="color: #0000BB">strlen</span><span style="color: #007700">(...);<br />echo </span><span style="color: #0000BB">$result</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">strlen</span><span style="color: #007700">(</span><span style="color: #DD0000">"Hello World"</span><span style="color: #007700">);<br />echo </span><span style="color: #0000BB">$result</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="annotation-interactive cdata"><pre>
+11
+11
+</pre></div>
+   </div>
+  </div>
+ </p>
+ <p class="para">
+  对于单次调用，并不特别有用。当多个调用链式组合时，其作用才得以体现。也就是说，以下两段代码在逻辑上是等价的：
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 链式 |&gt; 调用</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$result </span><span style="color: #007700">= </span><span style="color: #DD0000">"PHP Rocks"<br />    </span><span style="color: #007700">|&gt; </span><span style="color: #0000BB">htmlentities</span><span style="color: #007700">(...)<br />    |&gt; </span><span style="color: #0000BB">str_split</span><span style="color: #007700">(...)<br />    |&gt; (fn(</span><span style="color: #0000BB">$x</span><span style="color: #007700">) =&gt; </span><span style="color: #0000BB">array_map</span><span style="color: #007700">(</span><span style="color: #0000BB">strtoupper</span><span style="color: #007700">(...), </span><span style="color: #0000BB">$x</span><span style="color: #007700">))<br />    |&gt; (fn(</span><span style="color: #0000BB">$x</span><span style="color: #007700">) =&gt; </span><span style="color: #0000BB">array_filter</span><span style="color: #007700">(</span><span style="color: #0000BB">$x</span><span style="color: #007700">, fn(</span><span style="color: #0000BB">$v</span><span style="color: #007700">) =&gt; </span><span style="color: #0000BB">$v </span><span style="color: #007700">!= </span><span style="color: #DD0000">'O'</span><span style="color: #007700">))<br />;<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$temp </span><span style="color: #007700">= </span><span style="color: #DD0000">"PHP Rocks"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$temp </span><span style="color: #007700">= </span><span style="color: #0000BB">htmlentities</span><span style="color: #007700">(</span><span style="color: #0000BB">$temp</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$temp </span><span style="color: #007700">= </span><span style="color: #0000BB">str_split</span><span style="color: #007700">(</span><span style="color: #0000BB">$temp</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$temp </span><span style="color: #007700">= </span><span style="color: #0000BB">array_map</span><span style="color: #007700">(</span><span style="color: #0000BB">strtoupper</span><span style="color: #007700">(...), </span><span style="color: #0000BB">$temp</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$temp </span><span style="color: #007700">= </span><span style="color: #0000BB">array_filter</span><span style="color: #007700">(</span><span style="color: #0000BB">$temp</span><span style="color: #007700">, fn(</span><span style="color: #0000BB">$v</span><span style="color: #007700">) =&gt; </span><span style="color: #0000BB">$v </span><span style="color: #007700">!= </span><span style="color: #DD0000">'O'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">$temp</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$result</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="annotation-interactive cdata"><pre>
+Array
+(
+    [0] =&gt; P
+    [1] =&gt; H
+    [2] =&gt; P
+    [3] =&gt;
+    [4] =&gt; R
+    [6] =&gt; C
+    [7] =&gt; K
+    [8] =&gt; S
+)
+Array
+(
+    [0] =&gt; P
+    [1] =&gt; H
+    [2] =&gt; P
+    [3] =&gt;
+    [4] =&gt; R
+    [6] =&gt; C
+    [7] =&gt; K
+    [8] =&gt; S
+)
+</pre></div>
+   </div>
+  </div>
+ </p>
+ <p class="para">
+  管道的左侧可以是任何值或表达式。右侧可以是任何接受单个参数的有效 PHP
+  可调用对象，或是任何能够解析为这种可调用对象的表达式。不允许超过一个必需参数的函数，此类情况将如同普通调用时参数不足一样导致失败。不允许通过引用传递变量的函数。如果右侧无法解析为有效的可调用对象，则会抛出 Error。
+ </p>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   需要注意，为了避免语法歧义，<a href="functions.arrow.html" class="link">箭头函数</a>在与管道操作符一起使用时必须用括号包裹，如上述示例所示。未遵循此要求将导致核心错误。
+  </p>
+ </p></blockquote>
+
+ <div class="sect2">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="classname"><a href="class.closure.html" class="classname">Closure</a></span></li>
+   </ul>
+  </p>
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

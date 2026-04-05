@@ -1,0 +1,264 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>打开一个持久的 PostgreSQL 连接</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.pg-parameter-status.html" class="navbar__link">« pg_parameter_status</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.pg-ping.html" class="navbar__link">pg_ping »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pgsql.html">PostgreSQL 函数</a></li>
+        <li>打开一个持久的 PostgreSQL 连接</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.pg-pconnect" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">pg_pconnect</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">pg_pconnect</span> &mdash; <span class="dc-title">打开一个持久的 PostgreSQL 连接</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.pg-pconnect-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>pg_pconnect</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$connection_string</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = 0</span></span>): <span class="type"><span class="type"><a href="class.pgsql-connection.html" class="type PgSql\Connection">PgSql\Connection</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>pg_pconnect()</strong></span> 打开一个到 PostgreSQL 数据库的持久连接。返回其它 PostgreSQL 函数所需要的 <span class="classname"><a href="class.pgsql-connection.html" class="classname">PgSql\Connection</a></span> 实例。
+  </p>
+  <p class="para">
+   如果使用与已有连接相同的 <code class="parameter">connection_string</code> 对 <span class="function"><strong>pg_pconnect()</strong></span>
+   进行第二次调用，则将返回已有连接，除非将 <strong><code><a href="pgsql.constants.html#constant.pgsql-connect-force-new">PGSQL_CONNECT_FORCE_NEW</a></code></strong> 传递给 <code class="parameter">flags</code>。
+  </p>
+  <p class="para">
+   要打开持久连接，<var class="filename">php.ini</var> 中的 <a href="pgsql.configuration.html#ini.pgsql.allow-persistent" class="link">pgsql.allow_persistent</a> 参数必须为
+   <code class="literal">&quot;On&quot;</code>（也是默认值）。最大持久连接数由 <var class="filename">php.ini</var> 中的 <a href="pgsql.configuration.html#ini.pgsql.max-persistent" class="link">pgsql.max_persistent</a>
+   参数定义（默认为 <code class="literal">-1</code> 表示没有限制）。所有连接的数量可由 <var class="filename">php.ini</var> 中的 <a href="pgsql.configuration.html#ini.pgsql.max-links" class="link">pgsql.max_links</a> 参数设置。
+  </p>
+  <p class="para">
+   <span class="function"><a href="function.pg-close.html" class="function">pg_close()</a></span> 不能关闭由 <span class="function"><strong>pg_pconnect()</strong></span> 打开的持久连接。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.pg-pconnect-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">connection_string</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">connection_string</code> 可以为空以使用所有默认参数，也可以包含一个或多个由空格分隔的参数设置。每个参数设置的形式为
+       <code class="literal">keyword = value</code>。等号旁边的空格是可选的。要写入空值或包含空格的值，请用单引号将其括起来，例如，<code class="literal">keyword = 
+       &#039;a value&#039;</code>。值中的单引号和反斜线必须用反斜线转义，即 <code class="literal">\&#039;</code> 和 <code class="literal">\\</code>。
+      </p>
+      <p class="para">
+       当前可识别的参数关键字是：<code class="parameter">host</code>、<code class="parameter">hostaddr</code>、<code class="parameter">port</code>、<code class="parameter">dbname</code>、<code class="parameter">user</code>、<code class="parameter">password</code>、<code class="parameter">connect_timeout</code>、<code class="parameter">options</code>、<code class="parameter">tty</code>（已忽略）、<code class="parameter">sslmode</code>、<code class="parameter">requiressl</code>（已弃用以支持
+       <code class="parameter">sslmode</code>）和 <code class="parameter">service</code>。存在哪些参数取决于 PostgreSQL 版本。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">flags</code></dt>
+     <dd>
+      <p class="para">
+       如果传递了 <strong><code><a href="pgsql.constants.html#constant.pgsql-connect-force-new">PGSQL_CONNECT_FORCE_NEW</a></code></strong>，则会创建新连接，即使 <code class="parameter">connection_string</code> 与现有连接相同。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.pg-pconnect-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <span class="classname"><a href="class.pgsql-connection.html" class="classname">PgSql\Connection</a></span> 实例， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.pg-pconnect-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.1.0</td>
+      <td>
+       现在返回 <span class="classname"><a href="class.pgsql-connection.html" class="classname">PgSql\Connection</a></span> 实例；之前返回 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+ 
+ <div class="refsect1 examples" id="refsect1-function.pg-pconnect-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 使用 <span class="function"><strong>pg_pconnect()</strong></span></strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 连接到名为 "mary" 的数据库<br /></span><span style="color: #0000BB">$dbconn </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_pconnect</span><span style="color: #007700">(</span><span style="color: #DD0000">"dbname=mary"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 连接到主机为 "localhost"，端口为 "5432"， 名为 "mary" 的水库<br /></span><span style="color: #0000BB">$dbconn2 </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_pconnect</span><span style="color: #007700">(</span><span style="color: #DD0000">"host=localhost port=5432 dbname=mary"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 使用用户名和密码连接到主机为 "sheep"，名为 "mary" 的数据库<br /></span><span style="color: #0000BB">$dbconn3 </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_pconnect</span><span style="color: #007700">(</span><span style="color: #DD0000">"host=sheep port=5432 dbname=mary user=lamb password=foo"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 使用用户名和密码连接到主机为 "sheep"，名为 "test" 的数据库<br /></span><span style="color: #0000BB">$conn_string </span><span style="color: #007700">= </span><span style="color: #DD0000">"host=sheep port=5432 dbname=test user=lamb password=bar"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$dbconn4 </span><span style="color: #007700">= </span><span style="color: #0000BB">pg_pconnect</span><span style="color: #007700">(</span><span style="color: #0000BB">$conn_string</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+ 
+ <div class="refsect1 seealso" id="refsect1-function.pg-pconnect-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.pg-connect.html" class="function" rel="rdfs-seeAlso">pg_connect()</a> - 打开 PostgreSQL 连接</span></li>
+    <li>
+     <a href="features.persistent-connections.html" class="link">持久数据库连接</a>
+    </li>
+   </ul>
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

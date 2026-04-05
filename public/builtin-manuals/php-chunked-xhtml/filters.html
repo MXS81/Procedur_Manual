@@ -1,0 +1,170 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>可用过滤器列表</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="resource.html" class="navbar__link">« 资源类型列表</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="filters.string.html" class="navbar__link">字符串过滤器 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="appendices.html">附录</a></li>
+        <li>可用过滤器列表</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="filters" class="appendix">
+ <h1 class="title">可用过滤器列表</h1>
+<h2>目录</h2><ul class="chunklist chunklist_appendix"><li><a href="filters.string.html">字符串过滤器</a></li><li><a href="filters.convert.html">转换过滤器</a></li><li><a href="filters.compression.html">压缩过滤器</a></li><li><a href="filters.encryption.html">加密过滤器</a></li></ul>
+
+ <p class="para">
+  下面列出了用在 <span class="function"><a href="function.stream-filter-append.html" class="function">stream_filter_append()</a></span> 中的几个内置的流过滤器。用户的 PHP 版本中的过滤器也许比这里列出的更多（或更少）。
+ </p>
+
+ <p class="para">
+  值得指出 <span class="function"><a href="function.stream-filter-append.html" class="function">stream_filter_append()</a></span> 与 <span class="function"><a href="function.stream-filter-prepend.html" class="function">stream_filter_prepend()</a></span> 之间有少许不平衡。每个 PHP
+  流都含有一个小的<em>读取缓冲区</em>，它存储了来自文件系统或其它资源的几段数据以便更有效率地处理。数据一从资源进入流的内部缓冲区，立刻被附上的过滤器处理而不管
+  PHP 程序是否真的已经准备好接收数据。当过滤器是 <em>appended</em> 时如果数据等待在读取缓冲区，数据将被立即通过过滤器处理，使其效果看上去是透明的。然而当过滤器是 
+  <em>prepended</em> 时如果数据等待在读取缓冲区，数据将<em>不会</em>被该过滤器处理。该数据将会等到从资源取得下一段数据后才会被处理。
+ </p>
+
+ <p class="para"> 
+  用 <span class="function"><a href="function.stream-get-filters.html" class="function">stream_get_filters()</a></span> 来列出 PHP 中已安装的过滤器。
+ </p>
+
+ 
+
+  
+
+  
+
+  
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,293 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>打开密封的数据</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.openssl-get-publickey.html" class="navbar__link">« openssl_get_publickey</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.openssl-pbkdf2.html" class="navbar__link">openssl_pbkdf2 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.openssl.html">OpenSSL 函数</a></li>
+        <li>打开密封的数据</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.openssl-open" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">openssl_open</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.0.4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">openssl_open</span> &mdash; <span class="dc-title">打开密封的数据</span></p>
+
+ </div>
+ 
+ <div class="refsect1 description" id="refsect1-function.openssl-open-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>openssl_open</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$data</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="attribute"><a href="class.sensitiveparameter.html">#[\SensitiveParameter]</a> </span><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter reference">&$output</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$encrypted_key</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="attribute"><a href="class.sensitiveparameter.html">#[\SensitiveParameter]</a> </span><span class="type"><span class="type"><a href="class.opensslasymmetrickey.html" class="type OpenSSLAsymmetricKey">OpenSSLAsymmetricKey</a></span>|<span class="type"><a href="class.opensslcertificate.html" class="type OpenSSLCertificate">OpenSSLCertificate</a></span>|<span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.string.html" class="type string">string</a></span></span> <code class="parameter">$private_key</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$cipher_algo</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.string.html" class="type string">string</a></span></span> <code class="parameter">$iv</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>openssl_open()</strong></span> 使用通过 <code class="parameter">private_key</code> 从 <code class="parameter">encrypted_key</code> 解密得到的信封密钥来打开/解密
+   <code class="parameter">data</code>。解密过程采用 <code class="parameter">cipher_algo</code> 和 <code class="parameter">iv</code>。仅当加密方法需要时，才需提供
+   iv。该函数将解密后的数据填充至 <code class="parameter">output</code>。信封密钥通常在使用与私钥对应的公钥密封数据时生成。更多信息请参阅 <span class="function"><a href="function.openssl-seal.html" class="function">openssl_seal()</a></span>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.openssl-open-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">data</code></dt>
+     <dd>
+      <p class="para">
+       密封数据。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">output</code></dt>
+     <dd>
+      <p class="para">
+       如果调用成功，则在这个参数中返回打开的数据。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">encrypted_key</code></dt>
+     <dd>
+      <p class="para">
+       可使用 <code class="parameter">private_key</code> 解密的对称加密密钥。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">private_key</code></dt>
+     <dd>
+      <p class="para">
+       用于解密 <code class="parameter">encrypted_key</code> 的私钥。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">cipher_algo</code></dt>
+     <dd>
+      <p class="para">
+       用于解密 <code class="parameter">data</code> 的密码算法。
+       <div class="caution"><strong class="caution">警告</strong>
+        <p class="simpara">
+         PHP 8.0 之前版本的默认值为（<code class="literal">&#039;RC4&#039;</code>），该算法存在安全隐患。强烈建议明确指定安全密码方法。
+        </p>
+       </div>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">iv</code></dt>
+     <dd>
+      <p class="para">
+       用于解密 <code class="parameter">data</code> 的初始化向量。当密码算法需要 IV 时，必须提供该参数。可通过调用
+       <span class="function"><a href="function.openssl-cipher-iv-length.html" class="function">openssl_cipher_iv_length()</a></span> 并传入 <code class="parameter">cipher_algo</code> 来确认是否需要 IV。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.openssl-open-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.openssl-open-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.0.0</td>
+      <td>
+       <code class="parameter">private_key</code> 现在接受 <span class="classname"><a href="class.opensslasymmetrickey.html" class="classname">OpenSSLAsymmetricKey</a></span>
+       或 <span class="classname"><a href="class.opensslcertificate.html" class="classname">OpenSSLCertificate</a></span> 实例；之前接受类型 <code class="literal">OpenSSL key</code>
+       或 <code class="literal">OpenSSL X.509 CSR</code> 的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.0.0</td>
+      <td>
+       <code class="parameter">cipher_algo</code> 不再是可选参数。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.openssl-open-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>openssl_open()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">// $sealed、$env_key 和 $iv 分别假设包含密封数据、信封密钥和初始化向量，这些参数均由数据密封方提供。<br /><br />// 从 private_key.pem 文件中获取私钥<br /></span><span style="color: #0000BB">$pkey </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_get_privatekey</span><span style="color: #007700">(</span><span style="color: #DD0000">"file://private_key.pem"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 解密数据并存储到 $open<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">openssl_open</span><span style="color: #007700">(</span><span style="color: #0000BB">$sealed</span><span style="color: #007700">, </span><span style="color: #0000BB">$open</span><span style="color: #007700">, </span><span style="color: #0000BB">$env_key</span><span style="color: #007700">, </span><span style="color: #0000BB">$pkey</span><span style="color: #007700">, </span><span style="color: #DD0000">'AES256'</span><span style="color: #007700">, </span><span style="color: #0000BB">$iv</span><span style="color: #007700">)) {<br />    echo </span><span style="color: #DD0000">"Here is the opened data: "</span><span style="color: #007700">, </span><span style="color: #0000BB">$open</span><span style="color: #007700">;<br />} else {<br />    echo </span><span style="color: #DD0000">"Failed to open data"</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.openssl-open-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.openssl-seal.html" class="function" rel="rdfs-seeAlso">openssl_seal()</a> - 密封 (加密) 数据</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

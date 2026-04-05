@@ -1,0 +1,315 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>运行时配置</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="outcontrol.setup.html" class="navbar__link">« 安装/配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="outcontrol.constants.html" class="navbar__link">预定义常量 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="outcontrol.setup.html">安装/配置</a></li>
+        <li>运行时配置</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="outcontrol.configuration" class="section">
+ <h2 class="title">运行时配置</h2>
+ <p class="simpara">
+这些函数的行为受 <var class="filename">php.ini</var> 中的设置影响。
+</p>
+ <p class="para">
+  <table class="doctable table">
+   <caption><strong>输出控制配置选项</strong></caption>
+   
+    <thead>
+     <tr>
+      <th>名字</th>
+      <th>默认</th>
+      <th>可修改范围</th>
+      <th>更新日志</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+    <tr>
+     <td><a href="outcontrol.configuration.html#ini.output-buffering" class="link">output_buffering</a></td>
+     <td><code class="literal">&quot;0&quot;</code></td>
+     <td><strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="outcontrol.configuration.html#ini.output-handler" class="link">output_handler</a></td>
+     <td><strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></td>
+     <td><strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="outcontrol.configuration.html#ini.implicit-flush" class="link">implicit_flush</a></td>
+     <td><code class="literal">&quot;0&quot;</code></td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td class="empty">&nbsp;</td>
+    </tr>
+
+    <tr>
+     <td><a href="outcontrol.configuration.html#ini.url-rewriter.tags" class="link">url_rewriter.tags</a></td>
+     <td><code class="literal">&quot;form=&quot;</code></td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td>从 PHP 7.1.0 起，此 INI 设置仅影响 <span class="function"><a href="function.output-add-rewrite-var.html" class="function">output_add_rewrite_var()</a></span>。在 PHP 7.1.0
+     之前，此 INI 设置启用透明会话 id 支持（请参阅 <a href="session.configuration.html#ini.session.trans-sid-tags" class="link">session.trans_sid_tags</a>）。</td>
+    </tr>
+
+    <tr>
+     <td><a href="outcontrol.configuration.html#ini.url-rewriter.hosts" class="link">url_rewriter.hosts</a></td>
+     <td><code class="literal">$_SERVER[&#039;HTTP_HOST&#039;]</code> 用作默认值。</td>
+     <td><strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong></td>
+     <td>自 PHP 7.1.0 起可用</td>
+    </tr>
+
+    </tbody>
+   
+  </table>
+
+   有关 INI_* 样式的更多详情与定义，见 <a href="configuration.changes.modes.html" class="xref">配置可被设定范围</a>。
+ </p>
+
+ <p class="para">这是配置指令的简短说明。</p>
+
+ <p class="para">
+ <dl>
+  
+   <dt id="ini.output-buffering">
+    <code class="parameter">output_buffering</code>
+    <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>/<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     通过设置该选项为 <code class="literal">&quot;On&quot;</code>，来启用所有文件的输出缓冲。如果要限制缓冲区的大小，可以使用允许的最大字节数相对应的数字/数量来代替该指令的值
+     <code class="literal">&quot;On&quot;</code>。例如 <code class="literal">output_buffering=4096</code>。该选项在 PHP-CLI 下始终关闭。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.output-handler">
+    <code class="parameter">output_handler</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     脚本的输出可以重定向到函数。例如设置 <code class="literal">output_handler</code> 为 <span class="function"><a href="function.mb-output-handler.html" class="function">mb_output_handler()</a></span>
+     时，字符编码将会明确转换为指定编码。设置任何输出处理程序都会自动打开输出缓冲。
+    </p>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <p class="para">
+      <span class="function"><a href="function.mb-output-handler.html" class="function">mb_output_handler()</a></span> 和 <span class="function"><a href="function.ob-iconv-handler.html" class="function">ob_iconv_handler()</a></span> 不能一起使用，并且 <span class="function"><a href="function.ob-gzhandler.html" class="function">ob_gzhandler()</a></span> 和
+      <a href="zlib.configuration.html#ini.zlib.output-compression" class="link">zlib.output_compression</a> 不能与以下函数一起使用
+      <span class="function"><a href="function.mb-output-handler.html" class="function">mb_output_handler()</a></span>、<span class="function"><a href="function.ob-gzhandler.html" class="function">ob_gzhandler()</a></span>、<a href="zlib.configuration.html#ini.zlib.output-compression" class="link">zlib.output_compression</a>、“URL
+      重写器”处理程序（请参阅 <a href="session.configuration.html#ini.session.use-trans-sid" class="link">session.use_trans_sid</a> 和 <span class="function"><a href="function.output-add-rewrite-var.html" class="function">output_add_rewrite_var()</a></span>)。
+     </p>
+    </p></blockquote>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <p class="para">
+      只有内置函数可以使用此指令。对于用户定义的函数，使用 <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span>。
+     </p>
+    </p></blockquote>
+   </dd>
+  
+
+  
+   <dt id="ini.implicit-flush">
+    <code class="parameter">implicit_flush</code>
+    <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+   </dt>
+   <dd>
+    <p class="para">
+     默认为 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。如将该选项改为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，PHP
+     将使输出层在每段信息块输出后自动刷新。这等同于在每次调用任何产出输出的函数（比如
+     <span class="function"><a href="function.print.html" class="function">print</a></span>、<span class="function"><a href="function.echo.html" class="function">echo</a></span>）以及每个
+     HTML 块之后，调用 PHP 函数 <span class="function"><a href="function.flush.html" class="function">flush()</a></span>。
+    </p>
+    <p class="para">
+     在 Web 环境中使用 PHP 时，打开这个选项会严重影响性能，通常只推荐在调试时使用。在
+     <code class="literal">CLI SAPI</code> 操作时，此值默认为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+    </p>
+    <p class="para">
+     参见 <span class="function"><a href="function.ob-implicit-flush.html" class="function">ob_implicit_flush()</a></span>。
+    </p>
+   </dd>
+  
+
+  
+   <dt id="ini.url-rewriter.tags">
+    <code class="parameter">url_rewriter.tags</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <span class="simpara">
+     <code class="literal">url_rewriter.tags</code> 指定 HTML 标记和属性，其中 URL 由 <span class="function"><a href="function.output-add-rewrite-var.html" class="function">output_add_rewrite_var()</a></span>
+     值重写。默认为 <code class="literal">&quot;form=&quot;</code>。
+    </span>
+    <span class="simpara">
+     添加 <code class="literal">&quot;form=&quot;</code> 或任何 <code class="literal">form</code> 属性将向 <code class="literal">form</code> 添加隐藏的 <code class="literal">input</code>
+     元素，并为传递给 <span class="function"><a href="function.output-add-rewrite-var.html" class="function">output_add_rewrite_var()</a></span> 的每个名值对（name-value pair）添加名和值属性。
+    </span>
+    <div class="caution"><strong class="caution">警告</strong>
+     <p class="simpara">
+      在 <code class="literal">url_rewriter.tags</code> 中多次添加相同的标签将仅在 URL 重写过程中使用第一次出现的标签。
+     </p>
+    </div>
+    <blockquote class="note"><p><strong class="note">注意</strong>: 
+     <span class="simpara">
+      PHP 7.1.0 之前，使用 <a href="outcontrol.configuration.html#ini.url-rewriter.tags" class="link">url_rewriter.tags</a> 指定
+      <a href="session.configuration.html#ini.session.trans-sid-tags" class="link">session.trans_sid_tags</a>。
+     </span>
+    </p></blockquote>
+   </dd>
+  
+
+  
+   <dt id="ini.url-rewriter.hosts">
+    <code class="parameter">url_rewriter.hosts</code>
+    <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+   </dt>
+   <dd>
+    <span class="simpara">
+     <code class="literal">url_rewriter.hosts</code> 可以指定重写那些主机包含
+     <span class="function"><a href="function.output-add-rewrite-var.html" class="function">output_add_rewrite_var()</a></span> 值。默认是
+     <code class="literal">$_SERVER[&#039;HTTP_HOST&#039;]</code>。通过不包含空格的逗号分隔列表指定多个主机。例如
+     <code class="literal">&quot;php.net,wiki.php.net,bugs.php.net&quot;</code>。
+    </span>
+   </dd>
+  
+
+ </dl>
+ </p>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

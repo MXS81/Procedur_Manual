@@ -1,0 +1,201 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>引用返回</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.references.pass.html" class="navbar__link">« 引用传递</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.references.unset.html" class="navbar__link">取消引用 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.references.html">引用的解释</a></li>
+        <li>引用返回</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.references.return" class="sect1">
+   <h2 class="title">引用返回</h2>
+   <p class="para">
+    引用返回用在当想用函数找到引用应该被绑定在哪一个变量上面时。
+    <em>不要</em>用返回引用来增加性能，引擎足够聪明来自己进行优化。
+    仅在有合理的技术原因时才返回引用！
+    使用此语法返回引用：
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class </span><span style="color: #0000BB">Foo<br /></span><span style="color: #007700">{<br />    public </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">42</span><span style="color: #007700">;<br /><br />    public function &amp;</span><span style="color: #0000BB">getValue</span><span style="color: #007700">()<br />    {<br />        return </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">value</span><span style="color: #007700">;<br />    }<br />}<br /><br /></span><span style="color: #0000BB">$obj </span><span style="color: #007700">= new </span><span style="color: #0000BB">Foo</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$myValue </span><span style="color: #007700">= &amp;</span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getValue</span><span style="color: #007700">(); </span><span style="color: #FF8000">// $myValue 是对 $obj-&gt;value 的引用，即 42<br /></span><span style="color: #0000BB">$obj</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">value </span><span style="color: #007700">= </span><span style="color: #0000BB">2</span><span style="color: #007700">;<br />echo </span><span style="color: #0000BB">$myValue</span><span style="color: #007700">;                </span><span style="color: #FF8000">// 打印 $obj-&gt;value 的新值，即 2<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+    本例中 <var class="varname">getValue</var> 函数所返回的对象的属性将被赋值，
+    而不是拷贝，就和没有用引用语法一样。
+   </p>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     和参数传递不同，这里必须在两个地方都用 <code class="literal">&amp;</code>
+     符号——指出返回的是一个引用，而不是通常的一个拷贝，同样也指出 <var class="varname">$myValue</var>
+     是作为引用的绑定，而不是通常的赋值。
+    </span>
+   </p></blockquote>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     如果试图这样从函数返回引用：<code class="literal">return
+     ($this-&gt;value);</code>，这将<em>不会</em>起作用，
+     因为在试图返回一个<em>表达式</em>的结果而不是一个引用的变量。
+     只能从函数返回引用变量——没别的方法。
+    </span>
+   </p></blockquote>
+   <p class="para">
+    要使用返回的引用，必须使用引用赋值：
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">function &amp;</span><span style="color: #0000BB">collector</span><span style="color: #007700">()<br />{<br />    static </span><span style="color: #0000BB">$collection </span><span style="color: #007700">= array();<br />    return </span><span style="color: #0000BB">$collection</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">$collection </span><span style="color: #007700">= &amp;</span><span style="color: #0000BB">collector</span><span style="color: #007700">();<br /></span><span style="color: #FF8000">// 现在，$collection 是引用变量，引用了函数内部的静态数组<br /><br /></span><span style="color: #0000BB">$collection</span><span style="color: #007700">[] = </span><span style="color: #DD0000">'foo'</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">collector</span><span style="color: #007700">());<br /></span><span style="color: #FF8000">// Array<br />// (<br />//    [0] =&gt; foo<br />// )<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     如果赋值操作未使用 <code class="literal">&amp;</code> 符号，例如 <code class="code">$collection = collector();</code>，则
+     <var class="varname">$collection</var> 变量将接收值的副本，而非函数返回的引用。
+    </span>
+   </p></blockquote>
+     要将返回的引用传递给另外一个需要引用的函数，可以使用如下语法：
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">function &amp;</span><span style="color: #0000BB">collector</span><span style="color: #007700">()<br />{<br />    static </span><span style="color: #0000BB">$collection </span><span style="color: #007700">= array();<br />    return </span><span style="color: #0000BB">$collection</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #0000BB">array_push</span><span style="color: #007700">(</span><span style="color: #0000BB">collector</span><span style="color: #007700">(), </span><span style="color: #DD0000">'foo'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <span class="simpara">
+     注意 <code class="literal">array_push(&amp;collector(), &#039;foo&#039;);</code> 将 
+     <em>不</em> 起作用，它会导致 Fatal 错误。
+    </span>
+   </p></blockquote>
+  </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

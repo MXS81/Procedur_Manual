@@ -1,0 +1,323 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>类型系统</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.types.intro.html" class="navbar__link">« 简介</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.types.null.html" class="navbar__link">NULL »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.types.html">类型</a></li>
+        <li>类型系统</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.types.type-system" class="sect1">
+ <h2 class="title">类型系统</h2>
+
+ <p class="para">
+  PHP 采用名义类型系统，并具有强行为的子类型关系。子类型关系在编译时检查，而类型验证则在运行时动态进行。
+ </p>
+
+ <p class="para">
+  PHP 的类型系统支持各种原子类型，可以组合在一起创建更加复杂的类型。其中一些类型可以写成<a href="language.types.declarations.html" class="link">类型声明</a>。
+ </p>
+
+ <div class="sect2" id="language.types.type-system.atomic">
+  <h3 class="title">原子类型</h3>
+  <p class="para">
+   一些原子类型是内置类型，跟语言紧密集成，不能用用户定义类型重现（reproduced）。
+  </p>
+
+  <p class="para">
+   基础类型列表是：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">内置类型</span>
+     <ul class="itemizedlist">
+      <li class="listitem">
+       <span class="simpara">
+        标量类型：
+       </span>
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型</span>
+        </li>
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 类型</span>
+        </li>
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.float.html" class="type float">float</a></span> 类型</span>
+        </li>
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> 类型</span>
+        </li>
+       </ul>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> 类型</span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><span class="type"><a href="language.types.object.html" class="type object">object</a></span> 类型</span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span> 类型</span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><span class="type"><a href="language.types.never.html" class="type never">never</a></span> 类型</span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><span class="type"><span class="type"><a href="language.types.void.html" class="type void">void</a></span></span> 类型</span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        <a href="language.types.relative-class-types.html" class="link">相对类类型</a>：<span class="type">self</span>、<span class="type">parent</span>
+        和 <span class="type">static</span>
+       </span>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        <a href="language.types.singleton.html" class="link">单例类型</a>
+       </span>
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span>
+        </li>
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.singleton.html" class="type true">true</a></span></span>
+        </li>
+       </ul>
+      </li>
+      <li class="listitem">
+       <span class="simpara">
+        单值类型
+       </span>
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara"><span class="type"><a href="language.types.null.html" class="type null">null</a></span></span>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      用户定义的类型（通常称为类类型）
+     </span>
+     <ul class="itemizedlist">
+      <li class="listitem">
+       <span class="simpara"><a href="language.oop5.interfaces.html" class="link">接口</a></span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><a href="language.oop5.basic.html#language.oop5.basic.class" class="link">类</a></span>
+      </li>
+      <li class="listitem">
+       <span class="simpara"><a href="language.types.enumerations.html" class="link">枚举</a></span>
+      </li>
+     </ul>
+    </li>
+    <li class="listitem">
+     <span class="simpara"><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span> 类型</span>
+    </li>
+   </ul>
+  </p>
+
+  <div class="sect3" id="language.types.type-system.atomic.scalar">
+   <h4 class="title">标量类型</h4>
+   <p class="simpara">
+    如果值是 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>、<span class="type"><a href="language.types.float.html" class="type float">float</a></span>、<span class="type"><a href="language.types.string.html" class="type string">string</a></span> 或 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型，则视该值为标量。
+   </p>
+  </div>
+
+  <div class="sect3" id="language.types.type-system.atomic.user-defined">
+   <h4 class="title">用户定义类型</h4>
+   <p class="simpara">
+    可以使用 <a href="language.oop5.interfaces.html" class="link">interface</a>、<a href="language.oop5.basic.html#language.oop5.basic.class" class="link">类</a>和<a href="language.types.enumerations.html" class="link">枚举</a>定义自定义类型。这些被视为用户定义类型或类类型。例如，可以定义名为
+     <code class="literal">Elephant</code> 的类，然后可以实例化 <code class="literal">Elephant</code> 类型的对象，并且函数可以请求 <code class="literal">Elephant</code> 类型的参数。
+   </p>
+  </div>
+ </div>
+
+ <div class="sect2" id="language.types.type-system.composite">
+  <h3 class="title">复合类型</h3>
+  <p class="para">
+   可以将多个原子类型组合为复合类型。PHP 允许使用以下方式组合类型：
+  </p>
+
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">
+     类类型（接口和类名）的交集。
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     类型联合。
+    </span>
+   </li>
+  </ul>
+
+  <div class="sect3" id="language.types.type-system.composite.intersection">
+   <h4 class="title">交集类型</h4>
+   <p class="para">
+    交集类型接受满足多个类类型声明的值，而不是单个值。交集类型中的每个类型由 <code class="literal">&amp;</code>
+    符号连接。因此，类型 <code class="literal">T</code>、<code class="literal">U</code> 和 <code class="literal">V</code>
+    组成的交集类型将写成 <code class="literal">T&amp;U&amp;V</code>。
+   </p>
+  </div>
+
+  <div class="sect3" id="language.types.type-system.composite.union">
+   <h4 class="title">联合类型</h4>
+   <p class="para">
+    联合类型接受多个不同类型的值，而不是单个类型。联合类型中的每个类型由 <code class="literal">|</code>
+    符号连接。因此类型 <code class="literal">T</code>、<code class="literal">U</code> 和 <code class="literal">V</code>
+    的联合类型写成 <code class="literal">T|U|V</code>。如果其中一种类型是交集类型，需要使用括号括起来，在
+    <abbr title="Disjunctive Normal Form">DNF</abbr> 中写成：<code class="literal">T|(X&amp;Y)</code>。
+   </p>
+  </div>
+ </div>
+
+ <div class="sect2" id="language.types.type-system.alias">
+  <h3 class="title">类型别名</h3>
+
+  <p class="para">
+   PHP 支持两种类型别名 <span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span> 和 <span class="type"><a href="language.types.iterable.html" class="type iterable">iterable</a></span>，分别对应
+   <code class="literal">object|resource|array|string|float|int|bool|null</code> 和
+   <code class="literal">Traversable|array</code> 的<a href="language.types.type-system.html#language.types.type-system.composite.union" class="link">联合类型</a>。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    PHP 不支持用户定义类型别名。
+   </span>
+  </p></blockquote>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

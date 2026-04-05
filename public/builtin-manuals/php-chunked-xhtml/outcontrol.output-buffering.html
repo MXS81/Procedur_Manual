@@ -1,0 +1,210 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>输出缓冲</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="outcontrol.constants.html" class="navbar__link">« 预定义常量</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="outcontrol.flushing-system-buffers.html" class="navbar__link">冲刷系统缓冲区 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.outcontrol.html">输出控制</a></li>
+        <li>输出缓冲</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="outcontrol.output-buffering" class="chapter">
+ <h1 class="title">输出缓冲</h1>
+
+ <p class="para">
+  输出缓冲是在将输出冲刷（发送和丢弃）到浏览器（在 Web 上下文中）或
+  shell（在命令行上）之前对输出进行缓冲（临时存储）。当输出缓冲处于活动状态时，脚本不会发送任何输出，而是将输出存储在内部缓冲区中。
+ </p>
+
+ <div class="section">
+  <h2 class="title">缓冲影响 PHP</h2>
+  <p class="para">
+   PHP 在冲刷输出时依赖底层软件/硬件基础设施。由命令行上（例如行缓冲）的控制台或 Web 上下文中的 Web
+   服务器和浏览器（例如完全缓冲）实现的缓冲确实会影响向终端用户显示输出的时间。其中一些影响可以通过微调服务器设置和/或调整各层的缓冲区大小来排除。
+  </p>
+ </div>
+
+ <div class="section">
+  <h2 class="title">PHP 中的输出缓冲控制</h2>
+  <p class="para">
+   PHP 提供了全缓冲的用户级输出缓冲区，包含启动、操作和关闭缓冲区的函数（大多数 <a href="ref.outcontrol.html" class="link">ob_<span class="replaceable">*</span></a>
+   函数），以及两个刷新底层系统缓冲区的函数（<span class="function"><a href="function.flush.html" class="function">flush()</a></span> 和 <span class="function"><a href="function.ob-implicit-flush.html" class="function">ob_implicit_flush()</a></span>）。其中一些功能也可以使用合适的
+   <var class="filename">php.ini</var> 配置来设置。
+  </p>
+ </div>
+
+ <div class="section">
+  <h2 class="title">用例</h2>
+  <p class="para">
+   输出缓冲通常在修改或检查缓冲的输出或者在请求中多次使用时有用；或者当需要控制输出的冲刷时。具体用例包括：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      通过生成静态 <code class="literal">HTML</code> 页面来缓存计算/时间密集型脚本的结果
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      通过显示、保存到文件或通过电子邮件发送来重新使用生成的输出
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      将 <code class="literal">HTML</code> 页面的 <code class="literal">head</code> 与 <code class="literal">body</code>
+      分开冲刷，允许浏览器在脚本执行潜在的更耗时的任务（例如数据库/文件访问、外部网络连接）时加载外部资源。这只有在发送
+      header 后 <code class="literal">HTTP</code> 状态代码不能更改时才有用
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      从原本会产生输出的函数中提取信息（例如 <span class="function"><a href="function.phpinfo.html" class="function">phpinfo()</a></span>）
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      通过修改/使用部分（例如提取数据、替换字/词组、添加缺失的 <code class="literal">HTML</code>
+      标签）来控制第三方代码的输出，或在某些条件下（例如错误）完全丢弃它
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      填充某些不可用的 Web 服务器功能（例如压缩或编码输出）
+     </span>
+    </li>
+   </ul>
+  </p>
+ </div>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

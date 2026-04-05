@@ -1,0 +1,329 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>音频流</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="wrappers.rar.html" class="navbar__link">« rar://</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="wrappers.expect.html" class="navbar__link">expect:// »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="wrappers.html">支持的协议和封装协议</a></li>
+        <li>音频流</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="wrappers.audio" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">ogg://</h1>
+  <p class="refpurpose"><span class="refname">ogg://</span> &mdash; <span class="dc-title">音频流</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-wrappers.audio-description">
+  <h3 class="title">说明</h3>
+  <p class="para">
+   通过包装器 <var class="filename">ogg://</var> 读取的文件，
+   是作为 <code class="literal">OGG/Vorbis</code> 格式的压缩音频编码。
+   同样，通过包装器 <var class="filename">ogg://</var> 写入或追加的数据格式也是压缩音频。
+   
+   当 <span class="function"><a href="function.stream-get-meta-data.html" class="function">stream_get_meta_data()</a></span> 用于一个打开读取的 <code class="literal">OGG/Vorbis</code>
+   文件时，会返回关于数据流的详细信息，包含了 <code class="parameter">vendor</code> 标签、任何内含的
+   <code class="parameter">comments</code>、
+   <code class="parameter">channels</code> 数字、采样率（<code class="parameter">rate</code>），以及
+   用 <code class="parameter">bitrate_lower</code>、<code class="parameter">bitrate_upper</code>、
+   <code class="parameter">bitrate_nominal</code> 和 <code class="parameter">bitrate_window</code>
+   描述的可变比特率范围。
+  </p>
+
+  <p class="simpara"><var class="filename">ogg://</var> （PECL） </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <strong>该封装器默认未激活</strong><br />
+   <span class="simpara">
+    要使用 <var class="filename">ogg://</var> 封装协议，必须从 <a href="https://pecl.php.net/" class="link external">&raquo;&nbsp;PECL</a> 中安装有效的
+    <a href="https://pecl.php.net/package/oggvorbis" class="link external">&raquo;&nbsp;OGG/Vorbis</a> 扩展。
+   </span>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 usage" id="refsect1-wrappers.audio-usage"> 
+  <h3 class="title">用法</h3>
+  <ul class="itemizedlist">
+   <li class="listitem"><span class="simpara"><var class="filename">ogg://soundfile.ogg</var></span></li>
+   <li class="listitem"><span class="simpara"><var class="filename">ogg:///path/to/soundfile.ogg</var></span></li>
+   <li class="listitem"><span class="simpara"><var class="filename">ogg://http://www.example.com/path/to/soundstream.ogg</var></span></li>
+  </ul>
+ </div>
+ 
+
+ <div class="refsect1 options" id="refsect1-wrappers.audio-options">
+  <h3 class="title">可选项</h3>
+  <p class="para">
+   <table class="doctable table">
+    <caption><strong>封装协议摘要</strong></caption>
+    
+     <thead>
+      <tr>
+       <th>属性</th>
+       <th>支持</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>受限于 <a href="filesystem.configuration.html#ini.allow-url-fopen" class="link">allow_url_fopen</a></td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>允许读取</td>
+       <td>Yes</td>
+      </tr>
+
+      <tr>
+       <td>允许写入</td>
+       <td>Yes</td>
+      </tr>
+
+      <tr>
+       <td>允许附加</td>
+       <td>Yes</td>
+      </tr>
+
+      <tr>
+       <td>允许同时读写</td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>支持 <span class="function"><a href="function.stat.html" class="function">stat()</a></span></td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>支持 <span class="function"><a href="function.unlink.html" class="function">unlink()</a></span></td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>支持 <span class="function"><a href="function.rename.html" class="function">rename()</a></span></td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>支持 <span class="function"><a href="function.mkdir.html" class="function">mkdir()</a></span></td>
+       <td>No</td>
+      </tr>
+
+      <tr>
+       <td>支持 <span class="function"><a href="function.rmdir.html" class="function">rmdir()</a></span></td>
+       <td>No</td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+  
+  <p class="para">
+   <table class="doctable table">
+    <caption><strong>上下文选项</strong></caption>
+    
+     <thead>
+      <tr>
+       <th>名称</th>
+       <th>用法</th>
+       <th>默认</th>
+       <th>模式</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td><code class="literal">pcm_mode</code></td>
+       <td>
+        读取时使用如下 PCM 编码之一: 
+        <strong><code>OGGVORBIS_PCM_U8</code></strong>、<strong><code>OGGVORBIS_PCM_S8</code></strong>、
+        <strong><code>OGGVORBIS_PCM_U16_BE</code></strong>、<strong><code>OGGVORBIS_PCM_S16_BE</code></strong>、
+        <strong><code>OGGVORBIS_PCM_U16_LE</code></strong> 和 <strong><code>OGGVORBIS_PCM_S16_LE</code></strong>。
+        (8 或 16 位，签名或未签名，大或小的 <code class="literal">endian</code>)
+       </td>
+       <td>OGGVORBIS_PCM_S16_LE</td>
+       <td>读取</td>
+      </tr>
+
+      <tr>
+       <td><code class="literal">rate</code></td>
+       <td>
+        输入数据的采样率，单位为 Hz
+       </td>
+       <td>44100</td>
+       <td>写入/附加</td>
+      </tr>
+
+      <tr>
+       <td><code class="literal">bitrate</code></td>
+       <td>
+        若给的值为整数，则是用固定的比特率进行编码。（16000 到 131072）若给的值为浮点数，则使用可变的比特率（质。(-1.0 到 1.0）
+       </td>
+       <td>128000</td>
+       <td>写入/附加</td>
+      </tr>
+
+      <tr>
+       <td><code class="literal">channels</code></td>
+       <td>
+        要编码的声道的数量，典型为 1 (单声道), 或 2 (立体声)。最高支持 16 声道。
+       </td>
+       <td>2</td>
+       <td>写入/附加</td>
+      </tr>
+
+      <tr>
+       <td><code class="literal">comments</code></td>
+       <td>
+        编码到音轨头部的字符串数组。
+       </td>
+       <td class="empty">&nbsp;</td>
+       <td>写入/附加</td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+ 
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,340 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title></title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item"></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item"></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        
+        <li></li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="manual" class="book">
+  <h1 class="title">PHP 手册</h1>
+  
+
+
+
+<div id="preface" class="preface">
+ <div class="info">
+  
+  <h1 class="title">关于本手册</h1>
+  <div class="abstract">
+   <p class="simpara">
+    <abbr title="PHP: Hypertext Preprocessor">PHP</abbr>，即 <em>PHP: Hypertext
+    Preprocessor</em>，是一种被广泛应用的开源通用脚本语言，尤其适用于 Web 开发并可嵌入 HTML
+    中去。它的语法借鉴了 C、Java 和 Perl，易于学习。该语言的主要目标是允许 web 开发人员快速编写动态生成的 web
+    页面，但 PHP 的用途远不只于此。
+   </p>
+  </div>
+ </div>
+ <p class="para">
+  本手册内容主要由<a href="funcref.html" class="link">函数参考</a>构成，但也包含了<a href="langref.html" class="link">语言参考</a>，PHP
+  一些主要<a href="features.html" class="link">产品特点</a>的说明以及其它<a href="appendices.html" class="link">补充信息</a>。
+ </p>
+ <p class="simpara">
+  这份手册涵盖了 PHP 最近的两个主要版本 (7 和 8) 的相关信息。手册中只包含与 PHP 版本捆绑的扩展信息，并且不包含函数早期版本的更改信息。有关早期
+  PHP 版本的存档手册，可以在 <a href="https://www.php.net/docs.php" class="link external">&raquo;&nbsp;PHP 网站“Documentation”页面</a>的“More documentation”章节找到。
+ </p>
+ <p class="para">
+  可在 <a href="https://www.php.net/download-docs.php" class="link external">&raquo;&nbsp;https://www.php.net/download-docs.php</a> 下载此手册的各种格式。更多关于如何开发本手册的信息可参阅附录：<a href="about.html" class="link">“关于本手册”</a>。如果你对 <a href="history.html" class="link">PHP
+  的历史</a>感兴趣，可访问相关附录。
+ </p>
+
+ 
+
+
+ 
+<div class="section" id="contributors">
+ <div class="info"><h1 class="title">作者与贡献者</h1></div>
+
+ <p class="para">有大量贡献者目前正在帮助我们开展工作，或者过去曾为该项目提供过大量帮助。还有许多不知名的人帮助在手册中写下用户评论，并不断地包含在参考中，也很感谢他们的努力。下面所提供的列表均以字母顺序排序。</p>
+
+ <div class="section">
+  <div class="info"><h1 class="title">作者与编辑</h1></div>
+
+  <p class="para">
+   下列人员曾经或者目前正在为本手册添砖加瓦：
+   Mehdi Achour,            
+   Bill Abt,                
+   Jouni Ahto,              
+   Alexander Aulbach,       
+   Stig Bakken,             
+   George Peter Banyard,    
+   Christoph M. Becker,     
+   Daniel Beckham,          
+   Friedhelm Betz,          
+   Nilgün Belma Bugüner,    
+   Jesus M. Castagnetto,    
+   Ron Chmara,              
+   Sean Coates,             
+   John Coggeshall,         
+   Simone Cortesi,          
+   Peter Cowburn,           
+   Antony Dovgal,           
+   Daniel Egeberg,          
+   Markus Fischer,          
+   Wez Furlong,             
+   Sara Golemon,            
+   Rui Hirokawa,            
+   Brad House,              
+   Pierre-Alain Joye,       
+   Etienne Kneuss,          
+   Moriyoshi Koizumi,       
+   Rasmus Lerdorf,          
+   Andrew Lindeman,         
+   Nuno Lopes,              
+   Hannes Magnusson,        
+   Stanislav Malyshev,      
+   Justin Martin,           
+   Rafael Martinez,         
+   Rick McGuire,            
+   Moacir de Oliveira Miranda Júnior, 
+   Kalle Sommer Nielsen,    
+   Yasuo Ohgaki,            
+   Philip Olson,            
+   Richard Quadling,        
+   Derick Rethans,          
+   Rob Richards,            
+   Georg Richter,           
+   Sander Roobol,           
+   Egon Schmid,             
+   Thomas Schoefbeck,       
+   Sascha Schumann,         
+   Dan Scott,               
+   Damien Seguy,            
+   Masahiro Takagi,         
+   Yoshinari Takaoka,       
+   Yannick Torres,          
+   Jakub Vrana,             
+   Michael Wallner,         
+   Lars Torben Wilson,      
+   Jim Winstead,            
+   Jeroen van Wolffelaar和  
+   Andrei Zmievski.         
+  </p>
+
+  <p class="para">
+   下列人员对本手册做了相当数量的编辑工作：
+   Stig Bakken,                    
+   Peter Cowburn,                  
+   Gabor Hojtsy,                   
+   Hartmut Holzgraefe,             
+   Philip Olson和        
+   Egon Schmid.                    
+  </p>
+ </div>
+
+ <div class="section">
+  <div class="info"><h1 class="title">用户评论维护者</h1></div>
+
+  <p class="para">
+   目前最活跃的维护者是：
+   Daniel Brown,                
+   Nuno Lopes,                  
+   Felipe Pena,                 
+   Thiago Pojda和     
+   Maciek Sokolewicz.           
+  </p>
+
+  <p class="para">
+   下列人员为维护用户评论作出了巨大的努力:
+   Mehdi Achour,           
+   Daniel Beckham,         
+   Friedhelm Betz,         
+   Victor Boivie,          
+   Jesus M. Castagnetto,   
+   Nicolas Chaillan,       
+   Ron Chmara,             
+   Sean Coates,            
+   James Cox,              
+   Vincent Gevers,         
+   Sara Golemon,           
+   Zak Greant,             
+   Szabolcs Heilig,        
+   Oliver Hinckel,         
+   Hartmut Holzgraefe,     
+   Etienne Kneuss,         
+   Rasmus Lerdorf,         
+   Matthew Li,             
+   Andrew Lindeman,        
+   Aidan Lister,           
+   Hannes Magnusson,       
+   Maxim Maletsky,         
+   Bobby Matthis,          
+   James Moore,            
+   Philip Olson,           
+   Sebastian Picklum,      
+   Derick Rethans,         
+   Sander Roobol,          
+   Damien Seguy,           
+   Jason Sheets,           
+   Tom Sommer,             
+   Jani Taskinen,          
+   Yasuo Ohgaki,           
+   Jakub Vrana,            
+   Lars Torben Wilson,     
+   Jim Winstead,           
+   Jared Wyles和 
+   Jeroen van Wolffelaar.  
+  </p>
+ </div>
+
+</div>
+
+
+
+
+<div class="section">
+ <h2 class="title">中文翻译外部支持团队</h2>
+ <p class="para">
+    PHP 手册中文翻译工作是一项长期而又艰巨的工作。如果您有兴趣加入，请参阅 <a href="https://github.com/php/doc-zh" class="link external">&raquo;&nbsp;中文手册翻译指南</a>。
+  </p>
+</div>
+
+<div class="section">
+  <h2 class="title">中文翻译贡献者名单</h2>
+  <p class="para">
+    感谢以下贡献者为 PHP 中文翻译工作做出的贡献：
+    Jiania（洪建家）、verdana（穆少磊）、Gregory（宋琪）、黄啸宇、
+    codingall.com（赵磊）、cuimuxi（崔玉松）、cztviztor、gaojian1226、HaoHappy（陈浩）、HonestQiao（乔楚）、
+    kendotom、lgg860911、loosen.copen、miusun01（李鼎峰）、ping3608、r.anerg（罗翀）、suppersoft（paris.wang） 、
+    fising（王祥中）、wind.golden（陈金）、Luffy（鲁飞）、mowangjuanzi（鲍国枭）。
+  </p>
+</div>
+
+</div>
+
+
+
+ <ul class="chunklist chunklist_book"></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

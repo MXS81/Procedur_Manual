@@ -1,0 +1,221 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>正则表达式(兼容 Perl)</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="class.parle-parserexception.html" class="navbar__link">« Parle\ParserException</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="pcre.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.basic.text.html">文本处理</a></li>
+        <li>正则表达式(兼容 Perl)</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.pcre" class="book">
+ 
+ <h1 class="title">正则表达式(兼容 Perl)</h1>
+    
+
+ <div id="intro.pcre" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="para">
+  这些函数中使用的模式语法非常类似 perl。表达式必须用分隔符闭合，比如一个正斜杠(/)。
+  分隔符可以使任意非字母数字，除反斜杠(\)和空字节之外的非空白 ascii 字符。 如果分隔符
+  在表达式中使用，需要使用反斜线进行转义。也可以使用 perl 样式的()、 {}、
+  [] 以及 &lt;&gt; 作为分隔符。
+  更详细的解释参见<a href="reference.pcre.pattern.syntax.html" class="link">模式语法</a>。
+  </p>
+  <p class="para">
+  结束分隔符后面可以紧跟模式修饰符来影响匹配效果。
+  参见<a href="reference.pcre.pattern.modifiers.html" class="link">模式修饰符</a>。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+   这个扩展维护了一个已编译正则表达式的全局线程化缓存(最大4096)。
+   </p>
+  </p></blockquote>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+   你应该知道一些 PCRE 的限制。阅读<a href="http://www.pcre.org/pcre.txt" class="link external">&raquo;&nbsp;http://www.pcre.org/pcre.txt</a>
+   获取更详细信息。
+   </p>
+  </div>
+  
+  <p class="para">
+  PCRE 库是一个实现了与 perl 5 在语法和语义上略有差异(详见下文)的正则表达式模式匹配功能的函数集。
+  当前的实现对应于 perl 5.005。
+  </p>
+ </div>
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="pcre.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="pcre.installation.html">安装</a></li><li><a href="pcre.configuration.html">运行时配置</a></li></ul></li><li><a href="pcre.constants.html">预定义常量</a></li><li><a href="pcre.examples.html">示例</a></li><li><a href="pcre.pattern.html">PCRE模式</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="reference.pcre.pattern.syntax.html">PCRE 正则语法</a> — 模式语法</li><li><a href="reference.pcre.pattern.modifiers.html">正则表达式模式中可用的模式修饰符</a> — 模式修饰符</li><li><a href="reference.pcre.pattern.differences.html">与 perl 的不同之处</a></li></ul></li><li><a href="ref.pcre.html">PCRE 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.preg-filter.html">preg_filter</a> — 执行一个正则表达式搜索和替换</li><li><a href="function.preg-grep.html">preg_grep</a> — 返回匹配模式的数组条目</li><li><a href="function.preg-last-error.html">preg_last_error</a> — 返回最后一个PCRE正则执行产生的错误代码</li><li><a href="function.preg-last-error-msg.html">preg_last_error_msg</a> — Returns the error message of the last PCRE regex execution</li><li><a href="function.preg-match.html">preg_match</a> — 执行匹配正则表达式</li><li><a href="function.preg-match-all.html">preg_match_all</a> — 执行一个全局正则表达式匹配</li><li><a href="function.preg-quote.html">preg_quote</a> — 转义正则表达式字符</li><li><a href="function.preg-replace.html">preg_replace</a> — 执行一个正则表达式的搜索和替换</li><li><a href="function.preg-replace-callback.html">preg_replace_callback</a> — 执行一个正则表达式搜索并且使用一个回调进行替换</li><li><a href="function.preg-replace-callback-array.html">preg_replace_callback_array</a> — Perform a regular expression search and replace using callbacks</li><li><a href="function.preg-split.html">preg_split</a> — 通过一个正则表达式分隔字符串</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

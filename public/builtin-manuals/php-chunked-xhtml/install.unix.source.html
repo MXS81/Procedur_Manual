@@ -1,0 +1,236 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>在 Unix 和 macOS 系统上以源码安装</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="install.unix.openbsd.html" class="navbar__link">« OpenBSD 上从软件包或者 ports 中安装 PHP</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="install.unix.commandline.html" class="navbar__link">CGI 和命令行设置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="install.unix.html">在 Unix 系统上安装 PHP</a></li>
+        <li>在 Unix 和 macOS 系统上以源码安装</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="install.unix.source" class="sect1">
+ <h2 class="title">在 Unix 和 macOS 系统上以源码安装</h2>
+ <p class="para">
+  编译所需的前置软件：
+  <ul class="simplelist">
+   <li>
+    <a href="https://www.gnu.org/software/make/make.html" class="link external">&raquo;&nbsp;GNU <strong class="command">make</strong></a>
+   </li>
+   <li>
+    C 编译器（自 PHP 8.0.0 起要求支持 C99 标准；自 PHP 8.4.0 起要求支持 C11 标准）
+   </li>
+   <li>
+    Web 服务器
+   </li>
+   <li>
+    各模块所需的特定组件（例如 <abbr title="Graphics Draw">GD</abbr>、<abbr title="Portable Document Format">PDF</abbr> 库等）
+   </li>
+  </ul>
+ </p>
+
+ <p class="para">
+  直接从 Git 源码构建或进行自定义修改后，可能需要以下额外工具：
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">
+     <a href="https://www.gnu.org/software/autoconf/autoconf.html" class="link external">&raquo;&nbsp;autoconf</a>：
+    </span>
+    <ul class="simplelist">
+     <li>
+      PHP 7.3 及其以后：2.68+
+     </li>
+     <li>
+      PHP 7.2：2.64+
+     </li>
+     <li>
+      PHP 7.1 及其更早：2.59+
+     </li>
+    </ul>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     <a href="https://re2c.org/" class="link external">&raquo;&nbsp;re2c</a>：
+    </span>
+    <ul class="simplelist">
+     <li>
+      PHP 8.3 及其以后：1.0.3+
+     </li>
+     <li>
+      PHP 8.2 及其更早：0.13.4+
+     </li>
+    </ul>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     <a href="http://www.gnu.org/software/bison/bison.html" class="link external">&raquo;&nbsp;bison</a>:
+    </span>
+    <ul class="simplelist">
+     <li>
+      PHP 7.4 及其以后：3.0.0+
+     </li>
+     <li>
+      PHP 7.3 及其更早：2.4+（包含 Bison 3.x）
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </p>
+
+ <p class="simpara">
+  有关从源码编译 PHP 的详细步骤，请参见源码压缩包中的 <a href="https://github.com/php/php-src/blob/master/README.md" class="link external">&raquo;&nbsp;README.md</a> 文件。
+ </p>
+
+ <p class="simpara">
+  PHP 的初始设置和配置过程由 <strong class="command">configure</strong> 脚本的命令行选项控制。运行 <strong class="command">./configure --help</strong>
+  可列出所有可用选项及其简要说明。本手册对各项选项分别进行了说明：<a href="configure.about.html" class="link">核心选项位于附录</a>中，各扩展的特有选项则在其对应的参考页面中描述。
+ </p>
+
+ <p class="simpara">
+  配置脚本执行完成后，可使用 <strong class="command">make</strong> 命令构建 PHP。<a href="faq.installation.html" class="link">常见问题解答中的安装部分</a>提供了有关如何处理构建问题的更多信息。
+ </p>
+
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <span class="simpara">
+   某些 Unix 系统（如 OpenBSD 和 SELinux）出于安全原因，禁止同时将内存页映射为可写和可执行，这种机制称为 <a href="https://en.wikibooks.org/wiki/Grsecurity/Appendix/Grsecurity_and_PaX_Configuration_Options#Restrict_mprotect()" class="link external">&raquo;&nbsp;PaX MPROTECT</a> 或 » <a href="https://en.wikipedia.org/wiki/W^X" class="link external">&raquo;&nbsp;W^X 违规保护</a>。而 PCRE 的 JIT
+   需要此类内存映射，因此要么在构建 PHP 时<a href="pcre.installation.html" class="link">禁用 PCRE 的 JIT
+   支持</a>，要么通过系统提供的机制将 PHP 二进制文件加入白名单。
+  </span>
+ </p></blockquote>
+
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <span class="simpara">
+   目前不支持使用 Android 工具链进行 ARM 交叉编译。
+  </span>
+ </p></blockquote>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

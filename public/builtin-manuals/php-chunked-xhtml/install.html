@@ -1,0 +1,215 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>安装与配置</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="tutorial.whatsnext.html" class="navbar__link">« 下一步做什么？</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="install.general.html" class="navbar__link">安装前需要考虑的事项 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        
+        <li>安装与配置</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="install" class="book">
+  <h1 class="title">安装与配置</h1>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+ <ul class="chunklist chunklist_book"><li><a href="install.general.html">安装前需要考虑的事项</a></li><li><a href="install.unix.html">在 Unix 系统上安装 PHP</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.unix.debian.html">Debian GNU/Linux 及其相关发行版上从软件包中安装 PHP</a></li><li><a href="install.unix.dnf.html">在使用 DNF 的 GNU/Linux 发行版上通过软件包安装</a></li><li><a href="install.unix.openbsd.html">OpenBSD 上从软件包或者 ports 中安装 PHP</a></li><li><a href="install.unix.source.html">在 Unix 和 macOS 系统上以源码安装</a></li><li><a href="install.unix.commandline.html">CGI 和命令行设置</a></li><li><a href="install.unix.apache2.html">Unix 系统下的 Apache 2.x</a></li><li><a href="install.unix.nginx.html">Unix 系统下的 Nginx 1.4.x</a></li><li><a href="install.unix.lighttpd-14.html">Unix 平台的 Lighttpd 1.4</a></li><li><a href="install.unix.litespeed.html">Unix 系统下的 LiteSpeed、OpenLiteSpeed Web 服务器</a></li><li><a href="install.unix.solaris.html">针对 Solaris 的安装提示</a></li></ul></li><li><a href="install.macosx.html">macOS 系统下的安装</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.macosx.packages.html">在 MacOS 上使用第三方包安装</a></li><li><a href="install.macosx.compile.html">在 macOS 下编译 PHP</a></li><li><a href="install.macosx.bundled.html">使用 macOS Monterey 之前内置的 PHP</a></li></ul></li><li><a href="install.windows.html">Windows 系统下的安装</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.windows.recommended.html">Windows 系统下的推荐配置</a></li><li><a href="install.windows.manual.html">手动安装预编译的二进制文件</a></li><li><a href="install.windows.apache2.html">在Windows系统上安装 Apache 2.x</a></li><li><a href="install.windows.iis.html">Windows 上与 IIS 安装</a></li><li><a href="install.windows.tools.html">用于安装 PHP 的第三方工具</a></li><li><a href="install.windows.building.html">从源程序编译</a></li><li><a href="install.windows.commandline.html">在 Windows 系统的命令行上运行 PHP</a></li></ul></li><li><a href="install.cloud.html">云计算平台上的安装</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.cloud.azure.html">Azure 应用服务</a></li><li><a href="install.cloud.ec2.html">Amazon EC2</a></li><li><a href="install.cloud.digitalocean.html">DigitalOcean</a></li></ul></li><li><a href="install.fpm.html">FastCGI 进程管理器（FPM）</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.fpm.install.html">安装</a></li><li><a href="install.fpm.configuration.html">配置</a></li></ul></li><li><a href="install.pecl.html">PECL 扩展安装</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="install.pecl.intro.html">PECL 安装介绍</a></li><li><a href="install.pecl.downloads.html">下载 PECL 扩展库</a></li><li><a href="install.pecl.windows.html">在 Windows 上安装 PHP 扩展</a></li><li><a href="install.pecl.pear.html">用 PEAR 编译共享 PECL 扩展库</a></li><li><a href="install.pecl.phpize.html">用 phpize 编译共享 PECL 扩展库</a></li><li><a href="install.pecl.php-config.html">php-config</a></li><li><a href="install.pecl.static.html">将 PECL 扩展库静态编译入 PHP</a></li></ul></li><li><a href="install.composer.intro.html">Composer 简介</a></li><li><a href="install.pie.intro.html">PIE 简介</a></li><li><a href="configuration.html">运行时配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="configuration.file.html">配置文件</a></li><li><a href="configuration.file.per-user.html">.user.ini 文件</a></li><li><a href="configuration.changes.modes.html">配置可被设定范围</a></li><li><a href="configuration.changes.html">怎样修改配置设定</a></li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

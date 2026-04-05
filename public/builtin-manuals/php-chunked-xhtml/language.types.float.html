@@ -1,0 +1,265 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Float 浮点型</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.types.integer.html" class="navbar__link">« Integer 整型</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.types.string.html" class="navbar__link">String 字符串 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.types.html">类型</a></li>
+        <li>Float 浮点型</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.types.float" class="sect1">
+ <h2 class="title">Float 浮点型</h2>
+
+ <p class="para">
+  浮点型（也叫浮点数 float，双精度数 double 或实数 real）可以用以下任一语法定义：
+ </p>
+
+ <div class="informalexample">
+  <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1.234</span><span style="color: #007700">; <br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">1.2e3</span><span style="color: #007700">; <br /></span><span style="color: #0000BB">$c </span><span style="color: #007700">= </span><span style="color: #0000BB">7E-10</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$d </span><span style="color: #007700">= </span><span style="color: #0000BB">1_234.567</span><span style="color: #007700">; </span><span style="color: #FF8000">// 从 PHP 7.4.0 开始支持<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+  </div>
+
+ </div>
+
+ <p class="para">
+  浮点数的形式表示（PHP 7.4.0 之前不支持下划线）：
+ </p>
+
+ <div class="informalexample">
+  <div class="example-contents">
+<div class="annotation-interactive cdata"><pre>
+LNUM          [0-9]+(_[0-9]+)*
+DNUM ({LNUM}?&quot;.&quot;{LNUM}) | ({LNUM}&quot;.&quot;{LNUM}?)
+EXPONENT_DNUM (({LNUM} | {DNUM}) [eE][+-]? {LNUM})
+</pre></div>
+  </div>
+
+ </div>
+
+ <p class="para">
+  浮点数的字长和平台相关，尽管通常最大值是 1.8e308 并具有 14 位十进制数字的精度（64
+  位 IEEE 格式）。
+ </p>
+
+ <div class="warning"><strong class="warning">警告</strong>
+  <h1 class="title">浮点数的精度</h1>
+
+  <p class="para">
+   浮点数的精度有限。尽管取决于系统，PHP 通常使用 IEEE 754
+   双精度格式，则由于取整而导致的最大相对误差为
+   1.11e-16。非基本数学运算可能会给出更大误差，并且要考虑到进行复合运算时的误差传递。
+  </p>
+  <p class="para">
+   此外，以十进制能够精确表示的有理数如 <code class="literal">0.1</code> 或
+   <code class="literal">0.7</code>，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，<code class="literal">floor((0.1+0.7)*10)</code>
+   通常会返回 <code class="literal">7</code> 而不是预期中的
+   <code class="literal">8</code>，因为该结果内部的表示其实是类似
+   <code class="literal">7.9999999999999991118...</code>。
+  </p>
+
+  <p class="para">
+   所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等。如果确实需要更高的精度，应该使用<a href="ref.bc.html" class="link">任意精度数学函数</a>或者 <a href="ref.gmp.html" class="link">gmp 函数</a>。
+  </p>
+  <p class="para">
+   参见<a href="http://floating-point-gui.de/" class="link external">&raquo;&nbsp;浮点数指南</a>网页的简单解释。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.types.float.casting">
+  <h3 class="title">转换为浮点数</h3>
+
+  <div class="sect3" id="language.types.float.casting.from-string">
+   <h4 class="title">从 string 转换</h4>
+
+   <p class="simpara">
+    如果 string 是 <a href="language.types.numeric-strings.html" class="link">numeric</a> 或者前导数字，
+    则将它解析为相应的 float 值，否则将转换为零（<code class="literal">0</code>）。
+   </p>
+  </div>
+
+  <div class="sect3" id="language.types.float.casting.from-other">
+   <h4 class="title">从其他类型转换</h4>
+
+   <p class="para">
+    对于其它类型的值，其情况类似于先将值转换成 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，然后再转换成 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>。
+    请参阅“<a href="language.types.integer.html#language.types.integer.casting" class="link">转换为整型</a>”一节以获取更多信息。
+   </p>
+
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <p class="para">
+     某些类型在转换成 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 时有未定义行为，转换为 <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 时也会如此。
+    </p>
+   </p></blockquote>
+  </div>
+
+ </div>
+ <div class="sect2" id="language.types.float.comparison">
+  <h3 class="title">比较浮点数</h3>
+
+  <p class="para">
+   如上述警告信息所言，由于内部表达方式的原因，比较两个浮点数是否相等是有问题的。不过还是有迂回的方法来比较浮点数值的。
+  </p>
+
+  <p class="para">
+   要测试浮点数是否相等，要使用一个仅比该数值大一丁点的最小误差值。该值也被称为机器极小值（epsilon）或最小单元取整数，是计算中所能接受的最小的差别值。
+  </p>
+
+  <p class="para">
+   <var class="varname">$a</var> 和 <var class="varname">$b</var> 在小数点后五位精度内都是相等的。
+  </p>
+
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 浮点比较</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a </span><span style="color: #007700">= </span><span style="color: #0000BB">1.23456789</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$b </span><span style="color: #007700">= </span><span style="color: #0000BB">1.23456780</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$epsilon </span><span style="color: #007700">= </span><span style="color: #0000BB">0.00001</span><span style="color: #007700">;<br /><br />if (</span><span style="color: #0000BB">abs</span><span style="color: #007700">(</span><span style="color: #0000BB">$a </span><span style="color: #007700">- </span><span style="color: #0000BB">$b</span><span style="color: #007700">) &lt; </span><span style="color: #0000BB">$epsilon</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"true"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </div>
+
+ <div class="sect2" id="language.types.float.nan">
+  <h3 class="title">NaN</h3>
+  <p class="para">
+   某些数学运算会产生一个由常量 <strong><code><a href="math.constants.html#constant.nan">NAN</a></code></strong>
+   所代表的结果。此结果代表着一个在浮点数运算中未定义或不可表述的值。任何拿此值与其它任何值（除了  <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>）进行的松散或严格比较的结果都是
+   <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+  <p class="para">
+   由于 <strong><code><a href="math.constants.html#constant.nan">NAN</a></code></strong> 代表着任何不同值，不应拿
+   <strong><code><a href="math.constants.html#constant.nan">NAN</a></code></strong> 去和其它值进行比较，包括其自身，应该用
+   <span class="function"><a href="function.is-nan.html" class="function">is_nan()</a></span> 来检查。
+  </p>
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

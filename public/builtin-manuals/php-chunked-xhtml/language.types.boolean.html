@@ -1,0 +1,250 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Boolean 布尔类型</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.types.null.html" class="navbar__link">« NULL</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.types.integer.html" class="navbar__link">Integer 整型 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.types.html">类型</a></li>
+        <li>Boolean 布尔类型</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.types.boolean" class="sect1">
+ <h2 class="title">Boolean 布尔类型</h2>
+ 
+ <p class="simpara">
+  <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 仅有两个值，用于表达真（truth）值，不是 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 就是 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+ </p>
+
+ <div class="sect2" id="language.types.boolean.syntax">
+  <h3 class="title">语法</h3>
+  <p class="para">
+    要指定一个 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>，使用常量 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 或 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。两个都不区分大小写。
+  </p>
+
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$foo </span><span style="color: #007700">= </span><span style="color: #0000BB">True</span><span style="color: #007700">; </span><span style="color: #FF8000">// 设置 $foo 为 TRUE<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+
+  <p class="para">
+   通常<a href="language.operators.html" class="link">运算符</a>所返回的
+   <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 值结果会被传递给<a href="language.control-structures.html" class="link">控制流程</a>。
+  </p>
+
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$action </span><span style="color: #007700">= </span><span style="color: #DD0000">"show_version"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$show_separators </span><span style="color: #007700">= </span><span style="color: #0000BB">true</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// == 是一个操作符，它检测两个变量是否相等，并返回一个布尔值<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">$action </span><span style="color: #007700">== </span><span style="color: #DD0000">"show_version"</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"The version is 1.23"</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #FF8000">// 这样做是不必要的...<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">$show_separators </span><span style="color: #007700">== </span><span style="color: #0000BB">TRUE</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"&lt;hr&gt;\n"</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #FF8000">// ...因为可以使用下面这种简单的方式：<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">$show_separators</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"&lt;hr&gt;\n"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </div>
+
+ <div class="sect2" id="language.types.boolean.casting">
+  <h3 class="title">转换为布尔值</h3>
+
+  <p class="simpara">
+   要明确地将值转换成 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>，可以用 <code class="literal">(bool)</code>
+   强制转换。通常这不是必需的，因为值在逻辑上下文中使用将会自动解释为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+   类型的值。更多信息请阅读<a href="language.types.type-juggling.html" class="link">类型转换</a>页面。
+  </p>
+
+  <p class="simpara">
+   参见<a href="language.types.type-juggling.html" class="link">类型转换的判别</a>。
+  </p>
+   
+  <p class="para">
+   当转换为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 时，以下值被认为是 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>：
+  </p>
+  
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">
+     <a href="language.types.boolean.html" class="link">布尔</a>值 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong> 本身
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     <a href="language.types.integer.html" class="link">整型</a>值 <code class="literal">0</code>（零）
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     <a href="language.types.float.html" class="link">浮点型</a>值 <code class="literal">0.0</code>（零）<code class="literal">-0.0</code>（零）
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     空<a href="language.types.string.html" class="link">字符串</a> <code class="literal">&quot;&quot;</code>，以及<a href="language.types.string.html" class="link">字符串</a> <code class="literal">&quot;0&quot;</code>
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     不包括任何元素的<a href="language.types.array.html" class="link">数组</a>
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     原子类型 <a href="language.types.null.html" class="link">NULL</a>（包括尚未赋值的变量）
+    </span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">
+     内部对象的强制转换行为重载为 bool。例如：由不带属性的空元素创建的
+     <a href="ref.simplexml.html" class="link">SimpleXML</a> 对象。
+    </span>
+   </li>
+  </ul>
+    
+  <p class="para">
+   所有其它值都被认为是 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>（包括 <a href="language.types.resource.html" class="link">资源</a> 和 <strong><code><a href="math.constants.html#constant.nan">NAN</a></code></strong>）。
+  </p>
+  
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    <code class="literal">-1</code> 和其它非零值（不论正负）一样，被认为是 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>！
+   </p>
+  </div>
+
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 转换为布尔型</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />var_dump</span><span style="color: #007700">((bool) </span><span style="color: #DD0000">""</span><span style="color: #007700">);        </span><span style="color: #FF8000">// bool(false)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) </span><span style="color: #DD0000">"0"</span><span style="color: #007700">);       </span><span style="color: #FF8000">// bool(false)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) </span><span style="color: #0000BB">1</span><span style="color: #007700">);         </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) -</span><span style="color: #0000BB">2</span><span style="color: #007700">);        </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) </span><span style="color: #DD0000">"foo"</span><span style="color: #007700">);     </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) </span><span style="color: #0000BB">2.3e5</span><span style="color: #007700">);     </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) array(</span><span style="color: #0000BB">12</span><span style="color: #007700">)); </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) array());   </span><span style="color: #FF8000">// bool(false)<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">((bool) </span><span style="color: #DD0000">"false"</span><span style="color: #007700">);   </span><span style="color: #FF8000">// bool(true)<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+
+ </div>
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

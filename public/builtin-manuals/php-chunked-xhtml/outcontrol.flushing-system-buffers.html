@@ -1,0 +1,240 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>冲刷系统缓冲区</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="outcontrol.output-buffering.html" class="navbar__link">« 输出缓冲</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="outcontrol.user-level-output-buffers.html" class="navbar__link">用户级输出缓冲区 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.outcontrol.html">输出控制</a></li>
+        <li>冲刷系统缓冲区</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="outcontrol.flushing-system-buffers" class="chapter">
+ <h1 class="title">冲刷系统缓冲区</h1>
+
+ <p class="para">
+  PHP 提供了两种相关的方式来冲刷系统缓冲区（发送并丢弃内容）：通过调用 <span class="function"><a href="function.flush.html" class="function">flush()</a></span>
+  以及通过 <span class="function"><a href="function.ob-implicit-flush.html" class="function">ob_implicit_flush()</a></span> 或 <var class="filename">php.ini</var> 文件中的 <a href="outcontrol.configuration.html#ini.implicit-flush" class="link">implicit_flush</a> 设置来启用自动冲刷。
+ </p>
+
+ <div class="section">
+  <h2 class="title">输出冲刷行为</h2>
+  <p class="para">
+   如果禁用了自动冲刷，PHP 仅在调用 <span class="function"><a href="function.flush.html" class="function">flush()</a></span> 或脚本结束时才会冲刷输出。
+  </p>
+  <p class="para">
+   如果启用了自动冲刷，PHP 将尝试在每段代码块产生输出之后进行冲刷。在此上下文中，输出是指非零长度的数据，即：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      <code class="literal">&lt;?php ?&gt;</code> 标签之外的内容
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      由语言结构和函数打印，其明确目的是打印用户提供的变量或字符串，例如
+      <span class="function"><a href="function.echo.html" class="function">echo</a></span>、<span class="function"><a href="function.print.html" class="function">print</a></span>、<span class="function"><a href="function.printf.html" class="function">printf()</a></span>、<span class="function"><a href="function.var-dump.html" class="function">var_dump()</a></span>、<span class="function"><a href="function.var-export.html" class="function">var_export()</a></span>、<span class="function"><a href="function.vprintf.html" class="function">vprintf()</a></span>
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      由函数打印，其明确目的是收集和输出有关正在运行的脚本或者 PHP 的数据/信息，例如
+      <span class="function"><a href="function.debug-print-backtrace.html" class="function">debug_print_backtrace()</a></span>、<span class="function"><a href="function.phpcredits.html" class="function">phpcredits()</a></span>、<span class="function"><a href="function.phpinfo.html" class="function">phpinfo()</a></span>
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      当 PHP 出现未捕获的异常或未处理的错误时（取决于 <a href="errorfunc.configuration.html#ini.display-errors" class="link">display_errors</a> 和
+      <a href="errorfunc.configuration.html#ini.error-reporting" class="link">error_reporting</a> 的设置），会打印出相关信息。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      任何写入到 <code class="literal">php://output</code> 的内容
+     </span>
+    </li>
+   </ul>
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    打印空字符串或发送头部信息不会视为输出，因此不会导致冲刷操作。
+   </span>
+  </p></blockquote>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    如果启用了自动冲刷，控制字符（如 <code class="literal">&quot;\n&quot;</code>、<code class="literal">&quot;\r&quot;</code>、<code class="literal">&quot;\0&quot;</code>）也将触发冲刷操作。
+   </p>
+  </div>
+ </div>
+
+ <div class="section">
+  <h2 class="title">限制</h2>
+  <p class="para">
+   此功能无法冲刷用户级输出缓冲区。要一起使用的话，必须在冲刷系统缓冲区之前冲刷用户级输出缓冲区，以便 PHP 生成任何输出。
+  </p>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    调用 <span class="function"><a href="function.flush.html" class="function">flush()</a></span> 或启用绝对刷新可能会干扰用户级输出缓冲区的输出处理程序，这些输出处理程序在 Web
+    上下文中设置和发送 header（例如 <span class="function"><a href="function.ob-gzhandler.html" class="function">ob_gzhandler()</a></span>），因为在这些处理程序能够发送 header
+    之前，<span class="function"><a href="function.flush.html" class="function">flush()</a></span> 或绝对刷新就已经发送了 header 信息。
+   </p>
+  </div>
+  <p class="para">
+   PHP 不能完整覆盖由底层软件/硬件实现的缓冲，在使用 PHP 的缓冲控制函数时应考虑到这一点。检查 Web
+   服务器/浏览器/控制台缓冲设置并进行相应的处理可以缓解可能的问题。在 Web 环境中工作时，可以调整 Web
+   服务器的缓冲设置或脚本的缓冲以协同工作，而调整 PHP 脚本中的缓冲设置可以解决各种浏览器的缓冲策略。在实现行缓冲的控制台上，可以在刷新输出之前将换行符插入到适当的位置。
+  </p>
+ </div>
+
+ <div class="section">
+  <h2 class="title"><abbr title="Server Application Programming Interface">SAPI</abbr> 在冲刷方面的不同</h2>
+  <p class="para">
+   尽管每个 <abbr title="Server Application Programming Interface">SAPI</abbr> 实现冲刷的方式略有不同，但这些实现都属于以下两类中的一个：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      Web 上下文中使用的 <abbr title="Server Application Programming Interface">SAPI</abbr> 将首先冲刷 header，然后冲刷输出。<code class="literal">Apache2Handler</code>、<code class="literal">CGI</code>、<code class="literal">FastCGI</code>
+      和 <code class="literal">FPM</code> 都是此类 <abbr title="Server Application Programming Interface">SAPI</abbr>
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      其它 <abbr title="Server Application Programming Interface">SAPI</abbr>（比如 <code class="literal">CLI</code> 和 <code class="literal">embed</code>）仅冲刷输出
+     </span>
+    </li>
+   </ul>
+  </p>
+ </div>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

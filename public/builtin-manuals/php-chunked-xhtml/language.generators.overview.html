@@ -1,0 +1,193 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>生成器总览</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.generators.html" class="navbar__link">« 生成器</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.generators.syntax.html" class="navbar__link">生成器语法 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.generators.html">生成器</a></li>
+        <li>生成器总览</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.generators.overview" class="sect1">
+  <h2 class="title">生成器总览</h2>
+  <p class="verinfo">(PHP 5 &gt;= 5.5.0, PHP 7, PHP 8)</p>
+
+  <p class="para">
+   生成器提供了一种更容易的方法来实现简单的<a href="language.oop5.iterations.html" class="link">对象迭代</a>，相比较定义类实现
+   <span class="classname"><a href="class.iterator.html" class="classname">Iterator</a></span> 接口的方式，性能开销和复杂性大大降低。
+  </p>
+
+  <p class="para">
+   生成器提供了方便的方式来向 <a href="control-structures.foreach.html" class="link"><code class="literal">foreach</code></a> 循环提供数据，而无需提前在内存中构建数组，这可能会导致程序超出内存限制或需要相当长的处理时间来生成。相反，可以使用生成器函数，与普通的
+   <a href="functions.user-defined.html" class="link">function</a> 相同，不同之处在于生成器不是 <a href="functions.returning-values.html" class="link">return</a>
+   一次，而是可以根据需要多次 <a href="language.generators.syntax.html#control-structures.yield" class="link"><code class="literal">yield</code></a> 以提供要迭代的值。与迭代器一样，无法进行随机数据访问。
+  </p>
+
+  <p class="para">
+   一个简单的例子就是使用生成器来重新实现 <span class="function"><a href="function.range.html" class="function">range()</a></span>
+   函数。 标准的 <span class="function"><a href="function.range.html" class="function">range()</a></span>
+   函数需要在内存中生成一个数组包含每一个在它范围内的值，然后返回该数组, 结果就是会产生多个很大的数组。 比如，调用
+   <strong class="command">range(0, 1000000)</strong> 将导致内存占用超过 100 MB。
+  </p>
+
+  <p class="para">
+   做为一种替代方法, 我们可以实现一个 <code class="literal">xrange()</code>
+   生成器, 只需要足够的内存来创建
+   <span class="classname"><a href="class.iterator.html" class="classname">Iterator</a></span> 对象并在内部跟踪生成器的当前状态，这样只需要不到1K字节的内存。
+  </p>
+
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 将 <span class="function"><a href="function.range.html" class="function">range()</a></span> 实现为生成器</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">xrange</span><span style="color: #007700">(</span><span style="color: #0000BB">$start</span><span style="color: #007700">, </span><span style="color: #0000BB">$limit</span><span style="color: #007700">, </span><span style="color: #0000BB">$step </span><span style="color: #007700">= </span><span style="color: #0000BB">1</span><span style="color: #007700">) {<br />    if (</span><span style="color: #0000BB">$start </span><span style="color: #007700">&lt;= </span><span style="color: #0000BB">$limit</span><span style="color: #007700">) {<br />        if (</span><span style="color: #0000BB">$step </span><span style="color: #007700">&lt;= </span><span style="color: #0000BB">0</span><span style="color: #007700">) {<br />            throw new </span><span style="color: #0000BB">LogicException</span><span style="color: #007700">(</span><span style="color: #DD0000">'Step must be positive'</span><span style="color: #007700">);<br />        }<br /><br />        for (</span><span style="color: #0000BB">$i </span><span style="color: #007700">= </span><span style="color: #0000BB">$start</span><span style="color: #007700">; </span><span style="color: #0000BB">$i </span><span style="color: #007700">&lt;= </span><span style="color: #0000BB">$limit</span><span style="color: #007700">; </span><span style="color: #0000BB">$i </span><span style="color: #007700">+= </span><span style="color: #0000BB">$step</span><span style="color: #007700">) {<br />            yield </span><span style="color: #0000BB">$i</span><span style="color: #007700">;<br />        }<br />    } else {<br />        if (</span><span style="color: #0000BB">$step </span><span style="color: #007700">&gt;= </span><span style="color: #0000BB">0</span><span style="color: #007700">) {<br />            throw new </span><span style="color: #0000BB">LogicException</span><span style="color: #007700">(</span><span style="color: #DD0000">'Step must be negative'</span><span style="color: #007700">);<br />        }<br /><br />        for (</span><span style="color: #0000BB">$i </span><span style="color: #007700">= </span><span style="color: #0000BB">$start</span><span style="color: #007700">; </span><span style="color: #0000BB">$i </span><span style="color: #007700">&gt;= </span><span style="color: #0000BB">$limit</span><span style="color: #007700">; </span><span style="color: #0000BB">$i </span><span style="color: #007700">+= </span><span style="color: #0000BB">$step</span><span style="color: #007700">) {<br />            yield </span><span style="color: #0000BB">$i</span><span style="color: #007700">;<br />        }<br />    }<br />}<br /><br /></span><span style="color: #FF8000">/* <br /> * 注意下面range()和xrange()输出的结果是一样的。<br /> */<br /><br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">'Single digit odd numbers from range():  '</span><span style="color: #007700">;<br />foreach (</span><span style="color: #0000BB">range</span><span style="color: #007700">(</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">9</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">) as </span><span style="color: #0000BB">$number</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$number</span><span style="color: #DD0000"> "</span><span style="color: #007700">;<br />}<br />echo </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /><br />echo </span><span style="color: #DD0000">'Single digit odd numbers from xrange(): '</span><span style="color: #007700">;<br />foreach (</span><span style="color: #0000BB">xrange</span><span style="color: #007700">(</span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">9</span><span style="color: #007700">, </span><span style="color: #0000BB">2</span><span style="color: #007700">) as </span><span style="color: #0000BB">$number</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$number</span><span style="color: #DD0000"> "</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="cdata"><pre>
+Single digit odd numbers from range():  1 3 5 7 9
+Single digit odd numbers from xrange(): 1 3 5 7 9
+</pre></div>
+   </div>
+  </div>
+
+  <div class="sect2" id="language.generators.object">
+   <h3 class="title"><span class="classname"><a href="class.generator.html" class="classname">Generator</a></span> 对象</h3>
+   <p class="para">
+    调用生成器函数时会返回一个内部的 <span class="classname"><a href="class.generator.html" class="classname">Generator</a></span> 类的对象。
+    该对象实现了 <span class="classname"><a href="class.iterator.html" class="classname">Iterator</a></span> 接口，基本上和仅向前的迭代器一样，
+    它提供的方法可以操控生成器的状态，包括发送值、返回值。
+   </p>
+  </div>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

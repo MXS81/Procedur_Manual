@@ -1,0 +1,275 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>将提供的源码按 PHP 标记进行分割</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="ref.tokenizer.html" class="navbar__link">« Tokenizer 函数</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.token-name.html" class="navbar__link">token_name »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.tokenizer.html">Tokenizer 函数</a></li>
+        <li>将提供的源码按 PHP 标记进行分割</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.token-get-all" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">token_get_all</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.2.0, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">token_get_all</span> &mdash; <span class="dc-title">将提供的源码按 PHP 标记进行分割</span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-function.token-get-all-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>token_get_all</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$code</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$flags</code><span class="initializer"> = 0</span></span>): <span class="type"><a href="language.types.array.html" class="type array">array</a></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>token_get_all()</strong></span> 解析提供的 <code class="parameter">code</code> 
+   源码字符，然后使用 Zend 引擎的语法分析器获取源码中的 PHP 语言的解析器记号。
+  </p>
+  <p class="para">
+   解析器记号列表见<a href="tokens.html" class="xref">解析器记号（token）列表</a>，或者使用 
+   <span class="function"><a href="function.token-name.html" class="function">token_name()</a></span> 翻译获取这个记号的字符串表示。
+  </p>
+ </div>
+
+ <div class="refsect1 parameters" id="refsect1-function.token-get-all-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">code</code></dt>
+     <dd>
+      <p class="para">
+       需要解析的 PHP 源码.
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">flags</code></dt>
+     <dd>
+      <p class="para">
+       有效 flag：
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="tokenizer.constants.html#constant.token-parse">TOKEN_PARSE</a></code></strong>——在指定上下文中识别关键词。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+ <div class="refsect1 returnvalues" id="refsect1-function.token-get-all-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   记号标识符数组。每个单独的记号标识符要么是单个字符（即 <code class="literal">;</code>、<code class="literal">.</code>、<code class="literal">&gt;</code>、<code class="literal">!</code>
+   等），要么是有三个元素的数组，其中元素 0 是记号索引，元素 1 是原始记号的字符串内容和元素 2 是行号。
+  </p>
+ </div>
+
+ <div class="refsect1 examples" id="refsect1-function.token-get-all-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>token_get_all()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$tokens </span><span style="color: #007700">= </span><span style="color: #0000BB">token_get_all</span><span style="color: #007700">(</span><span style="color: #DD0000">'&lt;?php echo; ?&gt;'</span><span style="color: #007700">);<br /><br />foreach (</span><span style="color: #0000BB">$tokens </span><span style="color: #007700">as </span><span style="color: #0000BB">$token</span><span style="color: #007700">) {<br />    if (</span><span style="color: #0000BB">is_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">)) {<br />        echo </span><span style="color: #DD0000">"Line </span><span style="color: #007700">{</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]}</span><span style="color: #DD0000">: "</span><span style="color: #007700">, </span><span style="color: #0000BB">token_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">]), </span><span style="color: #DD0000">" ('</span><span style="color: #007700">{</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]}</span><span style="color: #DD0000">')"</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">Line 1: T_OPEN_TAG (&#039;&lt;?php &#039;)
+Line 1: T_ECHO (&#039;echo&#039;)
+Line 1: T_WHITESPACE (&#039; &#039;)
+Line 1: T_CLOSE_TAG (&#039;?&gt;&#039;)</pre>
+</div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 <span class="function"><strong>token_get_all()</strong></span> 错误用法示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$tokens </span><span style="color: #007700">= </span><span style="color: #0000BB">token_get_all</span><span style="color: #007700">(</span><span style="color: #DD0000">'/* comment */'</span><span style="color: #007700">);<br /><br />foreach (</span><span style="color: #0000BB">$tokens </span><span style="color: #007700">as </span><span style="color: #0000BB">$token</span><span style="color: #007700">) {<br />    if (</span><span style="color: #0000BB">is_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">)) {<br />        echo </span><span style="color: #DD0000">"Line </span><span style="color: #007700">{</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">2</span><span style="color: #007700">]}</span><span style="color: #DD0000">: "</span><span style="color: #007700">, </span><span style="color: #0000BB">token_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">]), </span><span style="color: #DD0000">" ('</span><span style="color: #007700">{</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]}</span><span style="color: #DD0000">')"</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">Line 1: T_INLINE_HTML (&#039;/* comment */&#039;)</pre>
+</div>
+    </div>
+   </div>
+   请注意，在前面的示例中，字符串解析为 <strong><code><a href="tokens.html#constant.t-inline-html">T_INLINE_HTML</a></code></strong> 而不是预期的
+   <strong><code><a href="tokens.html#constant.t-comment">T_COMMENT</a></code></strong>。这是因为在提供的代码中没有使用开放标记。这相当于在普通文件中将注释放在 PHP 标记之外。
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 
+     <span class="function"><strong>token_get_all()</strong></span> 在类上使用关键词示例
+    </strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$source </span><span style="color: #007700">= &lt;&lt;&lt;'code'<br /></span><span style="color: #DD0000">&lt;?php<br /><br />class A<br />{<br />    const PUBLIC = 1;<br />}<br /></span><span style="color: #007700">code;<br /><br /></span><span style="color: #0000BB">$tokens </span><span style="color: #007700">= </span><span style="color: #0000BB">token_get_all</span><span style="color: #007700">(</span><span style="color: #0000BB">$source</span><span style="color: #007700">, </span><span style="color: #0000BB">TOKEN_PARSE</span><span style="color: #007700">);<br /><br />foreach (</span><span style="color: #0000BB">$tokens </span><span style="color: #007700">as </span><span style="color: #0000BB">$token</span><span style="color: #007700">) {<br />    if (</span><span style="color: #0000BB">is_array</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">)) {<br />        echo </span><span style="color: #0000BB">token_name</span><span style="color: #007700">(</span><span style="color: #0000BB">$token</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">]) , </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+    <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">T_OPEN_TAG
+T_WHITESPACE
+T_CLASS
+T_WHITESPACE
+T_STRING
+T_CONST
+T_WHITESPACE
+T_STRING
+T_LNUMBER</pre>
+</div>
+    </div>
+   </div>
+   如果没有 <strong><code><a href="tokenizer.constants.html#constant.token-parse">TOKEN_PARSE</a></code></strong> flag，倒数第二个记号（<strong><code><a href="tokens.html#constant.t-string">T_STRING</a></code></strong>）将是 <strong><code><a href="tokens.html#constant.t-public">T_PUBLIC</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.token-get-all-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="phptoken.tokenize.html" class="function" rel="rdfs-seeAlso">PhpToken::tokenize()</a> - Splits given source into PHP tokens, represented by PhpToken objects.</span></li>
+    <li><span class="function"><a href="function.token-name.html" class="function" rel="rdfs-seeAlso">token_name()</a> - 获取提供的 PHP 解析器代号的符号名称</span></li>
+   </ul>
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

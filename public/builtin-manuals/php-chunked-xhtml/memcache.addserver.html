@@ -1,0 +1,318 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>新增 memcached 服务器到连接池</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="memcache.add.html" class="navbar__link">« Memcache::add</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="memcache.close.html" class="navbar__link">Memcache::close »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="class.memcache.html">Memcache</a></li>
+        <li>新增 memcached 服务器到连接池</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="memcache.addserver" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">Memcache::addServer</h1>
+  <h1 class="refname">memcache_add_server</h1>
+  <p class="verinfo">(PECL memcache &gt;= 2.0.0)</p><p class="refpurpose"><span class="refname">Memcache::addServer</span> -- <span class="refname">memcache_add_server</span> &mdash; <span class="dc-title">新增 memcached 服务器到连接池</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-memcache.addserver-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>Memcache::addServer</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$host</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$port</code><span class="initializer"> = 11211</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$persistent</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$weight</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$timeout</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$retry_interval</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$status</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span> <code class="parameter">$failure_callback</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$timeoutms</code><span class="initializer"> = ?</span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>memcache_add_server</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="class.memcache.html" class="type Memcache">Memcache</a></span> <code class="parameter">$memcache</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$host</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$port</code><span class="initializer"> = 11211</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$persistent</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$weight</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$timeout</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$retry_interval</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$status</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span> <code class="parameter">$failure_callback</code><span class="initializer"> = ?</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$timeoutms</code><span class="initializer"> = ?</span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+
+  <p class="simpara">
+   <span class="function"><strong>Memcache::addServer()</strong></span> 增加服务器到连接池。
+  </p>
+
+  <p class="simpara">
+   当使用这个方法的时候(与<span class="function"><a href="memcache.connect.html" class="function">Memcache::connect()</a></span>和<span class="function"><a href="memcache.pconnect.html" class="function">Memcache::pconnect()</a></span>相反)
+   网络连接并不会立刻建立，而是直到真正使用的时候才建立。 因此在加入大量服务器到连接池中时也是没有开销的，因为它们可能并不会被使用。
+  </p>
+
+  <p class="simpara">
+  故障转移可能在方法的任何一个层次发生，通常只要其他服务器可用用户就不会感受到。任何的socket或memcache服务器级别的错误
+  （比如内存溢出）都可能导致故障转移。而一般的客户端错误比如使用Memcache::add尝试增加一个已经存在的key则不会导致故障转移。
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    这个方法在2.0.0版本加入Memcache。
+   </span>
+  </p></blockquote>
+
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-memcache.addserver-parameters">
+  <h3 class="title">参数</h3>
+  <dl>
+   
+    <dt><code class="parameter">host</code></dt>
+    <dd>
+     <span class="simpara">
+     要连接的memcached服务端监听的主机位置。这个参数通常指定其他类型的传输比如Unix域套接字使用
+     <code class="literal">unix:///path/to/memcached.sock</code>，这种情况下参数<code class="parameter">port</code>
+      必须设置为<code class="literal">0</code>。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">port</code></dt>
+    <dd>
+     <span class="simpara">
+     要连接的memcached服务端监听的端口。当使用UNIX域套接字连接时设置为<code class="literal">0</code>。
+     </span>
+     <span class="simpara">
+      注意：如果未指定 <code class="parameter">port</code>，默认为 <a href="memcache.ini.html#ini.memcache.default-port" class="link">memcache.default_port</a>。因此，明智的做法是调用此方法时明确指定端口。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">persistent</code></dt>
+    <dd>
+     <span class="simpara">
+     控制是否使用持久化连接。默认<strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">weight</code></dt>
+    <dd>
+     <span class="simpara">
+     为此服务器创建的桶的数量，用来控制此服务器被选中的权重，单个服务器被选中的概率是相对于所有服务器weight总和而言的。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">timeout</code></dt>
+    <dd>
+     <span class="simpara">
+     连接持续（超时）时间（单位秒），默认值1秒，修改此值之前请三思，过长的连接持续时间可能会导致失去所有的缓存优势。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">retry_interval</code></dt>
+    <dd>
+     <span class="simpara">
+     服务器连接失败时重试的间隔时间，默认值15秒。如果此参数设置为-1表示不重试。此参数和<code class="parameter">persistent</code>参数在扩展以
+     <span class="function"><a href="function.dl.html" class="function">dl()</a></span>函数动态加载的时候无效。
+     </span>
+     <span class="simpara">
+     每个失败的连接结构有自己的超时时间，并且在它失效之前选择后端服务请求时该结构会被跳过。一旦一个连接失效，
+     它将会被成功重新连接或被标记为失败连接以在下一个<code class="parameter">retry_interval</code>秒重连。
+     典型的影响是每个web服务子进程在服务于一个页面时将会每<code class="parameter">retry_interval</code>秒
+     尝试重新连接一次。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">status</code></dt>
+    <dd>
+     <span class="simpara">
+     控制此服务器是否可以被标记为在线状态。设置此参数值为<strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>并且<code class="parameter">retry_interval</code>参数
+     设置为-1时允许将失败的服务器保留在一个池中以免影响key的分配算法。对于这个服务器的请求会进行故障转移或者立即失败，
+     这受限于<code class="parameter">memcache.allow_failover</code>参数的设置。该参数默认<strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，表明允许进行故障转移。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">failure_callback</code></dt>
+    <dd>
+     <span class="simpara">
+     允许用户指定一个运行时发生错误后的回调函数。回调函数会在故障转移之前运行。回调函数会接受到两个参数，分别是失败主机的
+     主机名和端口号。
+     </span>
+    </dd>
+   
+   
+    <dt><code class="parameter">timeoutms</code></dt>
+    <dd>
+     <span class="simpara">
+
+     </span>
+    </dd>
+   
+  </dl>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-memcache.addserver-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+<div class="refsect1 examples" id="refsect1-memcache.addserver-examples">
+  <h3 class="title">示例</h3>
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 <span class="function"><strong>Memcache::addServer()</strong></span> 示例</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #FF8000">/* OO API */<br /><br /></span><span style="color: #0000BB">$memcache </span><span style="color: #007700">= new </span><span style="color: #0000BB">Memcache</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$memcache</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addServer</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$memcache</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">addServer</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host2'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/* procedural API */<br /><br /></span><span style="color: #0000BB">$memcache_obj </span><span style="color: #007700">= </span><span style="color: #0000BB">memcache_connect</span><span style="color: #007700">(</span><span style="color: #DD0000">'memcache_host'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">memcache_add_server</span><span style="color: #007700">(</span><span style="color: #0000BB">$memcache_obj</span><span style="color: #007700">, </span><span style="color: #DD0000">'memcache_host2'</span><span style="color: #007700">, </span><span style="color: #0000BB">11211</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-memcache.addserver-notes">
+  <h3 class="title">注释</h3>
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    当 <code class="parameter">port</code> 未指定时，此方法默认为 PHP ini 指令 <a href="memcache.ini.html#ini.memcache.default-port" class="link">memcache.default_port</a>
+    的值。如果此值在应用程序的其他地方更改，可能会导致意外结果：因此，明智的做法是始终在这个方法调用。
+   </p>
+  </div>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-memcache.addserver-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="memcache.connect.html" class="function" rel="rdfs-seeAlso">Memcache::connect()</a> - 打开与 memcached 服务器的连接</span></li>
+   <li><span class="function"><a href="memcache.pconnect.html" class="function" rel="rdfs-seeAlso">Memcache::pconnect()</a> - 打开对 memcached 服务器的持久连接</span></li>
+   <li><span class="function"><a href="memcache.close.html" class="function" rel="rdfs-seeAlso">Memcache::close()</a> - 关闭 memcached 连接</span></li>
+   <li><span class="function"><a href="memcache.setserverparams.html" class="function" rel="rdfs-seeAlso">Memcache::setServerParams()</a> - 运行时修改服务器参数和状态</span></li>
+   <li><span class="function"><a href="memcache.getserverstatus.html" class="function" rel="rdfs-seeAlso">Memcache::getServerStatus()</a> - 用于获取一个服务器的在线/离线状态</span></li>
+  </ul>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

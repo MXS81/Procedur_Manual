@@ -1,0 +1,208 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>简介</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.types.html" class="navbar__link">« 类型</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.types.type-system.html" class="navbar__link">类型系统 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.types.html">类型</a></li>
+        <li>简介</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.types.intro" class="sect1">
+  <h2 class="title">简介</h2>
+
+  <p class="para">
+   PHP 中的每个表达式都属于以下某个内置类型，具体取决于值：
+   <ul class="itemizedlist">
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.null.html" class="type null">null</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.float.html" class="type float">float</a></span>（浮点数）</span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.string.html" class="type string">string</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.array.html" class="type array">array</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.object.html" class="type object">object</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span></span></li>
+    <li class="listitem"><span class="simpara"><span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span></span></li>
+   </ul>
+  </p>
+
+  <p class="para">
+   PHP 是动态类型语言，这意味着默认不需要指定变量的类型，因为会在运行时确定。然而，可以通过使用<a href="language.types.declarations.html" class="link">类型声明</a>对语言的一些方面进行类型静态化。可以在<a href="language.types.type-system.html" class="link">类型系统</a>页面找到 PHP 类型系统支持的不同类型。
+  </p>
+
+  <p class="para">
+   类型限制了可以对其执行的操作。然而，如果使用的表达式/变量不支持该操作，PHP 将尝试将该值<a href="language.types.type-juggling.html" class="link">类型转换</a>为操作支持的类型。此过程取决于使用该值的上下文。更多信息参阅<a href="language.types.type-juggling.html" class="link">类型转换</a>。
+  </p>
+
+  <div class="tip"><strong class="tip">小技巧</strong>
+   <p class="simpara">
+    <a href="types.comparisons.html" class="link">类型比较表</a>也很有用，因为存在不同类型之间的值的各种比较示例。
+   </p>
+  </div>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    使用<a href="language.types.type-juggling.html#language.types.typecasting" class="link">类型转换</a>，强制将表达式的值转换为某种类型。还可以使用
+    <span class="function"><a href="function.settype.html" class="function">settype()</a></span> 函数就地对变量进行类型转换。
+   </span>
+  </p></blockquote>
+
+  <p class="para">
+   使用 <span class="function"><a href="function.var-dump.html" class="function">var_dump()</a></span> 函数检查<a href="language.expressions.html" class="link">表达式</a>的值和类型。使用
+   <span class="function"><a href="function.get-debug-type.html" class="function">get_debug_type()</a></span> 检索<a href="language.expressions.html" class="link">表达式</a>的值和类型。使用
+   <code class="literal">is_<span class="replaceable">type</span></code> 检查表达式是否属于某种类型。
+
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 不同类型</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a_bool </span><span style="color: #007700">= </span><span style="color: #0000BB">true</span><span style="color: #007700">;   </span><span style="color: #FF8000">// a bool<br /></span><span style="color: #0000BB">$a_str  </span><span style="color: #007700">= </span><span style="color: #DD0000">"foo"</span><span style="color: #007700">;  </span><span style="color: #FF8000">// a string<br /></span><span style="color: #0000BB">$a_str2 </span><span style="color: #007700">= </span><span style="color: #DD0000">'foo'</span><span style="color: #007700">;  </span><span style="color: #FF8000">// a string<br /></span><span style="color: #0000BB">$an_int </span><span style="color: #007700">= </span><span style="color: #0000BB">12</span><span style="color: #007700">;     </span><span style="color: #FF8000">// an int<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">get_debug_type</span><span style="color: #007700">(</span><span style="color: #0000BB">$a_bool</span><span style="color: #007700">), </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br />echo </span><span style="color: #0000BB">get_debug_type</span><span style="color: #007700">(</span><span style="color: #0000BB">$a_str</span><span style="color: #007700">), </span><span style="color: #DD0000">"\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 如果是整型，就加上 4<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">is_int</span><span style="color: #007700">(</span><span style="color: #0000BB">$an_int</span><span style="color: #007700">)) {<br />    </span><span style="color: #0000BB">$an_int </span><span style="color: #007700">+= </span><span style="color: #0000BB">4</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$an_int</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 如果 $a_bool 是字符串，就打印出来<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">is_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$a_bool</span><span style="color: #007700">)) {<br />    echo </span><span style="color: #DD0000">"String: </span><span style="color: #0000BB">$a_bool</span><span style="color: #DD0000">"</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例在 PHP 8 中的输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive cdata"><pre>
+bool
+string
+int(16)
+</pre></div>
+    </div>
+   </div>
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    PHP 8.0.0 之前，<span class="function"><a href="function.get-debug-type.html" class="function">get_debug_type()</a></span> 无效，可以使用 <span class="function"><a href="function.gettype.html" class="function">gettype()</a></span>
+    函数代替。但是没有使用规范的类型名称。
+   </span>
+  </p></blockquote>
+ </div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

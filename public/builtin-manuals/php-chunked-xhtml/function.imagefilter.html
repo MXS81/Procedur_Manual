@@ -1,0 +1,501 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>对图像使用过滤器</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.imagefilltoborder.html" class="navbar__link">« imagefilltoborder</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.imageflip.html" class="navbar__link">imageflip »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.image.html">GD 和图像处理 函数</a></li>
+        <li>对图像使用过滤器</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.imagefilter" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">imagefilter</h1>
+  <p class="verinfo">(PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">imagefilter</span> &mdash; <span class="dc-title">对图像使用过滤器</span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-function.imagefilter-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>imagefilter</strong></span>(<span class="methodparam"><span class="type"><a href="class.gdimage.html" class="type GdImage">GdImage</a></span> <code class="parameter">$image</code></span>, <span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$filter</code></span>, <span class="methodparam"><span class="type"><span class="type"><a href="language.types.array.html" class="type array">array</a></span>|<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>|<span class="type"><a href="language.types.float.html" class="type float">float</a></span>|<span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></span> <code class="parameter">...$args</code></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>imagefilter()</strong></span> 在 <code class="parameter">image</code>
+   上应用指定的过滤器 <code class="parameter">filter</code>。
+  </p>
+ </div>
+
+ <div class="refsect1 parameters" id="refsect1-function.imagefilter-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    <dt>
+<code class="parameter">image</code></dt><dd><p class="para">由图象创建函数(例如<span class="function"><a href="function.imagecreatetruecolor.html" class="function">imagecreatetruecolor()</a></span>)返回的 
+<span class="classname"><a href="class.gdimage.html" class="classname">GdImage</a></span> 对象。</p></dd>
+    
+     <dt><code class="parameter">filter</code></dt>
+     <dd>
+      <p class="para">
+       <code class="parameter">filter</code> 可以是下列中的一个：
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-negate">IMG_FILTER_NEGATE</a></code></strong>：将图像中所有颜色反转。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-grayscale">IMG_FILTER_GRAYSCALE</a></code></strong>：将图像转换为灰度，通过使用与 REC.601
+          亮度 (Y&#039;) 计算相同的系数来更改红色、绿色和蓝色分量的加权和。保留 alpha
+          分量。对于调色板图像，由于调色板限制，结果可能有所不同。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-brightness">IMG_FILTER_BRIGHTNESS</a></code></strong>：更改图像的亮度。使用 <code class="parameter">args</code>
+          设置亮度级别。亮度的范围是 -255 到 255。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-contrast">IMG_FILTER_CONTRAST</a></code></strong>：更改图像的对比度。使用 <code class="parameter">args</code>
+          设置对比度级别。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-colorize">IMG_FILTER_COLORIZE</a></code></strong>：与 <strong><code><a href="image.constants.html#constant.img-filter-grayscale">IMG_FILTER_GRAYSCALE</a></code></strong>
+          类似，区别是可以指定颜色。使用 <code class="parameter">args</code>、<code class="parameter">arg2</code> 和
+          <code class="parameter">arg3</code> 以 <code class="parameter">red</code>、<code class="parameter">green</code>、<code class="parameter">blue</code>
+          的形式和 <code class="parameter">arg4</code> 用于 <code class="parameter">alpha</code> 通道。每种颜色的范围是 0 到 255。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-edgedetect">IMG_FILTER_EDGEDETECT</a></code></strong>：用边缘检测来突出图像的边缘。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-emboss">IMG_FILTER_EMBOSS</a></code></strong>：使图像浮雕化。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-gaussian-blur">IMG_FILTER_GAUSSIAN_BLUR</a></code></strong>：用高斯算法模糊图像。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-selective-blur">IMG_FILTER_SELECTIVE_BLUR</a></code></strong>：模糊图像。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-mean-removal">IMG_FILTER_MEAN_REMOVAL</a></code></strong>：用平均移除法来达到“轮廓”效果。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-smooth">IMG_FILTER_SMOOTH</a></code></strong>：使图像更平滑。用
+      <code class="parameter">args</code> 设定平滑级别。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-pixelate">IMG_FILTER_PIXELATE</a></code></strong>：对图像应用像素化效果，使用 <code class="parameter">args</code>
+          设置块大小和 <code class="parameter">arg2</code> 设置像素化效果模式。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong>：将散射效果应用于图像，使用 <code class="parameter">args</code>
+          和 <code class="parameter">arg2</code> 定义效果强度，另外使用 <code class="parameter">arg3</code> 仅应用选定像素颜色。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">args</code></dt>
+     <dd>
+      <p class="para">
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-brightness">IMG_FILTER_BRIGHTNESS</a></code></strong>：亮度级别。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-contrast">IMG_FILTER_CONTRAST</a></code></strong>：对比度级别。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-colorize">IMG_FILTER_COLORIZE</a></code></strong>: 红色成分的值。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-smooth">IMG_FILTER_SMOOTH</a></code></strong>：平滑级别。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-pixelate">IMG_FILTER_PIXELATE</a></code></strong>：块大小（像素）。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong>：效果减法级别。
+          不能高于或等于 <code class="parameter">arg2</code> 设置的加法级别。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">arg2</code></dt>
+     <dd>
+      <p class="para">
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-colorize">IMG_FILTER_COLORIZE</a></code></strong>: 绿色成分的值。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-pixelate">IMG_FILTER_PIXELATE</a></code></strong>：是否使用高级像素化效果（默认为 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>）。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong>：效果添加级别。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">arg3</code></dt>
+     <dd>
+      <p class="para">
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-colorize">IMG_FILTER_COLORIZE</a></code></strong>: 蓝色成分的值。
+         </span>
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong>：可选的数组索引颜色值，应用效果。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">arg4</code></dt>
+     <dd>
+      <p class="para">
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <strong><code><a href="image.constants.html#constant.img-filter-colorize">IMG_FILTER_COLORIZE</a></code></strong>：Alpha 通道，A 值在 0 到 127 之间。
+          0 表示完全不透明，而 127 表示完全透明。
+         </span>
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+ <div class="refsect1 returnvalues" id="refsect1-function.imagefilter-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 errors" id="refsect1-function.imagefilter-errors">
+  <h3 class="title">错误／异常</h3>
+  <p class="simpara">
+   抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span> 异常，如果 <code class="parameter">sub</code> 或 <code class="parameter">plus</code>
+   会导致 <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong> <code class="parameter">filter</code> 的溢出/下溢。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.imagefilter-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>8.4.0</td>
+       <td>
+        现在抛出 <span class="classname"><a href="class.valueerror.html" class="classname">ValueError</a></span> 异常，如果 <code class="parameter">sub</code> 或 <code class="parameter">plus</code>
+        会导致 <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong> <code class="parameter">filter</code> 的溢出/下溢。
+       </td>
+      </tr>
+
+      <tr>
+ <td>8.0.0</td>
+ <td>
+  <code class="parameter">image</code> 现在需要 <span class="classname"><a href="class.gdimage.html" class="classname">GdImage</a></span> 实例；之前需要有效的 <code class="literal">gd</code> <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。
+ </td>
+</tr>
+
+      <tr>
+       <td>7.4.0</td>
+       <td>
+        新增散射支持（<strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong>）。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+ <div class="refsect1 examples" id="refsect1-function.imagefilter-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>imagefilter()</strong></span> 灰度示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$im </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'dave.png'</span><span style="color: #007700">);<br /><br />if(</span><span style="color: #0000BB">$im </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_GRAYSCALE</span><span style="color: #007700">))<br />{<br />    echo </span><span style="color: #DD0000">'Image converted to grayscale.'</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">imagepng</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #DD0000">'dave.png'</span><span style="color: #007700">);<br />}<br />else<br />{<br />    echo </span><span style="color: #DD0000">'Conversion to grayscale failed.'</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 <span class="function"><strong>imagefilter()</strong></span> 亮度示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$im </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'sean.png'</span><span style="color: #007700">);<br /><br />if(</span><span style="color: #0000BB">$im </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_BRIGHTNESS</span><span style="color: #007700">, </span><span style="color: #0000BB">20</span><span style="color: #007700">))<br />{<br />    echo </span><span style="color: #DD0000">'Image brightness changed.'</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">imagepng</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #DD0000">'sean.png'</span><span style="color: #007700">);<br />}<br />else<br />{<br />    echo </span><span style="color: #DD0000">'Image brightness change failed.'</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 <span class="function"><strong>imagefilter()</strong></span> 着色示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$im </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'philip.png'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">/* R、G、B, 所以 0, 255, 0 是绿色 */<br /></span><span style="color: #007700">if(</span><span style="color: #0000BB">$im </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_COLORIZE</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">255</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">))<br />{<br />    echo </span><span style="color: #DD0000">'Image successfully shaded green.'</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">imagepng</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #DD0000">'philip.png'</span><span style="color: #007700">);<br />}<br />else<br />{<br />    echo </span><span style="color: #DD0000">'Green shading failed.'</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-4">
+    <p><strong>示例 #4 <span class="function"><strong>imagefilter()</strong></span> 反例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 定义否定函数，以便可以移植到没有<br />// imagefilter() 的 php 版本<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">negate</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">)<br />{<br />    if(</span><span style="color: #0000BB">function_exists</span><span style="color: #007700">(</span><span style="color: #DD0000">'imagefilter'</span><span style="color: #007700">))<br />    {<br />        return </span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_NEGATE</span><span style="color: #007700">);<br />    }<br /><br />    for(</span><span style="color: #0000BB">$x </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">; </span><span style="color: #0000BB">$x </span><span style="color: #007700">&lt; </span><span style="color: #0000BB">imagesx</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">); ++</span><span style="color: #0000BB">$x</span><span style="color: #007700">)<br />    {<br />        for(</span><span style="color: #0000BB">$y </span><span style="color: #007700">= </span><span style="color: #0000BB">0</span><span style="color: #007700">; </span><span style="color: #0000BB">$y </span><span style="color: #007700">&lt; </span><span style="color: #0000BB">imagesy</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">); ++</span><span style="color: #0000BB">$y</span><span style="color: #007700">)<br />        {<br />            </span><span style="color: #0000BB">$index </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecolorat</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">$x</span><span style="color: #007700">, </span><span style="color: #0000BB">$y</span><span style="color: #007700">);<br />            </span><span style="color: #0000BB">$rgb </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecolorsforindex</span><span style="color: #007700">(</span><span style="color: #0000BB">$index</span><span style="color: #007700">);<br />            </span><span style="color: #0000BB">$color </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecolorallocate</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">255 </span><span style="color: #007700">- </span><span style="color: #0000BB">$rgb</span><span style="color: #007700">[</span><span style="color: #DD0000">'red'</span><span style="color: #007700">], </span><span style="color: #0000BB">255 </span><span style="color: #007700">- </span><span style="color: #0000BB">$rgb</span><span style="color: #007700">[</span><span style="color: #DD0000">'green'</span><span style="color: #007700">], </span><span style="color: #0000BB">255 </span><span style="color: #007700">- </span><span style="color: #0000BB">$rgb</span><span style="color: #007700">[</span><span style="color: #DD0000">'blue'</span><span style="color: #007700">]);<br /><br />            </span><span style="color: #0000BB">imagesetpixel</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #0000BB">$x</span><span style="color: #007700">, </span><span style="color: #0000BB">$y</span><span style="color: #007700">, </span><span style="color: #0000BB">$color</span><span style="color: #007700">);<br />        }<br />    }<br /><br />    return(</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />}<br /><br /></span><span style="color: #0000BB">$im </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefromjpeg</span><span style="color: #007700">(</span><span style="color: #DD0000">'kalle.jpg'</span><span style="color: #007700">);<br /><br />if(</span><span style="color: #0000BB">$im </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">negate</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">))<br />{<br />    echo </span><span style="color: #DD0000">'Image successfully converted to negative colors.'</span><span style="color: #007700">;<br /><br />    </span><span style="color: #0000BB">imagejpeg</span><span style="color: #007700">(</span><span style="color: #0000BB">$im</span><span style="color: #007700">, </span><span style="color: #DD0000">'kalle.jpg'</span><span style="color: #007700">, </span><span style="color: #0000BB">100</span><span style="color: #007700">);<br />}<br />else<br />{<br />    echo </span><span style="color: #DD0000">'Converting to negative colors failed.'</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-5">
+    <p><strong>示例 #5 <span class="function"><strong>imagefilter()</strong></span> 像素化示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 加载 PHP log，需要创建两个实例<br />// 来显示差异<br /></span><span style="color: #0000BB">$logo1 </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'./php.png'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$logo2 </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'./php.png'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 创建想要显示差异的图像实例<br /></span><span style="color: #0000BB">$output </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatetruecolor</span><span style="color: #007700">(</span><span style="color: #0000BB">imagesx</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo1</span><span style="color: #007700">) * </span><span style="color: #0000BB">2</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesy</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo1</span><span style="color: #007700">));<br /><br /></span><span style="color: #FF8000">// 对每个实例应用像素化，块大小为 3<br /></span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo1</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_PIXELATE</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo2</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_PIXELATE</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 合并差异到输出图像上<br /></span><span style="color: #0000BB">imagecopy</span><span style="color: #007700">(</span><span style="color: #0000BB">$output</span><span style="color: #007700">, </span><span style="color: #0000BB">$logo1</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesx</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo1</span><span style="color: #007700">) - </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesy</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo1</span><span style="color: #007700">) - </span><span style="color: #0000BB">1</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">imagecopy</span><span style="color: #007700">(</span><span style="color: #0000BB">$output</span><span style="color: #007700">, </span><span style="color: #0000BB">$logo2</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesx</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo2</span><span style="color: #007700">), </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">0</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesx</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo2</span><span style="color: #007700">) - </span><span style="color: #0000BB">1</span><span style="color: #007700">, </span><span style="color: #0000BB">imagesy</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo2</span><span style="color: #007700">) - </span><span style="color: #0000BB">1</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 输出差异<br /></span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content-Type: image/png'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">imagepng</span><span style="color: #007700">(</span><span style="color: #0000BB">$output</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+    <div class="mediaobject">
+     
+     <div class="imageobject">
+      <img src="images/21009b70229598c6a80eef8b45bf282b-imagefilterpixelate.png" alt="示例输出：imagefilter() 像素化" width="190" height="51" />
+     </div>
+    </div>
+   </div>
+  </p>
+  <p class="para">
+   <div class="example" id="example-6">
+    <p><strong>示例 #6 <span class="function"><strong>imagefilter()</strong></span> 散射示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 加载图像<br /></span><span style="color: #0000BB">$logo </span><span style="color: #007700">= </span><span style="color: #0000BB">imagecreatefrompng</span><span style="color: #007700">(</span><span style="color: #DD0000">'./php.png'</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 对图像应用非常柔和的散射效果<br /></span><span style="color: #0000BB">imagefilter</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo</span><span style="color: #007700">, </span><span style="color: #0000BB">IMG_FILTER_SCATTER</span><span style="color: #007700">, </span><span style="color: #0000BB">3</span><span style="color: #007700">, </span><span style="color: #0000BB">5</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 输出带有散射效果的图像<br /></span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content-Type: image/png'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">imagepng</span><span style="color: #007700">(</span><span style="color: #0000BB">$logo</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+    <div class="mediaobject">
+     
+     <div class="imageobject">
+      <img src="images/21009b70229598c6a80eef8b45bf282b-scatter.png" alt="输出示例：imagefilter() 散射" width="200" height="106" />
+     </div>
+    </div>
+   </div>
+  </p>
+ </div>
+
+ <div class="refsect1 notes" id="refsect1-function.imagefilter-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    <strong><code><a href="image.constants.html#constant.img-filter-scatter">IMG_FILTER_SCATTER</a></code></strong> 的结果始终随机。
+   </span>
+  </p></blockquote>
+ </div>
+
+ <div class="refsect1 seealso" id="refsect1-function.imagefilter-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="function.imageconvolution.html" class="function" rel="rdfs-seeAlso">imageconvolution()</a> - 用系数 div 和 offset 申请一个 3x3 的卷积矩阵</span></li>
+  </ul>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

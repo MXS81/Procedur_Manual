@@ -1,0 +1,186 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>GNU Readline</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="refs.utilspec.cmdline.html" class="navbar__link">« 针对命令行的扩展</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="readline.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.utilspec.cmdline.html">针对命令行的扩展</a></li>
+        <li>GNU Readline</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.readline" class="book">
+ 
+ <h1 class="title">GNU Readline</h1>
+ 
+
+ 
+ <div id="intro.readline" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="simpara">
+   readline 扩展函数实现了访问 GNU Readline 库的接口。这些函数提供了可编辑的命令行。一个例子是在 Bash
+   中允许使用箭头按键来插入字符或者翻看历史命令。因为这个库的交互特性，对编写 Web
+   应用程序没多大用处，但当编写从<a href="features.commandline.html" class="link">命令行</a>使用的脚本时非常有用.
+  </p>
+  <p class="simpara">
+   从 PHP 7.1.0 开始，该扩展支持 Windows。
+  </p>
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    readline 扩展并非线程安全！因此，强烈建议不要在任何真正线程安全的 SAPI（例如 Apache 的 mod_winnt）中使用这个扩展！
+   </p>
+  </div>
+ </div>
+ 
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="readline.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="readline.requirements.html">需求</a></li><li><a href="readline.installation.html">安装</a></li><li><a href="readline.configuration.html">运行时配置</a></li></ul></li><li><a href="readline.constants.html">预定义常量</a></li><li><a href="ref.readline.html">Readline 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.readline.html">readline</a> — 读取一行</li><li><a href="function.readline-add-history.html">readline_add_history</a> — 添加一行到历史</li><li><a href="function.readline-callback-handler-install.html">readline_callback_handler_install</a> — 初始化 readline 回调接口和终端，然后打印提示并立即返回</li><li><a href="function.readline-callback-handler-remove.html">readline_callback_handler_remove</a> — 移除之前已安装的回调函数句柄并且恢复终端设置</li><li><a href="function.readline-callback-read-char.html">readline_callback_read_char</a> — 当一个行被接收时读取一个字符并且通知 readline 回调接口</li><li><a href="function.readline-clear-history.html">readline_clear_history</a> — 清除历史</li><li><a href="function.readline-completion-function.html">readline_completion_function</a> — 注册完成函数</li><li><a href="function.readline-info.html">readline_info</a> — 获取/设置各种 readline 内部变量</li><li><a href="function.readline-list-history.html">readline_list_history</a> — 获取历史</li><li><a href="function.readline-on-new-line.html">readline_on_new_line</a> — 通知 readline 将光标移动到新行</li><li><a href="function.readline-read-history.html">readline_read_history</a> — 读取历史</li><li><a href="function.readline-redisplay.html">readline_redisplay</a> — 重绘显示区</li><li><a href="function.readline-write-history.html">readline_write_history</a> — 写入历史记录</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,724 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>预定义常量</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="info.configuration.html" class="navbar__link">« 运行时配置</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="ref.info.html" class="navbar__link">PHP 选项/信息 函数 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="book.info.html">PHP 选项/信息</a></li>
+        <li>预定义常量</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="info.constants" class="appendix">
+ <h1 class="title">预定义常量</h1>
+
+ <p class="simpara">
+下列常量作为 PHP 核心的一部分总是可用的。
+</p>
+ <table id="constant.credits.constants" class="doctable table">
+      <tr>
+       <th>常量</th>
+       <th>描述</th>
+      </tr>
+  <strong class="title">预定义 <span class="function"><a href="function.phpcredits.html" class="function">phpcredits()</a></span> 常量</strong>
+  <tr>
+   <td id="constant.credits-group">
+    <strong><code><a href="info.constants.html#constant.credits-group">CREDITS_GROUP</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     核心开发者名单
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-general">
+    <strong><code><a href="info.constants.html#constant.credits-general">CREDITS_GENERAL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     总的贡献：语言设计和理念，PHP 作者 和 SAPI 模块。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-sapi">
+    <strong><code><a href="info.constants.html#constant.credits-sapi">CREDITS_SAPI</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     PHP 的服务器 API 模块列表，以及它们的作者。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-modules">
+    <strong><code><a href="info.constants.html#constant.credits-modules">CREDITS_MODULES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     PHP 扩展的列表，以及它们的作者。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-docs">
+    <strong><code><a href="info.constants.html#constant.credits-docs">CREDITS_DOCS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     文档组的贡献。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-fullpage">
+    <strong><code><a href="info.constants.html#constant.credits-fullpage">CREDITS_FULLPAGE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     通常与其他标志组合使用。通过其他标志指示了完整独立的 HTML 页面，用于打印包含信息。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-qa">
+    <strong><code><a href="info.constants.html#constant.credits-qa">CREDITS_QA</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     质量保证团队的贡献。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.credits-all">
+    <strong><code><a href="info.constants.html#constant.credits-all">CREDITS_ALL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     所有的贡献者，等于使用 <code class="literal">CREDITS_DOCS
+     | CREDITS_GENERAL | CREDITS_GROUP | CREDITS_MODULES | CREDITS_QA
+     | CREDITS_FULLPAGE</code>。
+     它以合适的标签产生了完整的独立 HTML 页面。这是默认的值。
+    </span>
+   </td>
+  </tr>
+ </table>
+
+ <table id="constant.info.constants" class="doctable table">
+      <tr>
+       <th>常量</th>
+       <th>描述</th>
+      </tr>
+  <strong class="title"><span class="function"><a href="function.phpinfo.html" class="function">phpinfo()</a></span> 常量</strong>
+  <tr>
+   <td id="constant.info-general">
+    <strong><code><a href="info.constants.html#constant.info-general">INFO_GENERAL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     配置行，<var class="filename">php.ini</var> 的位置、构建日期，Web 服务器、操作系统及其他。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-credits">
+    <strong><code><a href="info.constants.html#constant.info-credits">INFO_CREDITS</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     PHP 贡献者。参见 <span class="function"><a href="function.phpcredits.html" class="function">phpcredits()</a></span>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-configuration">
+    <strong><code><a href="info.constants.html#constant.info-configuration">INFO_CONFIGURATION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     当前 PHP 指令的本地（Local）和主（Master）值。参见 <span class="function"><a href="function.ini-get.html" class="function">ini_get()</a></span>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-modules">
+    <strong><code><a href="info.constants.html#constant.info-modules">INFO_MODULES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     已加载的模块和各自的设置。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-environment">
+    <strong><code><a href="info.constants.html#constant.info-environment">INFO_ENVIRONMENT</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     环境变量信息在 <var class="varname"><a href="reserved.variables.environment.html" class="classname">$_ENV</a></var> 中亦有效。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-variables">
+    <strong><code><a href="info.constants.html#constant.info-variables">INFO_VARIABLES</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     显示所有 <code class="literal">EGPCS</code> （环境变量、GET、POST、Cookie、Server）中的<a href="language.variables.predefined.html" class="link">预定义变量</a>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-license">
+    <strong><code><a href="info.constants.html#constant.info-license">INFO_LICENSE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     PHP 版权信息。参见 <a href="https://www.php.net/license/" class="link external">&raquo;&nbsp;license faq</a>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.info-all">
+    <strong><code><a href="info.constants.html#constant.info-all">INFO_ALL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     显示以上所有。这是默认值。
+    </span>
+   </td>
+  </tr>
+ </table>
+
+ <table id="constant.ini-mode" class="doctable table">
+      <tr>
+       <th>常量</th>
+       <th>描述</th>
+      </tr>
+  <strong class="title">INI 模式常量</strong>
+  <tr>
+   <td id="constant.ini-user">
+    <strong><code><a href="info.constants.html#constant.ini-user">INI_USER</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     可以在用户脚本（如使用 <span class="function"><a href="function.ini-set.html" class="function">ini_set()</a></span>）或 <a href="configuration.changes.html#configuration.changes.windows" class="link">Windows
+     注册表</a>中设置条目。可以在 <var class="filename">.user.ini</var> 中设置条目
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.ini-perdir">
+    <strong><code><a href="info.constants.html#constant.ini-perdir">INI_PERDIR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     可以在 <var class="filename">php.ini</var>、<var class="filename">.htaccess</var>、<var class="filename">httpd.conf</var> 或 <var class="filename">.user.ini</var> 中设置条目
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.ini-system">
+    <strong><code><a href="info.constants.html#constant.ini-system">INI_SYSTEM</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     可以在 <var class="filename">php.ini</var> 或 <var class="filename">httpd.conf</var> 中设置条目
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.ini-all">
+    <strong><code><a href="info.constants.html#constant.ini-all">INI_ALL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     条目可以设置在任何地方
+    </span>
+   </td>
+  </tr>
+ </table>
+
+ <p class="simpara">
+  断言常量，这些值用于设置 <span class="function"><a href="function.assert-options.html" class="function">assert_options()</a></span> 中的断言标记。
+ </p>
+ <table id="constant.assert.constants" class="doctable table">
+      <tr>
+       <th>常量</th>
+       <th>描述</th>
+      </tr>
+  <strong class="title"><span class="function"><a href="function.assert.html" class="function">assert()</a></span> 常量</strong>
+  <tr>
+   <td id="constant.assert-active">
+    <strong><code><a href="info.constants.html#constant.assert-active">ASSERT_ACTIVE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     启用 <span class="function"><a href="function.assert.html" class="function">assert()</a></span>。
+    </p>
+    <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 8.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.assert-callback">
+    <strong><code><a href="info.constants.html#constant.assert-callback">ASSERT_CALLBACK</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     失败断言的回调函数。
+    </p>
+    <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 8.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.assert-bail">
+    <strong><code><a href="info.constants.html#constant.assert-bail">ASSERT_BAIL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     断言失败时中止执行。
+    </p>
+    <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 8.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.assert-exception">
+    <strong><code><a href="info.constants.html#constant.assert-exception">ASSERT_EXCEPTION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     为每个失败的断言抛出 <span class="classname"><a href="class.assertionerror.html" class="classname">AssertionError</a></span>。
+    </p>
+    <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 8.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.assert-warning">
+    <strong><code><a href="info.constants.html#constant.assert-warning">ASSERT_WARNING</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     为每个失败的断言产生一条 PHP 警告。
+    </p>
+    <div class="warning"><strong class="warning">警告</strong><p class="simpara">本特性已自 PHP 8.3.0
+起<em>废弃</em>。强烈建议不要使用本特性。</p></div>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.assert-quiet-eval">
+    <strong><code><a href="info.constants.html#constant.assert-quiet-eval">ASSERT_QUIET_EVAL</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <p class="para">
+     在执行断言表达式时禁用 <code class="literal">error_reporting</code>。
+     <div class="warning"><strong class="warning">警告</strong>
+<p class="simpara">此功能自 PHP 8.0.0 起<em>移除</em>。</p>
+</div>
+    </p>
+   </td>
+  </tr>
+ </table>
+
+ <p class="simpara">
+  以下常量仅在主机操作系统是 Windows的情况下有效，能得到不同版本信息，能够检测利用一些功能。
+ </p>
+ <table id="constant.windows.constants" class="doctable table">
+      <tr>
+       <th>常量</th>
+       <th>描述</th>
+      </tr>
+  <strong class="title">Windows 特定常量</strong>
+  <tr>
+   <td id="constant.php-windows-version-major">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-major">PHP_WINDOWS_VERSION_MAJOR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     windows 主版本，可以是 <code class="literal">4</code>（NT4/Me/98/95）、<code class="literal">5</code>（XP/2003
+     R2/2003/2000）或 <code class="literal">6</code>（Vista/2008/7/8/8.1）。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-minor">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-minor">PHP_WINDOWS_VERSION_MINOR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     Windows 副版本号，可以是 <code class="literal">0</code> (Vista/2008/2000/NT4/95)、<code class="literal">1</code> (XP)、<code class="literal">2</code> (2003
+     R2/2003/XP x64)、<code class="literal">10</code>（98）或 <code class="literal">90</code>（ME）。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-build">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-build">PHP_WINDOWS_VERSION_BUILD</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     Windows 内部版本号（例如 Windows Vista SP1 是 build 6001）
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-platform">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-platform">PHP_WINDOWS_VERSION_PLATFORM</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     PHP 当前运行的平台， Windows Vista/XP/2000/NT4、Server 2008/2003 的值是 <code class="literal">2</code>，Windows ME/98/95 下值是 <code class="literal">1</code>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-sp-major">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-sp-major">PHP_WINDOWS_VERSION_SP_MAJOR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     安装的 service pack 主版本号，没有安装是 <code class="literal">0</code>。例如
+     Windows XP service pack 3 上这个值是 <code class="literal">3</code>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-sp-minor">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-sp-minor">PHP_WINDOWS_VERSION_SP_MINOR</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     安装的 service pack 副版本号，如果没有安装则是 <code class="literal">0</code>。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-suitemask">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-suitemask">PHP_WINDOWS_VERSION_SUITEMASK</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     suitemask 是位掩码，用来判断 Windows 是否安装了各种功能，参阅下表获取可能的位阈值。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-version-producttype">
+    <strong><code><a href="info.constants.html#constant.php-windows-version-producttype">PHP_WINDOWS_VERSION_PRODUCTTYPE</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     包含用于确定 <code class="literal">PHP_WINDOWS_NT_<span class="replaceable">*</span></code> 常量的值。该值可能是
+     <code class="literal">PHP_WINDOWS_NT_<span class="replaceable">*</span></code> 常量之一，表示平台类型的值。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-nt-domain-controller">
+    <strong><code><a href="info.constants.html#constant.php-windows-nt-domain-controller">PHP_WINDOWS_NT_DOMAIN_CONTROLLER</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     这是域控制器
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-nt-server">
+    <strong><code><a href="info.constants.html#constant.php-windows-nt-server">PHP_WINDOWS_NT_SERVER</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     这是一个服务器系统（例如 Server 2008/2003/2000），注意，如果这是一个域控制器，通过 
+     <strong><code><a href="info.constants.html#constant.php-windows-nt-domain-controller">PHP_WINDOWS_NT_DOMAIN_CONTROLLER</a></code></strong> 报告。
+    </span>
+   </td>
+  </tr>
+  <tr>
+   <td id="constant.php-windows-nt-workstation">
+    <strong><code><a href="info.constants.html#constant.php-windows-nt-workstation">PHP_WINDOWS_NT_WORKSTATION</a></code></strong>
+    (<span class="type"><a href="language.types.integer.html" class="type int">int</a></span>)
+   </td>
+   <td>
+    <span class="simpara">
+     这是一个工作站系统（例如 Vista/XP/2000/NT4）
+    </span>
+   </td>
+  </tr>
+ </table>
+ <p class="simpara">
+  此功能列表可以通过
+  <strong><code><a href="info.constants.html#constant.php-windows-version-suitemask">PHP_WINDOWS_VERSION_SUITEMASK</a></code></strong> 位掩码检测。
+ </p>
+ <table class="doctable table">
+  <caption><strong>Windows suitemask 位字段</strong></caption>
+  
+   <thead>
+    <tr>
+     <th>Bits</th>
+     <th>描述</th>
+    </tr>
+
+   </thead>
+
+   <tbody class="tbody">
+    <tr>
+     <td><code class="literal">0x00000004</code></td>
+     <td>安装的是 Microsoft BackOffice 组件。</td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000400</code></td>
+     <td>安装的是 Windows Server 2003 网络版。</td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00004000</code></td>
+     <td>安装的是 Windows Server 2003 计算集群版。</td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000080</code></td>
+     <td>
+      安装的是 Windows Server 2008 数据中心版、Windows Server 2003 数据中心版或者 
+      Windows 2000 数据中心服务器。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000002</code></td>
+     <td>
+      安装的是 Windows Server 2008 企业版，Windows Server 2003 企业版，Windows
+      2000 高级服务器版或 Windows NT Server 4.0 企业版 。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000040</code></td>
+     <td>安装的是 Windows XP 嵌入版。</td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000200</code></td>
+     <td>
+      安装的是 Windows Vista 家庭高级版，Windows Vista 家庭普通版或 Windows XP 家庭版。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000100</code></td>
+     <td>
+      支持远程桌面，但仅支持交互式会话。系统没有在应用服务器模式运行时则会设置此值。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000001</code></td>
+     <td>
+      Microsoft 小型商业服务器曾经安装在系统上，但可能已经升级到 Windows 的另外一个版本。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000020</code></td>
+     <td>
+      Microsoft 小型商业服务器安装时具有有效的限制性客户端许可证。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00002000</code></td>
+     <td>安装的是 Windows 存储服务器 2003 R2 或 Windows 存储服务器 2003。</td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00000010</code></td>
+     <td>
+      安装的是终端服务。该值始终设置。如果设置了该值但未设置 <code class="literal">0x00000100</code>，则系统运行在应用服务器模式。
+     </td>
+    </tr>
+
+    <tr>
+     <td><code class="literal">0x00008000</code></td>
+     <td>已安装 Windows Home Server。</td>
+    </tr>
+
+   </tbody>
+  
+ </table>
+
+</div>
+</div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

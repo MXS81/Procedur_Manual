@@ -1,0 +1,291 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>验证值是否可以在当前范围内作为函数调用</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.is-bool.html" class="navbar__link">« is_bool</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.is-countable.html" class="navbar__link">is_countable »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.var.html">变量处理函数</a></li>
+        <li>验证值是否可以在当前范围内作为函数调用</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.is-callable" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">is_callable</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.0.6, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">is_callable</span> &mdash; <span class="dc-title">
+   验证值是否可以在当前范围内作为函数调用
+  </span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.is-callable-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>is_callable</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span> <code class="parameter">$value</code></span>, <span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$syntax_only</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong></span></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter reference">&$callable_name</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   验证 <code class="parameter">value</code> 是 <span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span>，或者其可以使用
+   <span class="function"><a href="function.call-user-func.html" class="function">call_user_func()</a></span> 函数调用。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.is-callable-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">value</code></dt>
+     <dd>
+      <p class="para">
+       要验证的值。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">syntax_only</code></dt>
+     <dd>
+      <p class="para">
+       如果设置为 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，则函数仅验证 <code class="parameter">value</code>
+       是函数还是方法。它将拒绝任何不是<a href="language.oop5.magic.html#object.invoke" class="link">可调用</a>对象、<span class="classname"><a href="class.closure.html" class="classname">Closure</a></span>、<span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+       或者不能用作回调的无效结构的数组的值。有效的可调用数组只有
+       2 个条目，第一个是对象或者字符串，第二个是字符串。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">callable_name</code></dt>
+     <dd>
+      <p class="para">
+       接受 “callable 名称”，例如 <code class="literal">&quot;SomeClass::someMethod&quot;</code>。注意，尽管 
+       <code class="literal">SomeClass::someMethod()</code> 暗示是可调用静态方法，但事实并非如此。
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.is-callable-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   如果 <code class="parameter">value</code> 可调用则返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，否则返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.is-callable-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 检查字符串是否可以作为函数调用</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">function </span><span style="color: #0000BB">someFunction</span><span style="color: #007700">() {}<br /><br /></span><span style="color: #0000BB">$functionVariable </span><span style="color: #007700">= </span><span style="color: #DD0000">'someFunction'</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">is_callable</span><span style="color: #007700">(</span><span style="color: #0000BB">$functionVariable</span><span style="color: #007700">, </span><span style="color: #0000BB">false</span><span style="color: #007700">, </span><span style="color: #0000BB">$callable_name</span><span style="color: #007700">));<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$callable_name</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">bool(true)
+string(12) &quot;someFunction&quot;</pre>
+</div>
+    </div>
+   </div>
+   <div class="example" id="example-2">
+    <p><strong>示例 #2 检查数组是否可以作为函数调用</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class </span><span style="color: #0000BB">SomeClass<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">someMethod</span><span style="color: #007700">() {}<br />}<br /><br /></span><span style="color: #0000BB">$anObject </span><span style="color: #007700">= new </span><span style="color: #0000BB">SomeClass</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">$methodVariable </span><span style="color: #007700">= [</span><span style="color: #0000BB">$anObject</span><span style="color: #007700">, </span><span style="color: #DD0000">'someMethod'</span><span style="color: #007700">];<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">is_callable</span><span style="color: #007700">(</span><span style="color: #0000BB">$methodVariable</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">, </span><span style="color: #0000BB">$callable_name</span><span style="color: #007700">));<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$callable_name</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">bool(true)
+string(21) &quot;SomeClass::someMethod&quot;</pre>
+</div>
+    </div>
+   </div>
+   <div class="example" id="example-3">
+    <p><strong>示例 #3 <span class="function"><strong>is_callable()</strong></span> 和构造方法</strong></p>
+    <div class="example-contents"><p>
+     尽管构造方法是创建对象时调用的方法，但它们不是静态方法，<span class="function"><strong>is_callable()</strong></span>
+     将对它们返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。无法使用 <span class="function"><strong>is_callable()</strong></span> 检查类是否可以从当前作用域实例化。
+
+    </p></div>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">class </span><span style="color: #0000BB">Foo<br /></span><span style="color: #007700">{<br />    public function </span><span style="color: #0000BB">__construct</span><span style="color: #007700">() {}<br /><br />    public function </span><span style="color: #0000BB">foo</span><span style="color: #007700">() {}<br />}<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(<br />    </span><span style="color: #0000BB">is_callable</span><span style="color: #007700">([</span><span style="color: #DD0000">'Foo'</span><span style="color: #007700">, </span><span style="color: #DD0000">'__construct'</span><span style="color: #007700">]),<br />    </span><span style="color: #0000BB">is_callable</span><span style="color: #007700">([</span><span style="color: #DD0000">'Foo'</span><span style="color: #007700">, </span><span style="color: #DD0000">'foo'</span><span style="color: #007700">])<br />);<br /><br /></span><span style="color: #0000BB">$foo </span><span style="color: #007700">= new </span><span style="color: #0000BB">Foo</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">is_callable</span><span style="color: #007700">([</span><span style="color: #0000BB">$foo</span><span style="color: #007700">, </span><span style="color: #DD0000">'__construct'</span><span style="color: #007700">]));<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+    <div class="example-contents"><p>以上示例会输出：</p></div>
+    <div class="example-contents screen">
+<div class="annotation-interactive examplescode"><pre class="examplescode">bool(false)
+bool(false)
+bool(true)</pre>
+</div>
+    </div>
+   </div>
+  </p>   
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.is-callable-notes">
+  <h3 class="title">注释</h3>
+  <ul class="simplelist">
+   <li>
+    如果对象实现了 <a href="language.oop5.magic.html#object.invoke" class="link">__invoke()</a> 且该方法在当前作用域可见，则始终可调用。
+   </li>
+   <li>
+    如果类名实现了 <a href="language.oop5.overloading.html#object.callstatic" class="link">__callStatic()</a>，则可调用。
+   </li>
+   <li>
+    如果对象实现 <a href="language.oop5.overloading.html#object.call" class="link">__call()</a>，则此函数对该对象的任何方法将返回
+    <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，即使该方法没有定义。
+   </li>
+   <li>
+    如果使用类名调用此函数，则会触发自动加载。
+   </li>
+  </ul>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.is-callable-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><span class="function"><a href="function.call-user-func.html" class="function" rel="rdfs-seeAlso">call_user_func()</a> - 把第一个参数作为回调函数调用</span></li>
+    <li><span class="function"><a href="function.function-exists.html" class="function" rel="rdfs-seeAlso">function_exists()</a> - 如果给定的函数已经被定义就返回 true</span></li>
+    <li><span class="function"><a href="function.method-exists.html" class="function" rel="rdfs-seeAlso">method_exists()</a> - 检查类的方法是否存在</span></li>
+   </ul>
+  </p>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

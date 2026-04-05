@@ -1,0 +1,453 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>发送 Cookie</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.request-parse-body.html" class="navbar__link">« request_parse_body</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.setrawcookie.html" class="navbar__link">setrawcookie »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.network.html">网络 函数</a></li>
+        <li>发送 Cookie</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.setcookie" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">setcookie</h1>
+  <p class="verinfo">(PHP 4, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">setcookie</span> &mdash; <span class="dc-title">发送 Cookie</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.setcookie-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>setcookie</strong></span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$name</code></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$value</code><span class="initializer"> = &quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$expires_or_options</code><span class="initializer"> = 0</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$path</code><span class="initializer"> = &quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$domain</code><span class="initializer"> = &quot;&quot;</span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$secure</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong></span></span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$httponly</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong></span></span><br>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="simpara">自 PHP 7.3.0 起可用的替代签名（不支持命名参数）：</p>
+  <div class="methodsynopsis dc-description"><span class="methodname"><strong>setcookie</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$name</code></span>, <span class="methodparam"><span class="type"><a href="language.types.string.html" class="type string">string</a></span> <code class="parameter">$value</code><span class="initializer"> = &quot;&quot;</span></span>, <span class="methodparam"><span class="type"><a href="language.types.array.html" class="type array">array</a></span> <code class="parameter">$options</code><span class="initializer"> = []</span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="simpara">
+   <span class="function"><strong>setcookie()</strong></span> 用于定义 Cookie，会和其它 HTTP header 一起发送给客户端。和其他 HTTP header 一样，Cookie
+   必须在脚本输出任意内容<em>之前</em>发送 Cookie（这是协议限制）。该函数必须在输出任何内容（包括
+   <code class="literal">&lt;html&gt;</code> 和 <code class="literal">&lt;head&gt;</code> 或者任何空白字符）之前调用。
+  </p>
+  <p class="simpara">
+   一旦设置 Cookie 后，下次打开页面时可以使用 <var class="varname"><a href="reserved.variables.cookies.html" class="classname">$_COOKIE</a></var>
+   读取。Cookie 值同样也存在于 <var class="varname"><a href="reserved.variables.request.html" class="classname">$_REQUEST</a></var>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.setcookie-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <a href="https://datatracker.ietf.org/doc/html/rfc6265" class="link external">&raquo;&nbsp;RFC 6265</a> 提供了 <span class="function"><strong>setcookie()</strong></span> 每个参数的参考标准。
+   <dl>
+    
+     <dt><code class="parameter">name</code></dt>
+     <dd>
+      <span class="simpara">
+       Cookie 名称。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">value</code></dt>
+     <dd>
+      <span class="simpara">
+       Cookie 值。这个值储存于用户的电脑里，请勿储存敏感信息。比如
+       <code class="parameter">name</code> 是 <code class="literal">&#039;cookiename&#039;</code>，可通过
+       <var class="varname"><a href="reserved.variables.cookies.html" class="classname">$_COOKIE['cookiename']</a></var> 获取它的值。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">expires_or_options</code></dt>
+     <dd>
+      <span class="simpara">
+       Cookie 的过期时间。这是 Unix 时间戳，即纪元以来的秒数。一种设置此值的方式是将
+       cookie 过期前的秒数与调用 <span class="function"><a href="function.time.html" class="function">time()</a></span>
+       的结果相加。例如，<code class="literal">time()+60*60*24*30</code>
+       就是设置 Cookie 30 天后过期。还有一种选择就是使用 <span class="function"><a href="function.mktime.html" class="function">mktime()</a></span>
+       函数。如果设置为 <code class="literal">0</code> 或者忽略，Cookie 会在会话结束时过期（关掉浏览器时）。
+      </span>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        <code class="parameter">expires_or_options</code> 使用 Unix 时间戳而非 <code class="literal">Wdy, DD-Mon-YYYY
+        HH:MM:SS GMT</code> 这样的日期格式，是因为 PHP 内部作了转换。
+       </span>
+      </p></blockquote>
+     </dd>
+    
+    
+     <dt><code class="parameter">path</code></dt>
+     <dd>
+      <span class="simpara">
+       Cookie 有效的服务器路径。设置成 <code class="literal">&#039;/&#039;</code> 时，Cookie 对整个域名
+       <code class="parameter">domain</code> 有效。如果设置成 <code class="literal">&#039;/foo/&#039;</code>，Cookie
+       仅仅对 <code class="parameter">domain</code> 中 <code class="literal">/foo/</code>
+       目录及其子目录有效（比如 <code class="literal">/foo/bar/</code>）。默认值是设置 Cookie 时的当前目录。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">domain</code></dt>
+     <dd>
+      <span class="simpara">
+       Cookie 的有效域名/子域名。设置成子域名（例如 <code class="literal">&#039;www.example.com&#039;</code>），会使
+       Cookie 对这个子域名和它的三级域名有效（例如 w2.www.example.com）。要让 Cookie
+       对整个域名有效（包括它的全部子域名），只要设置成域名就可以了（这个示例里是 <code class="literal">&#039;example.com&#039;</code>）。
+      </span>
+      <span class="simpara">
+       旧版浏览器仍然在使用废弃的 <a href="https://datatracker.ietf.org/doc/html/rfc2109" class="link external">&raquo;&nbsp;RFC 2109</a>，需要一个前置的点
+       <code class="literal">.</code> 来匹配所有子域名。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">secure</code></dt>
+     <dd>
+      <span class="simpara">
+       设置这个 Cookie 是否仅仅通过安全的 HTTPS 连接传给客户端。设置成 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 时，只有安全连接存在时才会设置
+       Cookie。如果是在服务器端处理这个需求，程序员需要仅仅在安全连接上发送此类 Cookie（通过
+       <var class="varname"><a href="reserved.variables.server.html" class="classname">$_SERVER["HTTPS"]</a></var> 判断）。
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">httponly</code></dt>
+     <dd>
+      <span class="simpara">
+       设置成 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>，Cookie 仅可通过 HTTP 协议访问。这意思就是 Cookie 无法通过类似 JavaScript
+       这样的脚本语言访问。要有效减少 XSS 攻击时的身份窃取行为，可建议用此设置（虽然不是所有浏览器都支持），不过这个说法经常有争议。
+       <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong> 或 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>
+      </span>
+     </dd>
+    
+    
+     <dt><code class="parameter">options</code></dt>
+     <dd>
+      <span class="simpara">
+       关联 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>，可能会存在以下键
+       <code class="literal">expires</code>、<code class="literal">path</code>、<code class="literal">domain</code>、<code class="literal">secure</code>、<code class="literal">httponly</code> 和
+       <code class="literal">samesite</code>。如果存在其它的键，会生成 <strong><code><a href="errorfunc.constants.html#constant.e-warning">E_WARNING</a></code></strong>
+       级别的错误。这些值的含义跟同名参数的描述相同。<code class="literal">samesite</code> 元素的值应该是
+       <code class="literal">None</code>、<code class="literal">Lax</code> 或
+       <code class="literal">Strict</code>。如果没有指定任何允许的选项，它们的默认值与显式参数的默认值相同。如果省略
+       <code class="literal">samesite</code> 元素，则不设置 SameSite cookie 属性。
+      </span>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        要设置一个包含不在列出的关键字中的属性的 Cookie，使用 <span class="function"><a href="function.header.html" class="function">header()</a></span>。
+       </span>
+      </p></blockquote>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <span class="simpara">
+        若 <code class="literal">samesite</code> 为 <code class="literal">&quot;None&quot;</code>，则必须同时启用
+        <code class="literal">secure</code>，否则客户端将阻止该 Cookie。
+       </span>
+      </p></blockquote>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.setcookie-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="simpara">
+   如果在调用本函数以前就产生了输出，<span class="function"><strong>setcookie()</strong></span> 会失败并返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。如果
+   <span class="function"><strong>setcookie()</strong></span> 成功运行，返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。当然，它的意思并非用户是否已接受 Cookie。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.setcookie-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.2.0</td>
+      <td>
+       Cookie 的日期格式现在为 <code class="literal">&#039;D, d M Y H:i:s \G\M\T&#039;</code>；
+       以前是 <code class="literal">&#039;D, d-M-Y H:i:s T&#039;</code>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>7.3.0</td>
+      <td>
+       新增对替代签名 <code class="parameter">options</code> 数组的支持。此签名还支持 SameSite cookie 属性的设置。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.setcookie-examples">
+  <h3 class="title">示例</h3>
+  <p class="simpara">
+   下列示例的效果可通过浏览器开发者工具中的 Cookie 列表（通常位于 Storage 或 Application 标签页）进行观察。
+  </p>
+  <div class="example" id="example-1">
+   <p><strong>示例 #1 <span class="function"><strong>setcookie()</strong></span> 发送示例</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$value </span><span style="color: #007700">= </span><span style="color: #DD0000">'something from somewhere'</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 设置“会话 Cookie”，在浏览器关闭时失效<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// 设置一小时后失效的 Cookie<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #0000BB">time</span><span style="color: #007700">()+</span><span style="color: #0000BB">3600</span><span style="color: #007700">);<br /></span><span style="color: #FF8000">// 设置仅适用于特定域名下特定路径的 Cookie<br />// 注意所使用的域名应与站点域名一致<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">, </span><span style="color: #0000BB">time</span><span style="color: #007700">()+</span><span style="color: #0000BB">3600</span><span style="color: #007700">, </span><span style="color: #DD0000">"/~rasmus/"</span><span style="color: #007700">, </span><span style="color: #DD0000">"example.com"</span><span style="color: #007700">, </span><span style="color: #0000BB">true</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+  <p class="simpara">
+   注意，Cookie 的值部分会由 PHP 自动进行 URL 编码和解码。若要避免此行为，可改用 <span class="function"><a href="function.setrawcookie.html" class="function">setrawcookie()</a></span>。
+  </p>
+  <p class="simpara">
+   要在后续请求中查看上述示例所设置的 Cookie 内容：
+  </p>
+  <div class="informalexample">
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 打印一个单独的 Cookie<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">$_COOKIE</span><span style="color: #007700">[</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">];<br /><br /></span><span style="color: #FF8000">//  debug/test 查看所有 Cookie 的另一种方式<br /></span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$_COOKIE</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 <span class="function"><strong>setcookie()</strong></span> 删除示例</strong></p>
+   <div class="example-contents"><p>
+    要删除 Cookie，需将过期时间设为过去的时间值（但不能设为零，因为零专用于会话 Cookie）。
+   </p></div>
+   <div class="example-contents"><p>
+    删除前例中设置的 Cookie：
+   </p></div>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 设置过期时间为一个小时前<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">, </span><span style="color: #DD0000">""</span><span style="color: #007700">, </span><span style="color: #0000BB">time</span><span style="color: #007700">() - </span><span style="color: #0000BB">3600</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"TestCookie"</span><span style="color: #007700">, </span><span style="color: #DD0000">""</span><span style="color: #007700">, </span><span style="color: #0000BB">time</span><span style="color: #007700">() - </span><span style="color: #0000BB">3600</span><span style="color: #007700">, </span><span style="color: #DD0000">"/~rasmus/"</span><span style="color: #007700">, </span><span style="color: #DD0000">"example.com"</span><span style="color: #007700">, </span><span style="color: #0000BB">1</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+  <div class="example" id="example-3">
+   <p><strong>示例 #3 <span class="function"><strong>setcookie()</strong></span> 和数组</strong></p>
+   <div class="example-contents"><p>
+     在 Cookie 名称中使用数组表示法，可设置“Cookie 数组”。其效果是为数组中的每个元素分别设置一个
+     Cookie；当脚本接收到 Cookie 时，所有值会被合并到一个以该 Cookie 名称命名的数组中：
+   </p></div>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// 设置 Cookie<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"cookie[three]"</span><span style="color: #007700">, </span><span style="color: #DD0000">"cookiethree"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"cookie[two]"</span><span style="color: #007700">, </span><span style="color: #DD0000">"cookietwo"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">setcookie</span><span style="color: #007700">(</span><span style="color: #DD0000">"cookie[one]"</span><span style="color: #007700">, </span><span style="color: #DD0000">"cookieone"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 网页刷新后，打印出以下内容<br /></span><span style="color: #007700">if (isset(</span><span style="color: #0000BB">$_COOKIE</span><span style="color: #007700">[</span><span style="color: #DD0000">'cookie'</span><span style="color: #007700">])) {<br />    foreach (</span><span style="color: #0000BB">$_COOKIE</span><span style="color: #007700">[</span><span style="color: #DD0000">'cookie'</span><span style="color: #007700">] as </span><span style="color: #0000BB">$name </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$value</span><span style="color: #007700">) {<br />        </span><span style="color: #0000BB">$name </span><span style="color: #007700">= </span><span style="color: #0000BB">htmlspecialchars</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">);<br />        </span><span style="color: #0000BB">$value </span><span style="color: #007700">= </span><span style="color: #0000BB">htmlspecialchars</span><span style="color: #007700">(</span><span style="color: #0000BB">$value</span><span style="color: #007700">);<br />        echo </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$name</span><span style="color: #DD0000"> : </span><span style="color: #0000BB">$value</span><span style="color: #DD0000"> &lt;br /&gt;\n"</span><span style="color: #007700">;<br />    }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例会输出：</p></div>
+   <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">three : cookiethree
+two : cookietwo
+one : cookieone</pre>
+</div>
+   </div>
+  </div>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    使用 <code class="literal">[</code> 和 <code class="literal">]</code> 分隔符作为 cookie 名称的一部分不符合
+    RFC 6265 第 4 节。但根据 RFC 6265 第 5 节应该由 user agent 支持。
+   </span>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.setcookie-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    可使用输出缓冲机制，使脚本在调用此函数前产生输出。会缓冲所有输出，直到冲刷缓冲（手动冲刷或脚本执行结束时自动刷新）。实现方式是在脚本中调用
+    <span class="function"><a href="function.ob-start.html" class="function">ob_start()</a></span> 和 <span class="function"><a href="function.ob-end-flush.html" class="function">ob_end_flush()</a></span>，或在 <var class="filename">php.ini</var> 或服务器配置文件中启用
+    <code class="literal">output_buffering</code> 配置项。
+   </span>
+  </p></blockquote>
+  <p class="para">
+   注意避坑：
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      在页面（Cookie 可见的页面）下次刷新前，Cookie 不会生效。
+      测试 Cookie 是否已经成功设置，需要在下次页面加载时、Cookie 过期前检测。
+      过期时间是通过 <code class="parameter">expires_or_options</code> 参数设置的。
+      直接调用 <code class="literal">print_r($_COOKIE);</code> 调试检测 Cookie 是个很好的方式。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      为同一个参数再次设置 Cookie 前，必须先把它删掉。
+      如果 <code class="parameter">value</code> 的值是空 string，并且其他参数和上次调用 <span class="function"><strong>setcookie()</strong></span> 仍旧一样，
+      则指定的名称会被远程客户端删除。
+      内部的实现是：将值设置成 <code class="literal">&#039;deleted&#039;</code>，且过去的过期时间。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      因为设置值成 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong> 会导致 Cookie 被删除，所以不应该使用布尔值。代替方式：<em>0</em> 是 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>，<em>1</em> 是 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      Cookie 名称可以设置成数组名称，PHP 脚本里会是数组，浏览器储存的是单独分开的 Cookie。可以考虑使用
+      <span class="function"><a href="function.json-encode.html" class="function">json_encode()</a></span> 为一个 Cookie 设置多个名称和值。不建议将
+      <span class="function"><a href="function.serialize.html" class="function">serialize()</a></span> 用于此处，因为它会导致安全漏洞。
+     </span>
+    </li>
+   </ul>
+  </p>
+  <p class="simpara">
+   多次调用 <span class="function"><strong>setcookie()</strong></span> 会按调用顺序执行。
+  </p>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.setcookie-seealso">
+  <h3 class="title">参见</h3>
+  <ul class="simplelist">
+   <li><span class="function"><a href="function.header.html" class="function" rel="rdfs-seeAlso">header()</a> - 发送原生 HTTP 头</span></li>
+   <li><span class="function"><a href="function.setrawcookie.html" class="function" rel="rdfs-seeAlso">setrawcookie()</a> - 发送未经 URL 编码的 cookie</span></li>
+   <li><a href="features.cookies.html" class="link">Cookie 章节</a></li>
+   <li><a href="https://datatracker.ietf.org/doc/html/rfc6265" class="link external">&raquo;&nbsp;RFC 6265</a></li>
+   <li><a href="https://datatracker.ietf.org/doc/html/rfc2109" class="link external">&raquo;&nbsp;RFC 2109</a></li>
+  </ul>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

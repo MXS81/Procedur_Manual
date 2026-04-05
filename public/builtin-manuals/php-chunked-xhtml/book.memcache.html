@@ -1,0 +1,197 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>Memcache</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="class.ldap-result-entry.html" class="navbar__link">« LDAP\ResultEntry</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="memcache.setup.html" class="navbar__link">安装/配置 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="refs.remote.other.html">其它服务</a></li>
+        <li>Memcache</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="book.memcache" class="book">
+ 
+ <h1 class="title">Memcache</h1>
+
+ 
+ <div id="intro.memcache" class="preface">
+  <h1 class="title">简介</h1>
+  <p class="simpara">
+   Memcache 模块为 memcached 提供了方便的面向过程及面向对象的接口，memcached 是为了降低动态 web 应用程序数据库负载的一种高效的缓存守护程序。
+  </p>
+  <p class="simpara">
+   Memcache 模块同时提供了 <a href="ref.session.html" class="link">session</a> 处理程序（<code class="literal">memcache</code>）。
+  </p>
+  <p class="simpara">
+   更多关于 memcached 的信息请参见 <a href="http://www.memcached.org/" class="link external">&raquo;&nbsp;http://www.memcached.org/</a>。
+  </p>
+ </div>
+ 
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+<ul class="chunklist chunklist_book"><li><a href="memcache.setup.html">安装/配置</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="memcache.requirements.html">需求</a></li><li><a href="memcache.installation.html">安装</a></li><li><a href="memcache.ini.html">运行时配置</a></li><li><a href="memcache.resources.html">资源类型</a></li></ul></li><li><a href="memcache.constants.html">预定义常量</a></li><li><a href="memcache.examples.html">示例</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="memcache.examples-overview.html">基础用法</a></li></ul></li><li><a href="class.memcache.html">Memcache</a> — Memcache 类<ul class="chunklist chunklist_book chunklist_children"><li><a href="memcache.add.html">Memcache::add</a> — 增加条目到服务器</li><li><a href="memcache.addserver.html">Memcache::addServer</a> — 新增 memcached 服务器到连接池</li><li><a href="memcache.close.html">Memcache::close</a> — 关闭 memcached 连接</li><li><a href="memcache.connect.html">Memcache::connect</a> — 打开与 memcached 服务器的连接</li><li><a href="memcache.decrement.html">Memcache::decrement</a> — 减小元素的值</li><li><a href="memcache.delete.html">Memcache::delete</a> — 从服务器删除元素</li><li><a href="memcache.flush.html">Memcache::flush</a> — 清洗（删除）已经存储的所有的元素</li><li><a href="memcache.get.html">Memcache::get</a> — 从服务器检索元素</li><li><a href="memcache.getextendedstats.html">Memcache::getExtendedStats</a> — 缓存服务器池中所有服务器统计信息</li><li><a href="memcache.getserverstatus.html">Memcache::getServerStatus</a> — 用于获取一个服务器的在线/离线状态</li><li><a href="memcache.getstats.html">Memcache::getStats</a> — 获取服务器统计信息</li><li><a href="memcache.getversion.html">Memcache::getVersion</a> — 返回服务器版本信息</li><li><a href="memcache.increment.html">Memcache::increment</a> — 增加一个元素的值</li><li><a href="memcache.pconnect.html">Memcache::pconnect</a> — 打开对 memcached 服务器的持久连接</li><li><a href="memcache.replace.html">Memcache::replace</a> — 替换已经存在的元素的值</li><li><a href="memcache.set.html">Memcache::set</a> — 存储数据到服务器</li><li><a href="memcache.setcompressthreshold.html">Memcache::setCompressThreshold</a> — 开启大值自动压缩</li><li><a href="memcache.setserverparams.html">Memcache::setServerParams</a> — 运行时修改服务器参数和状态</li></ul></li><li><a href="ref.memcache.html">Memcache 函数</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.memcache-debug.html">memcache_debug</a> — 打开/关闭调试输出</li></ul></li></ul></div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

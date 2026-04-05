@@ -1,0 +1,38 @@
+.library-page {
+  display: flex; flex-direction: column;
+  min-height: 100vh; padding: 20px 24px;
+}
+
+.library-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; flex-shrink: 0;
+}
+.library-title {
+  margin: 0; font-size: 20px; font-weight: 700;
+}
+.library-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.library-batch-bar {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.library-batch-count { font-size: 13px; color: var(--color-text-secondary); }
+.library-batch-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.manual-list {
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.library-empty {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+}
+.empty-icon { margin-bottom: 12px; opacity: .5; }
+.empty-text { margin: 0; font-size: 16px; font-weight: 500; }
+.empty-hint { margin: 6px 0 0; font-size: 13px; }

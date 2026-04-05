@@ -1,0 +1,485 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>类型转换</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="language.types.declarations.html" class="navbar__link">« 类型声明</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="language.variables.html" class="navbar__link">变量 »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="language.types.html">类型</a></li>
+        <li>类型转换</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="language.types.type-juggling" class="sect1">
+ <h2 class="title">类型转换</h2>
+
+ <p class="simpara">
+  PHP 在变量声明时不需要定义类型。在这种情况下，变量的类型由存储的值决定。也就是说，如果
+  <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 赋值给 <var class="varname">$var</var>，然后 <var class="varname">$var</var>
+  的类型就是 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。之后将 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 值赋值给 
+  <var class="varname">$var</var>，它将是 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 类型。
+ </p>
+
+ <p class="para">
+  PHP 可能会尝试在某些上下文中自动将值转换为另一种类型。不同的上下文有：
+  <ul class="itemizedlist">
+   <li class="listitem">
+    <span class="simpara">数字</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">字符串</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">逻辑</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">整数和字符串</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">比较</span>
+   </li>
+   <li class="listitem">
+    <span class="simpara">函数</span>
+   </li>
+  </ul>
+ </p>
+
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <span class="simpara">
+   当值需要解释为不同类型时，值本身<em>不</em>会改变类型。
+  </span>
+ </p></blockquote>
+
+ <p class="simpara">
+  强制将变量当做某种变量来求值，参见<a href="language.types.type-juggling.html#language.types.typecasting" class="link">类型转换</a>一节。要更改变量的类型，请参阅
+  <span class="function"><a href="function.settype.html" class="function">settype()</a></span> 函数。
+ </p>
+
+ <div class="sect2">
+  <h3 class="title">数字上下文</h3>
+
+  <p class="simpara">
+   使用<a href="language.operators.arithmetic.html" class="link">算术运算符</a>时的上下文。
+  </p>
+
+  <p class="simpara">
+   在这种情况下，如果任一运算对象是 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>（或者不能解释为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>），则两个运算对象都将解释为
+   <span class="type"><a href="language.types.float.html" class="type float">float</a></span>，结果也将是 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>。否则，运算对象将解释为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，结果也将是
+   <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>。自 PHP 8.0.0 起，如果无法解释其中一个运算对象，则会抛出 <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>。
+  </p>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">字符串上下文</h3>
+
+  <p class="simpara">
+   使用 <span class="function"><a href="function.echo.html" class="function">echo</a></span>、<span class="function"><a href="function.print.html" class="function">print</a></span>、<a href="language.types.string.html#language.types.string.parsing" class="link">字符串插值</a>或者字符串<a href="language.operators.string.html" class="link">连接运算符</a>时的上下文。
+  </p>
+
+  <p class="simpara">
+   这种情况下，值将会解释为 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。如果值无法解释，那么会抛出
+   <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>。在 PHP 7.4.0 之前，会引发 <strong><code><a href="errorfunc.constants.html#constant.e-recoverable-error">E_RECOVERABLE_ERROR</a></code></strong>。
+  </p>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">逻辑上下文</h3>
+
+  <p class="simpara">
+   使用条件语句、<a href="language.operators.comparison.html#language.operators.comparison.ternary" class="link">三元运算符</a>或<a href="language.operators.logical.html" class="link">逻辑运算符</a>时的上下文。
+  </p>
+
+  <p class="simpara">
+   在这种情况下，值将会解释为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>。
+  </p>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">整数和字符串上下文</h3>
+
+  <p class="simpara">
+   使用<a href="language.operators.bitwise.html" class="link">位运算符</a>时的上下文。
+  </p>
+
+  <p class="simpara">
+   在这种情况下，如果所有的运算对象都是 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>，则结果也将是
+   <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。否则运算对象将解释为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，结果也将是
+   <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>。如果其中一个运算对象无法解释，则会抛出 <span class="classname"><a href="class.typeerror.html" class="classname">TypeError</a></span>。
+  </p>
+ </div>
+
+ <div class="sect2">
+  <h3 class="title">比较上下文</h3>
+
+  <p class="simpara">
+   使用<a href="language.operators.comparison.html" class="link">比较运算符</a>时的上下文。
+  </p>
+
+  <p class="simpara">
+   在此上下文中发生的类型转换在比较多种类型<a href="language.operators.comparison.html#language.operators.comparison.types" class="link">表</a>中进行了说明。
+  </p>
+ </div>
+
+ <div class="sect2" id="language.types.type-juggling.function">
+  <h3 class="title">函数上下文</h3>
+
+  <p class="simpara">
+   将值传递给已声明类型的参数、属性，或从声明了返回类型的函数返回值时的上下文。
+  </p>
+
+  <p class="para">
+   在此上下文中，值必须是类型值。但存在两个例外，第一个是如果值为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，但声明的类型是
+   <span class="type"><a href="language.types.float.html" class="type float">float</a></span>，然后整数会转换为浮点数。第二个是如果声明的类型是 <em>scalar</em>
+   
+   类型，值可转换为标量类型，并且强制类型模式处于活动状态（默认），值会转换为可接受的标量值。参见下文查看有关此行为的描述。
+  </p>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    <a href="functions.internal.html" class="link">内部函数</a>自动将 <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong>
+    转换为标量类型，此行为自 PHP 8.1.0 起<em>弃用</em>。
+   </p>
+  </div>
+
+  <div class="sect3" id="language.types.type-juggling.function.simple">
+   <h4 class="title">使用简单类型声明的强制类型</h4>
+   <ul class="itemizedlist">
+    <li class="listitem">
+     <span class="simpara">
+      <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> 类型声明：值将解释为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <span class="type"><a href="language.types.integer.html" class="type int">int</a></span> 类型声明：如果明确定义转换，则值将解释为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>。例如，字符串是<a href="language.types.numeric-strings.html" class="link">数字</a>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <span class="type"><a href="language.types.float.html" class="type float">float</a></span> 类型声明：如果明确定义转换，则值将解释为 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>。例如，字符串是<a href="language.types.numeric-strings.html" class="link">数字</a>。
+     </span>
+    </li>
+    <li class="listitem">
+     <span class="simpara">
+      <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 类型声明：值将解释为 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>。
+     </span>
+    </li>
+   </ul>
+  </div>
+
+  <div class="sect3" id="language.types.type-juggling.function.union">
+   <h4 class="title">使用联合类型的强制类型</h4>
+   <p class="para">
+    当未启用 <code class="literal">strict_types</code>
+    时，声明的标量类型会受到有限的隐式类型转换的影响。如果值的精确类型不是联合的一部分，然后会按照以下优先顺序选择目标类型：
+    <ol type="1">
+     <li class="listitem">
+      <span class="simpara">
+       <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>
+      </span>
+     </li>
+     <li class="listitem">
+      <span class="simpara">
+       <span class="type"><a href="language.types.float.html" class="type float">float</a></span>
+      </span>
+     </li>
+     <li class="listitem">
+      <span class="simpara">
+       <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+      </span>
+     </li>
+     <li class="listitem">
+      <span class="simpara">
+       <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span>
+      </span>
+     </li>
+    </ol>
+    如果类型存在于 union 类型中，并且值可以根据 PHP 现有的类型检查语义转换为此类型，则选择该类型。否则，尝试下一个类型
+   </p>
+
+   <div class="caution"><strong class="caution">警告</strong>
+    <p class="para">
+     有个例外，如果值是字符串，并且 int 和 float 都是联合类型的一部分，首选类型则通过现有的<a href="language.types.numeric-strings.html" class="link">数字字符串</a>语义决定。例如
+     <code class="literal">&quot;42&quot;</code> 选择 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span>，<code class="literal">&quot;42.0&quot;</code> 选择 <span class="type"><a href="language.types.float.html" class="type float">float</a></span>。
+    </p>
+   </div>
+
+   <blockquote class="note"><p><strong class="note">注意</strong>: 
+    <p class="para">
+     不属于上述优先级列表的类型不会进行隐式转换。特别是，不会出现对 <span class="type"><a href="language.types.null.html" class="type null">null</a></span>、<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span> 和 <span class="type"><a href="language.types.singleton.html" class="type true">true</a></span> 类型的隐式转换。
+    </p>
+   </p></blockquote>
+
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 类型转换为 union 类型中的一个的示例</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">// int|string<br /></span><span style="color: #0000BB">42    </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">42          </span><span style="color: #FF8000">// 具体类型<br /></span><span style="color: #DD0000">"42"  </span><span style="color: #007700">--&gt; </span><span style="color: #DD0000">"42"        </span><span style="color: #FF8000">// 具体类型<br /></span><span style="color: #007700">new </span><span style="color: #0000BB">ObjectWithToString </span><span style="color: #007700">--&gt; </span><span style="color: #DD0000">"Result of __toString()"<br />                      </span><span style="color: #FF8000">// 对象绝不会兼容 int，回退到 string<br /></span><span style="color: #0000BB">42.0  </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">42          </span><span style="color: #FF8000">// int 兼容 float<br /></span><span style="color: #0000BB">42.1  </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">42          </span><span style="color: #FF8000">// int 兼容 float<br /></span><span style="color: #0000BB">1e100 </span><span style="color: #007700">--&gt; </span><span style="color: #DD0000">"1.0E+100"  </span><span style="color: #FF8000">// float 对于 int 类型来说太大了，回退为 string<br /></span><span style="color: #0000BB">INF   </span><span style="color: #007700">--&gt; </span><span style="color: #DD0000">"INF"       </span><span style="color: #FF8000">// float 对于 int 类型来说太大了，回退为 string<br /></span><span style="color: #0000BB">true  </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">1           </span><span style="color: #FF8000">// int 兼容 bool<br /></span><span style="color: #007700">[]    --&gt; </span><span style="color: #0000BB">TypeError   </span><span style="color: #FF8000">// int 或 string 不兼容 array<br /><br />// int|float|bool<br /></span><span style="color: #DD0000">"45"    </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">45        </span><span style="color: #FF8000">// int 数字 string<br /></span><span style="color: #DD0000">"45.0"  </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">45.0      </span><span style="color: #FF8000">// float 数字 string<br /><br /></span><span style="color: #DD0000">"45X"   </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">true      </span><span style="color: #FF8000">// 不是 numeric string，回退为 bool<br /></span><span style="color: #DD0000">""      </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">false     </span><span style="color: #FF8000">// 不是 numeric string，回退为 bool<br /></span><span style="color: #DD0000">"X"     </span><span style="color: #007700">--&gt; </span><span style="color: #0000BB">true      </span><span style="color: #FF8000">// 不是 numeric string，回退为 bool<br /></span><span style="color: #007700">[]      --&gt; </span><span style="color: #0000BB">TypeError </span><span style="color: #FF8000">// int、float 或 bool 不兼容 array<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </div>
+
+ </div>
+
+ <div class="sect2" id="language.types.typecasting">
+  <h3 class="title">类型转换</h3>
+
+  <p class="simpara">
+   类型转换通过在值前面的括号中写入类型来将值转换指定的类型。
+  </p>
+
+  <div class="example" id="example-2">
+   <p><strong>示例 #2 类型转换</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$foo </span><span style="color: #007700">= </span><span style="color: #0000BB">10</span><span style="color: #007700">;   </span><span style="color: #FF8000">// $foo 是 int<br /></span><span style="color: #0000BB">$bar </span><span style="color: #007700">= (bool) </span><span style="color: #0000BB">$foo</span><span style="color: #007700">;   </span><span style="color: #FF8000">// $bar 是 bool<br /><br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$bar</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+
+  <p class="simpara">
+   允许的转换是：
+  </p>
+
+  <ul class="simplelist">
+   <li><code class="literal">(int)</code> ——转换为 <span class="type"><a href="language.types.integer.html" class="type int">int</a></span></li>
+   <li><code class="literal">(bool)</code> ——转换为 <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></li>
+   <li><code class="literal">(float)</code> ——转换为 <span class="type"><a href="language.types.float.html" class="type float">float</a></span></li>
+   <li><code class="literal">(string)</code> ——转换为 <span class="type"><a href="language.types.string.html" class="type string">string</a></span></li>
+   <li><code class="literal">(array)</code> ——转换为 <span class="type"><a href="language.types.array.html" class="type array">array</a></span></li>
+   <li><code class="literal">(object)</code> ——转换为 <span class="type"><a href="language.types.object.html" class="type object">object</a></span></li>
+   <li><code class="literal">(unset)</code> ——转换为 <span class="type"><a href="language.types.null.html" class="type NULL">NULL</a></span></li>
+  </ul>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="para">
+    <code class="literal">(integer)</code> 是 <code class="literal">(int)</code> 转换的别名。<code class="literal">(boolean)</code>
+    是 <code class="literal">(bool)</code> 转换的别名。<code class="literal">(binary)</code> 是 <code class="literal">(string)</code>
+    转换的别名。<code class="literal">(double)</code> 和 <code class="literal">(real)</code> 是 <code class="literal">(float)</code>
+    转换的别名。这些转换不使用标准的类型名称，自 PHP 8.5.0 起已弃用。
+   </p>
+  </div>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    自 PHP 7.4.0 起弃用 <code class="literal">(real)</code> 转换别名，并在 PHP 8.0.0 中移除。
+   </p>
+  </div>
+
+  <div class="warning"><strong class="warning">警告</strong>
+   <p class="simpara">
+    自 PHP 7.2.0 起弃用 <code class="literal">(unset)</code> 转换。注意
+    <code class="literal">(unset)</code> 转换等同于将值 <span class="type"><a href="language.types.null.html" class="type NULL">NULL</a></span> 
+    通过赋值或者调用给变量。自 PHP 8.0.0 起移除 <code class="literal">unset</code> 转换。
+   </p>
+  </div>
+
+  <div class="caution"><strong class="caution">警告</strong>
+   <p class="simpara">
+    向前兼容 <code class="literal">(binary)</code> 转换和 <code class="literal">b</code>
+    前缀转换。注意 <code class="literal">(binary)</code> 转换和 <code class="literal">(string)</code>
+    相同，但是这可能会改变且不应依赖。
+   </p>
+  </div>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <p class="para">
+    类型转换的括号中的空格将被忽略。
+    因此，以下两个转换是等价的：
+    <div class="informalexample">
+     <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$foo </span><span style="color: #007700">= (int) </span><span style="color: #0000BB">$bar</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$foo </span><span style="color: #007700">= ( int ) </span><span style="color: #0000BB">$bar</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+     </div>
+
+    </div>
+   </p>
+  </p></blockquote>
+
+  <div class="informalexample">
+   <p class="simpara">
+    将文字 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 和变量转换为二进制 <span class="type"><a href="language.types.string.html" class="type string">string</a></span>：
+   </p>
+
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$binary </span><span style="color: #007700">= (binary) </span><span style="color: #0000BB">$string</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$binary </span><span style="color: #007700">= </span><span style="color: #DD0000">b"binary string"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+
+  
+  <p class="simpara">
+   除了将变量转换为 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 之外，还可以将变量放在双引号内。
+  </p>
+
+  <div class="example" id="example-3">
+   <p><strong>示例 #3 不同的转换机制</strong></p>
+   <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$foo </span><span style="color: #007700">= </span><span style="color: #0000BB">10</span><span style="color: #007700">;            </span><span style="color: #FF8000">// $foo 是 int<br /></span><span style="color: #0000BB">$str </span><span style="color: #007700">= </span><span style="color: #DD0000">"</span><span style="color: #0000BB">$foo</span><span style="color: #DD0000">"</span><span style="color: #007700">;        </span><span style="color: #FF8000">// $str 是 string<br /></span><span style="color: #0000BB">$fst </span><span style="color: #007700">= (string) </span><span style="color: #0000BB">$foo</span><span style="color: #007700">; </span><span style="color: #FF8000">// $fst 也是 string<br /><br />// 打印出 "they are the same"<br /></span><span style="color: #007700">if (</span><span style="color: #0000BB">$fst </span><span style="color: #007700">=== </span><span style="color: #0000BB">$str</span><span style="color: #007700">) {<br />    echo </span><span style="color: #DD0000">"they are the same"</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+  </div>
+   
+  <p class="para">
+   有时在类型之间转换时确切地会发生什么可能不是很明显。更多信息见如下不分：
+   <ul class="simplelist">
+    <li><a href="language.types.boolean.html#language.types.boolean.casting" class="link">转换为 bool</a></li>
+    <li><a href="language.types.integer.html#language.types.integer.casting" class="link">转换为 int</a></li>
+    <li><a href="language.types.float.html#language.types.float.casting" class="link">转换为 float</a></li>
+    <li><a href="language.types.string.html#language.types.string.casting" class="link">转换为 string</a></li>
+    <li><a href="language.types.array.html#language.types.array.casting" class="link">转换为 array</a></li>
+    <li><a href="language.types.object.html#language.types.object.casting" class="link">转换为 object</a></li>
+    <li><a href="language.types.resource.html#language.types.resource.casting" class="link">转换为 resource</a></li>
+    <li><a href="language.types.null.html#language.types.null.casting" class="link">转换为 NULL</a></li>
+    <li><a href="types.comparisons.html" class="link">类型比较表</a></li>
+   </ul>
+  </p>
+
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+   <span class="simpara">
+    因为 PHP 的 <span class="type"><a href="language.types.string.html" class="type string">string</a></span> 支持使用与 <span class="type"><a href="language.types.array.html" class="type array">array</a></span>
+    索引相同的语法，通过偏移量进行索引，所以以下示例适用于所有 PHP 版本：
+   </span>
+
+   <div class="example" id="example-4">
+    <p><strong>示例 #4 使用字符串的数组偏移</strong></p>
+    <div class="example-contents">
+<div class="annotation-interactive phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$a    </span><span style="color: #007700">= </span><span style="color: #DD0000">'car'</span><span style="color: #007700">; </span><span style="color: #FF8000">// $a 是 string<br /></span><span style="color: #0000BB">$a</span><span style="color: #007700">[</span><span style="color: #0000BB">0</span><span style="color: #007700">] = </span><span style="color: #DD0000">'b'</span><span style="color: #007700">;   </span><span style="color: #FF8000">// $a 依然是 string<br /></span><span style="color: #007700">echo </span><span style="color: #0000BB">$a</span><span style="color: #007700">;       </span><span style="color: #FF8000">// bar<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+
+   <span class="simpara">
+    请查看章节标题为<a href="language.types.string.html#language.types.string.substr" class="link">存取和修改字符串中的字符</a>获取更多信息。
+   </span>
+  </p></blockquote>
+ </div>
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

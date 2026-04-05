@@ -1,0 +1,660 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>生成新的私钥</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.openssl-pkey-get-public.html" class="navbar__link">« openssl_pkey_get_public</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.openssl-private-decrypt.html" class="navbar__link">openssl_private_decrypt »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.openssl.html">OpenSSL 函数</a></li>
+        <li>生成新的私钥</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.openssl-pkey-new" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">openssl_pkey_new</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.2.0, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">openssl_pkey_new</span> &mdash; <span class="dc-title">生成新的私钥</span></p>
+
+ </div>
+
+ <div class="refsect1 description" id="refsect1-function.openssl-pkey-new-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>openssl_pkey_new</strong></span>(<span class="methodparam"><span class="type"><span class="type"><a href="language.types.null.html" class="type null">?</a></span><span class="type"><a href="language.types.array.html" class="type array">array</a></span></span> <code class="parameter">$options</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.null">null</a></code></strong></span></span>): <span class="type"><span class="type"><a href="class.opensslasymmetrickey.html" class="type OpenSSLAsymmetricKey">OpenSSLAsymmetricKey</a></span>|<span class="type"><a href="language.types.singleton.html" class="type false">false</a></span></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>openssl_pkey_new()</strong></span> 生成一个新的私钥和公钥对。如何获取该密钥的公共组件参见以下示例。
+  </p>
+  <blockquote class="note"><p><strong class="note">注意</strong>: 
+<span class="simpara">
+ 必须安装有效的 <var class="filename">openssl.cnf</var> 以保证此函数正确运行。参考有关<a href="openssl.installation.html" class="link">安装</a>的说明以获得更多信息。
+</span>
+</p></blockquote>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.openssl-pkey-new-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">options</code></dt>
+     <dd>
+      <p class="para">
+       可以使用 <code class="parameter">options</code> 参数微调密钥生成（例如指定位的数量或参数）。这些选项可以是用于密钥生成的特定于算法的参数，也可以是
+       <abbr title="Certificate Signing Request">CSR</abbr> 生成中使用的通用选项（如果未指定）。有关在 <abbr title="Certificate Signing Request">CSR</abbr> 中使用 <code class="parameter">options</code>
+       的更多信息，参阅 <span class="function"><a href="function.openssl-csr-new.html" class="function">openssl_csr_new()</a></span>。在这些选项中，只有
+       <code class="literal">private_key_bits</code>、<code class="literal">private_key_type</code>、<code class="literal">curve_name</code> 和 <code class="literal">config</code>
+       用于密钥生成。如果关联数组包含某个特定 key，则使用特定算法选项。
+       <ul class="itemizedlist">
+        <li class="listitem">
+         <span class="simpara">
+          <code class="literal">&quot;rsa&quot;</code> key 用于设置 RSA 参数。
+         </span>
+         <table class="doctable informaltable">
+          
+           <thead>
+            <tr>
+             <th>选项</th>
+             <th>类型</th>
+             <th>格式</th>
+             <th>是否必需</th>
+             <th>说明</th>
+            </tr>
+
+           </thead>
+
+           <tbody class="tbody">
+            <tr>
+             <td><code class="literal">&quot;n&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>yes</td>
+             <td>modulus</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;e&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>public exponent</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;d&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>yes</td>
+             <td>private exponent</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;p&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>prime 1</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;q&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>prime 2</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;dmp1&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>exponent1, d mod (p-1)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;dmq1&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>exponent2, d mod (q-1)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;iqmp&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>coefficient, (inverse of q) mod p</td>
+            </tr>
+
+           </tbody>
+          
+         </table>
+
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <code class="literal">&quot;dsa&quot;</code> key 用于设置 DSA 参数。
+         </span>
+         <table class="doctable informaltable">
+          
+           <thead>
+            <tr>
+             <th>选项</th>
+             <th>类型</th>
+             <th>格式</th>
+             <th>是否必需</th>
+             <th>说明</th>
+            </tr>
+
+           </thead>
+
+           <tbody class="tbody">
+            <tr>
+             <td><code class="literal">&quot;p&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>prime number (public)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;q&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>160-bit subprime, q | p-1 (public)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;g&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>generator of subgroup (public)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;priv_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>private key x</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;pub_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>public key y = g^x</td>
+            </tr>
+
+           </tbody>
+          
+         </table>
+
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <code class="literal">&quot;dh&quot;</code> key 用于 DH（迪菲-赫尔曼密钥交换）参数。
+         </span>
+         <table class="doctable informaltable">
+          
+           <thead>
+            <tr>
+             <th>选项</th>
+             <th>类型</th>
+             <th>格式</th>
+             <th>是否必需</th>
+             <th>说明</th>
+            </tr>
+
+           </thead>
+
+           <tbody class="tbody">
+            <tr>
+             <td><code class="literal">&quot;p&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>prime number (shared)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;g&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>generator of Z_p (shared)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;priv_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>private DH value x</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;pub_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>public DH value g^x</td>
+            </tr>
+
+           </tbody>
+          
+         </table>
+
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <code class="literal">&quot;ec&quot;</code> key，用于椭圆曲线参数
+         </span>
+         <table class="doctable informaltable">
+          
+           <thead>
+            <tr>
+             <th>选项</th>
+             <th>类型</th>
+             <th>格式</th>
+             <th>是否必需</th>
+             <th>说明</th>
+            </tr>
+
+           </thead>
+
+           <tbody class="tbody">
+            <tr>
+             <td><code class="literal">&quot;curve_name&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>name</td>
+             <td>no</td>
+             <td>name of curve, see <span class="function"><a href="function.openssl-get-curve-names.html" class="function">openssl_get_curve_names()</a></span></td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;p&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>prime of the field for curve over Fp</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;a&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>coofecient a of the curve for Fp: y^2 mod p = x^3 + ax + b mod p</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;b&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>coofecient b of the curve for Fp: y^2 mod p = x^3 + ax + b mod p</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;seed&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>用于生成系数 b 的可选随机数种子</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;generator&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary encoded point</td>
+             <td>no</td>
+             <td>曲线生成点</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;g_x&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>曲线生成点 x 坐标</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;g_y&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>曲线生成点 y 坐标</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;cofactor&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>curve cofactor</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;order&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>curve order</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;x&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>x coordinate (public)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;y&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>y coordinate (public)</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;d&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>binary number</td>
+             <td>no</td>
+             <td>private key</td>
+            </tr>
+
+           </tbody>
+          
+         </table>
+
+        </li>
+        <li class="listitem">
+         <span class="simpara">
+          <code class="literal">&quot;x25519&quot;</code>、<code class="literal">&quot;x448&quot;</code>、<code class="literal">&quot;ed25519&quot;</code>、<code class="literal">&quot;ed448&quot;</code>
+          key 用于 Curve25519 和 Curve448 参数。
+         </span>
+         <table class="doctable informaltable">
+          
+           <thead>
+            <tr>
+             <th>选项</th>
+             <th>类型</th>
+             <th>格式</th>
+             <th>是否必需</th>
+             <th>说明</th>
+            </tr>
+
+           </thead>
+
+           <tbody class="tbody">
+             <tr>
+             <td><code class="literal">&quot;priv_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>私钥</td>
+            </tr>
+
+            <tr>
+             <td><code class="literal">&quot;pub_key&quot;</code></td>
+             <td><span class="type"><a href="language.types.string.html" class="type string">string</a></span></td>
+             <td>PEM key</td>
+             <td>no</td>
+             <td>公钥</td>
+            </tr>
+
+           </tbody>
+          
+         </table>
+
+        </li>
+       </ul>
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.openssl-pkey-new-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时此函数会返回 <span class="classname"><a href="class.opensslasymmetrickey.html" class="classname">OpenSSLAsymmetricKey</a></span> 的实例；在失败时则会返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.openssl-pkey-new-changelog">
+  <h3 class="title">更新日志</h3>
+  <table class="doctable informaltable">
+   
+    <thead>
+     <tr>
+      <th>版本</th>
+      <th>说明</th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td>8.4.0</td>
+      <td>
+       引入 <code class="literal">x25519</code>、<code class="literal">ed25519</code>、<code class="literal">x448</code> 和 <code class="literal">ed448</code>
+       字段，增加了对基于 Curve25519 和 Curve448 的密钥支持。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.3.0</td>
+      <td>
+       新增使用自定义 EC 参数生成 EC 秘钥的支持。特别是引入了 EC 选项：<code class="literal">p</code>、<code class="literal">a</code>、<code class="literal">b</code>、<code class="literal">seed</code>、<code class="literal">generator</code>、<code class="literal">g_x</code>、<code class="literal">g_y</code>、<code class="literal">cofactor</code> 和 <code class="literal">order</code>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>8.0.0</td>
+      <td>
+       成功时此函数会返回 <span class="classname"><a href="class.opensslasymmetrickey.html" class="classname">OpenSSLAsymmetricKey</a></span> 的实例；在之前版本中，则会返回类似为
+       <code class="literal">OpenSSL key</code> 的 <span class="type"><a href="language.types.resource.html" class="type resource">resource</a></span>。
+      </td>
+     </tr>
+
+     <tr>
+      <td>7.1.0</td>
+      <td>
+       <code class="parameter">options</code> 参数中增加了 <code class="literal">curve_name</code> 键，以便基于椭圆曲线算法创建 EC 密钥。
+      </td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.openssl-pkey-new-examples">
+  <h3 class="title">示例</h3>
+  <div class="example" id="function.openssl-pkey-new.example.public-key">
+   <p><strong>示例 #1 从私钥获取公钥</strong></p>
+   <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /><br />$private_key </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_pkey_new</span><span style="color: #007700">();<br /><br /></span><span style="color: #0000BB">$public_key_pem </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_pkey_get_details</span><span style="color: #007700">(</span><span style="color: #0000BB">$private_key</span><span style="color: #007700">)[</span><span style="color: #DD0000">'key'</span><span style="color: #007700">];<br />echo </span><span style="color: #0000BB">$public_key_pem</span><span style="color: #007700">, </span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$public_key </span><span style="color: #007700">= </span><span style="color: #0000BB">openssl_pkey_get_public</span><span style="color: #007700">(</span><span style="color: #0000BB">$public_key_pem</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$public_key</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+   </div>
+
+   <div class="example-contents"><p>以上示例的输出类似于：</p></div>
+   <div class="example-contents screen">
+<div class="examplescode"><pre class="examplescode">// Output prior to PHP 8.0.0; note, the function returns a resource
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwknBFEherZe74BiRjTFA
+hqwZ1SK7brwq7C/afnLXKhRR7jnrpfM0ypC46q8xz5UZswenZakJ7kd5fls+r4Bv
+3P8XsKYLTh2m1GiWQhV1g77cNIN4qNWh70PiDO3fB2446o1LBgToQYuRZS5YQRfJ
+rVD0ysgtVcCU9tjaey28HlgApOpYFTaaKPj2MBmEYpMC+kG2HhL12GfpHUi2eiXI
+dXT2WskWHWvUrmQ7fJIfI92JlDokV62DH/q1oiedLs9OPNb0rL1aAmYdzaVN6XNH
+x/o4Lh125v2vAPV9E3fZCDc/HDEUaahpjanMiCQEgEDp5Hr+CRkvERT5/ydN+p08
+5wIDAQAB
+-----END PUBLIC KEY-----
+
+resource(6) of type (OpenSSL key)
+
+// Output as of PHP 8.0.0; note, the function returns an object
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwknBFEherZe74BiRjTFA
+hqwZ1SK7brwq7C/afnLXKhRR7jnrpfM0ypC46q8xz5UZswenZakJ7kd5fls+r4Bv
+3P8XsKYLTh2m1GiWQhV1g77cNIN4qNWh70PiDO3fB2446o1LBgToQYuRZS5YQRfJ
+rVD0ysgtVcCU9tjaey28HlgApOpYFTaaKPj2MBmEYpMC+kG2HhL12GfpHUi2eiXI
+dXT2WskWHWvUrmQ7fJIfI92JlDokV62DH/q1oiedLs9OPNb0rL1aAmYdzaVN6XNH
+x/o4Lh125v2vAPV9E3fZCDc/HDEUaahpjanMiCQEgEDp5Hr+CRkvERT5/ydN+p08
+5wIDAQAB
+-----END PUBLIC KEY-----
+
+object(OpenSSLAsymmetricKey)#2 (0) {
+}</pre>
+</div>
+   </div>
+  </div>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>

@@ -1,0 +1,251 @@
+[
+  {
+    "id": "builtin-linux-command",
+    "name": "Linux 命令手册",
+    "description": "基于本地 Markdown 命令文档整理的 Linux 命令手册",
+    "keywords": [
+      "linux",
+      "命令",
+      "shell",
+      "bash",
+      "terminal",
+      "cd",
+      "grep",
+      "ls"
+    ],
+    "fileName": "command",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-html-css",
+    "name": "HTML / CSS 参考手册",
+    "description": "HTML 标签与 CSS 属性完整参考",
+    "keywords": [
+      "html",
+      "css",
+      "网页",
+      "前端",
+      "标签",
+      "样式"
+    ],
+    "fileName": "html-css-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-javascript",
+    "name": "JavaScript 参考手册",
+    "description": "JavaScript 语言核心、DOM、BOM 参考",
+    "keywords": [
+      "javascript",
+      "js",
+      "前端",
+      "es6",
+      "dom",
+      "node"
+    ],
+    "fileName": "javascript-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-python",
+    "name": "Python 参考手册",
+    "description": "Python 标准库与语言参考",
+    "keywords": [
+      "python",
+      "py",
+      "标准库",
+      "pip"
+    ],
+    "fileName": "python-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-cpp",
+    "name": "C/C++ 参考手册",
+    "description": "C/C++ 标准库函数与语言参考",
+    "keywords": [
+      "c",
+      "c++",
+      "cpp",
+      "stl",
+      "标准库"
+    ],
+    "fileName": "cppreference-zh_CN.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-java",
+    "name": "Java 参考手册",
+    "description": "Java SE API 参考手册",
+    "keywords": [
+      "java",
+      "jdk",
+      "api",
+      "spring"
+    ],
+    "fileName": "java-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-matlab",
+    "name": "MATLAB 参考手册",
+    "description": "MATLAB 函数与工具箱参考",
+    "keywords": [
+      "matlab",
+      "矩阵",
+      "数值计算",
+      "simulink"
+    ],
+    "fileName": "matlab-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-sql",
+    "name": "SQL 参考手册",
+    "description": "SQL 语法与数据库操作参考",
+    "keywords": [
+      "sql",
+      "mysql",
+      "数据库",
+      "查询",
+      "postgresql"
+    ],
+    "fileName": "sql-reference.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-mysql8",
+    "name": "MySQL 8.0 中文参考手册",
+    "description": "MySQL 8.0 官方中文文档，安装、SQL、存储引擎、复制、安全与运维等完整参考",
+    "keywords": [
+      "mysql",
+      "mysql8",
+      "数据库",
+      "innodb",
+      "sql",
+      "查询",
+      "索引",
+      "复制",
+      "备份"
+    ],
+    "fileName": "MYSQL8.0中文参考手册.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-git",
+    "name": "Git 参考手册",
+    "description": "Git 常用命令参考手册，涵盖 config、clone、commit、push、pull、branch、merge、rebase、stash、tag 等",
+    "keywords": [
+      "git",
+      "版本控制",
+      "github",
+      "分支",
+      "合并",
+      "commit",
+      "push",
+      "pull",
+      "clone",
+      "rebase"
+    ],
+    "fileName": "git",
+    "version": "2.0"
+  },
+  {
+    "id": "builtin-php",
+    "name": "PHP 参考手册",
+    "description": "PHP 官方中文文档，函数、类、语言语法完整参考",
+    "keywords": [
+      "php",
+      "函数",
+      "array",
+      "string",
+      "mysql",
+      "pdo",
+      "json",
+      "正则"
+    ],
+    "fileName": "php-chunked-xhtml",
+    "entryFile": "index.html",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-js-core-ref-zh",
+    "name": "JavaScript 核心参考手册",
+    "description": "JavaScript 核心语法与 API 参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）",
+    "keywords": [
+      "javascript",
+      "js",
+      "核心",
+      "参考",
+      "ecma",
+      "语法"
+    ],
+    "fileName": "JS参考手册集合/JavaScript核心参考手册.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-js-ms-manual",
+    "name": "微软 JavaScript 手册",
+    "description": "微软 JavaScript / JScript 脚本手册（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）",
+    "keywords": [
+      "javascript",
+      "js",
+      "微软",
+      "jscript",
+      "脚本",
+      "ie"
+    ],
+    "fileName": "JS参考手册集合/微软JavaScript手册js.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-js-lang-zh-chm",
+    "name": "JavaScript 语言中文参考手册",
+    "description": "JavaScript 语言中文参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）",
+    "keywords": [
+      "javascript",
+      "js",
+      "中文",
+      "参考",
+      "语言",
+      "ecma"
+    ],
+    "fileName": "JS参考手册集合/JavaScript语言中文参考手册.chm",
+    "version": "1.0"
+  },
+  {
+    "id": "builtin-vim-manual-zh-72",
+    "name": "Vim 手册中文版 7.2",
+    "description": "Vim 编辑器中文帮助文档 7.2（内置 CHM；无 .hhc 时请用全文搜索）",
+    "keywords": [
+      "vim",
+      "vi",
+      "编辑器",
+      "帮助",
+      "命令",
+      "7.2",
+      "中文版"
+    ],
+    "fileName": "Vim手册中文版7.2.chm",
+    "version": "7.2"
+  },
+  {
+    "id": "builtin-vue-official-pdf-zh",
+    "name": "Vue.js 官方离线文档（PDF）",
+    "description": "Vue.js 官方文档中文离线版（PDF），按页全文检索；内置 pdf-parse 解析，失败时可安装 Poppler（pdftotext）加入 PATH",
+    "keywords": [
+      "vue",
+      "vue3",
+      "vue2",
+      "前端",
+      "框架",
+      "组合式",
+      "选项式",
+      "cli",
+      "router",
+      "vuex"
+    ],
+    "fileName": "d458f-main/vue_doc/VueJS官方离线文档(搬运版).pdf",
+    "version": "1.0"
+  }
+]

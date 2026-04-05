@@ -1,0 +1,315 @@
+    <!DOCTYPE HTML>
+    <html>
+     <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <style>
+        .navbar__local {
+          flex-grow: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr min-content 1fr;
+          margin: 0;
+          height: 100%;
+          
+          .navbar__item {
+            align-content: center;
+          }
+          .navbar__link {
+            display: inline;
+          }
+          .search {
+            text-align: center;
+          }
+          .next {
+            text-align: right;
+          }
+        }
+      </style>
+      <title>安装信号处理程序</title>
+      <link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-base.css" />
+<link media="all" rel="stylesheet" type="text/css" href="styles/03e73060321a0a848018724a6c83de7f-theme-medium.css" />
+
+     </head>
+     <body class="docs">    <div class="navbar navbar-fixed-top">
+      <div class="navbar__inner clearfix">
+          <ul class="navbar__local">
+            <li class="navbar__item prev"><a href="function.pcntl-setpriority.html" class="navbar__link">« pcntl_setpriority</a></li>
+            <li class="navbar__item search">
+              <!-- Desktop encanced search -->
+              <button
+                id="navbar__search-button"
+                class="navbar__search-button"
+                hidden
+              >
+                    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        width="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+                Search
+              </button>
+            </li>
+            <li class="navbar__item next"><a href="function.pcntl-signal-dispatch.html" class="navbar__link">pcntl_signal_dispatch »</a></li>
+          </ul>
+      </div>
+    </div>    <div id="breadcrumbs" class="clearfix">
+      <ul class="breadcrumbs-container">
+        <li><a href="index.html">PHP Manual</a></li>
+        <li><a href="ref.pcntl.html">PCNTL 函数</a></li>
+        <li>安装信号处理程序</li>
+      </ul>
+    </div>    <div id="layout">
+      <div id="layout-content"><div id="function.pcntl-signal" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">pcntl_signal</h1>
+  <p class="verinfo">(PHP 4 &gt;= 4.1.0, PHP 5, PHP 7, PHP 8)</p><p class="refpurpose"><span class="refname">pcntl_signal</span> &mdash; <span class="dc-title">安装信号处理程序</span></p>
+
+ </div>
+ 
+ <div class="refsect1 description" id="refsect1-function.pcntl-signal-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="methodname"><strong>pcntl_signal</strong></span>(<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$signal</code></span>, <span class="methodparam"><span class="type"><span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span>|<span class="type"><a href="language.types.integer.html" class="type int">int</a></span></span> <code class="parameter">$handler</code></span>, <span class="methodparam"><span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span> <code class="parameter">$restart_syscalls</code><span class="initializer"> = <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong></span></span>): <span class="type"><a href="language.types.boolean.html" class="type bool">bool</a></span></div>
+
+  <p class="para rdfs-comment">
+   <span class="function"><strong>pcntl_signal()</strong></span> 函数为 <code class="parameter">signal</code> 指定的信号安装新的信号处理程序或替换当前信号处理程序。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.pcntl-signal-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+    
+     <dt><code class="parameter">signal</code></dt>
+     <dd>
+      <p class="para">
+       信号编号。
+      </p>
+     </dd>
+    
+    
+     <dt><code class="parameter">handler</code></dt>
+     <dd>
+      <p class="para">
+       信号处理程序。要么是 <span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span>，将调用它来处理信号，要么是全局常量 <strong><code><a href="pcntl.constants.html#constant.sig-ign">SIG_IGN</a></code></strong> 或
+       <strong><code><a href="pcntl.constants.html#constant.sig-dfl">SIG_DFL</a></code></strong>，将分别用于忽略信号或恢复默认信号处理程序。
+      </p>
+      <p class="para">
+       如果指定为 <span class="type"><a href="language.types.callable.html" class="type callable">callable</a></span>，必须实现以下签名：
+      </p>
+      <p class="para">
+       <div class="methodsynopsis dc-description">
+        <span class="methodname"><span class="replaceable">handler</span></span>(<span class="methodparam"><span class="type"><a href="language.types.integer.html" class="type int">int</a></span> <code class="parameter">$signo</code></span>, <span class="methodparam"><span class="type"><a href="language.types.mixed.html" class="type mixed">mixed</a></span> <code class="parameter">$siginfo</code></span>): <span class="type"><a href="language.types.void.html" class="type void">void</a></span></div>
+
+       <dl>
+        
+         <dt><code class="parameter">signal</code></dt>
+         <dd>
+          <span class="simpara">
+           正在处理的信号。
+          </span>
+         </dd>
+        
+        
+         <dt><code class="parameter">siginfo</code></dt>
+         <dd>
+          <span class="simpara">
+           如果操作系统支持 siginfo_t 结构体，这将是依赖于信号的信号信息数组。
+          </span>
+         </dd>
+        
+       </dl>
+      </p>
+      <blockquote class="note"><p><strong class="note">注意</strong>: 
+       <p class="para">
+        请注意，当处理程序设置为对象方法时，该对象的引用计数会增加，这会使其持续存在，直到将处理程序更改为其他内容或脚本结束为止。
+       </p>
+      </p></blockquote>
+     </dd>
+    
+    
+     <dt><code class="parameter">restart_syscalls</code></dt>
+     <dd>
+      <p class="para">
+      指定当信号到达时系统调用重启是否可用。（译注：经查资料，此参数意为系统调用被信号打断时，系统调用是否从
+      开始处重新开始，但根据 http://bugs.php.net/bug.php?id=52121，此参数存在bug无效。）
+      </p>
+     </dd>
+    
+   </dl>
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.pcntl-signal-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   成功时返回 <strong><code><a href="reserved.constants.html#constant.true">true</a></code></strong>， 或者在失败时返回 <strong><code><a href="reserved.constants.html#constant.false">false</a></code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.pcntl-signal-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>7.1.0</td>
+       <td>
+        从 PHP 7.1.0 开始，处理程序 callback 指定为第二个参数，其中包含特定信号的 siginfo。仅当操作系统具有
+        siginfo_t 结构体时才提供此数据。如果操作系统未实现 siginfo_t，则提供 NULL。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.pcntl-signal-examples">
+  <h3 class="title">示例</h3>
+  <p class="para">
+   <div class="example" id="example-1">
+    <p><strong>示例 #1 <span class="function"><strong>pcntl_signal()</strong></span> 示例</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />pcntl_async_signals</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 信号处理函数<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">sig_handler</span><span style="color: #007700">(</span><span style="color: #0000BB">$signo</span><span style="color: #007700">)<br />{<br /><br />     switch (</span><span style="color: #0000BB">$signo</span><span style="color: #007700">) {<br />         case </span><span style="color: #0000BB">SIGTERM</span><span style="color: #007700">:<br />             </span><span style="color: #FF8000">// 处理终止任务<br />             </span><span style="color: #007700">exit;<br />             break;<br />         case </span><span style="color: #0000BB">SIGHUP</span><span style="color: #007700">:<br />             </span><span style="color: #FF8000">// 处理重启任务<br />             </span><span style="color: #007700">break;<br />         case </span><span style="color: #0000BB">SIGUSR1</span><span style="color: #007700">:<br />             echo </span><span style="color: #DD0000">"Caught SIGUSR1...\n"</span><span style="color: #007700">;<br />             break;<br />         default:<br />             </span><span style="color: #FF8000">// 处理所有其它信号<br />     </span><span style="color: #007700">}<br /><br />}<br /><br />echo </span><span style="color: #DD0000">"Installing signal handler...\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 安装信号处理程序<br /></span><span style="color: #0000BB">pcntl_signal</span><span style="color: #007700">(</span><span style="color: #0000BB">SIGTERM</span><span style="color: #007700">, </span><span style="color: #DD0000">"sig_handler"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">pcntl_signal</span><span style="color: #007700">(</span><span style="color: #0000BB">SIGHUP</span><span style="color: #007700">,  </span><span style="color: #DD0000">"sig_handler"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">pcntl_signal</span><span style="color: #007700">(</span><span style="color: #0000BB">SIGUSR1</span><span style="color: #007700">, </span><span style="color: #DD0000">"sig_handler"</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">// 或使用对象<br />// pcntl_signal(SIGUSR1, array($obj, "do_something");<br /><br /></span><span style="color: #007700">echo </span><span style="color: #DD0000">"Generating signal SIGUSR1 to self...\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">// 向当前进程 ID 发送 SIGUSR1 信号<br />// posix_* 函数需要 posix 扩展<br /></span><span style="color: #0000BB">posix_kill</span><span style="color: #007700">(</span><span style="color: #0000BB">posix_getpid</span><span style="color: #007700">(), </span><span style="color: #0000BB">SIGUSR1</span><span style="color: #007700">);<br /><br />echo </span><span style="color: #DD0000">"Done\n"</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.pcntl-signal-notes">
+  <h3 class="title">注释</h3>
+  <p class="para">
+   <span class="function"><strong>pcntl_signal()</strong></span> 不堆叠信号处理程序，而是替换。
+  </p>
+  <div class="refsect2 unknown-26" id="refsect2-function.pcntl-signal-unknown-26">
+   <h4 class="title">调度方式</h4>
+   <p class="para">
+    调度信号处理程序的方法有多种：
+    <ul class="simplelist">
+     <li>启用 <span class="function"><a href="function.pcntl-async-signals.html" class="function">pcntl_async_signals()</a></span> 异步调度。这是推荐方法</li>
+     <li>设置 <a href="control-structures.declare.html#control-structures.declare.ticks" class="link">tick</a> 频率</li>
+     <li>使用 <span class="function"><a href="function.pcntl-signal-dispatch.html" class="function">pcntl_signal_dispatch()</a></span> 手动调度</li>
+    </ul>
+   </p>
+   <p class="para">
+    当信号以异步方式或使用基于 tick 的执行调度时，阻塞函数（如 <span class="function"><a href="function.sleep.html" class="function">sleep()</a></span>）可能会被中断。
+   </p>
+  </div>
+
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.pcntl-signal-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li><a href="https://en.wikipedia.org/wiki/Signal_(IPC)" class="link external">&raquo;&nbsp;Signal (IPC)</a> on Wikipedia</li>
+    <li><span class="function"><a href="function.pcntl-async-signals.html" class="function" rel="rdfs-seeAlso">pcntl_async_signals()</a> - Enable/disable asynchronous signal handling or return the old setting</span></li>
+    <li><span class="function"><a href="function.pcntl-fork.html" class="function" rel="rdfs-seeAlso">pcntl_fork()</a> - 在当前进程当前位置产生分叉（fork）</span></li>
+    <li><span class="function"><a href="function.pcntl-signal-dispatch.html" class="function" rel="rdfs-seeAlso">pcntl_signal_dispatch()</a> - 调用等待信号的处理程序</span></li>
+    <li><span class="function"><a href="function.pcntl-waitpid.html" class="function" rel="rdfs-seeAlso">pcntl_waitpid()</a> - 等待或返回 fork 的子进程状态</span></li>
+   </ul>
+  </p>
+ </div>
+
+
+</div></div></div><script type="text/javascript" src="search-combined.js"></script><script type="text/javascript" src="js/67ae199ee27cc87120cab9ba49d1b776-FuzzySearch.min.js"></script><script type="text/javascript" src="js/f5555778cd757f2cb49676062898832b-search.js"></script>    <div id="search-modal__backdrop" class="search-modal__backdrop">
+      <div
+        role="dialog"
+        aria-label="Search modal"
+        id="search-modal"
+        class="search-modal"
+      >
+        <div class="search-modal__header">
+          <div class="search-modal__form">
+            <div class="search-modal__input-icon">
+              <!-- https://feathericons.com search -->
+              <svg xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                width="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="search-modal__input"
+              class="search-modal__input"
+              placeholder="Search docs"
+              aria-label="Search docs"
+            />
+          </div>
+    
+          <button aria-label="Close" class="search-modal__close">
+            <!-- https://pictogrammers.com/library/mdi/icon/close/ -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              width="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            </svg>
+          </button>
+        </div>
+        <div
+          role="listbox"
+          aria-label="Search results"
+          id="search-modal__results"
+          class="search-modal__results"
+        ></div>
+        <div class="search-modal__helper-text">
+          <div>
+            <kbd>↑</kbd> and <kbd>↓</kbd> to navigate •
+            <kbd>Enter</kbd> to select •
+            <kbd>Esc</kbd> to close • <kbd>/</kbd> to open
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*{{{Search Modal*/
+            const language = 'local';
+            initSearchModal();
+            initPHPSearch(language).then((searchCallback) => {
+                initSearchUI({language, searchCallback, limit: 30});
+            });
+            /*}}}*/
+        });
+    </script></body></html>
