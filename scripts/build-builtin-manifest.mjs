@@ -137,7 +137,7 @@ const BUILTIN_MANUALS = [
     name: 'Vue.js \u5b98\u65b9\u79bb\u7ebf\u6587\u6863\uff08PDF\uff09',
     description: 'Vue.js \u5b98\u65b9\u6587\u6863\u4e2d\u6587\u79bb\u7ebf\u7248\uff08PDF\uff09\uff0c\u6309\u9875\u5168\u6587\u68c0\u7d22\uff1b\u5185\u7f6e pdf-parse \u89e3\u6790\uff0c\u5931\u8d25\u65f6\u53ef\u5b89\u88c5 Poppler\uff08pdftotext\uff09\u52a0\u5165 PATH',
     keywords: ['vue', 'vue3', 'vue2', '\u524d\u7aef', '\u6846\u67b6', '\u7ec4\u5408\u5f0f', '\u9009\u9879\u5f0f', 'cli', 'router', 'vuex'],
-    fileName: 'd458f-main/vue_doc/VueJS\u5b98\u65b9\u79bb\u7ebf\u6587\u6863(\u642c\u8fd0\u7248).pdf',
+    fileName: 'VueJS\u5b98\u65b9\u79bb\u7ebf\u6587\u6863(\u642c\u8fd0\u7248).pdf',
     version: '1.0'
   }
 ]
