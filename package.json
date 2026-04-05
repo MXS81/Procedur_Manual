@@ -1,4 +1,13 @@
 {
+  "name": "procedur-manual-utools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "猿手册 uTools 插件：本地技术手册阅读与全文检索",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MXS81/Procedur_Manual.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -10,16 +10,18 @@ lerna-debug.log*
 node_modules
 dist
 
-# preload 独立 npm 依赖，由 postinstall / install:preload 安装
 public/preload/node_modules
 
-# 由 scripts/copy-bundled-7za.mjs 从 7zip-bin-win 复制，勿手传二进制
 public/tools/7za.exe
 
-# 鍐呯疆鎵嬪唽閲岃甯︾殑 Git 鐩綍锛堜綋绉ぇ锛屼笖浼氬鑷存暣搴撳鍒舵椂澶辫触锛�
 public/builtin-manuals/**/.git/
 dist-ssr
 *.local
+
+# 
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*

@@ -60,6 +60,23 @@
     "version": "1.0"
   },
   {
+    "id": "builtin-python-313-core-ref-v110",
+    "name": "Python 3.13.x 核心参考与实例手册",
+    "description": "Python 3.13.x 语言核心与实例参考（CHM；无 .hhc 时侧栏可能缺失，请用全文搜索）",
+    "keywords": [
+      "python",
+      "py",
+      "3.13",
+      "核心",
+      "实例",
+      "标准库",
+      "pip",
+      "typing"
+    ],
+    "fileName": "Python 3.13.x 核心参考与实例手册 v1.10.chm",
+    "version": "1.10"
+  },
+  {
     "id": "builtin-cpp",
     "name": "C/C++ 参考手册",
     "description": "C/C++ 标准库函数与语言参考",

@@ -44,6 +44,14 @@ const BUILTIN_MANUALS = [
     version: '1.0'
   },
   {
+    id: 'builtin-python-313-core-ref-v110',
+    name: 'Python 3.13.x \u6838\u5fc3\u53c2\u8003\u4e0e\u5b9e\u4f8b\u624b\u518c',
+    description: 'Python 3.13.x \u8bed\u8a00\u6838\u5fc3\u4e0e\u5b9e\u4f8b\u53c2\u8003\uff08CHM\uff1b\u65e0 .hhc \u65f6\u4fa7\u680f\u53ef\u80fd\u7f3a\u5931\uff0c\u8bf7\u7528\u5168\u6587\u641c\u7d22\uff09',
+    keywords: ['python', 'py', '3.13', '\u6838\u5fc3', '\u5b9e\u4f8b', '\u6807\u51c6\u5e93', 'pip', 'typing'],
+    fileName: 'Python 3.13.x \u6838\u5fc3\u53c2\u8003\u4e0e\u5b9e\u4f8b\u624b\u518c v1.10.chm',
+    version: '1.10'
+  },
+  {
     id: 'builtin-cpp',
     name: 'C/C++ \u53c2\u8003\u624b\u518c',
     description: 'C/C++ \u6807\u51c6\u5e93\u51fd\u6570\u4e0e\u8bed\u8a00\u53c2\u8003',

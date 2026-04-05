@@ -71,6 +71,8 @@
   padding: 12px;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
   gap: 0;
   -webkit-overflow-scrolling: touch;
 }
@@ -133,9 +135,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Do not use flex:1 from .pm-search-wrap ¡ª it fills sidebar height and vertically centers the field */
 .pdf-search-inner.pm-search-wrap {
   width: 100%;
   max-width: none;
+  flex: 0 0 auto;
+  align-self: stretch;
+  align-items: stretch;
 }
 
 .pdf-search-field.pm-search-field {
