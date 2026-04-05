@@ -62,7 +62,7 @@
   {
     "id": "builtin-python-313-core-ref-v110",
     "name": "Python 3.13.x 核心参考与实例手册",
-    "description": "Python 3.13.x 语言核心与实例参考（CHM；无 .hhc 时侧栏可能缺失，请用全文搜索）",
+    "description": "Python 3.13.x 语言核心与实例参考（CHM，含完整目录与全文搜索）",
     "keywords": [
       "python",
       "py",
