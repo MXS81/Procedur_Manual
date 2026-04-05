@@ -144,6 +144,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const iframeRef = useRef(null)
   const searchTimerRef = useRef(null)
   const pageSearchRef = useRef(null)
+  const sidebarRef = useRef(null)
 
   // ---- History ----
   const historyRef = useRef({ stack: [], idx: -1 })
@@ -291,17 +292,36 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     return () => el.removeEventListener('load', run)
   }, [iframeDoc, activeFragment])
 
-  // ---- Sidebar resize ----
+  // ---- Sidebar resize (direct DOM, bypass React during drag) ----
   const onResizeStart = useCallback((e) => {
+    if (e.button !== 0) return
     e.preventDefault()
     const startX = e.clientX
-    const startW = sidebarWidth
-    const onMove = (ev) => setSidebarWidth(Math.max(180, Math.min(window.innerWidth * 0.5, startW + ev.clientX - startX)))
-    const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); document.body.style.cursor = '' }
+    const sidebar = sidebarRef.current
+    if (!sidebar) return
+    const startW = sidebar.offsetWidth
+    const iframe = iframeRef.current
+
+    const finish = () => {
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      if (iframe) iframe.style.pointerEvents = ''
+      setSidebarWidth(sidebar.offsetWidth)
+    }
+    const onMove = (ev) => {
+      if (ev.buttons === 0) { finish(); return }
+      sidebar.style.width = Math.max(180, Math.min(window.innerWidth * 0.5, startW + ev.clientX - startX)) + 'px'
+    }
+    const onUp = () => finish()
+
     document.body.style.cursor = 'col-resize'
-    document.addEventListener('mousemove', onMove)
-    document.addEventListener('mouseup', onUp)
-  }, [sidebarWidth])
+    document.body.style.userSelect = 'none'
+    if (iframe) iframe.style.pointerEvents = 'none'
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }, [])
 
   // ---- Page search ----
   const togglePageSearch = useCallback(() => {
@@ -422,7 +442,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
 
       <div className="chm-main">
         {sidebarVisible && (
-          <div className="chm-sidebar" style={{ width: sidebarWidth }}>
+          <div className="chm-sidebar" ref={sidebarRef} style={{ width: sidebarWidth }}>
             <div className="chm-search-box">
               {!searchCompile.ok && searchTerm.trim() && (
                 <div className="chm-search-err">{searchCompile.error}</div>
