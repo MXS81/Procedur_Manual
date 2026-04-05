@@ -130,7 +130,7 @@ window.services = {
     }
   },
 
-  /** ?? HTML ???????????? http-equiv Content-Type ?? charset?? */
+  /** 从 HTML 头部读取 meta http-equiv Content-Type 或 charset 声明 */
   _parseHtmlDeclaredCharset (buffer) {
     const headLen = Math.min(32768, buffer.length)
     const head = buffer.subarray(0, headLen).toString('latin1')
@@ -153,7 +153,7 @@ window.services = {
   },
 
   /**
-   * ?? HTML ???????????? CHM ????????
+   * 按 HTML 声明编码读取文本（用于 CHM 内页等多编码场景）
    */
   readTextFileChmAware (filePath) {
     const buffer = fs.readFileSync(filePath)
@@ -171,7 +171,7 @@ window.services = {
     return fs.readFileSync(filePath).toString('base64')
   },
 
-  /** ?????? pdf.js ???????????? PDF ?? */
+  /** 供 pdf.js 等使用的原始 PDF 二进制 */
   readBinaryAsUint8 (filePath) {
     const buf = fs.readFileSync(filePath)
     return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
@@ -204,7 +204,7 @@ window.services = {
     if (/^!\[/.test(trimmed)) return true
     if (/^\|.*\|$/.test(trimmed)) return true
     if (/^<[a-z/]/.test(trimmed)) return true
-    if (/^\[??/.test(trimmed)) return true
+    if (/^\[/.test(trimmed)) return true
     return false
   },
 
@@ -291,7 +291,7 @@ window.services = {
   },
 
   /**
-   * ?????????? PHP ?????? HTML ?????? entryFile?? IframeManualReader?Node ?? + srcdoc???? GBK ?? UTF-8 ????
+   * 检测是否为 PHP 分块 HTML 手册：若存在 chunklist 则不设 entryFile，由 IframeManualReader 用 Node 列表 + srcdoc 处理 GBK/UTF-8 等编码
    */
   suggestBundledHtmlEntry (dirPath) {
     if (!dirPath || !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) {
@@ -319,7 +319,7 @@ window.services = {
       hasChunkToc = /chunklist[^"'>]*chunklist_set|chunklist_set|class\s*=\s*["'][^"']*chunklist/i.test(snippet)
     } catch { /* skip */ }
 
-    // ???? PHP ?? chunk ?????? Iframe??????????????? chunklist ??????????????????
+    // 含 PHP chunk 目录时不在此设入口，由 Iframe 侧按 chunklist 解析
     if (hasChunkToc) {
       return { entryFile: entry, reason: 'chunk-toc', htmlCount }
     }
@@ -618,8 +618,8 @@ window.services = {
   },
 
   // ========== PDF Extraction ==========
-  // ?? pdf-parse v2?PDFParse ??????????API ???????????????
-  // ????? Poppler ?? pdftotext ?? PATH ?????https://github.com/oschwartz10612/poppler-windows/releases??
+  // pdf-parse v2：PDFParse 使用不同 API；索引抽取优先 pdf-parse
+  // 备选：将 Poppler 的 pdftotext 加入 PATH，见 https://github.com/oschwartz10612/poppler-windows/releases/
 
   _pdftotextCandidateBins () {
     const out = ['pdftotext', 'pdftotext.exe']
@@ -665,7 +665,7 @@ window.services = {
   },
 
   /**
-   * ???????????onProgress?(currentPage, totalPages)
+   * 抽取 PDF 文本块供索引；可选 onProgress(currentPage, totalPages)
    */
   async extractPdfIndexChunks (filePath, onProgress) {
     const { PDFParse } = require('pdf-parse')
@@ -674,7 +674,7 @@ window.services = {
       try {
         const workerPath = require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs')
         PDFParse.setWorker(pathToFileURL(workerPath).href)
-      } catch { /* ?????? */ }
+      } catch { /* worker 可选 */ }
 
       const buffer = fs.readFileSync(filePath)
       parser = new PDFParse({ data: buffer, verbosity: 0 })
@@ -689,7 +689,7 @@ window.services = {
         const t = (pg && pg.text ? String(pg.text) : '').trim()
         if (t.length >= 12) {
           const lines = t.split(/\n/).map(l => l.trim()).filter(Boolean)
-          const title = (lines[0] || ('?? ' + (pg.num || i + 1) + ' ??')).substring(0, 120)
+          const title = (lines[0] || ('第 ' + (pg.num || i + 1) + ' 页')).substring(0, 120)
           chunks.push({
             pageNum: pg.num != null ? pg.num : i + 1,
             title,
@@ -733,14 +733,14 @@ window.services = {
   },
 
   /**
-   * ?????? PDF ?? base64 ???uTools/WebView ?? file:// ?????????? file:// ?????
+   * 小体积 PDF 以内联 base64 供 uTools/WebView 打开；过大则退回 file://（部分环境对 file:// 有限制）
    */
   getPdfViewerUrl (filePath) {
     const INLINE_MAX = 8 * 1024 * 1024
     try {
-      if (!filePath || !fs.existsSync(filePath)) return { kind: 'error', message: '??????' }
+      if (!filePath || !fs.existsSync(filePath)) return { kind: 'error', message: '文件不存在' }
       const st = fs.statSync(filePath)
-      if (!st.isFile()) return { kind: 'error', message: '????' }
+      if (!st.isFile()) return { kind: 'error', message: '不是文件' }
       if (st.size <= INLINE_MAX) {
         return { kind: 'inline-base64', base64: fs.readFileSync(filePath).toString('base64') }
       }
@@ -751,10 +751,10 @@ window.services = {
   },
 
   // ========== CHM Decompilation ==========
-  // ?????/?? CHM ????? _resolveChmFilePath??????..?file://????/index??.hhc ??????
-  // ?????? # ???? ChmReader ????.hhc ?? </ul> ???? liStack ???? <li>?????????????
+  // 打开/跳转 CHM 时一律走 _resolveChmFilePath（大小写、..、file://、目录/index、.hhc 实体解码）
+  // 正文内链保留 # 锚点由 ChmReader 滚动；.hhc 里嵌套 </ul> 必须用 liStack 恢复父 <li>，否则三级以下目录错位
 
-  /** ???????? HTML ?? .hhc??????????????????? */
+  /** 解压结果须含可读 HTML 或 .hhc，避免把「有文件但残缺」的缓存当成可用 */
   _chmExtractLooksUsable (extractDir) {
     try {
       const extGroups = [['.html', '.htm'], ['.xhtml', '.shtml']]
@@ -778,7 +778,7 @@ window.services = {
     return 'hh.exe'
   },
 
-  /** ?????public/tools ?? dist/tools?????? copy-bundled-7za.mjs ?? 7zip-bin-win ???? */
+  /** 插件内置：public/tools → dist/tools（构建时用 copy-bundled-7za.mjs 从 7zip-bin-win 复制） */
   _bundled7zExePath () {
     try {
       const toolDir = path.join(__dirname, '..', 'tools')
@@ -791,7 +791,7 @@ window.services = {
     return null
   },
 
-  /** 7-Zip?PM_SEVEN_ZIP ?? ?? tools ?? ?????? + PATH???? CHM ?? 7z ???hh.exe ???? */
+  /** 7-Zip：PM_SEVEN_ZIP → 内置 tools → 常见安装路径 + PATH（不少 CHM 仅 7z 能解，hh.exe 会失败） */
   _find7zExe () {
     const env7 = process.env.PM_SEVEN_ZIP
     try {
@@ -839,23 +839,23 @@ window.services = {
     try { fs.rmSync(extractDir, { recursive: true, force: true }) } catch { /* */ }
   },
 
-  /** ?? SearchService CHM_INDEX_MAX_HTML_FILES ????????????????? HTML ?? */
+  /** 与 SearchService CHM_INDEX_MAX_HTML_FILES 一致：全文扫描与索引上限，避免万级 HTML 卡死 */
   _CHM_CONTENT_SCAN_MAX_FILES: 2000,
 
   decompileChm (chmPath) {
     if (!chmPath) {
-      throw new Error('CHM ????')
+      throw new Error('CHM 路径无效')
     }
     const resolvedChm = path.resolve(chmPath)
     let chmSize = 0
     try {
       if (!fs.existsSync(resolvedChm) || !fs.statSync(resolvedChm).isFile()) {
-        throw new Error('CHM ??????????')
+        throw new Error('CHM 文件不存在或无法访问')
       }
       chmSize = fs.statSync(resolvedChm).size
     } catch (e) {
       if (e.message && e.message.includes('CHM')) throw e
-      throw new Error('CHM ??????????')
+      throw new Error('CHM 文件不存在或无法访问')
     }
 
     const hash = crypto.createHash('md5').update(resolvedChm).digest('hex').substring(0, 12)
@@ -905,7 +905,7 @@ window.services = {
         execFileSync(sevenZip, ['x', workChm, outSwitch, '-y', '-bb0'], {
           timeout: timeout7z, windowsHide: true, stdio: 'ignore'
         })
-      } catch { /* 7z ??????????? */ }
+      } catch { /* 7z 非零退出仍可能已解压 */ }
       return waitUsable(largeChm ? 48 : 20)
     }
 
@@ -914,7 +914,7 @@ window.services = {
         execFileSync(hhPath, ['-decompile', extractDir, workChm], {
           timeout: timeoutHh, windowsHide: true, stdio: 'ignore'
         })
-      } catch { /* hh ?????? */ }
+      } catch { /* hh 常非零退出 */ }
       return waitUsable(largeChm ? 56 : 24)
     }
 
@@ -968,15 +968,15 @@ window.services = {
   },
 
   /**
-   * CHM .hhc/.hhk ?? Local ????file:/// ?????URL ???mk:/ms-its:??
-   * ??????? / ???? #??????????????????
+   * CHM .hhc/.hhk 中 Local 可能是 file:///、相对路径、URL 编码或 mk:@MSITStore:/ms-its:
+   * 返回统一相对路径（正斜杠）；锚点 # 之前已在调用方拆分
    */
   _normalizeChmLocal (local) {
     if (!local) return ''
     let s = String(local).trim().split('#')[0]
     try {
       s = decodeURIComponent(s.replace(/\+/g, ' '))
-    } catch { /* ???? */ }
+    } catch { /* 非法编码则保留原串 */ }
 
     const lower = s.toLowerCase()
     if (lower.startsWith('file:')) {
@@ -1001,7 +1001,7 @@ window.services = {
     return s.replace(/\\/g, '/')
   },
 
-  /** .hhc/.hhk ?? PARAM ?? VALUE ?? &amp;??&quot; ?????????????? */
+  /** .hhc/.hhk 中 PARAM 的 VALUE 内 &amp;、&quot; 等实体还原为字符 */
   _unescapeHhcAttr (s) {
     if (s == null || s === '') return ''
     return String(s)
@@ -1020,13 +1020,13 @@ window.services = {
       .replace(/&amp;/g, '&')
   },
 
-  /** ?????????????????? startsWith ?????? Windows ????/?????? */
+  /** 判断 filePath 是否在 extract 根之下（relative 不以 .. 开头且非绝对路径） */
   _chmFileWithinExtract (filePath, extractRootResolved) {
     const rel = path.relative(extractRootResolved, filePath)
     return !!rel && !rel.startsWith('..') && !path.isAbsolute(rel)
   },
 
-  /** candidate ???? root ???????? root?? */
+  /** candidate 是否落在 root 目录树内（含 root 自身） */
   _pathUnderChmRoot (candidate, root) {
     const r = path.resolve(root)
     const c = path.resolve(candidate)
@@ -1035,7 +1035,7 @@ window.services = {
   },
 
   /**
-   * ???????? CHM Local???? ../ ??????????????????????? index.html??
+   * 在 CHM 解压根内解析 Local（含 ../），大小写不敏感，末级可为目录并回退 index.html
    */
   _resolveChmPathSmart (root, relPosix) {
     const parts = relPosix.split(/[/\\]+/).filter(p => p && p !== '.')
@@ -1115,7 +1115,7 @@ window.services = {
     return null
   },
 
-  /** ???????? Local ????????????????????????? */
+  /** 将原始 Local 规范为相对 extract 的正斜杠路径（尽量解析到真实文件） */
   _canonicalizeChmLocal (extractDir, rawLocal) {
     const norm = this._normalizeChmLocal(rawLocal)
     if (!norm) return ''
@@ -1159,7 +1159,7 @@ window.services = {
   },
 
   /**
-   * ???? script / stylesheet ?????? srcdoc+UTF-8 ?? GBK ?? .js/.css ??????
+   * 非 UTF-8 页：将外链 script/stylesheet 内联进 srcdoc，避免 GBK 页引用 .js/.css 乱码
    */
   _inlineChmExternalAssets (html, extractDir, pageDirPosix, decoderLabel) {
     if (!decoderLabel || decoderLabel === 'utf-8') return html
@@ -1272,8 +1272,8 @@ window.services = {
   },
 
   /**
-   * ?????????? HTML????/?????? .chm ?????????????? HTML ??????
-   * ?????? _resolveChmFilePath??..???????? index???????? API ???? join ??????
+   * 读取解压目录内 HTML（相对路径）；与 .chm 同级的散落 HTML 同样适用
+   * 路径经 _resolveChmFilePath（..、目录、index）；勿对不可信路径直接 API 拼接 join
    */
   getChmPageSrcdoc (extractDir, relPath) {
     if (!relPath || !extractDir) return ''
@@ -1315,14 +1315,14 @@ window.services = {
   },
 
   /**
-   * ???????? HTML ???? CHM ???????????????? getChmPageSrcdoc???
+   * 打包离线 HTML 目录内页：与 CHM 共用解析与内联逻辑，见 getChmPageSrcdoc
    */
   getBundledHtmlPageSrcdoc (rootDir, relPath) {
     return this.getChmPageSrcdoc(rootDir, relPath)
   },
 
   /**
-   * ???? searchModes.compileSearchMatcher ?????CHM/?? HTML ??????
+   * 与 searchModes.compileSearchMatcher 一致，用于 CHM/离线 HTML 正文搜索
    * opts: { matchCase?, wholeWord?, useRegex? }
    */
   _contentSearchFind (text, keyword, opts = {}) {
@@ -1503,7 +1503,7 @@ window.services = {
   _parseHhcSitemap (html) {
     const items = []
     const stack = [items]
-    /** ?? <ul> ?????????? <li>?????????? PARAM ?????????? */
+    /** 遇 <ul> 压栈、</ul> 出栈；<li> 上一条 PARAM 归属当前项 */
     const liStack = []
 
     const tokens = html.replace(/\r\n?/g, '\n').split(/(<\/?(?:UL|LI|OBJECT|PARAM)[^>]*>)/gi)

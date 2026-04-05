@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo, memo, createContext, useContext, useSyncExternalStore } from 'react'
 import {
   resolveBundledNavigationTarget,
   splitBundledActive,
@@ -8,12 +8,19 @@ import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightReg
 import SearchInputWithModes from './SearchInputWithModes'
 import './ChmReader.css'
 
-const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, pathKey = 'r' }) {
+const TocStoreContext = createContext(null)
+
+const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
+  const store = useContext(TocStoreContext)
+  const isActive = useSyncExternalStore(
+    store.subscribe,
+    () => !!(node.local && store.getActivePath() === node.local)
+  )
+
   const initiallyOpen = depth < 2
   const [expanded, setExpanded] = useState(initiallyOpen)
   const [childrenEverShown, setChildrenEverShown] = useState(initiallyOpen)
   const hasChildren = node.children && node.children.length > 0
-  const isActive = !!(node.local && activePath === node.local)
 
   const toggleExpand = useCallback((e) => {
     e.preventDefault()
@@ -24,15 +31,12 @@ const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, 
   }, [hasChildren])
 
   const onMainActivate = useCallback(() => {
-    if (node.local) {
-      onSelect(node.local)
-      return
-    }
+    if (node.local) store.select(node.local)
     if (hasChildren) {
       setChildrenEverShown(true)
       setExpanded(v => !v)
     }
-  }, [hasChildren, node.local, onSelect])
+  }, [hasChildren, node.local, store])
 
   const onMainKeyDown = useCallback((e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -41,7 +45,7 @@ const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, 
     }
   }, [onMainActivate])
 
-  const mainInteractive = !!(node.local || (hasChildren && !node.local))
+  const mainInteractive = !!(node.local || hasChildren)
 
   return (
     <li className='chm-toc-item'>
@@ -56,7 +60,7 @@ const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, 
               type='button'
               className={'chm-toc-arrow-btn' + (expanded ? ' expanded' : '')}
               aria-expanded={expanded}
-              aria-label={expanded ? '\u6298\u53e0' : '\u5c55\u5f00'}
+              aria-label={expanded ? '折叠' : '展开'}
               onClick={toggleExpand}
             >
               <span className='chm-toc-arrow' aria-hidden>&#9654;</span>
@@ -82,8 +86,6 @@ const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, 
               key={pathKey + '/' + i}
               pathKey={pathKey + '/' + i}
               node={child}
-              activePath={activePath}
-              onSelect={onSelect}
               depth={depth + 1}
             />
           ))}
@@ -91,7 +93,11 @@ const TocItem = memo(function TocItem ({ node, activePath, onSelect, depth = 0, 
       )}
     </li>
   )
-})
+}, (prev, next) =>
+  prev.node === next.node &&
+  prev.depth === next.depth &&
+  prev.pathKey === next.pathKey
+)
 
 function highlightSnippet (snippet, highlightRe) {
   if (!snippet) return snippet
@@ -125,7 +131,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
       if (info.defaultPage) setActivePage(info.defaultPage)
       setLoading(false)
     } catch (e) {
-      setError('CHM ????: ' + e.message)
+      setError('CHM 加载失败: ' + e.message)
       setLoading(false)
     }
   }, [chmPath])
@@ -134,6 +140,34 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     () => splitBundledActive(activePage),
     [activePage]
   )
+
+  const handleSelectPage = useCallback((localPath) => {
+    setActivePage(localPath)
+  }, [])
+
+  // TocStore: avoids passing activePath/onSelect as props to every TocItem
+  const activePathRef = useRef('')
+  const selectRef = useRef(handleSelectPage)
+  const listenersRef = useRef(new Set())
+  activePathRef.current = activePath
+  selectRef.current = handleSelectPage
+
+  const tocStore = useMemo(() => ({
+    subscribe (cb) {
+      listenersRef.current.add(cb)
+      return () => listenersRef.current.delete(cb)
+    },
+    getActivePath () { return activePathRef.current },
+    select (p) { selectRef.current(p) }
+  }), [])
+
+  const prevActiveRef = useRef(activePath)
+  useEffect(() => {
+    if (prevActiveRef.current !== activePath) {
+      prevActiveRef.current = activePath
+      listenersRef.current.forEach(cb => cb())
+    }
+  }, [activePath])
 
   useEffect(() => {
     if (!chmInfo?.extractDir || !activePath) {
@@ -148,10 +182,6 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     }
   }, [chmInfo, activePath])
 
-  const handleSelectPage = useCallback((localPath) => {
-    setActivePage(localPath)
-  }, [])
-
   useEffect(() => {
     if (!iframeDoc || !chmInfo) return
     const el = iframeRef.current
@@ -162,7 +192,6 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
       try {
         const doc = el.contentDocument
         if (!doc) return
-        const extractDir = chmInfo.extractDir.replace(/\\/g, '/')
         const click = (e) => {
           const a = e.target.closest && e.target.closest('a[href]')
           if (!a) return
@@ -240,7 +269,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
 
   const hasTocOutline = (chmInfo?.toc?.length ?? 0) > 0
 
-  if (loading) return <div className="chm-reader"><div className="chm-status">???...</div></div>
+  if (loading) return <div className="chm-reader"><div className="chm-status">{'加载中…'}</div></div>
   if (error) return <div className="chm-reader"><div className="chm-status chm-error">{error}</div></div>
 
   return (
@@ -249,11 +278,11 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
         <button className="btn btn-ghost btn-back" onClick={onBack}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <span className="chm-title">{manualName || 'CHM ??'}</span>
+        <span className="chm-title">{manualName || 'CHM 手册'}</span>
         <button
           className={'btn btn-ghost chm-sidebar-toggle' + (sidebarVisible ? ' active' : '')}
           onClick={() => setSidebarVisible(v => !v)}
-          title={sidebarVisible ? '????' : '????'}
+          title={sidebarVisible ? '隐藏目录' : '显示目录'}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -275,7 +304,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                 options={searchModeOpts}
                 onOptionsChange={setSearchModeOpts}
                 onClear={() => setSearchTerm('')}
-                placeholder={searchMode === 'toc' ? '?????' : '???????'}
+                placeholder={searchMode === 'toc' ? '搜索目录…' : '搜索页面内容…'}
                 className="chm-search-inner"
                 inputClassName="chm-pm-field"
               />
@@ -285,46 +314,47 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
               <button
                 className={'chm-tab' + (searchMode === 'toc' ? ' active' : '')}
                 onClick={() => setSearchMode('toc')}
-              >??</button>
+              >{'目录'}</button>
               <button
                 className={'chm-tab' + (searchMode === 'content' ? ' active' : '')}
                 onClick={() => setSearchMode('content')}
-              >????</button>
+              >{'全文搜索'}</button>
             </div>
 
             <div className="chm-toc-container">
               {searchMode === 'toc' ? (
                 !hasTocOutline ? (
                   <div className="chm-toc-empty chm-toc-nooutline">
-                    <p className="chm-toc-nooutline-title">?????????</p>
-                    <p className="chm-toc-muted">? CHM ?????? .hhc ????????????????????????????????????</p>
+                    <p className="chm-toc-nooutline-title">{'格式不支持目录生成'}</p>
+                    <p className="chm-toc-muted">{'此 CHM 解压后无标准 .hhc 目录，应用无法生成侧栏目录。请使用「全文搜索」浏览；正文仍从默认页打开。'}</p>
                   </div>
                 ) : filteredToc.length > 0 ? (
-                  <ul className="chm-toc-root">
-                    {filteredToc.map((node, i) => (
-                      <TocItem
-                        key={'r/' + i}
-                        pathKey={'r/' + i}
-                        node={node}
-                        activePath={activePath}
-                        onSelect={handleSelectPage}
-                      />
-                    ))}
-                  </ul>
+                  <TocStoreContext.Provider value={tocStore}>
+                    <ul className="chm-toc-root">
+                      {filteredToc.map((node, i) => (
+                        <TocItem
+                          key={'r/' + i}
+                          pathKey={'r/' + i}
+                          node={node}
+                          depth={0}
+                        />
+                      ))}
+                    </ul>
+                  </TocStoreContext.Provider>
                 ) : searchTerm && searchCompile.ok ? (
-                  <div className="chm-toc-empty">?????????</div>
+                  <div className="chm-toc-empty">{'目录中未找到匹配项'}</div>
                 ) : searchTerm ? (
-                  <div className="chm-toc-empty">??????</div>
+                  <div className="chm-toc-empty">{'搜索条件无效'}</div>
                 ) : (
-                  <div className="chm-toc-empty">?????</div>
+                  <div className="chm-toc-empty">{'无目录信息'}</div>
                 )
               ) : (
                 !searchTerm.trim() ? (
-                  <div className="chm-toc-empty">?????????????</div>
+                  <div className="chm-toc-empty">{'输入关键词搜索所有页面内容'}</div>
                 ) : !searchCompile.ok ? (
-                  <div className="chm-toc-empty">??????</div>
+                  <div className="chm-toc-empty">{'修正搜索条件'}</div>
                 ) : searching ? (
-                  <div className="chm-toc-empty">???...</div>
+                  <div className="chm-toc-empty">{'搜索中…'}</div>
                 ) : contentResults.length > 0 ? (
                   <ul className="chm-search-results">
                     {contentResults.map((r, i) => (
@@ -335,7 +365,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                       >
                         <div className="chm-result-title">
                           {r.title}
-                          <span className="chm-result-count">{r.matchCount} ???</span>
+                          <span className="chm-result-count">{r.matchCount} {'处匹配'}</span>
                         </div>
                         <div className="chm-result-snippet">
                           {highlightSnippet(r.snippet, contentHighlightRe)}
@@ -344,7 +374,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     ))}
                   </ul>
                 ) : (
-                  <div className="chm-toc-empty">???????</div>
+                  <div className="chm-toc-empty">{'未找到匹配内容'}</div>
                 )
               )}
             </div>
@@ -361,9 +391,9 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
               title="CHM Content"
             />
           ) : activePath ? (
-            <div className="chm-status">??????</div>
+            <div className="chm-status">{'无法加载页面'}</div>
           ) : (
-            <div className="chm-status">???????????????</div>
+            <div className="chm-status">{'请从左侧选择页面或使用全文搜索'}</div>
           )}
         </div>
       </div>

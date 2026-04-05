@@ -44,7 +44,7 @@ function normalizeUint8 (v) {
   return null
 }
 
-/** preload 直读二进制；若环境未暴露 Uint8Array 则退�? base64 解码 */
+/** preload 直读二进制；若环境未暴露 Uint8Array 则退回 base64 解码 */
 function readPdfFileAsUint8 (filePath) {
   try {
     if (typeof window.services.readBinaryAsUint8 === 'function') {
@@ -91,18 +91,18 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
     if (detectedType === 'chm' || detectedType === 'mixed') return
     setPdfBytes(null)
     setHtml('')
-    if (!resolvedPath) { setError('未指定文件路�?'); setLoading(false); return () => {} }
+    if (!resolvedPath) { setError('\u672a\u6307\u5b9a\u6587\u4ef6\u8def\u5f84'); setLoading(false); return () => {} }
     try {
       const info = window.services.pathInfo(resolvedPath)
-      if (!info.exists) { setError('文件不存�?: ' + resolvedPath); setLoading(false); return () => {} }
+      if (!info.exists) { setError('\u6587\u4ef6\u4e0d\u5b58\u5728: ' + resolvedPath); setLoading(false); return () => {} }
 
       if (detectedType === 'pdf') {
         try {
           const bytes = readPdfFileAsUint8(resolvedPath)
           if (bytes?.byteLength) setPdfBytes(bytes)
-          else setError('PDF 文件为空')
+          else setError('PDF \u6587\u4ef6\u4e3a\u7a7a')
         } catch (e2) {
-          setError('无法加载 PDF: ' + e2.message)
+          setError('\u65e0\u6cd5\u52a0\u8f7d PDF: ' + e2.message)
         }
         setLoading(false)
         return
@@ -123,7 +123,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
       }
       setLoading(false)
     } catch (e) {
-      setError('加载失败: ' + e.message); setLoading(false)
+      setError('\u52a0\u8f7d\u5931\u8d25: ' + e.message); setLoading(false)
     }
   }, [resolvedPath, detectedType])
 
@@ -144,7 +144,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
       <ChmReader
         chmPath={resolvedPath}
         onBack={goBack}
-        manualName={manual?.name || title || 'CHM 手册'}
+        manualName={manual?.name || title || 'CHM \u624b\u518c'}
         initialSearch={quickSearch}
       />
     )
@@ -166,7 +166,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
       <DirectoryManualReader
         manualId={manualId}
         sourcePath={resolvedPath}
-        title={title || '????'}
+        title={title || '\u76ee\u5f55'}
         searchQuery={searchQuery}
         initialKeyword={quickSearch}
       />
@@ -188,10 +188,10 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
         </div>
       </div>
       <div className={'reader-body' + (pdfBytes?.byteLength ? ' reader-body-pdf' : '')} ref={ref}>
-        {loading && <div className="reader-status">????</div>}
+        {loading && <div className="reader-status">{'\u52a0\u8f7d\u4e2d\u2026'}</div>}
         {error && <div className="reader-status reader-error">{error}</div>}
         {!loading && !error && pdfBytes?.byteLength > 0 && (
-          <Suspense fallback={<div className="reader-status">???? PDF ???</div>}>
+          <Suspense fallback={<div className="reader-status">{'\u6b63\u5728\u52a0\u8f7d PDF \u67e5\u770b\u5668\u2026'}</div>}>
             <PdfJsViewer
               data={pdfBytes}
               initialSearch={quickSearch || searchQuery || ''}
