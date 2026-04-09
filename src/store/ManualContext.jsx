@@ -103,9 +103,36 @@ export function ManualProvider ({ children }) {
     try { window.services.syncManualFeatures() } catch {}
   }, [])
 
+  const refreshManuals = useCallback(() => {
+    try {
+      window.services?.initBuiltinManuals()
+    } catch (e) {
+      console.warn('initBuiltinManuals:', e?.message || e)
+    }
+    try {
+      const list = window.services?.getAllManuals() || []
+      for (const m of list) {
+        if (m.indexStatus === 'ready') {
+          const data = window.services?.loadIndexData(m.id)
+          if (!data) {
+            m.indexStatus = 'none'
+            m.docCount = 0
+            try { window.services.saveManual({ id: m.id, indexStatus: 'none', docCount: 0 }) } catch {}
+          }
+        }
+      }
+      dispatch({ type: 'SET_MANUALS', payload: list })
+      try { window.services?.syncManualFeatures() } catch (e) {
+        console.warn('syncManualFeatures:', e?.message || e)
+      }
+    } catch (e) {
+      console.error('refreshManuals:', e)
+    }
+  }, [])
+
   return (
     <ManualContext.Provider value={{
-      ...state, dispatch, navigate, notify, addManual, updateManual, removeManual, removeManuals
+      ...state, dispatch, navigate, notify, addManual, updateManual, removeManual, removeManuals, refreshManuals
     }}>
       {children}
     </ManualContext.Provider>

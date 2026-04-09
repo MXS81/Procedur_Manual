@@ -2,6 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
 const os = require('os')
+const http = require('http')
+const https = require('https')
 const { pathToFileURL } = require('url')
 const { execFileSync } = require('child_process')
 
@@ -19,7 +21,9 @@ const CHARSET_MAP = {
 const STORAGE_KEYS = {
   MANUALS: 'pm_manuals',
   SETTINGS: 'pm_settings',
-  INDEX_PREFIX: 'pm_index_'
+  INDEX_PREFIX: 'pm_index_',
+  /** string[] ids with downloadUrl user wants in library when files exist */
+  REMOTE_BUILTIN_ENABLED: 'pm_remote_builtin_enabled_ids'
 }
 
 window.services = {
@@ -130,7 +134,7 @@ window.services = {
     }
   },
 
-  /** �? HTML 头部读取 meta http-equiv Content-Type �? charset 声明 */
+  /** ??? HTML ??????????????? meta http-equiv Content-Type ??? charset ??????? */
   _parseHtmlDeclaredCharset (buffer) {
     const headLen = Math.min(32768, buffer.length)
     const head = buffer.subarray(0, headLen).toString('latin1')
@@ -153,7 +157,7 @@ window.services = {
   },
 
   /**
-   * �? HTML 声明编码读取文本（用�? CHM 内页等多编码场景�?
+   * ??? HTML ??????????????????????????????????? CHM ?????????????????????????????
    */
   readTextFileChmAware (filePath) {
     const buffer = fs.readFileSync(filePath)
@@ -171,7 +175,7 @@ window.services = {
     return fs.readFileSync(filePath).toString('base64')
   },
 
-  /** �? pdf.js 等使用的原始 PDF 二进�? */
+  /** ??? pdf.js ???????????????????? PDF ????????? */
   readBinaryAsUint8 (filePath) {
     const buf = fs.readFileSync(filePath)
     return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
@@ -291,7 +295,7 @@ window.services = {
   },
 
   /**
-   * 检测是否为 PHP 分块 HTML 手册：若存在 chunklist 则不�? entryFile，由 IframeManualReader �? Node 列表 + srcdoc 处理 GBK/UTF-8 等编�?
+   * ??????????????? PHP ?????? HTML ??????????????????? chunklist ????????? entryFile?????? IframeManualReader ??? Node ??????? + srcdoc ??????? GBK/UTF-8 ?????????
    */
   suggestBundledHtmlEntry (dirPath) {
     if (!dirPath || !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory()) {
@@ -319,7 +323,7 @@ window.services = {
       hasChunkToc = /chunklist[^"'>]*chunklist_set|chunklist_set|class\s*=\s*["'][^"']*chunklist/i.test(snippet)
     } catch { /* skip */ }
 
-    // �? PHP chunk 目录时不在此设入口，�? Iframe 侧按 chunklist 解析
+    // ??? PHP chunk ??????????????????????????????????? Iframe ??????? chunklist ???????
     if (hasChunkToc) {
       return { entryFile: entry, reason: 'chunk-toc', htmlCount }
     }
@@ -454,6 +458,253 @@ window.services = {
     return null
   },
 
+  _getUtoolsUserData () {
+    try {
+      if (window.utools && typeof window.utools.getPath === 'function') {
+        return window.utools.getPath('userData')
+      }
+    } catch { /* */ }
+    return null
+  },
+
+  /** Large built-ins from manifest `downloadUrl` are stored here (GitHub Releases, OSS, etc.) */
+  getBuiltinRemoteCacheRoot () {
+    const ud = this._getUtoolsUserData()
+    const base = ud
+      ? path.join(ud, 'procedur-manual-remote-builtins')
+      : path.join(os.homedir(), '.procedur-manual-remote-builtins')
+    try {
+      fs.mkdirSync(base, { recursive: true })
+    } catch { /* */ }
+    return base
+  },
+
+  _inferBuiltinSourceTypeFromEntry (entry, filePath) {
+    if (filePath && fs.existsSync(filePath)) {
+      const info = this.pathInfo(filePath)
+      if (info.isDir) return 'mixed'
+      const ext = info.ext
+      return ext === '.chm' ? 'chm'
+        : ext === '.pdf' ? 'pdf'
+          : ['.md', '.markdown'].includes(ext) ? 'markdown'
+            : ext === '.json' ? 'json'
+              : 'html'
+    }
+    const ext = path.extname(entry.fileName || '').toLowerCase()
+    if (ext === '.chm') return 'chm'
+    if (ext === '.pdf') return 'pdf'
+    if (['.md', '.markdown'].includes(ext)) return 'markdown'
+    if (ext === '.json') return 'json'
+    if (!ext && entry.fileName && !/[\\/]/.test(entry.fileName)) return 'mixed'
+    if (/[\\/]/.test(entry.fileName || '')) return 'mixed'
+    return 'html'
+  },
+
+  _downloadHttpToFileImpl (urlString, destPath, redirectLeft) {
+    return new Promise((resolve, reject) => {
+      let u
+      try {
+        u = new URL(urlString)
+      } catch {
+        return reject(new Error('Invalid URL'))
+      }
+      const lib = u.protocol === 'https:' ? https : http
+      const part = destPath + '.part'
+      fs.mkdirSync(path.dirname(destPath), { recursive: true })
+      const req = lib.get(urlString, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; ProcedurManual-uTools/1.0; +https://github.com/MXS81/Procedur_Manual)'
+        }
+      }, (res) => {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          if (redirectLeft <= 0) {
+            res.resume()
+            return reject(new Error('Too many redirects'))
+          }
+          let next = res.headers.location
+          if (!/^https?:/i.test(next)) {
+            try {
+              next = new URL(next, urlString).href
+            } catch {
+              res.resume()
+              return reject(new Error('Bad redirect URL'))
+            }
+          }
+          res.resume()
+          return resolve(this._downloadHttpToFileImpl(next, destPath, redirectLeft - 1))
+        }
+        if (res.statusCode !== 200) {
+          res.resume()
+          return reject(new Error('HTTP ' + res.statusCode))
+        }
+        const out = fs.createWriteStream(part)
+        const onFail = (err) => {
+          try { out.close() } catch { /* */ }
+          try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+          reject(err)
+        }
+        res.on('error', onFail)
+        out.on('error', onFail)
+        out.on('finish', () => {
+          try {
+            fs.renameSync(part, destPath)
+            resolve()
+          } catch (e) {
+            onFail(e)
+          }
+        })
+        res.pipe(out)
+      })
+      req.on('error', (e) => {
+        try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+        reject(e)
+      })
+      req.setTimeout(900000, () => {
+        req.destroy()
+        try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+        reject(new Error('Download timeout'))
+      })
+    })
+  },
+
+  /**
+   * Download remote asset (e.g. from GitHub Releases) to manual.rootPath.
+   * @param {{ url: string, destPath: string, sha256?: string, archiveFormat?: string, entryFile?: string|null, companionUrl?: string, companionSha256?: string }} opts
+   */
+  async downloadRemoteBuiltinAsset (opts) {
+    const fmt = opts && String(opts.archiveFormat || '').trim().toLowerCase()
+    if (fmt === 'zip') {
+      return this._downloadRemoteBuiltinZip(opts)
+    }
+    const url = opts && String(opts.url || '').trim()
+    let destPath = opts && String(opts.destPath || '').trim()
+    if (!url || !destPath) throw new Error('url and destPath required')
+    if (!/^https?:\/\//i.test(url)) throw new Error('Only http(s) URLs are supported')
+    destPath = path.resolve(destPath)
+    const part = destPath + '.part'
+    try {
+      await this._downloadHttpToFileImpl(url, destPath, 12)
+    } catch (e) {
+      try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+      throw e
+    }
+    if (opts.sha256 && String(opts.sha256).trim()) {
+      const expected = String(opts.sha256).trim().toLowerCase()
+      const buf = fs.readFileSync(destPath)
+      const h = crypto.createHash('sha256').update(buf).digest('hex')
+      if (h !== expected) {
+        try { fs.unlinkSync(destPath) } catch { /* */ }
+        throw new Error('SHA256 mismatch')
+      }
+    }
+    const companionUrl = opts && String(opts.companionUrl || '').trim()
+    if (companionUrl) {
+      if (!/^https?:\/\//i.test(companionUrl)) throw new Error('Invalid companion URL')
+      const ext = path.extname(destPath).toLowerCase()
+      const companionDest = ext === '.chm'
+        ? path.join(path.dirname(destPath), path.basename(destPath, ext) + '.chw')
+        : path.join(path.dirname(destPath), path.basename(destPath) + '.companion')
+      const cpart = companionDest + '.part'
+      try {
+        await this._downloadHttpToFileImpl(companionUrl, companionDest, 12)
+      } catch (e) {
+        try { if (fs.existsSync(cpart)) fs.unlinkSync(cpart) } catch { /* */ }
+        throw e
+      }
+      if (opts.companionSha256 && String(opts.companionSha256).trim()) {
+        const expected = String(opts.companionSha256).trim().toLowerCase()
+        const buf = fs.readFileSync(companionDest)
+        const h = crypto.createHash('sha256').update(buf).digest('hex')
+        if (h !== expected) {
+          try { fs.unlinkSync(companionDest) } catch { /* */ }
+          throw new Error('Companion SHA256 mismatch')
+        }
+      }
+    }
+    return { path: destPath, size: fs.statSync(destPath).size }
+  },
+
+  /**
+   * Download a .zip (e.g. php-chunked-xhtml tree) and extract so destPath is the manual root folder.
+   * Zip must contain a top-level folder matching path.basename(destPath) (e.g. php-chunked-xhtml/).
+   */
+  async _downloadRemoteBuiltinZip (opts) {
+    const url = opts && String(opts.url || '').trim()
+    let destPath = opts && String(opts.destPath || '').trim()
+    if (!url || !destPath) throw new Error('url and destPath required')
+    if (!/^https?:\/\//i.test(url)) throw new Error('Only http(s) URLs are supported')
+    destPath = path.resolve(destPath)
+    const parentDir = path.dirname(destPath)
+    const sevenZip = this._find7zExe()
+    if (!sevenZip) {
+      throw new Error(
+        '\u672a\u627e\u5230 7-Zip\uff08\u5185\u7f6e tools/7za.exe \u6216 PM_SEVEN_ZIP / \u7cfb\u7edf 7-Zip\uff09\uff0c\u65e0\u6cd5\u89e3\u538b\u8fdc\u7a0b ZIP'
+      )
+    }
+    const zipPath = path.join(
+      os.tmpdir(),
+      'pm_builtin_zip_' + crypto.randomBytes(8).toString('hex') + '.zip'
+    )
+    try {
+      await this._downloadHttpToFileImpl(url, zipPath, 12)
+    } catch (e) {
+      try { if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath) } catch { /* */ }
+      throw e
+    }
+    if (opts.sha256 && String(opts.sha256).trim()) {
+      const expected = String(opts.sha256).trim().toLowerCase()
+      const buf = fs.readFileSync(zipPath)
+      const h = crypto.createHash('sha256').update(buf).digest('hex')
+      if (h !== expected) {
+        try { fs.unlinkSync(zipPath) } catch { /* */ }
+        throw new Error('SHA256 mismatch')
+      }
+    }
+    try {
+      try {
+        if (fs.existsSync(destPath)) {
+          fs.rmSync(destPath, { recursive: true, force: true })
+        }
+      } catch { /* */ }
+      fs.mkdirSync(parentDir, { recursive: true })
+      const outResolved = path.resolve(parentDir)
+      const outSwitch = /\s/.test(outResolved)
+        ? '-o"' + outResolved.replace(/"/g, '') + '"'
+        : '-o' + outResolved
+      execFileSync(sevenZip, ['x', zipPath, outSwitch, '-y', '-bb0'], {
+        timeout: 900000,
+        windowsHide: true,
+        stdio: 'ignore'
+      })
+    } catch (e) {
+      try { if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath) } catch { /* */ }
+      throw e
+    }
+    try { fs.unlinkSync(zipPath) } catch { /* */ }
+    let ok = false
+    try {
+      const st = fs.statSync(destPath)
+      ok = st.isDirectory()
+    } catch { /* */ }
+    if (!ok) {
+      throw new Error(
+        '\u89e3\u538b\u540e\u672a\u627e\u5230\u76ee\u5f55: ' + destPath +
+          '\u3002\u8bf7\u786e\u8ba4 ZIP \u5185\u9876\u5c42\u4e3a\u6587\u4ef6\u5939\u300c' +
+          path.basename(destPath) + '\u300d\u4e14\u4e0e manifest \u7684 fileName \u4e00\u81f4\u3002'
+      )
+    }
+    const entryRel = opts.entryFile && String(opts.entryFile).trim()
+    if (entryRel) {
+      const entryFull = path.join(destPath, entryRel.replace(/\//g, path.sep))
+      if (!fs.existsSync(entryFull)) {
+        throw new Error(
+          '\u89e3\u538b\u6210\u529f\u4f46\u7f3a\u5c11\u5165\u53e3\u6587\u4ef6: ' + entryRel
+        )
+      }
+    }
+    return { path: destPath, size: 0 }
+  },
+
   initBuiltinManuals () {
     const dir = this.getBuiltinManualsDir()
     if (!dir) return { added: 0, skipped: 0 }
@@ -472,7 +723,6 @@ window.services = {
     const existing = this.getAllManuals()
     let removed = 0
 
-    // Remove built-in manuals that were deleted from manifest.
     for (const manual of existing) {
       if (manual.builtin && !manifestIds.has(manual.id)) {
         this.removeManual(manual.id)
@@ -484,10 +734,42 @@ window.services = {
     const existingMap = new Map(existingAfterCleanup.map(m => [m.id, m]))
     let added = 0
     let skipped = 0
+    const cacheRoot = this.getBuiltinRemoteCacheRoot()
+    const remoteEnabled = this._getRemoteBuiltinEnabledIdSet(manifest)
 
     for (const entry of manifest) {
-      const filePath = path.join(dir, entry.fileName)
-      if (!fs.existsSync(filePath)) {
+      const remoteDownloadUrl = entry.downloadUrl && String(entry.downloadUrl).trim()
+        ? String(entry.downloadUrl).trim()
+        : null
+      const remoteSha256 = remoteDownloadUrl && entry.sha256 && String(entry.sha256).trim()
+        ? String(entry.sha256).trim().toLowerCase()
+        : null
+      const remoteDownloadArchive = remoteDownloadUrl && entry.downloadArchive
+        && String(entry.downloadArchive).trim().toLowerCase() === 'zip'
+        ? 'zip'
+        : null
+      const remoteDownloadChwUrl = remoteDownloadUrl && entry.downloadUrlChw
+        && String(entry.downloadUrlChw).trim()
+        ? String(entry.downloadUrlChw).trim()
+        : null
+      const remoteSha256Chw = remoteDownloadChwUrl && entry.sha256Chw && String(entry.sha256Chw).trim()
+        ? String(entry.sha256Chw).trim().toLowerCase()
+        : null
+
+      const bundlePath = path.join(dir, entry.fileName)
+      const relSafe = String(entry.fileName || '').replace(/^[\\/]+/, '')
+      const cachePath = path.join(cacheRoot, entry.id, relSafe)
+
+      let filePath
+      if (remoteDownloadUrl) {
+        filePath = fs.existsSync(bundlePath) ? bundlePath : cachePath
+      } else {
+        filePath = bundlePath
+      }
+
+      const exists = fs.existsSync(filePath)
+
+      if (!exists && !remoteDownloadUrl) {
         if (existingMap.has(entry.id)) {
           this.removeManual(entry.id)
           removed++
@@ -497,13 +779,31 @@ window.services = {
         continue
       }
 
-      const info = this.pathInfo(filePath)
-      const sourceType = info.isDir ? 'mixed'
-        : info.ext === '.chm' ? 'chm'
-          : info.ext === '.pdf' ? 'pdf'
-            : ['.md', '.markdown'].includes(info.ext) ? 'markdown'
-              : info.ext === '.json' ? 'json'
-                : 'html'
+      if (remoteDownloadUrl && !remoteEnabled.has(entry.id)) {
+        if (existingMap.has(entry.id)) {
+          this.removeManual(entry.id)
+          removed++
+        }
+        continue
+      }
+
+      if (remoteDownloadUrl && !exists) {
+        if (existingMap.has(entry.id)) {
+          this.removeManual(entry.id)
+          removed++
+        }
+        continue
+      }
+
+      const sourceType = this._inferBuiltinSourceTypeFromEntry(entry, exists ? filePath : null)
+
+      const patchRemote = {
+        remoteDownloadUrl: remoteDownloadUrl || null,
+        remoteSha256: remoteSha256 || null,
+        remoteDownloadArchive: remoteDownloadArchive || null,
+        remoteDownloadChwUrl: remoteDownloadChwUrl || null,
+        remoteSha256Chw: remoteSha256Chw || null
+      }
 
       const existingManual = existingMap.get(entry.id)
       if (existingManual) {
@@ -513,6 +813,11 @@ window.services = {
           || existingManual.description !== (entry.description || '')
           || JSON.stringify(existingManual.keywords || []) !== JSON.stringify(entry.keywords || [])
           || (existingManual.entryFile || null) !== (entry.entryFile || null)
+          || (existingManual.remoteDownloadUrl || null) !== (remoteDownloadUrl || null)
+          || (existingManual.remoteSha256 || null) !== (remoteSha256 || null)
+          || (existingManual.remoteDownloadArchive || null) !== (remoteDownloadArchive || null)
+          || (existingManual.remoteDownloadChwUrl || null) !== (remoteDownloadChwUrl || null)
+          || (existingManual.remoteSha256Chw || null) !== (remoteSha256Chw || null)
 
         if (changed) {
           this.saveManual({
@@ -528,7 +833,8 @@ window.services = {
             docCount: 0,
             searchEntryEnabled: existingManual.searchEntryEnabled === undefined
               ? true
-              : existingManual.searchEntryEnabled
+              : existingManual.searchEntryEnabled,
+            ...patchRemote
           })
           this.removeIndexData(entry.id)
         } else {
@@ -548,12 +854,408 @@ window.services = {
         enabled: true,
         builtin: true,
         searchEntryEnabled: true,
-        indexStatus: 'none'
+        indexStatus: 'none',
+        ...patchRemote
       })
       added++
     }
 
     return { added, skipped, removed }
+  },
+
+  _getAllRemoteManifestIds (manifest) {
+    const s = new Set()
+    if (!Array.isArray(manifest)) return s
+    for (const e of manifest) {
+      const u = e && e.downloadUrl && String(e.downloadUrl).trim()
+      if (u) s.add(e.id)
+    }
+    return s
+  },
+
+  /**
+   * First run (no storage): all remote manifest ids enabled (backward compatible).
+   * Later: only stored ids that still exist in manifest.
+   */
+  _getRemoteBuiltinEnabledIdSet (manifest) {
+    const allRemote = this._getAllRemoteManifestIds(manifest)
+    try {
+      if (!window.utools || !window.utools.dbStorage) return new Set()
+      const raw = window.utools.dbStorage.getItem(STORAGE_KEYS.REMOTE_BUILTIN_ENABLED)
+      if (!raw) {
+        window.utools.dbStorage.setItem(
+          STORAGE_KEYS.REMOTE_BUILTIN_ENABLED,
+          JSON.stringify({ v: 1, ids: [] })
+        )
+        return new Set()
+      }
+      const o = JSON.parse(raw)
+      const arr = Array.isArray(o.ids) ? o.ids.map(String) : []
+      return new Set(arr.filter(id => allRemote.has(id)))
+    } catch {
+      return new Set()
+    }
+  },
+
+  getRemoteBuiltinEnabledIds () {
+    const dir = this.getBuiltinManualsDir()
+    if (!dir) return []
+    let manifest
+    try {
+      manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf-8'))
+    } catch { return [] }
+    return [...this._getRemoteBuiltinEnabledIdSet(manifest)]
+  },
+
+  setRemoteBuiltinEnabledIds (ids) {
+    if (!window.utools || !window.utools.dbStorage) return
+    const dir = this.getBuiltinManualsDir()
+    const allowed = new Set()
+    if (dir) {
+      try {
+        const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf-8'))
+        if (Array.isArray(m)) {
+          for (const e of m) {
+            if (e.downloadUrl && String(e.downloadUrl).trim()) allowed.add(e.id)
+          }
+        }
+      } catch { /* */ }
+    }
+    const clean = [...new Set((ids || []).map(String).filter(id => allowed.has(id)))]
+    window.utools.dbStorage.setItem(
+      STORAGE_KEYS.REMOTE_BUILTIN_ENABLED,
+      JSON.stringify({ v: 1, ids: clean })
+    )
+  },
+
+  getBuiltinRemoteResourceCatalog () {
+    const dir = this.getBuiltinManualsDir()
+    if (!dir) return []
+    let manifest
+    try {
+      manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf-8'))
+    } catch { return [] }
+    if (!Array.isArray(manifest)) return []
+    const enabled = this._getRemoteBuiltinEnabledIdSet(manifest)
+    const cacheRoot = this.getBuiltinRemoteCacheRoot()
+    const out = []
+    for (const entry of manifest) {
+      const url = entry.downloadUrl && String(entry.downloadUrl).trim()
+        ? String(entry.downloadUrl).trim()
+        : ''
+      if (!url) continue
+      const relSafe = String(entry.fileName || '').replace(/^[\\/]+/, '')
+      const bundlePath = path.join(dir, entry.fileName)
+      const cachePath = path.join(cacheRoot, entry.id, relSafe)
+      const filePath = fs.existsSync(bundlePath) ? bundlePath : cachePath
+      const exists = fs.existsSync(filePath)
+      let chwOk = true
+      if (exists && entry.downloadUrlChw && String(entry.downloadUrlChw).trim()
+        && /\.chm$/i.test(entry.fileName || '')) {
+        const chwPath = path.join(
+          path.dirname(filePath),
+          path.basename(filePath, path.extname(filePath)) + '.chw'
+        )
+        chwOk = fs.existsSync(chwPath)
+      }
+      const downloaded = exists && chwOk
+      out.push({
+        id: entry.id,
+        name: entry.name || entry.id,
+        description: entry.description || '',
+        enabled: enabled.has(entry.id),
+        downloaded,
+        downloadUrl: url,
+        downloadArchive:
+          entry.downloadArchive && String(entry.downloadArchive).trim().toLowerCase() === 'zip'
+            ? 'zip'
+            : null,
+        hasCompanionChw: !!(entry.downloadUrlChw && String(entry.downloadUrlChw).trim())
+      })
+    }
+    return out
+  },
+
+  async downloadRemoteBuiltinById (manifestId) {
+    const dir = this.getBuiltinManualsDir()
+    if (!dir) throw new Error('builtin dir missing')
+    let manifest
+    try {
+      manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf-8'))
+    } catch {
+      throw new Error('manifest read failed')
+    }
+    if (!Array.isArray(manifest)) throw new Error('bad manifest')
+    const entry = manifest.find(e => e.id === manifestId)
+    if (!entry) throw new Error('unknown manual id')
+    const url = entry.downloadUrl && String(entry.downloadUrl).trim()
+      ? String(entry.downloadUrl).trim()
+      : ''
+    if (!url) throw new Error('not a remote release item')
+    const relSafe = String(entry.fileName || '').replace(/^[\\/]+/, '')
+    const cacheRoot = this.getBuiltinRemoteCacheRoot()
+    const cachePath = path.join(cacheRoot, entry.id, relSafe)
+    const bundlePath = path.join(dir, entry.fileName)
+    if (fs.existsSync(bundlePath)) {
+      return { path: bundlePath, bundled: true }
+    }
+    fs.mkdirSync(path.dirname(cachePath), { recursive: true })
+    const sha256 = entry.sha256 && String(entry.sha256).trim()
+      ? String(entry.sha256).trim().toLowerCase()
+      : undefined
+    const archiveFormat =
+      entry.downloadArchive && String(entry.downloadArchive).trim().toLowerCase() === 'zip'
+        ? 'zip'
+        : undefined
+    const companionUrl = entry.downloadUrlChw && String(entry.downloadUrlChw).trim()
+      ? String(entry.downloadUrlChw).trim()
+      : undefined
+    const companionSha256 = companionUrl && entry.sha256Chw && String(entry.sha256Chw).trim()
+      ? String(entry.sha256Chw).trim().toLowerCase()
+      : undefined
+    await this.downloadRemoteBuiltinAsset({
+      url,
+      destPath: cachePath,
+      sha256,
+      archiveFormat,
+      entryFile: entry.entryFile || undefined,
+      companionUrl,
+      companionSha256
+    })
+    return { path: cachePath, bundled: false }
+  },
+
+  _httpsGetJson (urlString, redirectLeft = 10) {
+    return new Promise((resolve, reject) => {
+      let u
+      try {
+        u = new URL(urlString)
+      } catch {
+        return reject(new Error('Invalid URL'))
+      }
+      const lib = u.protocol === 'https:' ? https : http
+      const req = lib.get(
+        urlString,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json',
+            'User-Agent': 'ProcedurManual-uTools/1.0 (+https://github.com/MXS81/Procedur_Manual)'
+          }
+        },
+        (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+            if (redirectLeft <= 0) {
+              res.resume()
+              return reject(new Error('Too many redirects'))
+            }
+            let next = res.headers.location
+            if (!/^https?:/i.test(next)) {
+              try {
+                next = new URL(next, urlString).href
+              } catch {
+                res.resume()
+                return reject(new Error('Bad redirect URL'))
+              }
+            }
+            res.resume()
+            return resolve(this._httpsGetJson(next, redirectLeft - 1))
+          }
+          if (res.statusCode !== 200) {
+            res.resume()
+            return reject(new Error('HTTP ' + res.statusCode))
+          }
+          const chunks = []
+          res.on('data', (c) => chunks.push(c))
+          res.on('end', () => {
+            try {
+              resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')))
+            } catch (e) {
+              reject(e)
+            }
+          })
+        }
+      )
+      req.on('error', reject)
+      req.setTimeout(120000, () => {
+        req.destroy()
+        reject(new Error('Request timeout'))
+      })
+    })
+  },
+
+  _findFileNamedRecursive (startDir, baseNameLower) {
+    const stack = [startDir]
+    while (stack.length) {
+      const d = stack.pop()
+      let names
+      try {
+        names = fs.readdirSync(d)
+      } catch {
+        continue
+      }
+      for (const n of names) {
+        if (n.startsWith('.')) continue
+        const p = path.join(d, n)
+        let st
+        try {
+          st = fs.statSync(p)
+        } catch {
+          continue
+        }
+        if (st.isDirectory()) stack.push(p)
+        else if (n.toLowerCase() === baseNameLower) return p
+      }
+    }
+    return null
+  },
+
+  _copyDirRecursive (src, dest) {
+    fs.mkdirSync(dest, { recursive: true })
+    for (const n of fs.readdirSync(src)) {
+      const s = path.join(src, n)
+      const d = path.join(dest, n)
+      const st = fs.statSync(s)
+      if (st.isDirectory()) this._copyDirRecursive(s, d)
+      else fs.copyFileSync(s, d)
+    }
+  },
+
+  _appendUserPathWin32 (binPath) {
+    const p = String(binPath || '')
+    const b64 = Buffer.from(p, 'utf8').toString('base64')
+    const ps = [
+      '$ErrorActionPreference = "Stop"',
+      `$b = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${b64}"))`,
+      '$cur = [Environment]::GetEnvironmentVariable("Path", "User")',
+      '$norm = { param($x) if (-not $x) { return "" }; ($x -replace "\\\\$","").TrimEnd([char]92) }',
+      '$bn = & $norm $b',
+      '$parts = @()',
+      'if ($cur) { $parts = $cur -split ";" | ForEach-Object { & $norm $_ } | Where-Object { $_ } }',
+      '$already = $parts | Where-Object { $_ -ieq $bn }',
+      'if (-not $already) { $np = if ($cur) { $cur + ";" + $b } else { $b }; [Environment]::SetEnvironmentVariable("Path", $np, "User") }'
+    ].join('; ')
+    execFileSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps], {
+      windowsHide: true,
+      timeout: 60000,
+      encoding: 'utf8'
+    })
+  },
+
+  /**
+   * Windows: download oschwartz10612/poppler-windows latest Release-*.zip, install under
+   * %LOCALAPPDATA%\\Programs\\Poppler, append User PATH (Library\\bin).
+   */
+  async installPopplerWindows () {
+    if (process.platform !== 'win32') {
+      throw new Error('Poppler auto-install is Windows-only')
+    }
+    const sevenZip = this._find7zExe()
+    if (!sevenZip) {
+      throw new Error(
+        '7-Zip not found (bundled tools/7za or PM_SEVEN_ZIP / system 7-Zip required)'
+      )
+    }
+    const repo = 'oschwartz10612/poppler-windows'
+    const rel = await this._httpsGetJson('https://api.github.com/repos/' + repo + '/releases/latest')
+    const assets = rel.assets || []
+    const asset = assets.find((a) => a && a.name && /^Release-.+\.zip$/i.test(a.name))
+    if (!asset || !asset.browser_download_url) {
+      throw new Error('No Release-*.zip asset on latest release')
+    }
+    const zip = path.join(os.tmpdir(), asset.name)
+    await this._downloadHttpToFileImpl(asset.browser_download_url, zip, 12)
+    const extractTmp = path.join(os.tmpdir(), 'pm-poppler-' + crypto.randomBytes(8).toString('hex'))
+    fs.mkdirSync(extractTmp, { recursive: true })
+    try {
+      const outSw = /\s/.test(extractTmp)
+        ? '-o"' + extractTmp.replace(/"/g, '') + '"'
+        : '-o' + extractTmp
+      execFileSync(sevenZip, ['x', zip, outSw, '-y', '-bb0'], {
+        timeout: 900000,
+        windowsHide: true,
+        stdio: 'ignore'
+      })
+    } finally {
+      try {
+        fs.unlinkSync(zip)
+      } catch { /* */ }
+    }
+    let inner = null
+    try {
+      const subs = fs
+        .readdirSync(extractTmp)
+        .map((n) => path.join(extractTmp, n))
+        .filter((p) => {
+          try {
+            return fs.statSync(p).isDirectory()
+          } catch {
+            return false
+          }
+        })
+      inner = subs.find((p) => !path.basename(p).startsWith('.')) || subs[0] || null
+    } catch { /* */ }
+    if (!inner) {
+      try {
+        fs.rmSync(extractTmp, { recursive: true, force: true })
+      } catch { /* */ }
+      throw new Error('No folder after unzip')
+    }
+    const probe = this._findFileNamedRecursive(inner, 'pdftotext.exe')
+    if (!probe) {
+      try {
+        fs.rmSync(extractTmp, { recursive: true, force: true })
+      } catch { /* */ }
+      throw new Error('pdftotext.exe not found in archive')
+    }
+    const la = process.env.LOCALAPPDATA || ''
+    const installRoot = path.join(la, 'Programs', 'Poppler')
+    const parent = path.dirname(installRoot)
+    try {
+      fs.mkdirSync(parent, { recursive: true })
+    } catch { /* */ }
+    try {
+      if (fs.existsSync(installRoot)) fs.rmSync(installRoot, { recursive: true, force: true })
+    } catch { /* */ }
+    fs.mkdirSync(installRoot, { recursive: true })
+    for (const n of fs.readdirSync(inner)) {
+      const s = path.join(inner, n)
+      const d = path.join(installRoot, n)
+      const st = fs.statSync(s)
+      if (st.isDirectory()) this._copyDirRecursive(s, d)
+      else fs.copyFileSync(s, d)
+    }
+    try {
+      fs.rmSync(extractTmp, { recursive: true, force: true })
+    } catch { /* */ }
+    const binPath = path.join(installRoot, 'Library', 'bin')
+    const exe = path.join(binPath, 'pdftotext.exe')
+    if (!fs.existsSync(exe)) {
+      throw new Error('Expected ' + exe + ' missing after install')
+    }
+    this._appendUserPathWin32(binPath)
+    return { binPath, exe }
+  },
+
+  getRuntimePlatform () {
+    return process.platform
+  },
+
+  /** True if pdftotext runs (PATH or LOCALAPPDATA\\Programs\\poppler*). */
+  isPopplerPdftotextAvailable () {
+    const maxBuffer = 4 * 1024 * 1024
+    for (const bin of this._pdftotextCandidateBins()) {
+      try {
+        execFileSync(bin, ['-v'], {
+          encoding: 'utf8',
+          maxBuffer,
+          windowsHide: true,
+          timeout: 12000,
+          stdio: ['ignore', 'pipe', 'pipe']
+        })
+        return true
+      } catch { /* try next */ }
+    }
+    return false
   },
 
   // ========== Dynamic uTools Feature Registration ==========
@@ -642,8 +1344,8 @@ window.services = {
   },
 
   // ========== PDF Extraction ==========
-  // pdf-parse v2：PDFParse 使用不同 API；索引抽取优�? pdf-parse
-  // 备选：�? Poppler �? pdftotext 加入 PATH，见 https://github.com/oschwartz10612/poppler-windows/releases/
+  // Indexing uses Poppler pdftotext only (no bundled pdf-parse/pdfjs ~90MB).
+  // https://github.com/oschwartz10612/poppler-windows/releases/
 
   _pdftotextCandidateBins () {
     const out = ['pdftotext', 'pdftotext.exe']
@@ -671,8 +1373,11 @@ window.services = {
     return [...new Set(out)]
   },
 
-  _extractPdfTextPdftotextSync (filePath) {
-    const args = ['-layout', '-enc', 'UTF-8', filePath, '-']
+  _extractPdfTextPdftotextSync (filePath, opts) {
+    const useLayout = !opts || opts.layout !== false
+    const args = useLayout
+      ? ['-layout', '-enc', 'UTF-8', filePath, '-']
+      : ['-enc', 'UTF-8', filePath, '-']
     const maxBuffer = 80 * 1024 * 1024
     for (const bin of this._pdftotextCandidateBins()) {
       try {
@@ -689,65 +1394,36 @@ window.services = {
   },
 
   /**
-   * 抽取 PDF 文本块供索引；可�? onProgress(currentPage, totalPages)
+   * PDF text chunks for index (Poppler pdftotext). Page breaks: form-feed in output (no -layout); fallback -layout = single doc.
    */
   async extractPdfIndexChunks (filePath, onProgress) {
-    const { PDFParse } = require('pdf-parse')
-    let parser = null
-    try {
-      try {
-        const workerPath = require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs')
-        PDFParse.setWorker(pathToFileURL(workerPath).href)
-      } catch { /* worker 可�? */ }
+    let raw = this._extractPdfTextPdftotextSync(filePath, { layout: false })
+    if (!raw || String(raw).trim().length < 12) {
+      raw = this._extractPdfTextPdftotextSync(filePath, { layout: true })
+    }
+    if (!raw || String(raw).trim().length < 12) return []
 
-      const buffer = fs.readFileSync(filePath)
-      parser = new PDFParse({ data: buffer, verbosity: 0 })
-      const result = await parser.getText()
-      const pages = result.pages || []
-      const total = pages.length
-      const maxPages = Math.min(total, 600)
-      const chunks = []
+    const baseTitle = path.basename(filePath, path.extname(filePath))
+    const text = String(raw).trim()
+    const parts = text.split(/\f+/).map((s) => s.trim()).filter((s) => s.length >= 8)
 
-      for (let i = 0; i < maxPages; i++) {
-        const pg = pages[i]
-        const t = (pg && pg.text ? String(pg.text) : '').trim()
-        if (t.length >= 12) {
-          const lines = t.split(/\n/).map(l => l.trim()).filter(Boolean)
-          const title = (lines[0] || ('�? ' + (pg.num || i + 1) + ' �?')).substring(0, 120)
-          chunks.push({
-            pageNum: pg.num != null ? pg.num : i + 1,
-            title,
-            text: t
-          })
-        }
-        if (onProgress && (i % 3 === 0 || i === maxPages - 1)) {
-          onProgress(Math.min(i + 1, maxPages), maxPages)
-        }
-      }
+    if (parts.length <= 1) {
+      if (onProgress) onProgress(1, 1)
+      return [{ pageNum: 1, title: baseTitle, text }]
+    }
 
-      if (!chunks.length && result.text && String(result.text).trim().length > 10) {
-        chunks.push({
-          pageNum: 1,
-          title: path.basename(filePath, path.extname(filePath)),
-          text: String(result.text).trim()
-        })
-      }
-
-      return chunks
-    } catch (e) {
-      console.error('PDFParse failed:', e.message)
-      const fallback = this._extractPdfTextPdftotextSync(filePath)
-      if (!fallback) return []
-      return [{
-        pageNum: 1,
-        title: path.basename(filePath, path.extname(filePath)),
-        text: fallback
-      }]
-    } finally {
-      if (parser) {
-        try { await parser.destroy() } catch { /* ok */ }
+    const maxPages = Math.min(parts.length, 600)
+    const chunks = []
+    for (let i = 0; i < maxPages; i++) {
+      const t = parts[i]
+      const lines = t.split(/\n/).map((l) => l.trim()).filter(Boolean)
+      const title = (lines[0] || ('\u7b2c ' + (i + 1) + ' \u9875')).substring(0, 120)
+      chunks.push({ pageNum: i + 1, title, text: t })
+      if (onProgress && (i % 3 === 0 || i === maxPages - 1)) {
+        onProgress(Math.min(i + 1, maxPages), maxPages)
       }
     }
+    return chunks
   },
 
   async extractPdfText (filePath) {
@@ -757,14 +1433,14 @@ window.services = {
   },
 
   /**
-   * 小体�? PDF 以内�? base64 �? uTools/WebView 打开；过大则退�? file://（部分环境对 file:// 有限制）
+   * ??????????? PDF ????????? base64 ??? uTools/WebView ?????????????????????????? file://???????????????????? file:// ?????????????
    */
   getPdfViewerUrl (filePath) {
     const INLINE_MAX = 8 * 1024 * 1024
     try {
-      if (!filePath || !fs.existsSync(filePath)) return { kind: 'error', message: '文件不存�?' }
+      if (!filePath || !fs.existsSync(filePath)) return { kind: 'error', message: '???????????????' }
       const st = fs.statSync(filePath)
-      if (!st.isFile()) return { kind: 'error', message: '不是文件' }
+      if (!st.isFile()) return { kind: 'error', message: '????????????' }
       if (st.size <= INLINE_MAX) {
         return { kind: 'inline-base64', base64: fs.readFileSync(filePath).toString('base64') }
       }
@@ -775,10 +1451,10 @@ window.services = {
   },
 
   // ========== CHM Decompilation ==========
-  // 打开/跳转 CHM 时一律走 _resolveChmFilePath（大小写�?..、file://、目�?/index�?.hhc 实体解码�?
-  // 正文内链保留 # 锚点�? ChmReader 滚动�?.hhc 里嵌�? </ul> 必须�? liStack 恢复�? <li>，否则三级以下目录错�?
+  // ??????/??????? CHM ????????????? _resolveChmFilePath?????????????????..???file://?????????/index???.hhc ????????????????
+  // ??????????????????? # ?????????? ChmReader ??????????.hhc ?????????? </ul> ?????????? liStack ?????????? <li>???????????????????????????????????
 
-  /** 解压结果须含可读 HTML �? .hhc，避免把「有文件但残缺」的缓存当成可用 */
+  /** ?????????????????????????? HTML ??? .hhc??????????????????????????????????????????????????????????? */
   _chmExtractLooksUsable (extractDir) {
     try {
       const extGroups = [['.html', '.htm'], ['.xhtml', '.shtml']]
@@ -802,7 +1478,7 @@ window.services = {
     return 'hh.exe'
   },
 
-  /** 插件内置：public/tools �? dist/tools（构建时�? copy-bundled-7za.mjs �? 7zip-bin-win 复制�? */
+  /** ???????????????public/tools ??? dist/tools??????????????? copy-bundled-7za.mjs ??? 7zip-bin-win ?????????? */
   _bundled7zExePath () {
     try {
       const toolDir = path.join(__dirname, '..', 'tools')
@@ -815,7 +1491,7 @@ window.services = {
     return null
   },
 
-  /** 7-Zip：PM_SEVEN_ZIP �? 内置 tools �? 常见安装路径 + PATH（不�? CHM �? 7z 能解，hh.exe 会失败） */
+  /** 7-Zip???PM_SEVEN_ZIP ??? ?????? tools ??? ???????????????????? + PATH?????????? CHM ??? 7z ??????????hh.exe ????????????? */
   _find7zExe () {
     const env7 = process.env.PM_SEVEN_ZIP
     try {
@@ -863,23 +1539,23 @@ window.services = {
     try { fs.rmSync(extractDir, { recursive: true, force: true }) } catch { /* */ }
   },
 
-  /** �? SearchService CHM_INDEX_MAX_HTML_FILES 一致：全文扫描与索引上限，避免万级 HTML 卡死 */
+  /** ??? SearchService CHM_INDEX_MAX_HTML_FILES ??????????????????????????????????????????????????????? HTML ?????? */
   _CHM_CONTENT_SCAN_MAX_FILES: 2000,
 
   decompileChm (chmPath) {
     if (!chmPath) {
-      throw new Error('CHM 路径无效')
+      throw new Error('CHM ?????????????')
     }
     const resolvedChm = path.resolve(chmPath)
     let chmSize = 0
     try {
       if (!fs.existsSync(resolvedChm) || !fs.statSync(resolvedChm).isFile()) {
-        throw new Error('CHM 文件不存在或无法访问')
+        throw new Error('CHM ????????????????????????????????')
       }
       chmSize = fs.statSync(resolvedChm).size
     } catch (e) {
       if (e.message && e.message.includes('CHM')) throw e
-      throw new Error('CHM 文件不存在或无法访问')
+      throw new Error('CHM ????????????????????????????????')
     }
 
     const hash = crypto.createHash('md5').update(resolvedChm).digest('hex').substring(0, 12)
@@ -929,7 +1605,7 @@ window.services = {
         execFileSync(sevenZip, ['x', workChm, outSwitch, '-y', '-bb0'], {
           timeout: timeout7z, windowsHide: true, stdio: 'ignore'
         })
-      } catch { /* 7z 非零退出仍可能已解�? */ }
+      } catch { /* 7z ??????????????????????????????????? */ }
       return waitUsable(largeChm ? 48 : 20)
     }
 
@@ -938,7 +1614,7 @@ window.services = {
         execFileSync(hhPath, ['-decompile', extractDir, workChm], {
           timeout: timeoutHh, windowsHide: true, stdio: 'ignore'
         })
-      } catch { /* hh 常非零退�? */ }
+      } catch { /* hh ?????????????????? */ }
       return waitUsable(largeChm ? 56 : 24)
     }
 
@@ -992,15 +1668,15 @@ window.services = {
   },
 
   /**
-   * CHM .hhc/.hhk �? Local 可能�? file:///、相对路径、URL 编码�? mk:@MSITStore:/ms-its:
-   * 返回统一相对路径（正斜杠）；锚点 # 之前已在调用方拆�?
+   * CHM .hhc/.hhk ??? Local ????????? file:///???????????????????URL ????????? mk:@MSITStore:/ms-its:
+   * ?????????????????????????????????????????????????? # ???????????????????????????????
    */
   _normalizeChmLocal (local) {
     if (!local) return ''
     let s = String(local).trim().split('#')[0]
     try {
       s = decodeURIComponent(s.replace(/\+/g, ' '))
-    } catch { /* 非法编码则保留原�? */ }
+    } catch { /* ???????????????????????????? */ }
 
     const lower = s.toLowerCase()
     if (lower.startsWith('file:')) {
@@ -1025,7 +1701,7 @@ window.services = {
     return s.replace(/\\/g, '/')
   },
 
-  /** .hhc/.hhk �? PARAM �? VALUE �? &amp;�?&quot; 等实体还原为字符 */
+  /** .hhc/.hhk ??? PARAM ??? VALUE ??? &amp;???&quot; ???????????????????????? */
   _unescapeHhcAttr (s) {
     if (s == null || s === '') return ''
     return String(s)
@@ -1044,13 +1720,13 @@ window.services = {
       .replace(/&amp;/g, '&')
   },
 
-  /** 判断 filePath 是否�? extract 根之下（relative 不以 .. 开头且非绝对路径） */
+  /** ??????? filePath ????????? extract ????????????relative ?????? .. ?????????????????????????????? */
   _chmFileWithinExtract (filePath, extractRootResolved) {
     const rel = path.relative(extractRootResolved, filePath)
     return !!rel && !rel.startsWith('..') && !path.isAbsolute(rel)
   },
 
-  /** candidate 是否落在 root 目录树内（含 root 自身�? */
+  /** candidate ????????????? root ?????????????????? root ????????? */
   _pathUnderChmRoot (candidate, root) {
     const r = path.resolve(root)
     const c = path.resolve(candidate)
@@ -1059,7 +1735,7 @@ window.services = {
   },
 
   /**
-   * �? CHM 解压根内解析 Local（含 ../），大小写不敏感，末级可为目录并回退 index.html
+   * ??? CHM ???????????????????? Local?????? ../?????????????????????????????????????????????????????????? index.html
    */
   _resolveChmPathSmart (root, relPosix) {
     const parts = relPosix.split(/[/\\]+/).filter(p => p && p !== '.')
@@ -1141,7 +1817,7 @@ window.services = {
     return null
   },
 
-  /** 将原�? Local 规范为相�? extract 的正斜杠路径（尽量解析到真实文件�? */
+  /** ??????????? Local ???????????????? extract ???????????????????????????????????????????????????????? */
   _canonicalizeChmLocal (extractDir, rawLocal) {
     const norm = this._normalizeChmLocal(rawLocal)
     if (!norm) return ''
@@ -1185,7 +1861,7 @@ window.services = {
   },
 
   /**
-   * �? UTF-8 页：将外�? script/stylesheet 内联�? srcdoc，避�? GBK 页引�? .js/.css 乱码
+   * ???? UTF-8 ??????????????????? script/stylesheet ????????? srcdoc?????????? GBK ?????????? .js/.css ??????
    */
   _inlineChmExternalAssets (html, extractDir, pageDirPosix, decoderLabel) {
     if (!decoderLabel || decoderLabel === 'utf-8') return html
@@ -1310,8 +1986,8 @@ window.services = {
   },
 
   /**
-   * 读取解压目录�? HTML（相对路径）；与 .chm 同级的散�? HTML 同样适用
-   * 路径�? _resolveChmFilePath�?..、目录、index）；勿对不可信路径直�? API 拼接 join
+   * ?????????????????????? HTML????????????????????????? .chm ???????????????? HTML ???????????????
+   * ?????????? _resolveChmFilePath???..????????????index?????????????????????????????????? API ?????? join
    */
   getChmPageSrcdoc (extractDir, relPath) {
     if (!relPath || !extractDir) return ''
@@ -1355,14 +2031,14 @@ window.services = {
   },
 
   /**
-   * 打包离线 HTML 目录内页：与 CHM 共用解析与内联逻辑，见 getChmPageSrcdoc
+   * ???????????? HTML ??????????????????? CHM ????????????????????????????????????? getChmPageSrcdoc
    */
   getBundledHtmlPageSrcdoc (rootDir, relPath) {
     return this.getChmPageSrcdoc(rootDir, relPath)
   },
 
   /**
-   * �? searchModes.compileSearchMatcher 一致，用于 CHM/离线 HTML 正文搜索
+   * ??? searchModes.compileSearchMatcher ???????????????? CHM/?????? HTML ????????????
    * opts: { matchCase?, wholeWord?, useRegex? }
    */
   _contentSearchFind (text, keyword, opts = {}) {
@@ -1543,7 +2219,7 @@ window.services = {
   _parseHhcSitemap (html) {
     const items = []
     const stack = [items]
-    /** �? <ul> 压栈�?</ul> 出栈�?<li> 上一�? PARAM 归属当前�? */
+    /** ???? <ul> ?????????</ul> ?????????<li> ????????? PARAM ???????????????? */
     const liStack = []
 
     const tokens = html.replace(/\r\n?/g, '\n').split(/(<\/?(?:UL|LI|OBJECT|PARAM)[^>]*>)/gi)

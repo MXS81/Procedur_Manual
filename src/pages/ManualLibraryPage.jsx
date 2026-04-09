@@ -2,11 +2,14 @@ import { useState, useEffect, useCallback } from 'react'
 import { useManualContext } from '../store/ManualContext'
 import ManualCard from '../components/ManualCard'
 import ManualCreateDialog from '../components/ManualCreateDialog'
+import ResourcesCenterModal from '../components/ResourcesCenterModal'
 import { clearIndexCache } from '../modules/search/SearchService'
+import { RESOURCES_CENTER_UI } from '../utils/asciiUiStrings.js'
 import './ManualLibraryPage.css'
 
 export default function ManualLibraryPage ({ importFilePath }) {
   const { manuals, navigate, removeManuals, notify } = useManualContext()
+  const [showResources, setShowResources] = useState(false)
   const [showCreate, setShowCreate] = useState(false)
   const [initPath, setInitPath] = useState('')
   const [editingManual, setEditingManual] = useState(null)
@@ -55,53 +58,56 @@ export default function ManualLibraryPage ({ importFilePath }) {
 
   const handleBatchDelete = () => {
     if (selectedIds.length === 0) {
-      notify('请先勾选要删除的手册', 'info')
+      notify('璇峰厛鍕鹃€夎鍒犻櫎鐨勬墜鍐�', 'info')
       return
     }
     const toDelete = manuals.filter(m => selectedIds.includes(m.id))
     const label = toDelete.length <= 3
-      ? toDelete.map(m => '"' + m.name + '"').join('、')
-      : toDelete.length + ' 本手册'
-    if (!window.confirm('确定删除 ' + label + ' 吗？\n（不会删除磁盘上的原始文件）')) return
+      ? toDelete.map(m => '"' + m.name + '"').join('銆�')
+      : toDelete.length + ' 鏈墜鍐�'
+    if (!window.confirm('纭畾鍒犻櫎 ' + label + ' 鍚楋紵\n锛堜笉浼氬垹闄ょ鐩樹笂鐨勫師濮嬫枃浠讹級')) return
     for (const id of selectedIds) {
       clearIndexCache(id)
     }
     removeManuals(selectedIds)
-    notify('已删除 ' + selectedIds.length + ' 本手册')
+    notify('宸插垹闄� ' + selectedIds.length + ' 鏈墜鍐�')
     exitManageMode()
   }
 
   return (
     <div className="library-page">
       <header className="library-header">
-        <h1 className="library-title">程序员手册</h1>
+        <h1 className="library-title">绋嬪簭鍛樻墜鍐�</h1>
         <div className="library-actions">
+          <button type="button" className="btn btn-secondary" onClick={() => setShowResources(true)}>
+            {RESOURCES_CENTER_UI.openButton}
+          </button>
           <button className="btn btn-secondary" onClick={() => navigate('search')}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-            搜索
+            鎼滅储
           </button>
           {manuals.length > 0 && (
             <button
               className={'btn ' + (manageMode ? 'btn-primary' : 'btn-secondary')}
               onClick={() => (manageMode ? exitManageMode() : setManageMode(true))}
             >
-              {manageMode ? '完成' : '管理'}
+              {manageMode ? '瀹屾垚' : '绠＄悊'}
             </button>
           )}
           <button className="btn btn-primary" onClick={handleOpenCreate}>
-            + 添加手册
+            + 娣诲姞鎵嬪唽
           </button>
         </div>
       </header>
 
       {manageMode && manuals.length > 0 && (
         <div className="library-batch-bar">
-          <span className="library-batch-count">已选 {selectedIds.length} / {manuals.length}</span>
+          <span className="library-batch-count">宸查€� {selectedIds.length} / {manuals.length}</span>
           <div className="library-batch-actions">
-            <button type="button" className="btn btn-small btn-secondary" onClick={selectAll}>全选</button>
-            <button type="button" className="btn btn-small btn-secondary" onClick={selectNone}>取消全选</button>
+            <button type="button" className="btn btn-small btn-secondary" onClick={selectAll}>鍏ㄩ€�</button>
+            <button type="button" className="btn btn-small btn-secondary" onClick={selectNone}>鍙栨秷鍏ㄩ€�</button>
             <button type="button" className="btn btn-small btn-ghost btn-danger-text" onClick={handleBatchDelete}>
-              删除所选
+              鍒犻櫎鎵€閫�
             </button>
           </div>
         </div>
@@ -115,8 +121,8 @@ export default function ManualLibraryPage ({ importFilePath }) {
             <line x1="12" y1="8" x2="12" y2="14"/>
             <line x1="9" y1="11" x2="15" y2="11"/>
           </svg>
-          <p className="empty-text">暂无手册</p>
-          <p className="empty-hint">点击 "添加手册" 导入你的第一本手册</p>
+          <p className="empty-text">鏆傛棤鎵嬪唽</p>
+          <p className="empty-hint">鐐瑰嚮 "娣诲姞鎵嬪唽" 瀵煎叆浣犵殑绗竴鏈墜鍐�</p>
         </div>
       ) : (
         <div className="manual-list">
@@ -138,6 +144,9 @@ export default function ManualLibraryPage ({ importFilePath }) {
       )}
       {editingManual && (
         <ManualCreateDialog editManual={editingManual} onClose={handleCloseEdit} />
+      )}
+      {showResources && (
+        <ResourcesCenterModal onClose={() => setShowResources(false)} />
       )}
     </div>
   )

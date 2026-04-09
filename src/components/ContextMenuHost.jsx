@@ -201,6 +201,40 @@ export default function ContextMenuHost () {
     return () => document.removeEventListener('mousedown', onMouseDown, true)
   }, [open, close])
 
+  /**
+   * srcdoc / same-origin iframe body: scroll and primary clicks happen inside iframe document;
+   * they never reach the parent document, so the menu would stay open (CHM reader).
+   */
+  useEffect(() => {
+    if (!open) return
+    const view = viewRef.current
+    if (!view || view === window) return
+    let doc = null
+    try {
+      doc = view.document
+    } catch {
+      return
+    }
+    if (!doc) return
+
+    const dismiss = () => close()
+    const wheelOpts = { capture: true, passive: true }
+
+    doc.addEventListener('mousedown', dismiss, true)
+    doc.addEventListener('wheel', dismiss, wheelOpts)
+    doc.addEventListener('touchstart', dismiss, { capture: true, passive: true })
+    view.addEventListener('scroll', dismiss, true)
+    doc.addEventListener('scroll', dismiss, true)
+
+    return () => {
+      doc.removeEventListener('mousedown', dismiss, true)
+      doc.removeEventListener('wheel', dismiss, wheelOpts)
+      doc.removeEventListener('touchstart', dismiss, { capture: true, passive: true })
+      view.removeEventListener('scroll', dismiss, true)
+      doc.removeEventListener('scroll', dismiss, true)
+    }
+  }, [open, close])
+
   if (!open) return null
 
   const menu = (

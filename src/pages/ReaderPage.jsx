@@ -18,6 +18,8 @@ import { escapeHtml } from '../utils/helpers'
 import ChmReader from '../components/ChmReader'
 import DirectoryManualReader from '../components/DirectoryManualReader'
 import IframeManualReader from '../components/IframeManualReader'
+import RemoteBuiltinDownload from '../components/RemoteBuiltinDownload'
+import { isRemoteBuiltinPending } from '../utils/manualRemote'
 import './ReaderPage.css'
 
 const PdfJsViewer = lazy(() => import('../components/PdfJsViewer'))
@@ -44,7 +46,7 @@ function normalizeUint8 (v) {
   return null
 }
 
-/** preload 直读二进制；若环境未暴露 Uint8Array 则退回 base64 解码 */
+/** preload PDF file as Uint8Array (base64 decoded). */
 function readPdfFileAsUint8 (filePath) {
   try {
     if (typeof window.services.readBinaryAsUint8 === 'function') {
@@ -87,6 +89,22 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
     else navigate('library')
   }
 
+  const renderRemoteBuiltinGate = () => (
+    <div className="reader-page">
+      <div className="reader-header">
+        <button className="btn btn-ghost btn-back" onClick={goBack}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div className="reader-info">
+          {manual && <span className="reader-manual-name">{manual.name}</span>}
+        </div>
+      </div>
+      <div className="reader-body">
+        <RemoteBuiltinDownload manual={manual} />
+      </div>
+    </div>
+  )
+
   useEffect(() => {
     if (detectedType === 'chm' || detectedType === 'mixed') return
     setPdfBytes(null)
@@ -94,6 +112,11 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
     if (!resolvedPath) { setError('\u672a\u6307\u5b9a\u6587\u4ef6\u8def\u5f84'); setLoading(false); return () => {} }
     try {
       const info = window.services.pathInfo(resolvedPath)
+      if (!info.exists && manual?.remoteDownloadUrl) {
+        setError(null)
+        setLoading(false)
+        return () => {}
+      }
       if (!info.exists) { setError('\u6587\u4ef6\u4e0d\u5b58\u5728: ' + resolvedPath); setLoading(false); return () => {} }
 
       if (detectedType === 'pdf') {
@@ -125,7 +148,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
     } catch (e) {
       setError('\u52a0\u8f7d\u5931\u8d25: ' + e.message); setLoading(false)
     }
-  }, [resolvedPath, detectedType])
+  }, [resolvedPath, detectedType, manual?.remoteDownloadUrl, manual?.id])
 
   useEffect(() => {
     if (detectedType === 'chm' || detectedType === 'mixed') return
@@ -140,6 +163,9 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
   }, [loading, html, anchor, detectedType])
 
   if (detectedType === 'chm' && resolvedPath) {
+    if (isRemoteBuiltinPending(manual)) {
+      return renderRemoteBuiltinGate()
+    }
     return (
       <ChmReader
         chmPath={resolvedPath}
@@ -151,6 +177,9 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
   }
 
   if (detectedType === 'mixed' && resolvedPath && manual?.entryFile) {
+    if (isRemoteBuiltinPending(manual)) {
+      return renderRemoteBuiltinGate()
+    }
     return (
       <IframeManualReader
         sourcePath={resolvedPath}
@@ -162,6 +191,9 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
   }
 
   if (detectedType === 'mixed' && resolvedPath) {
+    if (isRemoteBuiltinPending(manual)) {
+      return renderRemoteBuiltinGate()
+    }
     return (
       <DirectoryManualReader
         manualId={manualId}
@@ -172,6 +204,8 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
       />
     )
   }
+
+  const remotePdfGate = detectedType === 'pdf' && resolvedPath && isRemoteBuiltinPending(manual)
 
   return (
     <div className="reader-page">
@@ -188,9 +222,10 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
         </div>
       </div>
       <div className={'reader-body' + (pdfBytes?.byteLength ? ' reader-body-pdf' : '')} ref={ref}>
-        {loading && <div className="reader-status">{'\u52a0\u8f7d\u4e2d\u2026'}</div>}
-        {error && <div className="reader-status reader-error">{error}</div>}
-        {!loading && !error && pdfBytes?.byteLength > 0 && (
+        {remotePdfGate && <RemoteBuiltinDownload manual={manual} />}
+        {!remotePdfGate && loading && <div className="reader-status">{'\u52a0\u8f7d\u4e2d\u2026'}</div>}
+        {!remotePdfGate && error && <div className="reader-status reader-error">{error}</div>}
+        {!remotePdfGate && !loading && !error && pdfBytes?.byteLength > 0 && (
           <Suspense fallback={<div className="reader-status">{'\u6b63\u5728\u52a0\u8f7d PDF \u67e5\u770b\u5668\u2026'}</div>}>
             <PdfJsViewer
               data={pdfBytes}
@@ -198,7 +233,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
             />
           </Suspense>
         )}
-        {!loading && !error && !pdfBytes?.byteLength && (
+        {!remotePdfGate && !loading && !error && !pdfBytes?.byteLength && (
           <div className="doc-content" dangerouslySetInnerHTML={{ __html: html }} />
         )}
       </div>

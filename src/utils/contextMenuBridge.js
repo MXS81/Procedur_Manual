@@ -3,11 +3,11 @@
  * contextmenu here so ContextMenuHost (portal on parent body) opens with correct Window + coordinates.
  *
  * Cross-origin or sandboxed iframes (no same-origin access):
- * 1) postMessage °™ child runs a tiny script: on contextmenu, parent.postMessage({ type:'pm-ctx', x,y, hasSel }, '*');
+ * 1) postMessage ÔºÅ child runs a tiny script: on contextmenu, parent.postMessage({ type:'pm-ctx', x,y, hasSel }, '*');
  *    parent window listens and opens the same menu (must validate event.source === iframe.contentWindow).
- * 2) Build-time °™ inject <script src=".../context-menu-bridge-inject.js"> into every shipped HTML (or Vite plugin).
- * 3) Stop using iframe °™ fetch HTML and insert into shadow DOM / div (lose separate document, big refactor).
- * 4) Electron only °™ session.setPermissionRequestHandler + webPreferences + preload to inject without CORS.
+ * 2) Build-time ÔºÅ inject <script src=".../context-menu-bridge-inject.js"> into every shipped HTML (or Vite plugin).
+ * 3) Stop using iframe ÔºÅ fetch HTML and insert into shadow DOM / div (lose separate document, big refactor).
+ * 4) Electron only ÔºÅ session.setPermissionRequestHandler + webPreferences + preload to inject without CORS.
  */
 
 let subscriber = null

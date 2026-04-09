@@ -1,16 +1,50 @@
 /**
- * Generate public/builtin-manuals/manifest.json from ASCII-only source (\uXXXX).
- * Avoids .mjs saved as wrong encoding producing U+FFFD in output.
+ * Generate public/builtin-manuals/manifest.json:
+ * 1) Scan public/builtin-manuals for dirs / .chm / .pdf (matches disk layout).
+ * 2) Merge metadata from STATIC_CATALOG by fileName; unknown paths get auto ids.
+ * 3) Append REMOTE_BY_ID-only rows when file absent locally (Release download).
+ *
+ * UTF-8 output. Run: node scripts/build-builtin-manifest.mjs
  */
+import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const outPath = path.join(__dirname, '..', 'public', 'builtin-manuals', 'manifest.json')
+const builtinRoot = path.join(__dirname, '..', 'public', 'builtin-manuals')
+const outPath = path.join(builtinRoot, 'manifest.json')
 
-/** @type {Array<Record<string, unknown>>} */
-const BUILTIN_MANUALS = [
+const PM_RELEASE_BASE = (process.env.PM_RELEASE_BASE || '').trim()
+  || 'https://github.com/MXS81/Procedur_Manual/releases/download/manuals/'
+
+const IGNORE_TOP = new Set(['manifest.json', '.git', '.DS_Store', 'Thumbs.db'])
+
+/**
+ * @type {Map<string, {
+ *   downloadUrl: string,
+ *   sha256?: string,
+ *   downloadArchive?: 'zip',
+ *   downloadUrlChw?: string,
+ *   sha256Chw?: string
+ * }>}
+ */
+const REMOTE_BY_ID = new Map([
+  ['builtin-cpp', { downloadUrl: PM_RELEASE_BASE + 'cppreference-zh_CN.chm' }],
+  ['builtin-mysql8', { downloadUrl: PM_RELEASE_BASE + 'MYSQL8.0.chm' }],
+  ['builtin-python-313-core-ref-v110', {
+    downloadUrl: PM_RELEASE_BASE + 'Python.3.13.x.v1.10.chm',
+    downloadUrlChw: PM_RELEASE_BASE + 'Python.3.13.x.v1.10.chw'
+  }],
+  ['builtin-qt-help-zh-full', { downloadUrl: PM_RELEASE_BASE + 'QT.chm' }],
+  ['builtin-php', {
+    downloadUrl: PM_RELEASE_BASE + 'php-chunked-xhtml.zip',
+    downloadArchive: 'zip'
+  }]
+])
+
+/** Full row templates; fileName keys must match disk / Release layout. */
+const STATIC_CATALOG = [
   {
     id: 'builtin-linux-command',
     name: 'Linux \u547d\u4ee4\u624b\u518c',
@@ -141,15 +175,200 @@ const BUILTIN_MANUALS = [
     version: '7.2'
   },
   {
+    id: 'builtin-qt-help-zh-full',
+    name: 'Qt \u4e2d\u6587\u5e2e\u52a9\u6587\u6863\uff08\u5b8c\u6574\u7248\uff09',
+    description: 'Qt \u6846\u67b6\u5b98\u65b9\u4e2d\u6587\u5e2e\u52a9\uff08CHM\uff0c\u542b\u7c7b\u5e93\u3001\u4fe1\u53f7\u69fd\u3001QML \u7b49\u53c2\u8003\uff09',
+    keywords: [
+      'qt', 'qt5', 'qt6', 'qml', 'qwidget', 'signals', 'slots', 'c++', 'gui',
+      '\u4fe1\u53f7', '\u69fd', '\u754c\u9762', '\u5e2e\u52a9'
+    ],
+    fileName: 'QT\u4e2d\u6587\u5e2e\u52a9\u6587\u6863\u5b8c\u6574\u7248.chm',
+    version: '1.0'
+  },
+  {
     id: 'builtin-vue-official-pdf-zh',
     name: 'Vue.js \u5b98\u65b9\u79bb\u7ebf\u6587\u6863\uff08PDF\uff09',
-    description: 'Vue.js \u5b98\u65b9\u6587\u6863\u4e2d\u6587\u79bb\u7ebf\u7248\uff08PDF\uff09\uff0c\u6309\u9875\u5168\u6587\u68c0\u7d22\uff1b\u5185\u7f6e pdf-parse \u89e3\u6790\uff0c\u5931\u8d25\u65f6\u53ef\u5b89\u88c5 Poppler\uff08pdftotext\uff09\u52a0\u5165 PATH',
+    description: 'Vue.js \u5b98\u65b9\u6587\u6863\u4e2d\u6587\u79bb\u7ebf\u7248\uff08PDF\uff09\u3002PDF \u5168\u6587\u68c0\u7d22\u9700 Poppler\uff08pdftotext\uff09\uff1b\u8d44\u6e90\u4e0e\u4f9d\u8d56\u5185\u53ef\u5b89\u88c5\u6216\u91cd\u542f uTools \u540e\u70b9\u300c\u7d22\u5f15\u300d\u3002',
     keywords: ['vue', 'vue3', 'vue2', '\u524d\u7aef', '\u6846\u67b6', '\u7ec4\u5408\u5f0f', '\u9009\u9879\u5f0f', 'cli', 'router', 'vuex'],
     fileName: 'VueJS\u5b98\u65b9\u79bb\u7ebf\u6587\u6863(\u642c\u8fd0\u7248).pdf',
     version: '1.0'
   }
 ]
 
+const KNOWN_BY_FILE = new Map(STATIC_CATALOG.map((e) => [e.fileName, e]))
+
+function toPosixRel (root, absPath) {
+  return path.relative(root, absPath).split(path.sep).join('/')
+}
+
+function walkFiles (dir, acc) {
+  let dirents
+  try {
+    dirents = fs.readdirSync(dir, { withFileTypes: true })
+  } catch {
+    return acc
+  }
+  for (const d of dirents) {
+    const p = path.join(dir, d.name)
+    if (d.isDirectory()) walkFiles(p, acc)
+    else acc.push(p)
+  }
+  return acc
+}
+
+function dirTreeHasMd (dir) {
+  let dirents
+  try {
+    dirents = fs.readdirSync(dir, { withFileTypes: true })
+  } catch {
+    return false
+  }
+  for (const d of dirents) {
+    const p = path.join(dir, d.name)
+    if (d.isDirectory()) {
+      if (dirTreeHasMd(p)) return true
+    } else if (/\.md$/i.test(d.name)) {
+      return true
+    }
+  }
+  return false
+}
+
+function dirHtmlManualLike (dir) {
+  const idx = path.join(dir, 'index.html')
+  try {
+    if (fs.existsSync(idx) && fs.statSync(idx).isFile()) return true
+  } catch { /* */ }
+  const all = []
+  walkFiles(dir, all)
+  let htmlN = 0
+  for (const f of all) {
+    if (/\.(html|htm)$/i.test(f)) {
+      htmlN++
+      if (htmlN >= 8) return true
+    }
+  }
+  return false
+}
+
+function listChmPdfUnder (dir) {
+  const all = []
+  walkFiles(dir, all)
+  return all.filter((f) => /\.(chm|pdf)$/i.test(f))
+}
+
+/**
+ * @returns {string[]} fileName relative to builtinRoot (posix)
+ */
+function discoverFromDisk (root) {
+  if (!fs.existsSync(root)) return []
+  const out = []
+  const seen = new Set()
+  const push = (rel) => {
+    const n = rel.replace(/^[\\/]+/, '')
+    if (!seen.has(n)) {
+      seen.add(n)
+      out.push(n)
+    }
+  }
+
+  let top
+  try {
+    top = fs.readdirSync(root, { withFileTypes: true })
+  } catch {
+    return []
+  }
+
+  for (const ent of top) {
+    if (IGNORE_TOP.has(ent.name)) continue
+    const full = path.join(root, ent.name)
+    if (ent.isFile()) {
+      if (/\.(chm|pdf)$/i.test(ent.name)) push(ent.name)
+      continue
+    }
+    if (!ent.isDirectory()) continue
+
+    const hasMd = dirTreeHasMd(full)
+    const assets = listChmPdfUnder(full)
+    if (assets.length > 0 && !hasMd) {
+      for (const abs of assets) push(toPosixRel(root, abs))
+    } else if (hasMd || ent.name === 'php-chunked-xhtml' || dirHtmlManualLike(full)) {
+      push(ent.name)
+    }
+  }
+  return out
+}
+
+function buildAutoEntry (fileName) {
+  const base = path.basename(fileName).replace(/\.[^.]+$/, '') || fileName
+  const id =
+    'builtin-auto-' +
+    crypto.createHash('md5').update(fileName).digest('hex').slice(0, 12)
+  const parts = base.split(/[\s._\-\/]+/).filter(Boolean)
+  const kw = parts.slice(0, 8)
+  if (kw.length === 0) kw.push('docs')
+  return {
+    id,
+    name: base,
+    description:
+      '\u672c\u5730\u5185\u7f6e\u8d44\u6e90\uff08\u81ea\u52a8\u626b\u63cf\uff09: ' + fileName,
+    keywords: kw,
+    fileName,
+    version: '1.0'
+  }
+}
+
+function existsUnderRoot (root, fileName) {
+  const p = path.join(root, ...fileName.split('/'))
+  try {
+    return fs.existsSync(p)
+  } catch {
+    return false
+  }
+}
+
+function buildManifest () {
+  const discovered = discoverFromDisk(builtinRoot)
+  const seen = new Set()
+  const rows = []
+
+  for (const fileName of discovered) {
+    if (!existsUnderRoot(builtinRoot, fileName)) continue
+    const known = KNOWN_BY_FILE.get(fileName)
+    if (known) {
+      rows.push({ ...known })
+    } else {
+      rows.push(buildAutoEntry(fileName))
+    }
+    seen.add(fileName)
+  }
+
+  for (const stub of STATIC_CATALOG) {
+    if (seen.has(stub.fileName)) continue
+    if (REMOTE_BY_ID.has(stub.id)) {
+      rows.push({ ...stub })
+    }
+  }
+
+  for (const entry of rows) {
+    const r = REMOTE_BY_ID.get(entry.id)
+    if (r) {
+      entry.downloadUrl = r.downloadUrl
+      if (r.sha256) entry.sha256 = r.sha256
+      if (r.downloadArchive) entry.downloadArchive = r.downloadArchive
+      if (r.downloadUrlChw) entry.downloadUrlChw = r.downloadUrlChw
+      if (r.sha256Chw) entry.sha256Chw = r.sha256Chw
+    }
+  }
+
+  rows.sort((a, b) =>
+    String(a.fileName).localeCompare(String(b.fileName), 'zh-Hans-CN', { sensitivity: 'base' })
+  )
+
+  return rows
+}
+
+const BUILTIN_MANUALS = buildManifest()
 const text = JSON.stringify(BUILTIN_MANUALS, null, 2) + '\n'
 fs.writeFileSync(outPath, text, 'utf8')
 console.log('[build-builtin-manifest] wrote', outPath, 'entries:', BUILTIN_MANUALS.length)

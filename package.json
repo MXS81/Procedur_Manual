@@ -2,7 +2,7 @@
   "name": "procedur-manual-utools",
   "version": "1.0.0",
   "private": true,
-  "description": "\u733f\u624b\u518c uTools \u63d2\u4ef6\uff1a\u672c\u5730\u6280\u672f\u624b\u518c\u9605\u8bfb\u4e0e\u5168\u6587\u68c0\u7d22",
+  "description": "猿手册 uTools 插件：本地技术手册阅读与全文检索",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
     "test:nav": "node scripts/test-bundled-doc-nav.mjs",
     "bundle:7za": "node scripts/copy-bundled-7za.mjs",
     "build": "node scripts/test-bundled-doc-nav.mjs && node scripts/build-builtin-manifest.mjs && node scripts/copy-bundled-7za.mjs && vite build && node scripts/prepare-release.mjs",
-    "postinstall": "node scripts/copy-bundled-7za.mjs && npm install --prefix public/preload",
+    "build:full": "cross-env PM_RELEASE_SLIM=0 npm run build",
+    "postinstall": "node scripts/copy-bundled-7za.mjs && npm install --prefix public/preload && node scripts/clean-preload-node-modules.mjs",
     "install:preload": "npm install --prefix public/preload"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "7zip-bin": "^5.2.0",
     "7zip-bin-win": "^2.2.0",
+    "cross-env": "^7.0.3",
     "standard": "^17.1.0",
     "utools-api-types": "^7.5.1",
     "vite": "^6.0.11"

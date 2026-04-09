@@ -2,7 +2,15 @@ import { useState } from 'react'
 import { useManualContext } from '../store/ManualContext'
 import { buildManualIndex, clearIndexCache } from '../modules/search/SearchService'
 import { getSourceTypeLabel } from '../utils/helpers'
-import { MAIN_SEARCH_TOGGLE_LABEL, MAIN_SEARCH_TOGGLE_TITLE } from '../utils/asciiUiStrings.js'
+import { isRemoteBuiltinPending } from '../utils/manualRemote'
+import {
+  MAIN_SEARCH_TOGGLE_LABEL,
+  MAIN_SEARCH_TOGGLE_TITLE,
+  PDF_INDEX_POPPLER_CARD_PREFIX,
+  PDF_INDEX_POPPLER_CARD_SUFFIX,
+  PDF_INDEX_POPPLER_DOWNLOAD_URL,
+  PDF_INDEX_POPPLER_SCRIPT_HINT
+} from '../utils/asciiUiStrings.js'
 import './ManualCard.css'
 
 const STATUS = {
@@ -23,10 +31,12 @@ export default function ManualCard ({
   const [rebuilding, setRebuilding] = useState(false)
   const [progress, setProgress] = useState('')
   const st = STATUS[manual.indexStatus] || STATUS.pending
+  const remotePending = isRemoteBuiltinPending(manual)
 
   const toggle = (field) => () => updateManual({ id: manual.id, [field]: !manual[field] })
 
   const handleRebuild = async () => {
+    if (remotePending) return
     setRebuilding(true)
     setProgress('\u51c6\u5907\u4e2d...')
     updateManual({ id: manual.id, indexStatus: 'building' })
@@ -81,8 +91,33 @@ export default function ManualCard ({
         )}
         <div className="card-icon">{getSourceTypeLabel(manual.sourceType)[0]}</div>
         <div className="card-body">
-          <div className="card-name">{manual.name}</div>
+          <div className="card-name-row">
+            <div className="card-name">{manual.name}</div>
+            {remotePending && (
+              <span className="card-remote-badge" title={'\u9700\u5148\u4e0b\u8f7d\u8d44\u6e90\u6587\u4ef6'}>
+                {'\u9700\u4e0b\u8f7d'}
+              </span>
+            )}
+          </div>
           {manual.description && <div className="card-desc">{manual.description}</div>}
+          {manual.sourceType === 'pdf' && (
+            <div className="card-pdf-poppler-hint">
+              {PDF_INDEX_POPPLER_CARD_PREFIX}
+              <a
+                href={PDF_INDEX_POPPLER_DOWNLOAD_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-pdf-poppler-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {PDF_INDEX_POPPLER_DOWNLOAD_URL}
+              </a>
+              {PDF_INDEX_POPPLER_CARD_SUFFIX}
+            </div>
+          )}
+          {manual.sourceType === 'pdf' && (
+            <div className="card-pdf-poppler-script-hint">{PDF_INDEX_POPPLER_SCRIPT_HINT}</div>
+          )}
           <div className="card-meta">
             <span className="card-type-badge">{getSourceTypeLabel(manual.sourceType)}</span>
             {manual.keywords?.map(k => <span key={k} className="card-kw">{k}</span>)}
@@ -110,7 +145,12 @@ export default function ManualCard ({
           />
           <span>{MAIN_SEARCH_TOGGLE_LABEL}</span>
         </label>
-        <button className="btn btn-small btn-ghost" onClick={handleRebuild} disabled={rebuilding}>
+        <button
+          className="btn btn-small btn-ghost"
+          onClick={handleRebuild}
+          disabled={rebuilding || remotePending}
+          title={remotePending ? '\u8bf7\u5148\u5728\u9605\u8bfb\u9875\u4e0b\u8f7d\u8d44\u6e90\u540e\u518d\u7d22\u5f15' : undefined}
+        >
           {rebuilding ? (progress || '...') : '\u7d22\u5f15'}
         </button>
         {onEdit && !manageMode && (
