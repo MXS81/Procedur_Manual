@@ -2,7 +2,7 @@
   "name": "procedur-manual-utools",
   "version": "1.0.0",
   "private": true,
-  "description": "猿手册 uTools 插件：本地技术手册阅读与全文检索",
+  "description": "\u733f\u624b\u518c uTools \u63d2\u4ef6\uff1a\u672c\u5730\u6280\u672f\u624b\u518c\u9605\u8bfb\u4e0e\u5168\u6587\u68c0\u7d22",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,8 +11,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test:nav": "node scripts/test-bundled-doc-nav.mjs",
     "bundle:7za": "node scripts/copy-bundled-7za.mjs",
-    "build": "node scripts/build-builtin-manifest.mjs && node scripts/copy-bundled-7za.mjs && vite build && node scripts/prepare-release.mjs",
+    "build": "node scripts/test-bundled-doc-nav.mjs && node scripts/build-builtin-manifest.mjs && node scripts/copy-bundled-7za.mjs && vite build && node scripts/prepare-release.mjs",
     "postinstall": "node scripts/copy-bundled-7za.mjs && npm install --prefix public/preload",
     "install:preload": "npm install --prefix public/preload"
   },

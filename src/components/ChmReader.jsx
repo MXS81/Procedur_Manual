@@ -4,6 +4,7 @@ import {
   splitBundledActive,
   scrollBundledIframeToFragment
 } from '../utils/bundledDocNav'
+import { attachBundledIframeContextMenu } from '../utils/contextMenuBridge.js'
 import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightRegex } from '../utils/searchModes'
 import SearchInputWithModes from './SearchInputWithModes'
 import './ChmReader.css'
@@ -145,6 +146,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const searchTimerRef = useRef(null)
   const pageSearchRef = useRef(null)
   const sidebarRef = useRef(null)
+  const pendingFindRef = useRef(null)
 
   // ---- History ----
   const historyRef = useRef({ stack: [], idx: -1 })
@@ -252,35 +254,47 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     } catch { setIframeDoc('') }
   }, [chmInfo, activePath])
 
-  // ---- Iframe click handler ----
+  // ---- Navigation via postMessage from injected nav-guard script ----
+  useEffect(() => {
+    if (!chmInfo) return
+    const handler = (e) => {
+      if (!e.data || e.data.type !== 'pm-nav') return
+      if (e.source !== iframeRef.current?.contentWindow) return
+      const href = e.data.href
+      if (!href) return
+      const trimmed = String(href).trim()
+      if (/^https?:/i.test(trimmed)) {
+        try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
+        return
+      }
+      const rel = resolveBundledNavigationTarget(href, chmInfo.extractDir, activePathRef.current)
+      if (rel) {
+        activePathRef.current = splitBundledActive(rel).path
+        navigateTo(rel)
+      }
+    }
+    window.addEventListener('message', handler)
+    return () => window.removeEventListener('message', handler)
+  }, [chmInfo, navigateTo])
+
+  // ---- Iframe pending find on load ----
   useEffect(() => {
     if (!iframeDoc || !chmInfo) return
     const el = iframeRef.current
     if (!el) return
     const onLoad = () => {
-      let cleanup = null
-      try {
-        const doc = el.contentDocument
-        if (!doc) return
-        const click = (e) => {
-          const a = e.target.closest && e.target.closest('a[href]')
-          if (!a) return
-          const raw = a.getAttribute('href')
-          if (!raw) return
-          const rel = resolveBundledNavigationTarget(raw, chmInfo.extractDir, activePath)
-          if (rel) { e.preventDefault(); e.stopPropagation(); navigateTo(rel) }
-        }
-        doc.addEventListener('click', click, true)
-        cleanup = () => doc.removeEventListener('click', click, true)
-      } catch {}
-      el._pmCleanup = cleanup
+      const term = pendingFindRef.current
+      if (term) {
+        pendingFindRef.current = null
+        try {
+          const win = el.contentWindow
+          if (win) { win.getSelection()?.removeAllRanges(); win.find(term, false, false, true) }
+        } catch {}
+      }
     }
     el.addEventListener('load', onLoad)
-    return () => {
-      el.removeEventListener('load', onLoad)
-      if (el._pmCleanup) { el._pmCleanup(); delete el._pmCleanup }
-    }
-  }, [iframeDoc, chmInfo, activePath, navigateTo])
+    return () => el.removeEventListener('load', onLoad)
+  }, [iframeDoc, chmInfo])
 
   // ---- Fragment scroll ----
   useEffect(() => {
@@ -292,27 +306,45 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     return () => el.removeEventListener('load', run)
   }, [iframeDoc, activeFragment])
 
-  // ---- Sidebar resize (direct DOM, bypass React during drag) ----
+  useEffect(() => {
+    const el = iframeRef.current
+    if (!el || !iframeDoc) return
+    return attachBundledIframeContextMenu(el)
+  }, [iframeDoc, activePath])
+
+  // ---- Sidebar resize (preview line during drag, commit on mouseup) ----
   const onResizeStart = useCallback((e) => {
     if (e.button !== 0) return
     e.preventDefault()
-    const startX = e.clientX
     const sidebar = sidebarRef.current
     if (!sidebar) return
+    const mainRect = sidebar.parentElement?.getBoundingClientRect()
+    if (!mainRect) return
+    const startX = e.clientX
     const startW = sidebar.offsetWidth
     const iframe = iframeRef.current
+    let nextW = startW
+    const guide = document.createElement('div')
+    guide.className = 'chm-resize-guide'
+    guide.style.top = mainRect.top + 'px'
+    guide.style.height = mainRect.height + 'px'
+    guide.style.left = (mainRect.left + startW) + 'px'
+    document.body.appendChild(guide)
 
     const finish = () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseup', onUp)
+      window.removeEventListener('blur', onUp)
       document.body.style.cursor = ''
       document.body.style.userSelect = ''
       if (iframe) iframe.style.pointerEvents = ''
-      setSidebarWidth(sidebar.offsetWidth)
+      guide.remove()
+      setSidebarWidth(nextW)
     }
     const onMove = (ev) => {
       if (ev.buttons === 0) { finish(); return }
-      sidebar.style.width = Math.max(180, Math.min(window.innerWidth * 0.5, startW + ev.clientX - startX)) + 'px'
+      nextW = Math.max(180, Math.min(window.innerWidth * 0.5, startW + ev.clientX - startX))
+      guide.style.left = (mainRect.left + nextW) + 'px'
     }
     const onUp = () => finish()
 
@@ -321,6 +353,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     if (iframe) iframe.style.pointerEvents = 'none'
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseup', onUp)
+    window.addEventListener('blur', onUp)
   }, [])
 
   // ---- Page search ----
@@ -523,7 +556,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     {contentResults.map((r, i) => (
                       <li key={i}
                         className={'chm-search-result' + (activePath === r.local ? ' active' : '')}
-                        onClick={() => handleSelectPage(r.local)}>
+                        onClick={() => { pendingFindRef.current = searchTerm; handleSelectPage(r.local) }}>
                         <div className="chm-result-title">
                           {r.title}
                           <span className="chm-result-count">{r.matchCount} {'\u5904\u5339\u914d'}</span>

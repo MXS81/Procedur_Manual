@@ -3,6 +3,7 @@ import { ManualProvider, useManualContext } from './store/ManualContext'
 import ManualLibraryPage from './pages/ManualLibraryPage'
 import SearchPage from './pages/SearchPage'
 import ReaderPage from './pages/ReaderPage'
+import ContextMenuHost from './components/ContextMenuHost'
 import './App.css'
 
 function AppRouter () {
@@ -55,6 +56,7 @@ function AppRouter () {
 
   return (
     <div className="app">
+      <ContextMenuHost />
       {notification && (
         <div className={`toast toast-${notification.type}`}>
           {notification.message}

@@ -15,6 +15,14 @@ export const SEARCH_INPUT_TITLES = {
   useRegex: '\u4f7f\u7528\u6b63\u5219\u8868\u8fbe\u5f0f'
 }
 
+/** Custom context menu (uTools / Electron often disables native menu) */
+export const CONTEXT_MENU_LABELS = {
+  cut: '\u526a\u5207',
+  copy: '\u590d\u5236',
+  paste: '\u7c98\u8d34',
+  selectAll: '\u5168\u9009'
+}
+
 export const PDF_VIEWER_UI = {
   loading: '\u6b63\u5728\u52a0\u8f7d PDF\u2026',
   fullSearch: '\u5168\u6587\u641c\u7d22',
@@ -46,3 +54,25 @@ export function pdfPageLabel (pageNum) {
 export function pdfMatchCountLabel (n) {
   return n + ' \u5904'
 }
+
+/** ManualCard: use code points so \u7d22 (\u7d + digit) is never misparsed in JSX/bundlers */
+export const MAIN_SEARCH_TOGGLE_LABEL = String.fromCodePoint(0x4e3b, 0x641c, 0x7d22)
+
+export const MAIN_SEARCH_TOGGLE_TITLE =
+  'uTools ' +
+  String.fromCodePoint(
+    0x4e3b,
+    0x641c,
+    0x7d22,
+    0x6846,
+    0x5339,
+    0x914d,
+    0x672c,
+    0x624b,
+    0x518c,
+    0x540d,
+    0x4e0e,
+    0x5173,
+    0x952e,
+    0x8bcd
+  )

@@ -4,6 +4,7 @@ import {
   splitBundledActive,
   scrollBundledIframeToFragment
 } from '../utils/bundledDocNav'
+import { attachBundledIframeContextMenu } from '../utils/contextMenuBridge.js'
 import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightRegex } from '../utils/searchModes'
 import SearchInputWithModes from './SearchInputWithModes'
 import './IframeManualReader.css'
@@ -94,7 +95,7 @@ function parseUl (ul) {
     const children = childUl ? parseUl(childUl) : []
 
     items.push({
-      name: desc ? `${title} — ${desc}` : title,
+      name: desc ? `${title} �? ${desc}` : title,
       local: href,
       children
     })
@@ -119,7 +120,7 @@ function filterToc (nodes, term, modeOpts) {
   return result
 }
 
-/** chunklist 解析失败或结构非 PHP 手册时，用目录下 HTML 列表作为可点击目录 */
+/** chunklist 解析失败或结构非 PHP 手册时，用目录下 HTML 列表作为可点击目�? */
 function buildFlatHtmlToc (sourcePath) {
   try {
     const files = window.services.scanDir(sourcePath, ['.html', '.htm'], { maxFiles: 800 })
@@ -208,47 +209,41 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
     }
   }, [sourcePath, activePath])
 
+  const activePathRef = useRef('')
+  activePathRef.current = activePath
+
   const handleSelectPage = useCallback((localPath) => {
     setActivePage(localPath)
   }, [])
 
+  // ---- Navigation via postMessage from injected nav-guard script ----
   useEffect(() => {
-    if (!iframeDoc || !sourcePath) return
-    const el = iframeRef.current
-    if (!el) return
-
-    const onLoad = () => {
-      let cleanup = null
-      try {
-        const doc = el.contentDocument
-        if (!doc) return
-        const click = (e) => {
-          const a = e.target.closest && e.target.closest('a[href]')
-          if (!a) return
-          const raw = a.getAttribute('href')
-          if (!raw) return
-          const rel = resolveBundledNavigationTarget(raw, sourcePath, activePath)
-          if (rel) {
-            e.preventDefault()
-            e.stopPropagation()
-            setActivePage(rel)
-          }
-        }
-        doc.addEventListener('click', click, true)
-        cleanup = () => doc.removeEventListener('click', click, true)
-      } catch { /* */ }
-      el._pmIframeCleanup = cleanup
-    }
-
-    el.addEventListener('load', onLoad)
-    return () => {
-      el.removeEventListener('load', onLoad)
-      if (el._pmIframeCleanup) {
-        el._pmIframeCleanup()
-        delete el._pmIframeCleanup
+    if (!sourcePath) return
+    const handler = (e) => {
+      if (!e.data || e.data.type !== 'pm-nav') return
+      if (e.source !== iframeRef.current?.contentWindow) return
+      const href = e.data.href
+      if (!href) return
+      const trimmed = String(href).trim()
+      if (/^https?:/i.test(trimmed)) {
+        try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
+        return
+      }
+      const rel = resolveBundledNavigationTarget(href, sourcePath, activePathRef.current)
+      if (rel) {
+        activePathRef.current = splitBundledActive(rel).path
+        setActivePage(rel)
       }
     }
-  }, [iframeDoc, sourcePath, activePath])
+    window.addEventListener('message', handler)
+    return () => window.removeEventListener('message', handler)
+  }, [sourcePath])
+
+  useEffect(() => {
+    const el = iframeRef.current
+    if (!el || !iframeDoc) return
+    return attachBundledIframeContextMenu(el)
+  }, [iframeDoc, activePath])
 
   useEffect(() => {
     const el = iframeRef.current
@@ -296,7 +291,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
     return filterToc(toc, searchTerm, searchModeOpts)
   }, [toc, searchTerm, searchMode, searchModeOpts, searchCompile.ok])
 
-  if (loading) return <div className="ifr-reader"><div className="ifr-status">加载中...</div></div>
+  if (loading) return <div className="ifr-reader"><div className="ifr-status">加载�?...</div></div>
 
   return (
     <div className="ifr-reader">
@@ -330,7 +325,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                 options={searchModeOpts}
                 onOptionsChange={setSearchModeOpts}
                 onClear={() => setSearchTerm('')}
-                placeholder={searchMode === 'toc' ? '搜索目录…' : '搜索页面内容…'}
+                placeholder={searchMode === 'toc' ? '搜索目录�?' : '搜索页面内容�?'}
                 className="ifr-search-inner"
                 inputClassName="ifr-pm-field"
               />
@@ -361,19 +356,19 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                     ))}
                   </ul>
                 ) : searchTerm && searchCompile.ok ? (
-                  <div className="ifr-toc-empty">目录中未找到匹配项</div>
+                  <div className="ifr-toc-empty">目录中未找到匹配�?</div>
                 ) : searchTerm ? (
                   <div className="ifr-toc-empty">搜索条件无效</div>
                 ) : (
-                  <div className="ifr-toc-empty">无目录信息</div>
+                  <div className="ifr-toc-empty">无目录信�?</div>
                 )
               ) : (
                 !searchTerm.trim() ? (
-                  <div className="ifr-toc-empty">输入关键词搜索所有页面内容</div>
+                  <div className="ifr-toc-empty">输入关键词搜索所有页面内�?</div>
                 ) : !searchCompile.ok ? (
                   <div className="ifr-toc-empty">修正搜索条件</div>
                 ) : searching ? (
-                  <div className="ifr-toc-empty">搜索中...</div>
+                  <div className="ifr-toc-empty">搜索�?...</div>
                 ) : contentResults.length > 0 ? (
                   <ul className="ifr-search-results">
                     {contentResults.map((r, i) => (
@@ -384,7 +379,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                       >
                         <div className="ifr-result-title">
                           {r.title}
-                          <span className="ifr-result-count">{r.matchCount} 处匹配</span>
+                          <span className="ifr-result-count">{r.matchCount} 处匹�?</span>
                         </div>
                         <div className="ifr-result-snippet">
                           {highlightSnippet(r.snippet, contentHighlightRe)}
@@ -393,7 +388,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                     ))}
                   </ul>
                 ) : (
-                  <div className="ifr-toc-empty">未找到匹配内容</div>
+                  <div className="ifr-toc-empty">未找到匹配内�?</div>
                 )
               )}
             </div>

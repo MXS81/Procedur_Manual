@@ -30,7 +30,7 @@ export function detectSourceType (ext) {
 
 export function createManual ({
   id, name, keywords = [], description = '', rootPath,
-  sourceType = 'html', enabled = true, searchEntryEnabled = false,
+  sourceType = 'html', enabled = true, searchEntryEnabled = true,
   entryFile = null
 }) {
   return {

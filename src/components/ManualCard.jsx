@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useManualContext } from '../store/ManualContext'
 import { buildManualIndex, clearIndexCache } from '../modules/search/SearchService'
 import { getSourceTypeLabel } from '../utils/helpers'
+import { MAIN_SEARCH_TOGGLE_LABEL, MAIN_SEARCH_TOGGLE_TITLE } from '../utils/asciiUiStrings.js'
 import './ManualCard.css'
 
 const STATUS = {
-  pending: { color: 'var(--color-warning)', label: '待索引' },
-  building: { color: 'var(--color-primary)', label: '构建中' },
-  ready: { color: 'var(--color-success)', label: '就绪' },
-  error: { color: 'var(--color-danger)', label: '异常' }
+  pending: { color: 'var(--color-warning)', label: '\u5f85\u7d22\u5f15' },
+  building: { color: 'var(--color-primary)', label: '\u6784\u5efa\u4e2d' },
+  ready: { color: 'var(--color-success)', label: '\u5c31\u7eea' },
+  error: { color: 'var(--color-danger)', label: '\u5f02\u5e38' }
 }
 
 export default function ManualCard ({
@@ -27,25 +28,29 @@ export default function ManualCard ({
 
   const handleRebuild = async () => {
     setRebuilding(true)
-    setProgress('准备中...')
+    setProgress('\u51c6\u5907\u4e2d...')
     updateManual({ id: manual.id, indexStatus: 'building' })
     try {
       clearIndexCache(manual.id)
       const { docCount } = await buildManualIndex(manual, (p) => {
-        if (p.stage === 'decompress') setProgress('解压文件...')
+        if (p.stage === 'decompress') setProgress('\u89e3\u538b\u6587\u4ef6...')
         else if (p.stage === 'index') {
           if (manual.sourceType === 'pdf') {
-            setProgress(`解析 PDF ${p.current}/${p.total} 页 (${p.docCount} 条目)`)
+            setProgress(
+              `\u89e3\u6790 PDF ${p.current}/${p.total} \u9875 (${p.docCount} \u6761)`
+            )
           } else {
-            setProgress(`索引 ${p.current}/${p.total} 文件 (${p.docCount} 条目)`)
+            setProgress(
+              `\u7d22\u5f15 ${p.current}/${p.total} \u6587\u4ef6 (${p.docCount} \u6761)`
+            )
           }
-        } else if (p.stage === 'save') setProgress('保存索引...')
+        } else if (p.stage === 'save') setProgress('\u4fdd\u5b58\u7d22\u5f15...')
       })
       updateManual({ id: manual.id, indexStatus: 'ready', docCount, indexVersion: (manual.indexVersion || 0) + 1 })
-      notify('索引重建成功，共 ' + docCount + ' 个条目', 'success')
+      notify('\u7d22\u5f15\u91cd\u5efa\u6210\u529f\uff0c\u5171 ' + docCount + ' \u6761', 'success')
     } catch (e) {
       updateManual({ id: manual.id, indexStatus: 'error' })
-      notify('索引重建失败: ' + e.message, 'error')
+      notify('\u7d22\u5f15\u91cd\u5efa\u5931\u8d25: ' + e.message, 'error')
     } finally { setRebuilding(false); setProgress('') }
   }
 
@@ -89,20 +94,28 @@ export default function ManualCard ({
       </div>
 
       <div className="card-actions">
-        <label className="card-toggle" title="启用/停用手册">
+        <label className="card-toggle" title={'\u542f\u7528/\u505c\u7528\u624b\u518c'}>
           <input type="checkbox" checked={manual.enabled} onChange={toggle('enabled')} />
-          <span>启用</span>
+          <span>{'\u542f\u7528'}</span>
         </label>
-        <label className="card-toggle" title="允许在主输入框独立搜索此手册">
-          <input type="checkbox" checked={manual.searchEntryEnabled} onChange={toggle('searchEntryEnabled')} />
-          <span>主搜索</span>
+        <label className="card-toggle" title={MAIN_SEARCH_TOGGLE_TITLE}>
+          <input
+            type="checkbox"
+            checked={manual.searchEntryEnabled !== false}
+            onChange={() =>
+              updateManual({
+                id: manual.id,
+                searchEntryEnabled: manual.searchEntryEnabled === false
+              })}
+          />
+          <span>{MAIN_SEARCH_TOGGLE_LABEL}</span>
         </label>
         <button className="btn btn-small btn-ghost" onClick={handleRebuild} disabled={rebuilding}>
-          {rebuilding ? (progress || '...') : '索引'}
+          {rebuilding ? (progress || '...') : '\u7d22\u5f15'}
         </button>
         {onEdit && !manageMode && (
           <button className="btn btn-small btn-ghost" onClick={() => onEdit(manual)}>
-            编辑
+            {'\u7f16\u8f91'}
           </button>
         )}
       </div>

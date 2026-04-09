@@ -525,7 +525,10 @@ window.services = {
             entryFile: entry.entryFile || null,
             builtin: true,
             indexStatus: 'none',
-            docCount: 0
+            docCount: 0,
+            searchEntryEnabled: existingManual.searchEntryEnabled === undefined
+              ? true
+              : existingManual.searchEntryEnabled
           })
           this.removeIndexData(entry.id)
         } else {
@@ -544,6 +547,7 @@ window.services = {
         entryFile: entry.entryFile || null,
         enabled: true,
         builtin: true,
+        searchEntryEnabled: true,
         indexStatus: 'none'
       })
       added++
@@ -556,6 +560,31 @@ window.services = {
 
   _FEATURE_PREFIX: 'manual-quick-',
   _FEATURES_KEY: 'pm_registered_features',
+
+  /**
+   * uTools main search matches string cmds; { type:'over', label } alone is often not enough for the name.
+   * "???" card toggle: only manuals with searchEntryEnabled !== false get setFeature (false = opt-out).
+   */
+  _mainSearchEntryOn (manual) {
+    return manual.searchEntryEnabled !== false
+  },
+
+  _buildManualFeatureCmds (manual) {
+    const label = (manual.name || '').trim() || '\u624b\u518c'
+    const cmds = [{ type: 'over', label }]
+    const seen = new Set()
+    const pushStr = (s) => {
+      const t = String(s || '').trim()
+      if (!t || seen.has(t)) return
+      seen.add(t)
+      cmds.push(t)
+    }
+    pushStr(manual.name)
+    for (const kw of manual.keywords || []) {
+      pushStr(kw)
+    }
+    return cmds
+  },
 
   syncManualFeatures () {
     if (!window.utools) return
@@ -572,21 +601,16 @@ window.services = {
 
     for (const manual of manuals) {
       if (!manual.enabled) continue
+      if (!this._mainSearchEntryOn(manual)) continue
+
       const code = this._FEATURE_PREFIX + manual.id
       activeCodes.add(code)
 
       try {
-        const cmds = [
-          { type: 'over', label: manual.name }
-        ]
-        for (const kw of (manual.keywords || [])) {
-          if (kw && kw !== manual.name) {
-            cmds.push(kw)
-          }
-        }
+        const cmds = this._buildManualFeatureCmds(manual)
         window.utools.setFeature({
           code,
-          explain: manual.description || manual.name,
+          explain: manual.description || manual.name || '',
           cmds
         })
       } catch (e) {
@@ -1083,7 +1107,9 @@ window.services = {
 
   _resolveChmFilePath (extractDir, relPosix) {
     const root = path.resolve(extractDir)
-    const pathOnly = String(relPosix || '').split('#')[0].trim()
+    let pathOnly = String(relPosix || '').split('#')[0].trim()
+    const qm = pathOnly.indexOf('?')
+    if (qm >= 0) pathOnly = pathOnly.slice(0, qm).trim()
     if (!pathOnly) return null
     const relOs = pathOnly.replace(/\//g, path.sep)
     const quick = path.resolve(root, relOs)
@@ -1260,7 +1286,16 @@ window.services = {
 
   _injectChmViewBase (html, baseHref) {
     const safeBase = baseHref.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
-    const inject = `<meta charset="utf-8"><base href="${safeBase}">`
+    const navGuard = `<script>(function(){` +
+      `document.addEventListener("click",function(e){` +
+      `var t=e.target;while(t&&t!==document&&(!t.tagName||t.tagName!=="A"))t=t.parentElement;` +
+      `if(!t||!t.getAttribute)return;var h=t.getAttribute("href");` +
+      `if(!h)return;var s=h.replace(/^\\s+/,"");` +
+      `if(s.lastIndexOf("javascript:",0)===0||s.lastIndexOf("mailto:",0)===0||s.lastIndexOf("tel:",0)===0)return;` +
+      `e.preventDefault();e.stopImmediatePropagation();` +
+      `try{window.parent.postMessage({type:"pm-nav",href:h},"*")}catch(x){}` +
+      `},true);})()</script>`
+    const inject = `<meta charset="utf-8"><base href="${safeBase}">${navGuard}`
     const headMatch = html.match(/<head[^>]*>/i)
     if (headMatch) {
       const i = headMatch.index + headMatch[0].length
@@ -1302,6 +1337,8 @@ window.services = {
     } catch {
       str = this.readTextFile(resolved)
     }
+
+    str = str.replace(/<meta\b[^>]*\bhttp-equiv\s*=\s*["']?\s*refresh\s*["']?[^>]*>/gi, '')
 
     const pageDirPosix = path.dirname(relFromRoot).split(path.sep).join('/')
     if (decoderLabel && decoderLabel !== 'utf-8') {
