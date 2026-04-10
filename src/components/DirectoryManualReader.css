@@ -11,9 +11,25 @@
   margin-bottom: 16px;
 }
 
+.dir-search-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
 .dir-search-wrap {
   flex: 1;
-  min-width: min(100%, 240px);
+  min-width: min(100%, 200px);
+}
+
+.dir-add-md-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-self: stretch;
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 .dir-search-err {
@@ -69,6 +85,18 @@
 .dir-reader-item:hover {
   border-color: var(--color-primary);
   background: var(--color-primary-light);
+}
+
+.dir-reader-item-user-md {
+  border-left: 3px solid var(--color-primary, #2563eb);
+}
+
+.ctx-menu-item-danger {
+  color: var(--color-danger, #c0392b);
+}
+
+.ctx-menu-item-danger:hover:not(:disabled) {
+  background: rgba(192, 57, 43, 0.08);
 }
 
 .dir-reader-name {

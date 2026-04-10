@@ -14,6 +14,29 @@ export const SEARCH_INPUT_TITLES = {
   useRegex: '使用正则表达式'
 }
 
+/** 目录型 Markdown 手册：用户新增命令条目 */
+export const DIR_MD_ADD_COMMAND_UI = {
+  buttonTitle: '按固定格式新增一条命令文档（.md）',
+  buttonLabel: '新增',
+  modalTitle: '新增命令文档',
+  formatHint:
+    '请先写两行元数据，空一行后再写正文（Markdown）。将保存为「命令名.md」。',
+  cancel: '取消',
+  save: '保存',
+  saving: '保存中…',
+  successSaved: '已保存',
+  successTail: '。若需参与全文搜索，请在手册卡片上重建索引。',
+  parseError: '格式有误：',
+  saveError: '保存失败：',
+  needService: '当前环境无法写入文件',
+  deleteItem: '删除命令文档',
+  deleteConfirmPrefix: '确定删除',
+  deleteConfirmSuffix: '？此操作不可恢复。',
+  deleteDone: '已删除',
+  deleteFail: '删除失败：',
+  deleteForbidden: '只能删除通过本页「新增」添加的文档'
+}
+
 export const CONTEXT_MENU_LABELS = {
   cut: '剪切',
   copy: '复制',

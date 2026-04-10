@@ -24,7 +24,9 @@ const STORAGE_KEYS = {
   SETTINGS: 'pm_settings',
   INDEX_PREFIX: 'pm_index_',
   /** string[] ids with downloadUrl user wants in library when files exist */
-  REMOTE_BUILTIN_ENABLED: 'pm_remote_builtin_enabled_ids'
+  REMOTE_BUILTIN_ENABLED: 'pm_remote_builtin_enabled_ids',
+  /** + manualId → JSON string[] relative paths (posix) of user-added .md via「新增」 */
+  USER_ADDED_MD_PREFIX: 'pm_user_md_cmds_'
 }
 
 window.services = {
@@ -103,6 +105,17 @@ window.services = {
     return 'utf-8'
   },
 
+  _isPathInsideDir (filePath, dirPath) {
+    const f = path.resolve(filePath)
+    const d = path.resolve(dirPath)
+    if (process.platform === 'win32') {
+      const fl = f.toLowerCase()
+      const dl = d.toLowerCase()
+      return fl === dl || fl.startsWith(dl + path.sep)
+    }
+    return f === d || f.startsWith(d + path.sep)
+  },
+
   // ========== File System ==========
 
   readTextFile (filePath, forceEncoding) {
@@ -133,6 +146,102 @@ window.services = {
       }
       return buffer.toString('latin1')
     }
+  },
+
+  /**
+   * 在已有手册目录下新建 UTF-8 的 .md 文件（用户扩展命令文档等）。
+   * @param {string} rootDir 手册根目录（绝对路径）
+   * @param {string} baseName 不含扩展名的文件名（已与展示用命令名一致）
+   * @param {string} utf8Content 完整 Markdown 正文
+   * @returns {{ path: string, fileName: string }}
+   */
+  _normManualRel (rel) {
+    return String(rel || '').replace(/\\/g, '/').replace(/^\/+/g, '').trim()
+  },
+
+  _userAddedMdStorageKey (manualId) {
+    return STORAGE_KEYS.USER_ADDED_MD_PREFIX + String(manualId || '')
+  },
+
+  getUserAddedMarkdownCommandRels (manualId) {
+    if (!window.utools?.dbStorage) return []
+    try {
+      const raw = window.utools.dbStorage.getItem(this._userAddedMdStorageKey(manualId))
+      const arr = raw ? JSON.parse(raw) : []
+      if (!Array.isArray(arr)) return []
+      return arr.map((r) => this._normManualRel(r)).filter(Boolean)
+    } catch {
+      return []
+    }
+  },
+
+  registerUserAddedMarkdownCommand (manualId, relPath) {
+    if (!window.utools?.dbStorage) return
+    const id = String(manualId || '').trim()
+    const rel = this._normManualRel(relPath)
+    if (!id || !rel) return
+    const key = this._userAddedMdStorageKey(id)
+    const list = this.getUserAddedMarkdownCommandRels(id)
+    if (!list.includes(rel)) {
+      list.push(rel)
+      window.utools.dbStorage.setItem(key, JSON.stringify(list))
+    }
+  },
+
+  unregisterUserAddedMarkdownCommand (manualId, relPath) {
+    if (!window.utools?.dbStorage) return
+    const id = String(manualId || '').trim()
+    const rel = this._normManualRel(relPath)
+    if (!id) return
+    const key = this._userAddedMdStorageKey(id)
+    const next = this.getUserAddedMarkdownCommandRels(id).filter((x) => x !== rel)
+    window.utools.dbStorage.setItem(key, JSON.stringify(next))
+  },
+
+  isUserAddedMarkdownCommand (manualId, relPath) {
+    const rel = this._normManualRel(relPath)
+    return this.getUserAddedMarkdownCommandRels(manualId).includes(rel)
+  },
+
+  /**
+   * 仅删除通过「新增」登记过的 .md（见 registerUserAddedMarkdownCommand）。
+   */
+  deleteUserAddedMarkdownCommand (rootDir, manualId, relPath) {
+    if (!this.isUserAddedMarkdownCommand(manualId, relPath)) {
+      throw new Error('只能删除通过本页「新增」添加的命令文档')
+    }
+    const root = path.resolve(String(rootDir || '').trim())
+    if (!root || !fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
+      throw new Error('手册目录不存在或无效')
+    }
+    const rel = this._normManualRel(relPath)
+    if (!rel || rel.includes('..')) throw new Error('无效路径')
+    const segments = rel.split('/').filter(Boolean)
+    const target = path.resolve(path.join(root, ...segments))
+    if (!this._isPathInsideDir(target, root)) throw new Error('路径非法')
+    if (fs.existsSync(target)) fs.unlinkSync(target)
+    this.unregisterUserAddedMarkdownCommand(manualId, relPath)
+    return { ok: true }
+  },
+
+  saveNewMarkdownInManualDir (rootDir, baseName, utf8Content, manualId) {
+    const root = path.resolve(String(rootDir || '').trim())
+    if (!root || !fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
+      throw new Error('手册目录不存在或无效')
+    }
+    let base = String(baseName || '').trim()
+    base = base.replace(/[\\/:*?"<>|]/g, '-').replace(/^\.+/, '').trim()
+    if (!base || base === '.' || base === '..') throw new Error('无效的文件名')
+    if (base.length > 200) throw new Error('文件名过长')
+    const target = path.join(root, base + '.md')
+    const resolved = path.resolve(target)
+    if (!this._isPathInsideDir(resolved, root)) throw new Error('路径超出手册目录')
+    if (fs.existsSync(resolved)) throw new Error('已存在同名文件: ' + base + '.md')
+    fs.writeFileSync(resolved, String(utf8Content), { encoding: 'utf-8' })
+    if (manualId && window.utools?.dbStorage) {
+      this.registerUserAddedMarkdownCommand(manualId, base + '.md')
+    }
+    return { path: resolved, fileName: base + '.md' }
   },
 
   /** ??? HTML ??????????????? meta http-equiv Content-Type ??? charset ??????? */

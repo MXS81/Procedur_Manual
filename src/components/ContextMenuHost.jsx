@@ -41,6 +41,8 @@ export default function ContextMenuHost () {
     const onContextMenu = (e) => {
       const t = e.target
       if (t?.closest?.('.ctx-menu-host')) return
+      // 目录手册列表项：由 DirectoryManualReader 自行处理右键（删除自建命令等）
+      if (t?.closest?.('.dir-reader-item')) return
       e.preventDefault()
       e.stopPropagation()
       openMenu({

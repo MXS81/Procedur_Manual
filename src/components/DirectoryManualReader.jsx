@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useManualContext } from '../store/ManualContext'
 import {
   compileSearchMatcher,
@@ -6,7 +7,11 @@ import {
   snippetAroundMatch,
   splitTextByHighlightRegex
 } from '../utils/searchModes'
+import { clampMenuPos } from '../utils/contextMenuCore.js'
 import SearchInputWithModes from './SearchInputWithModes'
+import AddUserMdCommandModal from './AddUserMdCommandModal'
+import { DIR_MD_ADD_COMMAND_UI as UI } from '../utils/asciiUiStrings.js'
+import './ContextMenuHost.css'
 import './DirectoryManualReader.css'
 
 function detectTypeByPath (filePath) {
@@ -28,9 +33,12 @@ function highlightByMatcher (text, matcher) {
 }
 
 export default function DirectoryManualReader ({ manualId, sourcePath, title, searchQuery, initialKeyword }) {
-  const { manuals, navigate } = useManualContext()
+  const { manuals, navigate, notify } = useManualContext()
   const [keyword, setKeyword] = useState(initialKeyword || '')
   const [modeOpts, setModeOpts] = useState(() => defaultSearchModeOptions())
+  const [addCmdOpen, setAddCmdOpen] = useState(false)
+  const [scanTick, setScanTick] = useState(0)
+  const [dirCmdCtx, setDirCmdCtx] = useState(null)
 
   useEffect(() => {
     if (initialKeyword !== undefined && initialKeyword !== null) {
@@ -55,7 +63,7 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
         const isChm = entry.ext.toLowerCase() === '.chm'
         return {
           ...entry,
-          rel: entry.path.slice(sourcePath.length).replace(/^[\\/]/, ''),
+          rel: entry.path.slice(sourcePath.length).replace(/^[\\/]/, '').replace(/\\/g, '/'),
           title: entry.name.replace(/\.(md|markdown|json|pdf|html|htm|chm)$/i, ''),
           summary: isChm ? 'CHM 帮助文档' : (window.services.readFileSummary?.(entry.path, 80) || ''),
           searchText: isChm
@@ -64,7 +72,62 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
         }
       })
       .sort((a, b) => a.rel.localeCompare(b.rel))
-  }, [sourcePath])
+  }, [sourcePath, scanTick])
+
+  const userAddedRelSet = useMemo(() => {
+    try {
+      const rels = window.services.getUserAddedMarkdownCommandRels?.(manualId) || []
+      return new Set(rels)
+    } catch {
+      return new Set()
+    }
+  }, [manualId, scanTick])
+
+  useEffect(() => {
+    if (!dirCmdCtx) return
+    const dismiss = () => setDirCmdCtx(null)
+    const onKey = (e) => {
+      if (e.key === 'Escape') dismiss()
+    }
+    const onMd = (e) => {
+      if (e.button !== 0) return
+      if (e.target.closest?.('.dir-cmd-ctx-menu')) return
+      dismiss()
+    }
+    window.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onMd, true)
+    document.addEventListener('scroll', dismiss, true)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onMd, true)
+      document.removeEventListener('scroll', dismiss, true)
+    }
+  }, [dirCmdCtx])
+
+  const runDeleteUserCmd = useCallback((file) => {
+    if (!file || !sourcePath) return
+    const msg =
+      UI.deleteConfirmPrefix + '「' + file.name + '」' + UI.deleteConfirmSuffix
+    if (!window.confirm(msg)) return
+    try {
+      if (typeof window.services?.deleteUserAddedMarkdownCommand !== 'function') {
+        notify(UI.needService, 'error')
+        return
+      }
+      window.services.deleteUserAddedMarkdownCommand(sourcePath, manualId, file.rel)
+      notify(UI.deleteDone + '「' + file.name + '」', 'success')
+      setDirCmdCtx(null)
+      setScanTick((t) => t + 1)
+    } catch (e) {
+      notify(UI.deleteFail + (e.message || String(e)), 'error')
+    }
+  }, [manualId, notify, sourcePath])
+
+  const canAddUserMdCommand = useMemo(() => {
+    if (!sourcePath) return false
+    if (files.length === 0) return true
+    return files.some((f) => /\.(md|markdown)$/i.test(f.ext))
+  }, [sourcePath, files])
 
   const filtered = useMemo(() => {
     if (!keyword.trim()) return files
@@ -116,21 +179,37 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
           <div className="dir-reader-header">
             <div className="dir-reader-summary">共 {files.length} 个文档</div>
             {compileErr && <div className="dir-search-err">{compileErr}</div>}
-            <SearchInputWithModes
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              options={modeOpts}
-              onOptionsChange={setModeOpts}
-              onClear={() => setKeyword('')}
-              placeholder="搜索文件名或内容…"
-              className="dir-search-wrap"
-              inputClassName="dir-pm-field"
-            />
+            <div className="dir-search-row">
+              <SearchInputWithModes
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                options={modeOpts}
+                onOptionsChange={setModeOpts}
+                onClear={() => setKeyword('')}
+                placeholder="搜索文件名或内容…"
+                className="dir-search-wrap"
+                inputClassName="dir-pm-field"
+              />
+              {canAddUserMdCommand && (
+                <button
+                  type="button"
+                  className="btn btn-secondary dir-add-md-btn"
+                  title={UI.buttonTitle}
+                  onClick={() => setAddCmdOpen(true)}
+                >
+                  {UI.buttonLabel}
+                </button>
+              )}
+            </div>
           </div>
 
           {filtered.length === 0 ? (
             <div className="reader-status">
-              {keyword.trim() && compileErr ? '搜索条件无效' : '没有匹配的文档'}
+              {files.length === 0 && !keyword.trim()
+                ? '目录为空。可点击右侧「新增」添加第一条命令文档。'
+                : keyword.trim() && compileErr
+                  ? '搜索条件无效'
+                  : '没有匹配的文档'}
             </div>
           ) : (
             <div className="dir-reader-list">
@@ -141,11 +220,26 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
                   ? snippetAroundMatch(hay, matcher)
                   : ''
                 const displaySummary = contextSnippet || file.summary || ''
+                const isUserAddedMd =
+                  /\.(md|markdown)$/i.test(file.ext || file.name) &&
+                  userAddedRelSet.has(file.rel)
                 return (
                   <button
                     key={file.path}
-                    className="dir-reader-item"
+                    type="button"
+                    className={'dir-reader-item' + (isUserAddedMd ? ' dir-reader-item-user-md' : '')}
+                    title={isUserAddedMd ? '右键可删除此自建命令文档' : undefined}
                     onClick={() => openFile(file)}
+                    onContextMenu={
+                      isUserAddedMd
+                        ? (e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            const p = clampMenuPos(e.clientX, e.clientY, 200, 52)
+                            setDirCmdCtx({ x: p.x, y: p.y, file })
+                          }
+                        : undefined
+                    }
                   >
                     <span className="dir-reader-name">
                       {hasKeyword ? highlightByMatcher(file.title, matcher) : file.title}
@@ -162,6 +256,35 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
           )}
         </div>
       </div>
+      <AddUserMdCommandModal
+        open={addCmdOpen}
+        onClose={() => setAddCmdOpen(false)}
+        sourcePath={sourcePath}
+        manualId={manualId}
+        notify={notify}
+        onSaved={(commandName) => {
+          setScanTick((t) => t + 1)
+          if (commandName) setKeyword(String(commandName))
+        }}
+      />
+      {dirCmdCtx && createPortal(
+        <div
+          className="ctx-menu-host dir-cmd-ctx-menu"
+          style={{ left: dirCmdCtx.x, top: dirCmdCtx.y }}
+          role="menu"
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <button
+            type="button"
+            role="menuitem"
+            className="ctx-menu-item ctx-menu-item-danger"
+            onClick={() => runDeleteUserCmd(dirCmdCtx.file)}
+          >
+            {UI.deleteItem}
+          </button>
+        </div>,
+        document.body
+      )}
     </div>
   )
 }
