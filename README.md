@@ -135,9 +135,9 @@
 | MySQL 8.0 中文参考手册 | CHM | `MYSQL8.0中文参考手册.chm` |
 | Git 参考手册 | Markdown 目录 | `git/` |
 | PHP 参考手册 | 整站 HTML（`entryFile`: `index.html`） | `php-chunked-xhtml/` |
-| JavaScript 核心参考手册 | CHM | `JS参考手册集合/JavaScript核心参考手册.chm` |
-| 微软 JavaScript 手册 | CHM | `JS参考手册集合/微软JavaScript手册js.chm` |
-| JavaScript 语言中文参考手册 | CHM | `JS参考手册集合/JavaScript语言中文参考手册.chm` |
+| JavaScript 核心参考手册 | CHM（资源中心下载） | `JS_core.chm` |
+| 微软 JavaScript 手册 | CHM（资源中心下载） | `Microsoft_JS.chm` |
+| JavaScript 语言中文参考手册 | CHM（资源中心下载） | `JS_zh.chm` |
 | Vim 手册中文版 7.2 | CHM | `Vim手册中文版7.2.chm` |
 | Vue.js 官方离线文档（PDF） | PDF | `VueJS官方离线文档(搬运版).pdf` |
 

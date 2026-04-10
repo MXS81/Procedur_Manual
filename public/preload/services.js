@@ -29,7 +29,26 @@ const STORAGE_KEYS = {
   USER_ADDED_MD_PREFIX: 'pm_user_md_cmds_'
 }
 
+/** 资源中心「离线资源」列表暂时隐藏的 manifest id（恢复展示时从此 Set 删除） */
+const RESOURCE_CENTER_CATALOG_HIDDEN_IDS = new Set(['builtin-php'])
+
 window.services = {
+
+  /** manifestId → AbortController，用于资源中心暂停下载 */
+  _builtinDlAbortById: new Map(),
+
+  pauseRemoteBuiltinDownload (manifestId) {
+    const c = this._builtinDlAbortById.get(manifestId)
+    if (c) {
+      try { c.abort() } catch { /* */ }
+    }
+  },
+
+  _makeDownloadPausedError () {
+    const e = new Error('已暂停')
+    e.code = 'PM_PAUSED'
+    return e
+  },
 
   // ========== Encoding Detection ==========
 
@@ -632,9 +651,32 @@ window.services = {
 
   /**
    * @param {(info: { loaded: number, total: number|null }) => void} [onProgress] throttled ~120ms
+   * @param {{ signal?: AbortSignal, resume?: boolean }} [httpOpts] resume：断点续传（Range）；暂停时不删除 .part
    */
-  _downloadHttpToFileImpl (urlString, destPath, redirectLeft, onProgress) {
+  _downloadHttpToFileImpl (urlString, destPath, redirectLeft, onProgress, httpOpts) {
+    const opts = httpOpts || {}
+    const signal = opts.signal
+    const part = destPath + '.part'
+    fs.mkdirSync(path.dirname(destPath), { recursive: true })
+
+    let startByte = 0
+    const allowResume = opts.resume !== false
+    try {
+      if (allowResume && fs.existsSync(part)) {
+        startByte = fs.statSync(part).size
+      } else {
+        try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+        startByte = 0
+      }
+    } catch {
+      startByte = 0
+    }
+
     return new Promise((resolve, reject) => {
+      if (signal?.aborted) {
+        return reject(this._makeDownloadPausedError())
+      }
+
       let u
       try {
         u = new URL(urlString)
@@ -642,15 +684,27 @@ window.services = {
         return reject(new Error('Invalid URL'))
       }
       const lib = u.protocol === 'https:' ? https : http
-      const part = destPath + '.part'
-      fs.mkdirSync(path.dirname(destPath), { recursive: true })
-      const req = lib.get(urlString, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; ProcedurManual-uTools/1.0; +https://github.com/MXS81/Procedur_Manual)'
-        }
-      }, (res) => {
+
+      const headers = {
+        'User-Agent': 'Mozilla/5.0 (compatible; ProcedurManual-uTools/1.0; +https://github.com/MXS81/Procedur_Manual)'
+      }
+      if (startByte > 0) {
+        headers.Range = 'bytes=' + startByte + '-'
+      }
+
+      let req
+      const cleanupAbort = () => {
+        try { signal?.removeEventListener('abort', onAbort) } catch { /* */ }
+      }
+      const onAbort = () => {
+        try { req.destroy() } catch { /* */ }
+      }
+      signal?.addEventListener('abort', onAbort)
+
+      req = lib.get(urlString, { headers }, (res) => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           if (redirectLeft <= 0) {
+            cleanupAbort()
             res.resume()
             return reject(new Error('Too many redirects'))
           }
@@ -659,47 +713,82 @@ window.services = {
             try {
               next = new URL(next, urlString).href
             } catch {
+              cleanupAbort()
               res.resume()
               return reject(new Error('Bad redirect URL'))
             }
           }
           res.resume()
-          return resolve(this._downloadHttpToFileImpl(next, destPath, redirectLeft - 1, onProgress))
+          cleanupAbort()
+          return resolve(this._downloadHttpToFileImpl(next, destPath, redirectLeft - 1, onProgress, httpOpts))
         }
-        if (res.statusCode !== 200) {
+
+        if (startByte > 0 && res.statusCode === 200) {
+          res.resume()
+          cleanupAbort()
+          return resolve(
+            this._downloadHttpToFileImpl(urlString, destPath, redirectLeft, onProgress, {
+              ...opts,
+              resume: false
+            })
+          )
+        }
+
+        if (res.statusCode !== 200 && res.statusCode !== 206) {
+          cleanupAbort()
           res.resume()
           return reject(new Error('HTTP ' + res.statusCode))
         }
-        const cl = res.headers['content-length']
+
         let total = 0
-        if (cl != null) {
-          const n = parseInt(String(cl), 10)
-          if (Number.isFinite(n) && n > 0) total = n
+        if (res.statusCode === 206) {
+          const cr = res.headers['content-range']
+          const m = cr && String(cr).match(/bytes\s+\d+-\d+\/(\d+)/i)
+          if (m) {
+            total = parseInt(m[1], 10)
+          }
+        } else {
+          const cl = res.headers['content-length']
+          if (cl != null) {
+            const n = parseInt(String(cl), 10)
+            if (Number.isFinite(n) && n > 0) total = n
+          }
         }
-        let loaded = 0
+
+        let innerLoaded = 0
         let lastReport = 0
         const fireProgress = (force) => {
           if (typeof onProgress !== 'function') return
           const now = Date.now()
-          if (!force && now - lastReport < 120 && (total <= 0 || loaded < total)) return
+          const curLoaded = startByte + innerLoaded
+          if (!force && now - lastReport < 120 && (total <= 0 || curLoaded < total)) return
           lastReport = now
           try {
-            onProgress({ loaded, total: total > 0 ? total : null })
+            onProgress({ loaded: curLoaded, total: total > 0 ? total : null })
           } catch { /* */ }
         }
+
         const counter = new Transform({
           transform (chunk, enc, cb) {
-            loaded += chunk.length
+            innerLoaded += chunk.length
             fireProgress(false)
             cb(null, chunk)
           }
         })
-        const out = fs.createWriteStream(part)
+
+        const writeFlags = startByte > 0 ? 'a' : 'w'
+        const out = fs.createWriteStream(part, { flags: writeFlags })
+
         const onFail = (err) => {
+          cleanupAbort()
           try { out.close() } catch { /* */ }
+          if (signal?.aborted) {
+            return reject(this._makeDownloadPausedError())
+          }
           try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
           reject(err)
         }
+
         res.on('error', onFail)
         counter.on('error', onFail)
         out.on('error', onFail)
@@ -707,6 +796,7 @@ window.services = {
           try {
             fireProgress(true)
             fs.renameSync(part, destPath)
+            cleanupAbort()
             resolve()
           } catch (e) {
             onFail(e)
@@ -714,12 +804,18 @@ window.services = {
         })
         res.pipe(counter).pipe(out)
       })
+
       req.on('error', (e) => {
+        cleanupAbort()
+        if (signal?.aborted) {
+          return reject(this._makeDownloadPausedError())
+        }
         try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
         reject(e)
       })
       req.setTimeout(900000, () => {
         req.destroy()
+        cleanupAbort()
         try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
         reject(new Error('Download timeout'))
       })
@@ -733,12 +829,15 @@ window.services = {
     const part = destPath + '.part'
     const primary = String(primaryUrl || '').trim()
     const mirror = String(mirrorUrl || '').trim()
+    const signal = progressOpts && progressOpts.signal
+    const httpOpts = { signal, resume: true }
     const run = async (u) => {
-      await this._downloadHttpToFileImpl(u, destPath, redirectLeft, onProgress)
+      await this._downloadHttpToFileImpl(u, destPath, redirectLeft, onProgress, httpOpts)
     }
     try {
       await run(primary)
     } catch (e) {
+      if (e && e.code === 'PM_PAUSED') throw e
       if (!mirror || !/^https?:\/\//i.test(mirror)) throw e
       try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
       this._emitRemoteDlProgress(progressOpts, {
@@ -785,7 +884,7 @@ window.services = {
   /**
    * Download remote asset (e.g. from GitHub Releases) to manual.rootPath.
    * onProgress?: (info: { phase: string, step?: string, loaded?: number, total?: number|null }) => void
-   * @param {{ url: string, urlMirror?: string, destPath: string, sha256?: string, archiveFormat?: string, entryFile?: string|null, companionUrl?: string, companionUrlMirror?: string, companionSha256?: string, onProgress?: function }} opts
+   * @param {{ url: string, urlMirror?: string, destPath: string, sha256?: string, archiveFormat?: string, entryFile?: string|null, companionUrl?: string, companionUrlMirror?: string, companionSha256?: string, onProgress?: function, signal?: AbortSignal }} opts
    */
   async downloadRemoteBuiltinAsset (opts) {
     const fmt = opts && String(opts.archiveFormat || '').trim().toLowerCase()
@@ -806,16 +905,34 @@ window.services = {
     if (!url || !destPath) throw new Error('url and destPath required')
     if (!/^https?:\/\//i.test(url)) throw new Error('Only http(s) URLs are supported')
     destPath = path.resolve(destPath)
+
+    const mainShaOk = () => {
+      if (!opts.sha256 || !String(opts.sha256).trim()) return true
+      const expected = String(opts.sha256).trim().toLowerCase()
+      const buf = fs.readFileSync(destPath)
+      const h = crypto.createHash('sha256').update(buf).digest('hex')
+      return h === expected
+    }
+
+    let needMain = !fs.existsSync(destPath)
+    if (!needMain && opts.sha256 && String(opts.sha256).trim() && !mainShaOk()) {
+      try { fs.unlinkSync(destPath) } catch { /* */ }
+      needMain = true
+    }
+
     try {
-      await this._downloadHttpWithOptionalMirror(
-        url,
-        urlMirror,
-        destPath,
-        12,
-        byteProgress('main'),
-        opts
-      )
+      if (needMain) {
+        await this._downloadHttpWithOptionalMirror(
+          url,
+          urlMirror,
+          destPath,
+          12,
+          byteProgress('main'),
+          opts
+        )
+      }
     } catch (e) {
+      if (e && e.code === 'PM_PAUSED') throw e
       const part = destPath + '.part'
       try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
       throw e
@@ -840,16 +957,34 @@ window.services = {
         ? path.join(path.dirname(destPath), path.basename(destPath, ext) + '.chw')
         : path.join(path.dirname(destPath), path.basename(destPath) + '.companion')
       const cpart = companionDest + '.part'
+
+      const companionShaOk = () => {
+        if (!opts.companionSha256 || !String(opts.companionSha256).trim()) return true
+        const expected = String(opts.companionSha256).trim().toLowerCase()
+        const buf = fs.readFileSync(companionDest)
+        const h = crypto.createHash('sha256').update(buf).digest('hex')
+        return h === expected
+      }
+
+      let needCompanion = !fs.existsSync(companionDest)
+      if (!needCompanion && opts.companionSha256 && String(opts.companionSha256).trim() && !companionShaOk()) {
+        try { fs.unlinkSync(companionDest) } catch { /* */ }
+        needCompanion = true
+      }
+
       try {
-        await this._downloadHttpWithOptionalMirror(
-          companionUrl,
-          companionUrlMirror,
-          companionDest,
-          12,
-          byteProgress('companion'),
-          opts
-        )
+        if (needCompanion) {
+          await this._downloadHttpWithOptionalMirror(
+            companionUrl,
+            companionUrlMirror,
+            companionDest,
+            12,
+            byteProgress('companion'),
+            opts
+          )
+        }
       } catch (e) {
+        if (e && e.code === 'PM_PAUSED') throw e
         try { if (fs.existsSync(cpart)) fs.unlinkSync(cpart) } catch { /* */ }
         throw e
       }
@@ -895,10 +1030,8 @@ window.services = {
         } catch { /* */ }
       }
     }
-    const zipPath = path.join(
-      os.tmpdir(),
-      'pm_builtin_zip_' + crypto.randomBytes(8).toString('hex') + '.zip'
-    )
+    fs.mkdirSync(parentDir, { recursive: true })
+    const zipPath = path.join(parentDir, '_pm_remote_zip_dl')
     try {
       await this._downloadHttpWithOptionalMirror(
         url,
@@ -909,6 +1042,7 @@ window.services = {
         opts
       )
     } catch (e) {
+      if (e && e.code === 'PM_PAUSED') throw e
       try { if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath) } catch { /* */ }
       throw e
     }
@@ -1213,6 +1347,7 @@ window.services = {
     const cacheRoot = this.getBuiltinRemoteCacheRoot()
     const out = []
     for (const entry of manifest) {
+      if (RESOURCE_CENTER_CATALOG_HIDDEN_IDS.has(entry.id)) continue
       const url = entry.downloadUrl && String(entry.downloadUrl).trim()
         ? String(entry.downloadUrl).trim()
         : ''
@@ -1249,7 +1384,54 @@ window.services = {
     return out
   },
 
-  async downloadRemoteBuiltinById (manifestId) {
+  /**
+   * 强制重下前清理缓存目录中的主文件、.part、CHM 配套 .chw、ZIP 临时包与解压目录。
+   */
+  _clearRemoteBuiltinCacheArtifacts (cachePath, archiveFormat, hasCompanionChw) {
+    const resolved = path.resolve(String(cachePath || ''))
+    if (!resolved) return
+    const parentDir = path.dirname(resolved)
+    const zipBase = path.join(parentDir, '_pm_remote_zip_dl')
+    try {
+      if (fs.existsSync(zipBase + '.part')) fs.unlinkSync(zipBase + '.part')
+    } catch { /* */ }
+    try {
+      if (fs.existsSync(zipBase)) fs.unlinkSync(zipBase)
+    } catch { /* */ }
+    if (archiveFormat === 'zip') {
+      try {
+        if (fs.existsSync(resolved)) {
+          fs.rmSync(resolved, { recursive: true, force: true })
+        }
+      } catch { /* */ }
+      return
+    }
+    const ext = path.extname(resolved).toLowerCase()
+    if (ext === '.chm' && hasCompanionChw) {
+      const chw = path.join(
+        path.dirname(resolved),
+        path.basename(resolved, ext) + '.chw'
+      )
+      try {
+        if (fs.existsSync(chw + '.part')) fs.unlinkSync(chw + '.part')
+      } catch { /* */ }
+      try {
+        if (fs.existsSync(chw)) fs.unlinkSync(chw)
+      } catch { /* */ }
+    }
+    try {
+      if (fs.existsSync(resolved + '.part')) fs.unlinkSync(resolved + '.part')
+    } catch { /* */ }
+    try {
+      if (fs.existsSync(resolved)) fs.unlinkSync(resolved)
+    } catch { /* */ }
+  },
+
+  /**
+   * @param {string} manifestId
+   * @param {{ force?: boolean, onProgress?: function }} [userOpts] force：忽略已存在且校验通过的文件并重下
+   */
+  async downloadRemoteBuiltinById (manifestId, userOpts) {
     const dir = this.getBuiltinManualsDir()
     if (!dir) throw new Error('builtin dir missing')
     let manifest
@@ -1272,7 +1454,20 @@ window.services = {
     if (fs.existsSync(bundlePath)) {
       return { path: bundlePath, bundled: true }
     }
-    fs.mkdirSync(path.dirname(cachePath), { recursive: true })
+
+    const uo = userOpts && typeof userOpts === 'object' ? userOpts : {}
+    const onProgress = typeof uo.onProgress === 'function' ? uo.onProgress : undefined
+    const force = !!uo.force
+
+    if (this._builtinDlAbortById.has(manifestId)) {
+      const e = new Error('已在下载中')
+      e.code = 'PM_BUSY'
+      throw e
+    }
+
+    const controller = new AbortController()
+    this._builtinDlAbortById.set(manifestId, controller)
+
     const sha256 = entry.sha256 && String(entry.sha256).trim()
       ? String(entry.sha256).trim().toLowerCase()
       : undefined
@@ -1292,18 +1487,32 @@ window.services = {
     const companionUrlMirror = companionUrl && entry.downloadUrlChwMirror && String(entry.downloadUrlChwMirror).trim()
       ? String(entry.downloadUrlChwMirror).trim()
       : undefined
-    await this.downloadRemoteBuiltinAsset({
-      url,
-      urlMirror,
-      destPath: cachePath,
-      sha256,
-      archiveFormat,
-      entryFile: entry.entryFile || undefined,
-      companionUrl,
-      companionUrlMirror,
-      companionSha256
-    })
-    return { path: cachePath, bundled: false }
+    const hasCompanionChw = !!(
+      companionUrl && /\.chm$/i.test(String(entry.fileName || ''))
+    )
+
+    try {
+      if (force) {
+        this._clearRemoteBuiltinCacheArtifacts(cachePath, archiveFormat, hasCompanionChw)
+      }
+      fs.mkdirSync(path.dirname(cachePath), { recursive: true })
+      await this.downloadRemoteBuiltinAsset({
+        url,
+        urlMirror,
+        destPath: cachePath,
+        sha256,
+        archiveFormat,
+        entryFile: entry.entryFile || undefined,
+        companionUrl,
+        companionUrlMirror,
+        companionSha256,
+        onProgress,
+        signal: controller.signal
+      })
+      return { path: cachePath, bundled: false }
+    } finally {
+      this._builtinDlAbortById.delete(manifestId)
+    }
   },
 
   _httpsGetJson (urlString, redirectLeft = 10) {

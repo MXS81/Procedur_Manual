@@ -72,6 +72,24 @@ const REMOTE_BY_ID = new Map([
     ...(PM_RELEASE_MIRROR_BASE
       ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'php-chunked-xhtml.zip' }
       : {})
+  }],
+  ['builtin-js-ms-manual', {
+    downloadUrl: PM_RELEASE_BASE + 'Microsoft_JS.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'Microsoft_JS.chm' }
+      : {})
+  }],
+  ['builtin-js-lang-zh-chm', {
+    downloadUrl: PM_RELEASE_BASE + 'JS_zh.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'JS_zh.chm' }
+      : {})
+  }],
+  ['builtin-js-core-ref-zh', {
+    downloadUrl: PM_RELEASE_BASE + 'JS_core.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'JS_core.chm' }
+      : {})
   }]
 ])
 
@@ -177,25 +195,28 @@ const STATIC_CATALOG = [
   {
     id: 'builtin-js-core-ref-zh',
     name: 'JavaScript 核心参考手册',
-    description: 'JavaScript 核心语法与 API 参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    description:
+      'JavaScript 核心语法与 API 参考（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
     keywords: ['javascript', 'js', '核心', '参考', 'ecma', '语法'],
-    fileName: 'JS参考手册集合/JavaScript核心参考手册.chm',
+    fileName: 'JS_core.chm',
     version: '1.0'
   },
   {
     id: 'builtin-js-ms-manual',
     name: '微软 JavaScript 手册',
-    description: '微软 JavaScript / JScript 脚本手册（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    description:
+      '微软 JavaScript / JScript 脚本手册（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
     keywords: ['javascript', 'js', '微软', 'jscript', '脚本', 'ie'],
-    fileName: 'JS参考手册集合/微软JavaScript手册js.chm',
+    fileName: 'Microsoft_JS.chm',
     version: '1.0'
   },
   {
     id: 'builtin-js-lang-zh-chm',
     name: 'JavaScript 语言中文参考手册',
-    description: 'JavaScript 语言中文参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    description:
+      'JavaScript 语言中文参考（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
     keywords: ['javascript', 'js', '中文', '参考', '语言', 'ecma'],
-    fileName: 'JS参考手册集合/JavaScript语言中文参考手册.chm',
+    fileName: 'JS_zh.chm',
     version: '1.0'
   },
   {
@@ -228,6 +249,16 @@ const STATIC_CATALOG = [
 ]
 
 const KNOWN_BY_FILE = new Map(STATIC_CATALOG.map((e) => [e.fileName, e]))
+/** 旧版内置路径仍指向同一 manifest 条目，避免本地残留文件被扫成 auto id */
+const CATALOG_BY_ID = new Map(STATIC_CATALOG.map((e) => [e.id, e]))
+for (const [legacyRel, legacyId] of [
+  ['JS参考手册集合/JavaScript核心参考手册.chm', 'builtin-js-core-ref-zh'],
+  ['JS参考手册集合/微软JavaScript手册js.chm', 'builtin-js-ms-manual'],
+  ['JS参考手册集合/JavaScript语言中文参考手册.chm', 'builtin-js-lang-zh-chm']
+]) {
+  const meta = CATALOG_BY_ID.get(legacyId)
+  if (meta) KNOWN_BY_FILE.set(legacyRel, meta)
+}
 
 function toPosixRel (root, absPath) {
   return path.relative(root, absPath).split(path.sep).join('/')

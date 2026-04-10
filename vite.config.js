@@ -27,6 +27,15 @@ function rmDirDeep (dir) {
  */
 const releaseSlim = process.env.PM_RELEASE_SLIM !== '0'
 
+/**
+ * 瘦身包仍随程序内置的 CHM（与 manifest 中 fileName 一致，须存在于 public/builtin-manuals）。
+ * HTML/CSS、JS 三本、Vim；其余 CHM/PDF 仍走 slim 排除或 build:full。
+ */
+const SLIM_BUILTIN_BUNDLE_CHM = new Set([
+  'builtin-manuals/html-css-reference.chm',
+  'builtin-manuals/Vim手册中文版7.2.chm'
+])
+
 /** preload 仅 services.js（无 npm 依赖）；绝不把 preload/node_modules 打进包（曾为 pdf-parse ~90MB） */
 function shouldSkipPreloadNodeModules (relPosix) {
   const n = String(relPosix || '').replace(/\\/g, '/')
@@ -37,6 +46,7 @@ function shouldSkipPreloadNodeModules (relPosix) {
 function shouldSkipSlimBuiltinPath (relPosix) {
   const n = String(relPosix || '').replace(/\\/g, '/')
   if (n !== 'builtin-manuals' && !n.startsWith('builtin-manuals/')) return false
+  if (SLIM_BUILTIN_BUNDLE_CHM.has(n)) return false
   if (n === 'builtin-manuals/php-chunked-xhtml' || n.startsWith('builtin-manuals/php-chunked-xhtml/')) {
     return true
   }
@@ -79,7 +89,10 @@ function copyPublicExcludeGitPlugin () {
       copyPublicSkipGit(path.join(__dirname, 'public'), distRoot, '')
       rmDirDeep(path.join(distRoot, 'preload', 'node_modules'))
       if (releaseSlim) {
-        console.log('[vite] PM_RELEASE_SLIM: omitted builtin-manuals *.chm / *.pdf / php-chunked-xhtml from dist (use build:full for complete assets)')
+        console.log(
+          '[vite] PM_RELEASE_SLIM: builtin-manuals 仍打包 HTML/CSS 与 Vim 共 2 个 CHM；' +
+            '其余 *.chm / *.pdf / php-chunked-xhtml 已省略（PM_RELEASE_SLIM=0 为完整包）'
+        )
       }
     }
   }
