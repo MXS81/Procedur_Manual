@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { useManualContext } from '../store/ManualContext'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
@@ -15,6 +15,8 @@ import sql from 'highlight.js/lib/languages/sql'
 import matlab from 'highlight.js/lib/languages/matlab'
 import 'highlight.js/styles/atom-one-dark.css'
 import { escapeHtml } from '../utils/helpers'
+import { anchorIdFromMarkdownHeading } from '../utils/markdownAnchor'
+import { compileSearchMatcher, defaultSearchModeOptions } from '../utils/searchModes'
 import ChmReader from '../components/ChmReader'
 import DirectoryManualReader from '../components/DirectoryManualReader'
 import IframeManualReader from '../components/IframeManualReader'
@@ -35,6 +37,114 @@ hljs.registerLanguage('html', xml)
 hljs.registerLanguage('css', css)
 hljs.registerLanguage('sql', sql)
 hljs.registerLanguage('matlab', matlab)
+
+function headingPlainFromTokens (tokens) {
+  if (!tokens?.length) return ''
+  let s = ''
+  for (const t of tokens) {
+    if (t.type === 'text') s += t.text || ''
+    else if (t.type === 'codespan') s += t.text || ''
+    else if (t.tokens && Array.isArray(t.tokens)) s += headingPlainFromTokens(t.tokens)
+  }
+  return s
+}
+
+marked.use({
+  renderer: {
+    heading ({ tokens, depth }) {
+      const textHtml = this.parser.parseInline(tokens)
+      const plain = headingPlainFromTokens(tokens).trim()
+        || String(textHtml).replace(/<[^>]+>/g, '').trim()
+      const id = anchorIdFromMarkdownHeading(plain)
+      const idAttr = id ? ` id="${escapeHtml(id)}"` : ''
+      return `<h${depth}${idAttr}>${textHtml}</h${depth}>\n`
+    }
+  }
+})
+
+function shouldSkipHighlightTextNode (parentEl) {
+  if (!parentEl) return true
+  return !!parentEl.closest(
+    'pre, code, script, style, textarea, kbd, samp, mark.search-highlight'
+  )
+}
+
+/**
+ * 在 Markdown 正文中用 <mark class="search-highlight"> 包裹所有匹配（跳过代码块等）。
+ * 仅在 dangerouslySetInnerHTML 之后、同一轮 html 生命周期内执行；下次 setHtml 会清空。
+ */
+function wrapMarkdownSearchHighlights (root, re) {
+  if (!root || !re) return 0
+  const flags = re.flags.includes('g') ? re.flags : re.flags + 'g'
+  const rgBase = new RegExp(re.source, flags)
+  let count = 0
+  let guard = 8000
+  while (guard-- > 0) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+    let node
+    let done = false
+    while ((node = walker.nextNode())) {
+      if (!node.textContent || !node.parentElement) continue
+      if (shouldSkipHighlightTextNode(node.parentElement)) continue
+      const t = node.textContent
+      const rg = new RegExp(rgBase.source, rgBase.flags)
+      rg.lastIndex = 0
+      const m = rg.exec(t)
+      if (!m || !m[0] || m[0].length === 0 || m.index === undefined) continue
+
+      const parent = node.parentNode
+      const start = m.index
+      const len = m[0].length
+      const before = t.slice(0, start)
+      const mid = t.slice(start, start + len)
+      const after = t.slice(start + len)
+      const frag = document.createDocumentFragment()
+      if (before) frag.appendChild(document.createTextNode(before))
+      const mk = document.createElement('mark')
+      mk.className = 'search-highlight pm-md-search-hit'
+      mk.textContent = mid
+      frag.appendChild(mk)
+      if (after) frag.appendChild(document.createTextNode(after))
+      parent.replaceChild(frag, node)
+      count++
+      done = true
+      break
+    }
+    if (!done) break
+  }
+  return count
+}
+
+function scrollContainerToFirstSearchMark (container) {
+  const el = container?.querySelector?.('mark.pm-md-search-hit, mark.search-highlight')
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+/** 在容器内找到正则首次匹配并滚动（备用：未产生 mark 时，如匹配仅在代码块内） */
+function scrollContainerToFirstRegexMatch (container, re) {
+  if (!container || !re) return
+  const flags = re.flags.includes('g') ? re.flags : re.flags + 'g'
+  const rg = new RegExp(re.source, flags)
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
+  let node
+  while ((node = walker.nextNode())) {
+    if (!node.textContent || !node.parentElement) continue
+    const t = node.textContent
+    rg.lastIndex = 0
+    const m = rg.exec(t)
+    if (m && m[0] && m.index !== undefined) {
+      const range = document.createRange()
+      range.setStart(node, m.index)
+      range.setEnd(node, m.index + m[0].length)
+      const r = range.getBoundingClientRect()
+      const c = container.getBoundingClientRect()
+      if (r.height > 0 || r.width > 0) {
+        container.scrollTop += r.top - c.top - 100
+      }
+      return
+    }
+  }
+}
 
 function normalizeUint8 (v) {
   if (!v) return null
@@ -61,7 +171,11 @@ function readPdfFileAsUint8 (filePath) {
   return out
 }
 
-export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, title, searchQuery, quickSearch, parentDir, parentTitle }) {
+export default function ReaderPage ({
+  manualId, sourcePath, sourceType, anchor, title,
+  searchQuery, quickSearch, parentDir, parentTitle,
+  scrollHighlight, dirListKeyword, searchHighlightOpts
+}) {
   const { manuals, navigate } = useManualContext()
   const [html, setHtml] = useState('')
   const [pdfBytes, setPdfBytes] = useState(null)
@@ -85,8 +199,15 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
 
   const goBack = () => {
     if (searchQuery) navigate('search', { query: searchQuery })
-    else if (parentDir) navigate('reader', { manualId, sourcePath: parentDir, sourceType: 'mixed', title: parentTitle })
-    else navigate('library')
+    else if (parentDir) {
+      navigate('reader', {
+        manualId,
+        sourcePath: parentDir,
+        sourceType: 'mixed',
+        title: parentTitle,
+        dirListKeyword: dirListKeyword || undefined
+      })
+    } else navigate('library')
   }
 
   const renderRemoteBuiltinGate = () => (
@@ -150,17 +271,47 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
     }
   }, [resolvedPath, detectedType, manual?.remoteDownloadUrl, manual?.id])
 
+  const scrollMatcher = useMemo(() => {
+    const q = (searchQuery && String(searchQuery).trim())
+      || (scrollHighlight && String(scrollHighlight).trim())
+      || (quickSearch && String(quickSearch).trim())
+      || ''
+    if (!q) return { ok: false, highlightRe: null }
+    const opts = searchHighlightOpts || defaultSearchModeOptions()
+    return compileSearchMatcher(q, opts)
+  }, [searchQuery, scrollHighlight, quickSearch, searchHighlightOpts])
+
   useEffect(() => {
     if (detectedType === 'chm' || detectedType === 'mixed') return
     if (loading || !ref.current) return
     ref.current.querySelectorAll('pre code').forEach(block => {
       if (!block.dataset.highlighted) hljs.highlightElement(block)
     })
-    if (anchor) {
-      const el = ref.current.querySelector('#' + CSS.escape(anchor))
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const root = ref.current.querySelector('.doc-content') || ref.current
+    const canHighlightMd =
+      detectedType === 'markdown' && scrollMatcher.ok && scrollMatcher.highlightRe
+    let markedCount = 0
+    if (canHighlightMd) {
+      markedCount = wrapMarkdownSearchHighlights(root, scrollMatcher.highlightRe)
     }
-  }, [loading, html, anchor, detectedType])
+
+    requestAnimationFrame(() => {
+      if (markedCount > 0) {
+        scrollContainerToFirstSearchMark(root)
+        return
+      }
+      if (anchor) {
+        const el = root.querySelector('#' + CSS.escape(anchor))
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          return
+        }
+      }
+      if (scrollMatcher.ok && scrollMatcher.highlightRe) {
+        scrollContainerToFirstRegexMatch(root, scrollMatcher.highlightRe)
+      }
+    })
+  }, [loading, html, anchor, detectedType, scrollMatcher])
 
   if (detectedType === 'chm' && resolvedPath) {
     if (isRemoteBuiltinPending(manual)) {
@@ -200,7 +351,7 @@ export default function ReaderPage ({ manualId, sourcePath, sourceType, anchor, 
         sourcePath={resolvedPath}
         title={title || '目录'}
         searchQuery={searchQuery}
-        initialKeyword={quickSearch}
+        initialKeyword={dirListKeyword || quickSearch}
       />
     )
   }

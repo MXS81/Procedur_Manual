@@ -133,7 +133,8 @@ export default function SearchPage ({ initialQuery = '' }) {
         : 'html',
       anchor: r.anchor,
       title: r.title,
-      searchQuery: query
+      searchQuery: query,
+      searchHighlightOpts: modeOpts
     })
   }
 

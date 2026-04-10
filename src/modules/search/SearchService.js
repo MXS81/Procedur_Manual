@@ -242,7 +242,10 @@ export function buildManualIndex (manual, onProgress) {
                 })
                 documents.push(...pdfDocs)
               } else {
-                documents.push(...extractDocumentsSync(files[i].path, files[i].ext, id, name, true))
+                // 目录内 .md 需按标题分节索引，否则 anchor 恒为空，全文搜索无法跳到对应小节
+                const extLo = files[i].ext.toLowerCase()
+                const singleDoc = extLo !== '.md' && extLo !== '.markdown'
+                documents.push(...extractDocumentsSync(files[i].path, files[i].ext, id, name, singleDoc))
               }
             } catch { /* skip */ }
             if (i % 20 === 0) {

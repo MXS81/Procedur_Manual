@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useManualContext } from '../store/ManualContext'
 import {
   compileSearchMatcher,
@@ -31,6 +31,12 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
   const { manuals, navigate } = useManualContext()
   const [keyword, setKeyword] = useState(initialKeyword || '')
   const [modeOpts, setModeOpts] = useState(() => defaultSearchModeOptions())
+
+  useEffect(() => {
+    if (initialKeyword !== undefined && initialKeyword !== null) {
+      setKeyword(String(initialKeyword))
+    }
+  }, [initialKeyword])
 
   const manual = manuals.find(m => m.id === manualId)
 
@@ -70,6 +76,7 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
   }, [files, keyword, matcher])
 
   const openFile = (file) => {
+    const kw = keyword.trim()
     navigate('reader', {
       manualId,
       sourcePath: file.path,
@@ -77,7 +84,10 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
       title: file.title,
       searchQuery,
       parentDir: sourcePath,
-      parentTitle: title
+      parentTitle: title,
+      dirListKeyword: kw || undefined,
+      scrollHighlight: kw || undefined,
+      scrollHighlightOpts: kw ? modeOpts : undefined
     })
   }
 
