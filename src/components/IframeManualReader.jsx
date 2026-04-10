@@ -89,13 +89,13 @@ function parseUl (ul) {
       else if (nd.tagName === 'UL') break
       nd = nd.nextSibling
     }
-    desc = desc.replace(/^\s*â\s*/, '').trim()
+    desc = desc.replace(/^\s*—\s*/, '').trim()
 
     const childUl = li.querySelector(':scope > ul.chunklist')
     const children = childUl ? parseUl(childUl) : []
 
     items.push({
-      name: desc ? `${title} â? ${desc}` : title,
+      name: desc ? `${title} — ${desc}` : title,
       local: href,
       children
     })
@@ -120,7 +120,7 @@ function filterToc (nodes, term, modeOpts) {
   return result
 }
 
-/** chunklist č§Łćĺ¤ąč´Ľćçťćé PHP ćĺćśďźç¨çŽĺ˝ä¸ HTML ĺčĄ¨ä˝ä¸şĺŻçšĺťçŽĺ˝? */
+/** chunklist 解析失败或纯粹是 PHP 手册时，用目录下 HTML 列表作为可点击目录 */
 function buildFlatHtmlToc (sourcePath) {
   try {
     const files = window.services.scanDir(sourcePath, ['.html', '.htm'], { maxFiles: 800 })
@@ -216,7 +216,6 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
     setActivePage(localPath)
   }, [])
 
-  // ---- Navigation via postMessage from injected nav-guard script ----
   useEffect(() => {
     if (!sourcePath) return
     const handler = (e) => {
@@ -291,7 +290,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
     return filterToc(toc, searchTerm, searchModeOpts)
   }, [toc, searchTerm, searchMode, searchModeOpts, searchCompile.ok])
 
-  if (loading) return <div className="ifr-reader"><div className="ifr-status">ĺ č˝˝ä¸?...</div></div>
+  if (loading) return <div className="ifr-reader"><div className="ifr-status">加载中...</div></div>
 
   return (
     <div className="ifr-reader">
@@ -299,11 +298,11 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
         <button className="btn btn-ghost btn-back" onClick={onBack}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <span className="ifr-title">{manualName || 'ćĺ'}</span>
+        <span className="ifr-title">{manualName || '手册'}</span>
         <button
           className={'btn btn-ghost ifr-sidebar-toggle' + (sidebarVisible ? ' active' : '')}
           onClick={() => setSidebarVisible(v => !v)}
-          title={sidebarVisible ? 'éčçŽĺ˝' : 'ćžç¤şçŽĺ˝'}
+          title={sidebarVisible ? '隐藏目录' : '显示目录'}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -325,7 +324,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                 options={searchModeOpts}
                 onOptionsChange={setSearchModeOpts}
                 onClear={() => setSearchTerm('')}
-                placeholder={searchMode === 'toc' ? 'ćç´˘çŽĺ˝â?' : 'ćç´˘éĄľé˘ĺĺŽšâ?'}
+                placeholder={searchMode === 'toc' ? '搜索目录…' : '搜索页面内容…'}
                 className="ifr-search-inner"
                 inputClassName="ifr-pm-field"
               />
@@ -335,11 +334,11 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
               <button
                 className={'ifr-tab' + (searchMode === 'toc' ? ' active' : '')}
                 onClick={() => setSearchMode('toc')}
-              >çŽĺ˝</button>
+              >目录</button>
               <button
                 className={'ifr-tab' + (searchMode === 'content' ? ' active' : '')}
                 onClick={() => setSearchMode('content')}
-              >ĺ¨ććç´˘</button>
+              >全文搜索</button>
             </div>
 
             <div className="ifr-toc-container">
@@ -356,19 +355,19 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                     ))}
                   </ul>
                 ) : searchTerm && searchCompile.ok ? (
-                  <div className="ifr-toc-empty">çŽĺ˝ä¸­ćŞćžĺ°ĺšééĄ?</div>
+                  <div className="ifr-toc-empty">目录中未找到匹配项</div>
                 ) : searchTerm ? (
-                  <div className="ifr-toc-empty">ćç´˘ćĄäťść ć</div>
+                  <div className="ifr-toc-empty">搜索条件无效</div>
                 ) : (
-                  <div className="ifr-toc-empty">ć çŽĺ˝äżĄć?</div>
+                  <div className="ifr-toc-empty">无目录信息</div>
                 )
               ) : (
                 !searchTerm.trim() ? (
-                  <div className="ifr-toc-empty">čžĺĽĺłéŽčŻćç´˘ććéĄľé˘ĺĺŽ?</div>
+                  <div className="ifr-toc-empty">输入关键词搜索所有页面内容</div>
                 ) : !searchCompile.ok ? (
-                  <div className="ifr-toc-empty">äżŽć­Łćç´˘ćĄäťś</div>
+                  <div className="ifr-toc-empty">修正搜索条件</div>
                 ) : searching ? (
-                  <div className="ifr-toc-empty">ćç´˘ä¸?...</div>
+                  <div className="ifr-toc-empty">搜索中...</div>
                 ) : contentResults.length > 0 ? (
                   <ul className="ifr-search-results">
                     {contentResults.map((r, i) => (
@@ -379,7 +378,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                       >
                         <div className="ifr-result-title">
                           {r.title}
-                          <span className="ifr-result-count">{r.matchCount} ĺ¤ĺšé?</span>
+                          <span className="ifr-result-count">{r.matchCount} 处匹配</span>
                         </div>
                         <div className="ifr-result-snippet">
                           {highlightSnippet(r.snippet, contentHighlightRe)}
@@ -388,7 +387,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
                     ))}
                   </ul>
                 ) : (
-                  <div className="ifr-toc-empty">ćŞćžĺ°ĺšéĺĺŽ?</div>
+                  <div className="ifr-toc-empty">未找到匹配内容</div>
                 )
               )}
             </div>
@@ -402,12 +401,12 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
               ref={iframeRef}
               srcDoc={iframeDoc}
               className="ifr-iframe"
-              title={manualName || 'ćĺ'}
+              title={manualName || '手册'}
             />
           ) : activePath ? (
-            <div className="ifr-status">ć ćłĺ č˝˝éĄľé˘</div>
+            <div className="ifr-status">无法加载页面</div>
           ) : (
-            <div className="ifr-status">čŻˇäťĺˇŚäž§çŽĺ˝éćŠéĄľé˘</div>
+            <div className="ifr-status">请从左侧目录选择页面</div>
           )}
         </div>
       </div>

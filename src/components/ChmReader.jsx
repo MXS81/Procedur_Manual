@@ -89,7 +89,7 @@ const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
             <button type='button'
               className={'chm-toc-arrow-btn' + (expanded ? ' expanded' : '')}
               aria-expanded={expanded}
-              aria-label={expanded ? '\u6298\u53e0' : '\u5c55\u5f00'}
+              aria-label={expanded ? '折叠' : '展开'}
               onClick={toggleExpand}>
               <span className='chm-toc-arrow' aria-hidden>&#9654;</span>
             </button>
@@ -191,7 +191,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
       if (info.defaultPage) navigateTo(info.defaultPage)
       setLoading(false)
     } catch (e) {
-      setError('CHM \u52a0\u8f7d\u5931\u8d25: ' + e.message)
+      setError('CHM 加载失败: ' + e.message)
       setLoading(false)
     }
   }, [chmPath, navigateTo])
@@ -431,33 +431,33 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const hasIndex = (chmInfo?.indexEntries?.length ?? 0) > 0
 
   // ---- Render ----
-  if (loading) return <div className="chm-reader"><div className="chm-status">{'\u52a0\u8f7d\u4e2d\u2026'}</div></div>
+  if (loading) return <div className="chm-reader"><div className="chm-status">{'加载中…'}</div></div>
   if (error) return <div className="chm-reader"><div className="chm-status chm-error">{error}</div></div>
 
   const searchPlaceholder = searchMode === 'toc'
-    ? '\u641c\u7d22\u76ee\u5f55\u2026'
+    ? '搜索目录…'
     : searchMode === 'index'
-      ? '\u641c\u7d22\u7d22\u5f15\u2026'
-      : '\u641c\u7d22\u9875\u9762\u5185\u5bb9\u2026'
+      ? '搜索索引…'
+      : '搜索页面内容…'
 
   return (
     <div className="chm-reader">
       <div className="chm-toolbar">
-        <button className="btn btn-ghost btn-back" onClick={onBack} title="\u8fd4\u56de">
+        <button className="btn btn-ghost btn-back" onClick={onBack} title="返回">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <button className={'btn btn-ghost chm-nav-btn' + (canGoBack ? '' : ' disabled')} onClick={goBack} disabled={!canGoBack} title="\u540e\u9000">
+        <button className={'btn btn-ghost chm-nav-btn' + (canGoBack ? '' : ' disabled')} onClick={goBack} disabled={!canGoBack} title="后退">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
           </svg>
         </button>
-        <button className={'btn btn-ghost chm-nav-btn' + (canGoForward ? '' : ' disabled')} onClick={goForward} disabled={!canGoForward} title="\u524d\u8fdb">
+        <button className={'btn btn-ghost chm-nav-btn' + (canGoForward ? '' : ' disabled')} onClick={goForward} disabled={!canGoForward} title="前进">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
           </svg>
         </button>
-        <span className="chm-title">{manualName || 'CHM \u624b\u518c'}</span>
-        <button className={'btn btn-ghost chm-page-search-btn' + (pageSearchOpen ? ' active' : '')} onClick={togglePageSearch} title="\u9875\u5185\u641c\u7d22 (Ctrl+F)">
+        <span className="chm-title">{manualName || 'CHM 手册'}</span>
+        <button className={'btn btn-ghost chm-page-search-btn' + (pageSearchOpen ? ' active' : '')} onClick={togglePageSearch} title="页内搜索 (Ctrl+F)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -465,7 +465,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
         <button
           className={'btn btn-ghost chm-sidebar-toggle' + (sidebarVisible ? ' active' : '')}
           onClick={() => setSidebarVisible(v => !v)}
-          title={sidebarVisible ? '\u9690\u85cf\u4fa7\u680f' : '\u663e\u793a\u4fa7\u680f'}
+          title={sidebarVisible ? '隐藏侧栏' : '显示侧栏'}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
@@ -494,21 +494,21 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
 
             <div className="chm-tabs">
               <button className={'chm-tab' + (searchMode === 'toc' ? ' active' : '')}
-                onClick={() => setSearchMode('toc')}>{'\u76ee\u5f55'}</button>
+                onClick={() => setSearchMode('toc')}>{'目录'}</button>
               {hasIndex && (
                 <button className={'chm-tab' + (searchMode === 'index' ? ' active' : '')}
-                  onClick={() => setSearchMode('index')}>{'\u7d22\u5f15'}</button>
+                  onClick={() => setSearchMode('index')}>{'索引'}</button>
               )}
               <button className={'chm-tab' + (searchMode === 'content' ? ' active' : '')}
-                onClick={() => setSearchMode('content')}>{'\u5168\u6587\u641c\u7d22'}</button>
+                onClick={() => setSearchMode('content')}>{'全文搜索'}</button>
             </div>
 
             <div className="chm-toc-container">
               {searchMode === 'toc' ? (
                 !hasTocOutline ? (
                   <div className="chm-toc-empty chm-toc-nooutline">
-                    <p className="chm-toc-nooutline-title">{'\u683c\u5f0f\u4e0d\u652f\u6301\u76ee\u5f55\u751f\u6210'}</p>
-                    <p className="chm-toc-muted">{'\u6b64 CHM \u89e3\u538b\u540e\u65e0\u6807\u51c6 .hhc \u76ee\u5f55\uff0c\u5e94\u7528\u65e0\u6cd5\u751f\u6210\u4fa7\u680f\u76ee\u5f55\u3002\u8bf7\u4f7f\u7528\u300c\u5168\u6587\u641c\u7d22\u300d\u6d4f\u89c8\uff1b\u6b63\u6587\u4ecd\u4ece\u9ed8\u8ba4\u9875\u6253\u5f00\u3002'}</p>
+                    <p className="chm-toc-nooutline-title">{'格式不支持目录生成'}</p>
+                    <p className="chm-toc-muted">{'此 CHM 解压后无标准 .hhc 目录，应用无法生成侧栏目录。请使用「全文搜索」浏览；正文仍从默认页打开。'}</p>
                   </div>
                 ) : filteredToc.length > 0 ? (
                   <TocStoreCtx.Provider value={tocStore}>
@@ -519,11 +519,11 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     </ul>
                   </TocStoreCtx.Provider>
                 ) : searchTerm && searchCompile.ok ? (
-                  <div className="chm-toc-empty">{'\u76ee\u5f55\u4e2d\u672a\u627e\u5230\u5339\u914d\u9879'}</div>
+                  <div className="chm-toc-empty">{'目录中未找到匹配项'}</div>
                 ) : searchTerm ? (
-                  <div className="chm-toc-empty">{'\u641c\u7d22\u6761\u4ef6\u65e0\u6548'}</div>
+                  <div className="chm-toc-empty">{'搜索条件无效'}</div>
                 ) : (
-                  <div className="chm-toc-empty">{'\u65e0\u76ee\u5f55\u4fe1\u606f'}</div>
+                  <div className="chm-toc-empty">{'无目录信息'}</div>
                 )
 
               ) : searchMode === 'index' ? (
@@ -539,18 +539,18 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     ))}
                   </ul>
                 ) : searchTerm && searchCompile.ok ? (
-                  <div className="chm-toc-empty">{'\u7d22\u5f15\u4e2d\u672a\u627e\u5230\u5339\u914d\u9879'}</div>
+                  <div className="chm-toc-empty">{'索引中未找到匹配项'}</div>
                 ) : (
-                  <div className="chm-toc-empty">{'\u65e0\u7d22\u5f15\u4fe1\u606f'}</div>
+                  <div className="chm-toc-empty">{'无索引信息'}</div>
                 )
 
               ) : (
                 !searchTerm.trim() ? (
-                  <div className="chm-toc-empty">{'\u8f93\u5165\u5173\u952e\u8bcd\u641c\u7d22\u6240\u6709\u9875\u9762\u5185\u5bb9'}</div>
+                  <div className="chm-toc-empty">{'输入关键词搜索所有页面内容'}</div>
                 ) : !searchCompile.ok ? (
-                  <div className="chm-toc-empty">{'\u4fee\u6b63\u641c\u7d22\u6761\u4ef6'}</div>
+                  <div className="chm-toc-empty">{'修正搜索条件'}</div>
                 ) : searching ? (
-                  <div className="chm-toc-empty">{'\u641c\u7d22\u4e2d\u2026'}</div>
+                  <div className="chm-toc-empty">{'搜索中…'}</div>
                 ) : contentResults.length > 0 ? (
                   <ul className="chm-search-results">
                     {contentResults.map((r, i) => (
@@ -559,7 +559,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                         onClick={() => { pendingFindRef.current = searchTerm; handleSelectPage(r.local) }}>
                         <div className="chm-result-title">
                           {r.title}
-                          <span className="chm-result-count">{r.matchCount} {'\u5904\u5339\u914d'}</span>
+                          <span className="chm-result-count">{r.matchCount} {'处匹配'}</span>
                         </div>
                         <div className="chm-result-snippet">
                           {highlightSnippet(r.snippet, contentHighlightRe)}
@@ -568,7 +568,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     ))}
                   </ul>
                 ) : (
-                  <div className="chm-toc-empty">{'\u672a\u627e\u5230\u5339\u914d\u5185\u5bb9'}</div>
+                  <div className="chm-toc-empty">{'未找到匹配内容'}</div>
                 )
               )}
             </div>
@@ -587,19 +587,19 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                   if (e.key === 'Enter') findInPage(!e.shiftKey)
                   if (e.key === 'Escape') { setPageSearchOpen(false); setPageSearchTerm('') }
                 }}
-                placeholder={'\u641c\u7d22\u5173\u952e\u8bcd\u2026'} />
+                placeholder={'搜索关键词…'} />
               {pageSearchTerm && (
                 <span className="chm-page-search-count">
-                  {pageMatchCount > 0 ? pageMatchCount + ' \u5904\u5339\u914d' : '\u65e0\u5339\u914d'}
+                  {pageMatchCount > 0 ? pageMatchCount + ' 处匹配' : '无匹配'}
                 </span>
               )}
-              <button className="chm-ps-btn" onClick={() => findInPage(false)} title={'\u4e0a\u4e00\u4e2a'}>
+              <button className="chm-ps-btn" onClick={() => findInPage(false)} title={'上一个'}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="18 15 12 9 6 15"/></svg>
               </button>
-              <button className="chm-ps-btn" onClick={() => findInPage(true)} title={'\u4e0b\u4e00\u4e2a'}>
+              <button className="chm-ps-btn" onClick={() => findInPage(true)} title={'下一个'}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
-              <button className="chm-ps-btn" onClick={() => { setPageSearchOpen(false); setPageSearchTerm('') }} title={'\u5173\u95ed'}>
+              <button className="chm-ps-btn" onClick={() => { setPageSearchOpen(false); setPageSearchTerm('') }} title={'关闭'}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
@@ -608,9 +608,9 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
           {iframeDoc ? (
             <iframe key={activePath} ref={iframeRef} srcDoc={iframeDoc} className="chm-iframe" title="CHM Content" />
           ) : activePath ? (
-            <div className="chm-status">{'\u65e0\u6cd5\u52a0\u8f7d\u9875\u9762'}</div>
+            <div className="chm-status">{'无法加载页面'}</div>
           ) : (
-            <div className="chm-status">{'\u8bf7\u4ece\u5de6\u4fa7\u9009\u62e9\u9875\u9762\u6216\u4f7f\u7528\u5168\u6587\u641c\u7d22'}</div>
+            <div className="chm-status">{'请从左侧选择页面或使用全文搜索'}</div>
           )}
         </div>
       </div>

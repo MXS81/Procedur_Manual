@@ -29,7 +29,8 @@
     ],
     "fileName": "cppreference-zh_CN.chm",
     "version": "1.0",
-    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/cppreference-zh_CN.chm"
+    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/cppreference-zh_CN.chm",
+    "downloadUrlMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/cppreference-zh_CN.chm"
   },
   {
     "id": "builtin-git",
@@ -127,7 +128,8 @@
     ],
     "fileName": "MYSQL8.0中文参考手册.chm",
     "version": "1.0",
-    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/MYSQL8.0.chm"
+    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/MYSQL8.0.chm",
+    "downloadUrlMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/MYSQL8.0.chm"
   },
   {
     "id": "builtin-php",
@@ -147,6 +149,7 @@
     "entryFile": "index.html",
     "version": "1.0",
     "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/php-chunked-xhtml.zip",
+    "downloadUrlMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/php-chunked-xhtml.zip",
     "downloadArchive": "zip"
   },
   {
@@ -166,7 +169,9 @@
     "fileName": "Python 3.13.x 核心参考与实例手册 v1.10.chm",
     "version": "1.10",
     "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/Python.3.13.x.v1.10.chm",
-    "downloadUrlChw": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/Python.3.13.x.v1.10.chw"
+    "downloadUrlMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/Python.3.13.x.v1.10.chm",
+    "downloadUrlChw": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/Python.3.13.x.v1.10.chw",
+    "downloadUrlChwMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/Python.3.13.x.v1.10.chw"
   },
   {
     "id": "builtin-qt-help-zh-full",
@@ -189,7 +194,8 @@
     ],
     "fileName": "QT中文帮助文档完整版.chm",
     "version": "1.0",
-    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/QT.chm"
+    "downloadUrl": "https://github.com/MXS81/Procedur_Manual/releases/download/manuals/QT.chm",
+    "downloadUrlMirror": "https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/QT.chm"
   },
   {
     "id": "builtin-vim-manual-zh-72",

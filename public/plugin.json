@@ -2,40 +2,40 @@
   "main": "index.html",
   "preload": "preload/services.js",
   "logo": "logo.png",
-  "description": "\u672c\u5730\u6280\u672f\u624b\u518c\u9605\u8bfb\u4e0e\u5168\u6587\u68c0\u7d22\u3002\u4e3b\u754c\u9762\u300c\u8d44\u6e90\u4e0e\u4f9d\u8d56\u300d\u53ef\u52fe\u9009 GitHub Releases \u79bb\u7ebf\u5305\u5e76\u4e0b\u8f7d\uff0cWindows \u4e0b\u53ef\u540c\u9875\u5b89\u88c5 Poppler\uff08pdftotext\uff09\u5230\u7528\u6237 PATH\u3002PDF \u7d22\u5f15\u9700 Poppler\uff1b\u91cd\u542f uTools \u540e\u70b9\u300c\u7d22\u5f15\u300d\u3002\u4ea6\u53ef\u8fd0\u884c install-poppler-windows.ps1 \u6216\u624b\u52a8\u4e0b\u8f7d\u3002\u8fdc\u7a0b\u8d44\u6e90\u89c1 Release manuals\u3002",
+  "description": "本地技术手册阅读与全文检索。主界面「资源与依赖」可勾选 GitHub Releases 离线包并下载，Windows 下可同页安装 Poppler（pdftotext）到用户 PATH。PDF 索引需 Poppler；重启 uTools 后点「索引」。亦可运行 install-poppler-windows.ps1 或手动下载。远程资源见 Release manuals。",
   "development": {
     "main": "http://localhost:5173"
   },
   "features": [
     {
       "code": "manual-home",
-      "explain": "\u6253\u5f00\u7a0b\u5e8f\u5458\u624b\u518c\u4e3b\u754c\u9762\uff0c\u7ba1\u7406\u548c\u6d4f\u89c8\u624b\u518c",
+      "explain": "打开程序员手册主界面，管理和浏览手册",
       "cmds": [
-        "\u7a0b\u5e8f\u5458\u624b\u518c",
-        "\u624b\u518c\u7ba1\u7406",
+        "程序员手册",
+        "手册管理",
         "manual"
       ]
     },
     {
       "code": "manual-search",
-      "explain": "\u641c\u7d22\u547d\u4ee4\u3001\u51fd\u6570\u548c\u5173\u952e\u8bcd",
+      "explain": "搜索命令、函数和关键词",
       "cmds": [
-        "\u624b\u518c\u641c\u7d22",
+        "手册搜索",
         {
           "type": "over",
-          "label": "\u624b\u518c\u641c\u7d22"
+          "label": "手册搜索"
         }
       ]
     },
     {
       "code": "manual-file-import",
-      "explain": "\u5bfc\u5165\u672c\u5730\u624b\u518c\u6587\u4ef6\uff08\u652f\u6301 HTML\u3001Markdown\u3001JSON\u3001PDF\u3001CHM\uff09",
+      "explain": "导入本地手册文件（支持 HTML、Markdown、JSON、PDF、CHM）",
       "cmds": [
         {
           "type": "files",
           "fileType": "file",
           "maxLength": 1,
-          "label": "\u5bfc\u5165\u624b\u518c",
+          "label": "导入手册",
           "match": "/\\.(html?|md|markdown|json|pdf|chm)$/i"
         }
       ]

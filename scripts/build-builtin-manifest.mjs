@@ -15,31 +15,63 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const builtinRoot = path.join(__dirname, '..', 'public', 'builtin-manuals')
 const outPath = path.join(builtinRoot, 'manifest.json')
 
+/** 主下载源（默认 GitHub Releases） */
 const PM_RELEASE_BASE = (process.env.PM_RELEASE_BASE || '').trim()
   || 'https://github.com/MXS81/Procedur_Manual/releases/download/manuals/'
+
+/** 备选源（默认 Gitee Releases，国内更易连通）；设为空字符串可禁用 */
+const PM_RELEASE_MIRROR_BASE = (process.env.PM_RELEASE_MIRROR_BASE !== undefined
+  ? String(process.env.PM_RELEASE_MIRROR_BASE).trim()
+  : 'https://gitee.com/mxs801/Procedur_Manual/releases/download/manuals/')
 
 const IGNORE_TOP = new Set(['manifest.json', '.git', '.DS_Store', 'Thumbs.db'])
 
 /**
  * @type {Map<string, {
  *   downloadUrl: string,
+ *   downloadUrlMirror?: string,
  *   sha256?: string,
  *   downloadArchive?: 'zip',
  *   downloadUrlChw?: string,
+ *   downloadUrlChwMirror?: string,
  *   sha256Chw?: string
  * }>}
  */
 const REMOTE_BY_ID = new Map([
-  ['builtin-cpp', { downloadUrl: PM_RELEASE_BASE + 'cppreference-zh_CN.chm' }],
-  ['builtin-mysql8', { downloadUrl: PM_RELEASE_BASE + 'MYSQL8.0.chm' }],
+  ['builtin-cpp', {
+    downloadUrl: PM_RELEASE_BASE + 'cppreference-zh_CN.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'cppreference-zh_CN.chm' }
+      : {})
+  }],
+  ['builtin-mysql8', {
+    downloadUrl: PM_RELEASE_BASE + 'MYSQL8.0.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'MYSQL8.0.chm' }
+      : {})
+  }],
   ['builtin-python-313-core-ref-v110', {
     downloadUrl: PM_RELEASE_BASE + 'Python.3.13.x.v1.10.chm',
-    downloadUrlChw: PM_RELEASE_BASE + 'Python.3.13.x.v1.10.chw'
+    downloadUrlChw: PM_RELEASE_BASE + 'Python.3.13.x.v1.10.chw',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? {
+          downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'Python.3.13.x.v1.10.chm',
+          downloadUrlChwMirror: PM_RELEASE_MIRROR_BASE + 'Python.3.13.x.v1.10.chw'
+        }
+      : {})
   }],
-  ['builtin-qt-help-zh-full', { downloadUrl: PM_RELEASE_BASE + 'QT.chm' }],
+  ['builtin-qt-help-zh-full', {
+    downloadUrl: PM_RELEASE_BASE + 'QT.chm',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'QT.chm' }
+      : {})
+  }],
   ['builtin-php', {
     downloadUrl: PM_RELEASE_BASE + 'php-chunked-xhtml.zip',
-    downloadArchive: 'zip'
+    downloadArchive: 'zip',
+    ...(PM_RELEASE_MIRROR_BASE
+      ? { downloadUrlMirror: PM_RELEASE_MIRROR_BASE + 'php-chunked-xhtml.zip' }
+      : {})
   }]
 ])
 
@@ -47,150 +79,150 @@ const REMOTE_BY_ID = new Map([
 const STATIC_CATALOG = [
   {
     id: 'builtin-linux-command',
-    name: 'Linux \u547d\u4ee4\u624b\u518c',
-    description: '\u57fa\u4e8e\u672c\u5730 Markdown \u547d\u4ee4\u6587\u6863\u6574\u7406\u7684 Linux \u547d\u4ee4\u624b\u518c',
-    keywords: ['linux', '\u547d\u4ee4', 'shell', 'bash', 'terminal', 'cd', 'grep', 'ls'],
+    name: 'Linux 命令手册',
+    description: '基于本地 Markdown 命令文档整理的 Linux 命令手册',
+    keywords: ['linux', '命令', 'shell', 'bash', 'terminal', 'cd', 'grep', 'ls'],
     fileName: 'command',
     version: '1.0'
   },
   {
     id: 'builtin-html-css',
-    name: 'HTML / CSS \u53c2\u8003\u624b\u518c',
-    description: 'HTML \u6807\u7b7e\u4e0e CSS \u5c5e\u6027\u5b8c\u6574\u53c2\u8003',
-    keywords: ['html', 'css', '\u7f51\u9875', '\u524d\u7aef', '\u6807\u7b7e', '\u6837\u5f0f'],
+    name: 'HTML / CSS 参考手册',
+    description: 'HTML 标签与 CSS 属性完整参考',
+    keywords: ['html', 'css', '网页', '前端', '标签', '样式'],
     fileName: 'html-css-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-javascript',
-    name: 'JavaScript \u53c2\u8003\u624b\u518c',
-    description: 'JavaScript \u8bed\u8a00\u6838\u5fc3\u3001DOM\u3001BOM \u53c2\u8003',
-    keywords: ['javascript', 'js', '\u524d\u7aef', 'es6', 'dom', 'node'],
+    name: 'JavaScript 参考手册',
+    description: 'JavaScript 语言核心、DOM、BOM 参考',
+    keywords: ['javascript', 'js', '前端', 'es6', 'dom', 'node'],
     fileName: 'javascript-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-python',
-    name: 'Python \u53c2\u8003\u624b\u518c',
-    description: 'Python \u6807\u51c6\u5e93\u4e0e\u8bed\u8a00\u53c2\u8003',
-    keywords: ['python', 'py', '\u6807\u51c6\u5e93', 'pip'],
+    name: 'Python 参考手册',
+    description: 'Python 标准库与语言参考',
+    keywords: ['python', 'py', '标准库', 'pip'],
     fileName: 'python-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-python-313-core-ref-v110',
-    name: 'Python 3.13.x \u6838\u5fc3\u53c2\u8003\u4e0e\u5b9e\u4f8b\u624b\u518c',
-    description: 'Python 3.13.x \u8bed\u8a00\u6838\u5fc3\u4e0e\u5b9e\u4f8b\u53c2\u8003\uff08CHM\uff0c\u542b\u5b8c\u6574\u76ee\u5f55\u4e0e\u5168\u6587\u641c\u7d22\uff09',
-    keywords: ['python', 'py', '3.13', '\u6838\u5fc3', '\u5b9e\u4f8b', '\u6807\u51c6\u5e93', 'pip', 'typing'],
-    fileName: 'Python 3.13.x \u6838\u5fc3\u53c2\u8003\u4e0e\u5b9e\u4f8b\u624b\u518c v1.10.chm',
+    name: 'Python 3.13.x 核心参考与实例手册',
+    description: 'Python 3.13.x 语言核心与实例参考（CHM，含完整目录与全文搜索）',
+    keywords: ['python', 'py', '3.13', '核心', '实例', '标准库', 'pip', 'typing'],
+    fileName: 'Python 3.13.x 核心参考与实例手册 v1.10.chm',
     version: '1.10'
   },
   {
     id: 'builtin-cpp',
-    name: 'C/C++ \u53c2\u8003\u624b\u518c',
-    description: 'C/C++ \u6807\u51c6\u5e93\u51fd\u6570\u4e0e\u8bed\u8a00\u53c2\u8003',
-    keywords: ['c', 'c++', 'cpp', 'stl', '\u6807\u51c6\u5e93'],
+    name: 'C/C++ 参考手册',
+    description: 'C/C++ 标准库函数与语言参考',
+    keywords: ['c', 'c++', 'cpp', 'stl', '标准库'],
     fileName: 'cppreference-zh_CN.chm',
     version: '1.0'
   },
   {
     id: 'builtin-java',
-    name: 'Java \u53c2\u8003\u624b\u518c',
-    description: 'Java SE API \u53c2\u8003\u624b\u518c',
+    name: 'Java 参考手册',
+    description: 'Java SE API 参考手册',
     keywords: ['java', 'jdk', 'api', 'spring'],
     fileName: 'java-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-matlab',
-    name: 'MATLAB \u53c2\u8003\u624b\u518c',
-    description: 'MATLAB \u51fd\u6570\u4e0e\u5de5\u5177\u7bb1\u53c2\u8003',
-    keywords: ['matlab', '\u77e9\u9635', '\u6570\u503c\u8ba1\u7b97', 'simulink'],
+    name: 'MATLAB 参考手册',
+    description: 'MATLAB 函数与工具箱参考',
+    keywords: ['matlab', '矩阵', '数值计算', 'simulink'],
     fileName: 'matlab-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-sql',
-    name: 'SQL \u53c2\u8003\u624b\u518c',
-    description: 'SQL \u8bed\u6cd5\u4e0e\u6570\u636e\u5e93\u64cd\u4f5c\u53c2\u8003',
-    keywords: ['sql', 'mysql', '\u6570\u636e\u5e93', '\u67e5\u8be2', 'postgresql'],
+    name: 'SQL 参考手册',
+    description: 'SQL 语法与数据库操作参考',
+    keywords: ['sql', 'mysql', '数据库', '查询', 'postgresql'],
     fileName: 'sql-reference.chm',
     version: '1.0'
   },
   {
     id: 'builtin-mysql8',
-    name: 'MySQL 8.0 \u4e2d\u6587\u53c2\u8003\u624b\u518c',
-    description: 'MySQL 8.0 \u5b98\u65b9\u4e2d\u6587\u6587\u6863\uff0c\u5b89\u88c5\u3001SQL\u3001\u5b58\u50a8\u5f15\u64ce\u3001\u590d\u5236\u3001\u5b89\u5168\u4e0e\u8fd0\u7ef4\u7b49\u5b8c\u6574\u53c2\u8003',
-    keywords: ['mysql', 'mysql8', '\u6570\u636e\u5e93', 'innodb', 'sql', '\u67e5\u8be2', '\u7d22\u5f15', '\u590d\u5236', '\u5907\u4efd'],
-    fileName: 'MYSQL8.0\u4e2d\u6587\u53c2\u8003\u624b\u518c.chm',
+    name: 'MySQL 8.0 中文参考手册',
+    description: 'MySQL 8.0 官方中文文档，安装、SQL、存储引擎、复制、安全与运维等完整参考',
+    keywords: ['mysql', 'mysql8', '数据库', 'innodb', 'sql', '查询', '索引', '复制', '备份'],
+    fileName: 'MYSQL8.0中文参考手册.chm',
     version: '1.0'
   },
   {
     id: 'builtin-git',
-    name: 'Git \u53c2\u8003\u624b\u518c',
-    description: 'Git \u5e38\u7528\u547d\u4ee4\u53c2\u8003\u624b\u518c\uff0c\u6db5\u76d6 config\u3001clone\u3001commit\u3001push\u3001pull\u3001branch\u3001merge\u3001rebase\u3001stash\u3001tag \u7b49',
-    keywords: ['git', '\u7248\u672c\u63a7\u5236', 'github', '\u5206\u652f', '\u5408\u5e76', 'commit', 'push', 'pull', 'clone', 'rebase'],
+    name: 'Git 参考手册',
+    description: 'Git 常用命令参考手册，涵盖 config、clone、commit、push、pull、branch、merge、rebase、stash、tag 等',
+    keywords: ['git', '版本控制', 'github', '分支', '合并', 'commit', 'push', 'pull', 'clone', 'rebase'],
     fileName: 'git',
     version: '2.0'
   },
   {
     id: 'builtin-php',
-    name: 'PHP \u53c2\u8003\u624b\u518c',
-    description: 'PHP \u5b98\u65b9\u4e2d\u6587\u6587\u6863\uff0c\u51fd\u6570\u3001\u7c7b\u3001\u8bed\u8a00\u8bed\u6cd5\u5b8c\u6574\u53c2\u8003',
-    keywords: ['php', '\u51fd\u6570', 'array', 'string', 'mysql', 'pdo', 'json', '\u6b63\u5219'],
+    name: 'PHP 参考手册',
+    description: 'PHP 官方中文文档，函数、类、语言语法完整参考',
+    keywords: ['php', '函数', 'array', 'string', 'mysql', 'pdo', 'json', '正则'],
     fileName: 'php-chunked-xhtml',
     entryFile: 'index.html',
     version: '1.0'
   },
   {
     id: 'builtin-js-core-ref-zh',
-    name: 'JavaScript \u6838\u5fc3\u53c2\u8003\u624b\u518c',
-    description: 'JavaScript \u6838\u5fc3\u8bed\u6cd5\u4e0e API \u53c2\u8003\uff08\u5185\u7f6e CHM\uff1b\u65e0 .hhc \u65f6\u4e0d\u751f\u6210\u4fa7\u680f\u76ee\u5f55\uff0c\u8bf7\u7528\u5168\u6587\u641c\u7d22\uff09',
-    keywords: ['javascript', 'js', '\u6838\u5fc3', '\u53c2\u8003', 'ecma', '\u8bed\u6cd5'],
-    fileName: 'JS\u53c2\u8003\u624b\u518c\u96c6\u5408/JavaScript\u6838\u5fc3\u53c2\u8003\u624b\u518c.chm',
+    name: 'JavaScript 核心参考手册',
+    description: 'JavaScript 核心语法与 API 参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    keywords: ['javascript', 'js', '核心', '参考', 'ecma', '语法'],
+    fileName: 'JS参考手册集合/JavaScript核心参考手册.chm',
     version: '1.0'
   },
   {
     id: 'builtin-js-ms-manual',
-    name: '\u5fae\u8f6f JavaScript \u624b\u518c',
-    description: '\u5fae\u8f6f JavaScript / JScript \u811a\u672c\u624b\u518c\uff08\u5185\u7f6e CHM\uff1b\u65e0 .hhc \u65f6\u4e0d\u751f\u6210\u4fa7\u680f\u76ee\u5f55\uff0c\u8bf7\u7528\u5168\u6587\u641c\u7d22\uff09',
-    keywords: ['javascript', 'js', '\u5fae\u8f6f', 'jscript', '\u811a\u672c', 'ie'],
-    fileName: 'JS\u53c2\u8003\u624b\u518c\u96c6\u5408/\u5fae\u8f6fJavaScript\u624b\u518cjs.chm',
+    name: '微软 JavaScript 手册',
+    description: '微软 JavaScript / JScript 脚本手册（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    keywords: ['javascript', 'js', '微软', 'jscript', '脚本', 'ie'],
+    fileName: 'JS参考手册集合/微软JavaScript手册js.chm',
     version: '1.0'
   },
   {
     id: 'builtin-js-lang-zh-chm',
-    name: 'JavaScript \u8bed\u8a00\u4e2d\u6587\u53c2\u8003\u624b\u518c',
-    description: 'JavaScript \u8bed\u8a00\u4e2d\u6587\u53c2\u8003\uff08\u5185\u7f6e CHM\uff1b\u65e0 .hhc \u65f6\u4e0d\u751f\u6210\u4fa7\u680f\u76ee\u5f55\uff0c\u8bf7\u7528\u5168\u6587\u641c\u7d22\uff09',
-    keywords: ['javascript', 'js', '\u4e2d\u6587', '\u53c2\u8003', '\u8bed\u8a00', 'ecma'],
-    fileName: 'JS\u53c2\u8003\u624b\u518c\u96c6\u5408/JavaScript\u8bed\u8a00\u4e2d\u6587\u53c2\u8003\u624b\u518c.chm',
+    name: 'JavaScript 语言中文参考手册',
+    description: 'JavaScript 语言中文参考（内置 CHM；无 .hhc 时不生成侧栏目录，请用全文搜索）',
+    keywords: ['javascript', 'js', '中文', '参考', '语言', 'ecma'],
+    fileName: 'JS参考手册集合/JavaScript语言中文参考手册.chm',
     version: '1.0'
   },
   {
     id: 'builtin-vim-manual-zh-72',
-    name: 'Vim \u624b\u518c\u4e2d\u6587\u7248 7.2',
-    description: 'Vim \u7f16\u8f91\u5668\u4e2d\u6587\u5e2e\u52a9\u6587\u6863 7.2\uff08\u5185\u7f6e CHM\uff1b\u65e0 .hhc \u65f6\u8bf7\u7528\u5168\u6587\u641c\u7d22\uff09',
-    keywords: ['vim', 'vi', '\u7f16\u8f91\u5668', '\u5e2e\u52a9', '\u547d\u4ee4', '7.2', '\u4e2d\u6587\u7248'],
-    fileName: 'Vim\u624b\u518c\u4e2d\u6587\u72487.2.chm',
+    name: 'Vim 手册中文版 7.2',
+    description: 'Vim 编辑器中文帮助文档 7.2（内置 CHM；无 .hhc 时请用全文搜索）',
+    keywords: ['vim', 'vi', '编辑器', '帮助', '命令', '7.2', '中文版'],
+    fileName: 'Vim手册中文版7.2.chm',
     version: '7.2'
   },
   {
     id: 'builtin-qt-help-zh-full',
-    name: 'Qt \u4e2d\u6587\u5e2e\u52a9\u6587\u6863\uff08\u5b8c\u6574\u7248\uff09',
-    description: 'Qt \u6846\u67b6\u5b98\u65b9\u4e2d\u6587\u5e2e\u52a9\uff08CHM\uff0c\u542b\u7c7b\u5e93\u3001\u4fe1\u53f7\u69fd\u3001QML \u7b49\u53c2\u8003\uff09',
+    name: 'Qt 中文帮助文档（完整版）',
+    description: 'Qt 框架官方中文帮助（CHM，含类库、信号槽、QML 等参考）',
     keywords: [
       'qt', 'qt5', 'qt6', 'qml', 'qwidget', 'signals', 'slots', 'c++', 'gui',
-      '\u4fe1\u53f7', '\u69fd', '\u754c\u9762', '\u5e2e\u52a9'
+      '信号', '槽', '界面', '帮助'
     ],
-    fileName: 'QT\u4e2d\u6587\u5e2e\u52a9\u6587\u6863\u5b8c\u6574\u7248.chm',
+    fileName: 'QT中文帮助文档完整版.chm',
     version: '1.0'
   },
   {
     id: 'builtin-vue-official-pdf-zh',
-    name: 'Vue.js \u5b98\u65b9\u79bb\u7ebf\u6587\u6863\uff08PDF\uff09',
-    description: 'Vue.js \u5b98\u65b9\u6587\u6863\u4e2d\u6587\u79bb\u7ebf\u7248\uff08PDF\uff09\u3002PDF \u5168\u6587\u68c0\u7d22\u9700 Poppler\uff08pdftotext\uff09\uff1b\u8d44\u6e90\u4e0e\u4f9d\u8d56\u5185\u53ef\u5b89\u88c5\u6216\u91cd\u542f uTools \u540e\u70b9\u300c\u7d22\u5f15\u300d\u3002',
-    keywords: ['vue', 'vue3', 'vue2', '\u524d\u7aef', '\u6846\u67b6', '\u7ec4\u5408\u5f0f', '\u9009\u9879\u5f0f', 'cli', 'router', 'vuex'],
-    fileName: 'VueJS\u5b98\u65b9\u79bb\u7ebf\u6587\u6863(\u642c\u8fd0\u7248).pdf',
+    name: 'Vue.js 官方离线文档（PDF）',
+    description: 'Vue.js 官方文档中文离线版（PDF）。PDF 全文检索需 Poppler（pdftotext）；资源与依赖内可安装或重启 uTools 后点「索引」。',
+    keywords: ['vue', 'vue3', 'vue2', '前端', '框架', '组合式', '选项式', 'cli', 'router', 'vuex'],
+    fileName: 'VueJS官方离线文档(搬运版).pdf',
     version: '1.0'
   }
 ]
@@ -311,7 +343,7 @@ function buildAutoEntry (fileName) {
     id,
     name: base,
     description:
-      '\u672c\u5730\u5185\u7f6e\u8d44\u6e90\uff08\u81ea\u52a8\u626b\u63cf\uff09: ' + fileName,
+      '本地内置资源（自动扫描）: ' + fileName,
     keywords: kw,
     fileName,
     version: '1.0'
@@ -354,9 +386,11 @@ function buildManifest () {
     const r = REMOTE_BY_ID.get(entry.id)
     if (r) {
       entry.downloadUrl = r.downloadUrl
+      if (r.downloadUrlMirror) entry.downloadUrlMirror = r.downloadUrlMirror
       if (r.sha256) entry.sha256 = r.sha256
       if (r.downloadArchive) entry.downloadArchive = r.downloadArchive
       if (r.downloadUrlChw) entry.downloadUrlChw = r.downloadUrlChw
+      if (r.downloadUrlChwMirror) entry.downloadUrlChwMirror = r.downloadUrlChwMirror
       if (r.sha256Chw) entry.sha256Chw = r.sha256Chw
     }
   }

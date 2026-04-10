@@ -448,10 +448,10 @@ export default function PdfJsViewer ({ data, initialSearch = '' }) {
                 {contentResults.length > 0 && (
                   <div className="pdf-search-results-panel">
                     <div className="pdf-search-results-title">
-                      {'\u5171 ' + contentResults.length + ' \u6761'}
+                      {'共 ' + contentResults.length + ' 条'}
                       {searchMeta.pagesScanned > 0 && (
                         <span className="pdf-search-results-sub">
-                          {' \u5df2\u626b ' + searchMeta.pagesScanned + ' \u9875'}
+                          {' 已扫 ' + searchMeta.pagesScanned + ' 页'}
                         </span>
                       )}
                     </div>

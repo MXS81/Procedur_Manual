@@ -5,7 +5,8 @@ const os = require('os')
 const http = require('http')
 const https = require('https')
 const { pathToFileURL } = require('url')
-const { execFileSync } = require('child_process')
+const { Transform } = require('stream')
+const { execFileSync, spawn } = require('child_process')
 
 const CHARSET_MAP = {
   'gb2312': 'gbk', 'gb_2312': 'gbk', 'gbk': 'gbk', 'gb18030': 'gb18030',
@@ -371,6 +372,7 @@ window.services = {
     const manuals = this.getAllManuals().filter(m => m.id !== id)
     this._saveAllManuals(manuals)
     this.removeIndexData(id)
+    this._disableRemoteBuiltinIds([id])
   },
 
   removeManuals (ids) {
@@ -381,6 +383,25 @@ window.services = {
     for (const id of ids) {
       this.removeIndexData(id)
     }
+    this._disableRemoteBuiltinIds(ids)
+  },
+
+  _disableRemoteBuiltinIds (ids) {
+    try {
+      if (!window.utools || !window.utools.dbStorage) return
+      const raw = window.utools.dbStorage.getItem(STORAGE_KEYS.REMOTE_BUILTIN_ENABLED)
+      if (!raw) return
+      const o = JSON.parse(raw)
+      const arr = Array.isArray(o.ids) ? o.ids : []
+      const removeSet = new Set(ids.map(String))
+      const filtered = arr.filter(id => !removeSet.has(String(id)))
+      if (filtered.length !== arr.length) {
+        window.utools.dbStorage.setItem(
+          STORAGE_KEYS.REMOTE_BUILTIN_ENABLED,
+          JSON.stringify({ v: 1, ids: filtered })
+        )
+      }
+    } catch { /* ignore */ }
   },
 
   // ========== Index Storage (chunked to stay under uTools 1MB/doc limit) ==========
@@ -500,7 +521,10 @@ window.services = {
     return 'html'
   },
 
-  _downloadHttpToFileImpl (urlString, destPath, redirectLeft) {
+  /**
+   * @param {(info: { loaded: number, total: number|null }) => void} [onProgress] throttled ~120ms
+   */
+  _downloadHttpToFileImpl (urlString, destPath, redirectLeft, onProgress) {
     return new Promise((resolve, reject) => {
       let u
       try {
@@ -531,12 +555,36 @@ window.services = {
             }
           }
           res.resume()
-          return resolve(this._downloadHttpToFileImpl(next, destPath, redirectLeft - 1))
+          return resolve(this._downloadHttpToFileImpl(next, destPath, redirectLeft - 1, onProgress))
         }
         if (res.statusCode !== 200) {
           res.resume()
           return reject(new Error('HTTP ' + res.statusCode))
         }
+        const cl = res.headers['content-length']
+        let total = 0
+        if (cl != null) {
+          const n = parseInt(String(cl), 10)
+          if (Number.isFinite(n) && n > 0) total = n
+        }
+        let loaded = 0
+        let lastReport = 0
+        const fireProgress = (force) => {
+          if (typeof onProgress !== 'function') return
+          const now = Date.now()
+          if (!force && now - lastReport < 120 && (total <= 0 || loaded < total)) return
+          lastReport = now
+          try {
+            onProgress({ loaded, total: total > 0 ? total : null })
+          } catch { /* */ }
+        }
+        const counter = new Transform({
+          transform (chunk, enc, cb) {
+            loaded += chunk.length
+            fireProgress(false)
+            cb(null, chunk)
+          }
+        })
         const out = fs.createWriteStream(part)
         const onFail = (err) => {
           try { out.close() } catch { /* */ }
@@ -544,16 +592,18 @@ window.services = {
           reject(err)
         }
         res.on('error', onFail)
+        counter.on('error', onFail)
         out.on('error', onFail)
         out.on('finish', () => {
           try {
+            fireProgress(true)
             fs.renameSync(part, destPath)
             resolve()
           } catch (e) {
             onFail(e)
           }
         })
-        res.pipe(out)
+        res.pipe(counter).pipe(out)
       })
       req.on('error', (e) => {
         try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
@@ -568,27 +618,102 @@ window.services = {
   },
 
   /**
+   * 先 primaryUrl，失败且 mirrorUrl 合法时再试镜像（如 Gitee）。
+   */
+  async _downloadHttpWithOptionalMirror (primaryUrl, mirrorUrl, destPath, redirectLeft, onProgress, progressOpts) {
+    const part = destPath + '.part'
+    const primary = String(primaryUrl || '').trim()
+    const mirror = String(mirrorUrl || '').trim()
+    const run = async (u) => {
+      await this._downloadHttpToFileImpl(u, destPath, redirectLeft, onProgress)
+    }
+    try {
+      await run(primary)
+    } catch (e) {
+      if (!mirror || !/^https?:\/\//i.test(mirror)) throw e
+      try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
+      this._emitRemoteDlProgress(progressOpts, {
+        phase: 'download',
+        step: 'mirror',
+        loaded: 0,
+        total: null
+      })
+      await new Promise((r) => setImmediate(r))
+      await run(mirror)
+    }
+  },
+
+  _emitRemoteDlProgress (opts, info) {
+    const fn = opts && opts.onProgress
+    if (typeof fn !== 'function') return
+    try {
+      fn(info)
+    } catch { /* */ }
+  },
+
+  _run7zExtractAsync (sevenZip, args, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const child = spawn(sevenZip, args, {
+        windowsHide: true,
+        stdio: 'ignore'
+      })
+      const tid = setTimeout(() => {
+        try { child.kill('SIGTERM') } catch { /* */ }
+        reject(new Error('Extract timeout'))
+      }, timeoutMs || 900000)
+      child.on('error', (e) => {
+        clearTimeout(tid)
+        reject(e)
+      })
+      child.on('close', (code) => {
+        clearTimeout(tid)
+        if (code === 0) resolve()
+        else reject(new Error('7-Zip exit ' + code))
+      })
+    })
+  },
+
+  /**
    * Download remote asset (e.g. from GitHub Releases) to manual.rootPath.
-   * @param {{ url: string, destPath: string, sha256?: string, archiveFormat?: string, entryFile?: string|null, companionUrl?: string, companionSha256?: string }} opts
+   * onProgress?: (info: { phase: string, step?: string, loaded?: number, total?: number|null }) => void
+   * @param {{ url: string, urlMirror?: string, destPath: string, sha256?: string, archiveFormat?: string, entryFile?: string|null, companionUrl?: string, companionUrlMirror?: string, companionSha256?: string, onProgress?: function }} opts
    */
   async downloadRemoteBuiltinAsset (opts) {
     const fmt = opts && String(opts.archiveFormat || '').trim().toLowerCase()
     if (fmt === 'zip') {
       return this._downloadRemoteBuiltinZip(opts)
     }
+    const byteProgress = (step) => {
+      if (typeof opts.onProgress !== 'function') return null
+      return ({ loaded, total }) => {
+        try {
+          opts.onProgress({ phase: 'download', step, loaded, total })
+        } catch { /* */ }
+      }
+    }
     const url = opts && String(opts.url || '').trim()
+    const urlMirror = opts && String(opts.urlMirror || '').trim()
     let destPath = opts && String(opts.destPath || '').trim()
     if (!url || !destPath) throw new Error('url and destPath required')
     if (!/^https?:\/\//i.test(url)) throw new Error('Only http(s) URLs are supported')
     destPath = path.resolve(destPath)
-    const part = destPath + '.part'
     try {
-      await this._downloadHttpToFileImpl(url, destPath, 12)
+      await this._downloadHttpWithOptionalMirror(
+        url,
+        urlMirror,
+        destPath,
+        12,
+        byteProgress('main'),
+        opts
+      )
     } catch (e) {
+      const part = destPath + '.part'
       try { if (fs.existsSync(part)) fs.unlinkSync(part) } catch { /* */ }
       throw e
     }
     if (opts.sha256 && String(opts.sha256).trim()) {
+      this._emitRemoteDlProgress(opts, { phase: 'verify', step: 'main' })
+      await new Promise((r) => setImmediate(r))
       const expected = String(opts.sha256).trim().toLowerCase()
       const buf = fs.readFileSync(destPath)
       const h = crypto.createHash('sha256').update(buf).digest('hex')
@@ -598,6 +723,7 @@ window.services = {
       }
     }
     const companionUrl = opts && String(opts.companionUrl || '').trim()
+    const companionUrlMirror = opts && String(opts.companionUrlMirror || '').trim()
     if (companionUrl) {
       if (!/^https?:\/\//i.test(companionUrl)) throw new Error('Invalid companion URL')
       const ext = path.extname(destPath).toLowerCase()
@@ -606,12 +732,21 @@ window.services = {
         : path.join(path.dirname(destPath), path.basename(destPath) + '.companion')
       const cpart = companionDest + '.part'
       try {
-        await this._downloadHttpToFileImpl(companionUrl, companionDest, 12)
+        await this._downloadHttpWithOptionalMirror(
+          companionUrl,
+          companionUrlMirror,
+          companionDest,
+          12,
+          byteProgress('companion'),
+          opts
+        )
       } catch (e) {
         try { if (fs.existsSync(cpart)) fs.unlinkSync(cpart) } catch { /* */ }
         throw e
       }
       if (opts.companionSha256 && String(opts.companionSha256).trim()) {
+        this._emitRemoteDlProgress(opts, { phase: 'verify', step: 'companion' })
+        await new Promise((r) => setImmediate(r))
         const expected = String(opts.companionSha256).trim().toLowerCase()
         const buf = fs.readFileSync(companionDest)
         const h = crypto.createHash('sha256').update(buf).digest('hex')
@@ -621,6 +756,7 @@ window.services = {
         }
       }
     }
+    this._emitRemoteDlProgress(opts, { phase: 'done' })
     return { path: destPath, size: fs.statSync(destPath).size }
   },
 
@@ -630,6 +766,7 @@ window.services = {
    */
   async _downloadRemoteBuiltinZip (opts) {
     const url = opts && String(opts.url || '').trim()
+    const urlMirror = opts && String(opts.urlMirror || '').trim()
     let destPath = opts && String(opts.destPath || '').trim()
     if (!url || !destPath) throw new Error('url and destPath required')
     if (!/^https?:\/\//i.test(url)) throw new Error('Only http(s) URLs are supported')
@@ -638,20 +775,37 @@ window.services = {
     const sevenZip = this._find7zExe()
     if (!sevenZip) {
       throw new Error(
-        '\u672a\u627e\u5230 7-Zip\uff08\u5185\u7f6e tools/7za.exe \u6216 PM_SEVEN_ZIP / \u7cfb\u7edf 7-Zip\uff09\uff0c\u65e0\u6cd5\u89e3\u538b\u8fdc\u7a0b ZIP'
+        '未找到 7-Zip（内置 tools/7za.exe 或 PM_SEVEN_ZIP / 系统 7-Zip），无法解压远程 ZIP'
       )
+    }
+    const byteProgress = (step) => {
+      if (typeof opts.onProgress !== 'function') return null
+      return ({ loaded, total }) => {
+        try {
+          opts.onProgress({ phase: 'download', step, loaded, total })
+        } catch { /* */ }
+      }
     }
     const zipPath = path.join(
       os.tmpdir(),
       'pm_builtin_zip_' + crypto.randomBytes(8).toString('hex') + '.zip'
     )
     try {
-      await this._downloadHttpToFileImpl(url, zipPath, 12)
+      await this._downloadHttpWithOptionalMirror(
+        url,
+        urlMirror,
+        zipPath,
+        12,
+        byteProgress('zip'),
+        opts
+      )
     } catch (e) {
       try { if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath) } catch { /* */ }
       throw e
     }
     if (opts.sha256 && String(opts.sha256).trim()) {
+      this._emitRemoteDlProgress(opts, { phase: 'verify', step: 'zip' })
+      await new Promise((r) => setImmediate(r))
       const expected = String(opts.sha256).trim().toLowerCase()
       const buf = fs.readFileSync(zipPath)
       const h = crypto.createHash('sha256').update(buf).digest('hex')
@@ -671,11 +825,8 @@ window.services = {
       const outSwitch = /\s/.test(outResolved)
         ? '-o"' + outResolved.replace(/"/g, '') + '"'
         : '-o' + outResolved
-      execFileSync(sevenZip, ['x', zipPath, outSwitch, '-y', '-bb0'], {
-        timeout: 900000,
-        windowsHide: true,
-        stdio: 'ignore'
-      })
+      this._emitRemoteDlProgress(opts, { phase: 'extract' })
+      await this._run7zExtractAsync(sevenZip, ['x', zipPath, outSwitch, '-y', '-bb0'], 900000)
     } catch (e) {
       try { if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath) } catch { /* */ }
       throw e
@@ -688,9 +839,9 @@ window.services = {
     } catch { /* */ }
     if (!ok) {
       throw new Error(
-        '\u89e3\u538b\u540e\u672a\u627e\u5230\u76ee\u5f55: ' + destPath +
-          '\u3002\u8bf7\u786e\u8ba4 ZIP \u5185\u9876\u5c42\u4e3a\u6587\u4ef6\u5939\u300c' +
-          path.basename(destPath) + '\u300d\u4e14\u4e0e manifest \u7684 fileName \u4e00\u81f4\u3002'
+        '解压后未找到目录: ' + destPath +
+          '。请确认 ZIP 内顶层为文件夹「' +
+          path.basename(destPath) + '」且与 manifest 的 fileName 一致。'
       )
     }
     const entryRel = opts.entryFile && String(opts.entryFile).trim()
@@ -698,10 +849,11 @@ window.services = {
       const entryFull = path.join(destPath, entryRel.replace(/\//g, path.sep))
       if (!fs.existsSync(entryFull)) {
         throw new Error(
-          '\u89e3\u538b\u6210\u529f\u4f46\u7f3a\u5c11\u5165\u53e3\u6587\u4ef6: ' + entryRel
+          '解压成功但缺少入口文件: ' + entryRel
         )
       }
     }
+    this._emitRemoteDlProgress(opts, { phase: 'done' })
     return { path: destPath, size: 0 }
   },
 
@@ -755,6 +907,14 @@ window.services = {
       const remoteSha256Chw = remoteDownloadChwUrl && entry.sha256Chw && String(entry.sha256Chw).trim()
         ? String(entry.sha256Chw).trim().toLowerCase()
         : null
+      const remoteDownloadMirrorUrl = remoteDownloadUrl && entry.downloadUrlMirror
+        && String(entry.downloadUrlMirror).trim()
+        ? String(entry.downloadUrlMirror).trim()
+        : null
+      const remoteDownloadChwMirrorUrl = remoteDownloadChwUrl && entry.downloadUrlChwMirror
+        && String(entry.downloadUrlChwMirror).trim()
+        ? String(entry.downloadUrlChwMirror).trim()
+        : null
 
       const bundlePath = path.join(dir, entry.fileName)
       const relSafe = String(entry.fileName || '').replace(/^[\\/]+/, '')
@@ -802,7 +962,9 @@ window.services = {
         remoteSha256: remoteSha256 || null,
         remoteDownloadArchive: remoteDownloadArchive || null,
         remoteDownloadChwUrl: remoteDownloadChwUrl || null,
-        remoteSha256Chw: remoteSha256Chw || null
+        remoteSha256Chw: remoteSha256Chw || null,
+        remoteDownloadMirrorUrl: remoteDownloadMirrorUrl || null,
+        remoteDownloadChwMirrorUrl: remoteDownloadChwMirrorUrl || null
       }
 
       const existingManual = existingMap.get(entry.id)
@@ -818,6 +980,8 @@ window.services = {
           || (existingManual.remoteDownloadArchive || null) !== (remoteDownloadArchive || null)
           || (existingManual.remoteDownloadChwUrl || null) !== (remoteDownloadChwUrl || null)
           || (existingManual.remoteSha256Chw || null) !== (remoteSha256Chw || null)
+          || (existingManual.remoteDownloadMirrorUrl || null) !== (remoteDownloadMirrorUrl || null)
+          || (existingManual.remoteDownloadChwMirrorUrl || null) !== (remoteDownloadChwMirrorUrl || null)
 
         if (changed) {
           this.saveManual({
@@ -1013,13 +1177,21 @@ window.services = {
     const companionSha256 = companionUrl && entry.sha256Chw && String(entry.sha256Chw).trim()
       ? String(entry.sha256Chw).trim().toLowerCase()
       : undefined
+    const urlMirror = entry.downloadUrlMirror && String(entry.downloadUrlMirror).trim()
+      ? String(entry.downloadUrlMirror).trim()
+      : undefined
+    const companionUrlMirror = companionUrl && entry.downloadUrlChwMirror && String(entry.downloadUrlChwMirror).trim()
+      ? String(entry.downloadUrlChwMirror).trim()
+      : undefined
     await this.downloadRemoteBuiltinAsset({
       url,
+      urlMirror,
       destPath: cachePath,
       sha256,
       archiveFormat,
       entryFile: entry.entryFile || undefined,
       companionUrl,
+      companionUrlMirror,
       companionSha256
     })
     return { path: cachePath, bundled: false }
@@ -1272,7 +1444,7 @@ window.services = {
   },
 
   _buildManualFeatureCmds (manual) {
-    const label = (manual.name || '').trim() || '\u624b\u518c'
+    const label = (manual.name || '').trim() || '手册'
     const cmds = [{ type: 'over', label }]
     const seen = new Set()
     const pushStr = (s) => {
@@ -1417,7 +1589,7 @@ window.services = {
     for (let i = 0; i < maxPages; i++) {
       const t = parts[i]
       const lines = t.split(/\n/).map((l) => l.trim()).filter(Boolean)
-      const title = (lines[0] || ('\u7b2c ' + (i + 1) + ' \u9875')).substring(0, 120)
+      const title = (lines[0] || ('第 ' + (i + 1) + ' 页')).substring(0, 120)
       chunks.push({ pageNum: i + 1, title, text: t })
       if (onProgress && (i % 3 === 0 || i === maxPages - 1)) {
         onProgress(Math.min(i + 1, maxPages), maxPages)
@@ -1571,13 +1743,13 @@ window.services = {
 
     let workChm = resolvedChm
     let workChmTemp = null
-    if (process.platform === 'win32' && /[^\u0000-\u007F]/.test(resolvedChm)) {
+    if (process.platform === 'win32' && /[^ -]/.test(resolvedChm)) {
       workChmTemp = path.join(os.tmpdir(), 'pm_chm_in_' + hash + '.chm')
       try {
         fs.copyFileSync(resolvedChm, workChmTemp)
         workChm = workChmTemp
       } catch (e) {
-        throw new Error('CHM \u65e0\u6cd5\u590d\u5236\u5230\u4e34\u65f6\u8def\u5f84\uff08\u975e ASCII \u8def\u5f84\u65f6\u9700 ASCII \u4e34\u65f6\u526f\u672c\uff09: ' + (e.message || String(e)))
+        throw new Error('CHM 无法复制到临时路径（非 ASCII 路径时需 ASCII 临时副本）: ' + (e.message || String(e)))
       }
     }
 
@@ -1634,10 +1806,10 @@ window.services = {
       this._chmRmExtractDir(extractDir)
 
       const hint = sevenZip
-        ? '\u5df2\u5c1d\u8bd5 7-Zip \u4e0e hh.exe\uff0c\u89e3\u538b\u7ed3\u679c\u4ecd\u65e0\u53ef\u8bfb\u9875\u9762\u3002\u8bf7\u786e\u8ba4 CHM \u672a\u635f\u574f\u3001\u975e\u52a0\u5bc6\u3002'
-        : '\u672a\u627e\u5230 7-Zip \u53ef\u6267\u884c\u6587\u4ef6\uff08\u5185\u7f6e public/tools/7za.exe \u7f3a\u5931\u65f6\u8bf7\u91cd\u65b0\u6267\u884c npm run build \u6216 npm run bundle:7za\uff09\u3002\u4ea6\u53ef\u5b89\u88c5\u7cfb\u7edf\u7248 7-Zip \u6216\u8bbe\u7f6e\u73af\u5883\u53d8\u91cf PM_SEVEN_ZIP\u3002'
+        ? '已尝试 7-Zip 与 hh.exe，解压结果仍无可读页面。请确认 CHM 未损坏、非加密。'
+        : '未找到 7-Zip 可执行文件（内置 public/tools/7za.exe 缺失时请重新执行 npm run build 或 npm run bundle:7za）。亦可安装系统版 7-Zip 或设置环境变量 PM_SEVEN_ZIP。'
 
-      throw new Error('CHM \u89e3\u538b\u5931\u8d25\uff1a' + hint)
+      throw new Error('CHM 解压失败：' + hint)
     } finally {
       if (workChmTemp) {
         try { fs.unlinkSync(workChmTemp) } catch { /* */ }

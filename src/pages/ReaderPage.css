@@ -32,6 +32,50 @@
   margin-top: 1rem;
 }
 
+.remote-dl-progress-block {
+  margin: 0.75rem 0 1rem;
+}
+
+.remote-dl-phase {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 0.45rem;
+}
+
+.remote-dl-track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-border, rgba(0, 0, 0, 0.1));
+  overflow: hidden;
+}
+
+.remote-dl-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--color-primary, #2563eb);
+  transition: width 0.2s ease-out;
+}
+
+.remote-dl-indeterminate {
+  height: 100%;
+  width: 40%;
+  border-radius: 4px;
+  background: var(--color-primary, #2563eb);
+  animation: remote-dl-slide 1.2s ease-in-out infinite;
+}
+
+@keyframes remote-dl-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+.remote-dl-bytes {
+  font-size: 0.75rem;
+  color: var(--color-muted, #888);
+  margin-top: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
 .reader-page {
   display: flex; flex-direction: column;
   height: 100vh;

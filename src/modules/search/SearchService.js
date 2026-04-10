@@ -13,8 +13,8 @@ const CHM_INDEX_MAX_FILE_BYTES = 600 * 1024
 
 const indexCache = new Map()
 
-const CJK_RANGE = '\u2E80-\u9FFF\uF900-\uFAFF'
-const TOKEN_RE = new RegExp('[a-zA-Z0-9\u00C0-\u024F\u1E00-\u1EFF_]+|[' + CJK_RANGE + ']', 'g')
+const CJK_RANGE = '⺀-鿿豈-﫿'
+const TOKEN_RE = new RegExp('[a-zA-Z0-9À-ɏḀ-ỿ_]+|[' + CJK_RANGE + ']', 'g')
 
 function cjkTokenize (text) {
   if (typeof text !== 'string') return []
