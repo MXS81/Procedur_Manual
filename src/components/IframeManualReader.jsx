@@ -234,17 +234,6 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
   }, [sourcePath])
 
   useEffect(() => {
-    if (!sourcePath) return
-    const handler = (e) => {
-      if (!e.data || e.data.type !== 'pm-nav') return
-      if (e.source !== iframeRef.current?.contentWindow) return
-      handleIframeHref(e.data.href)
-    }
-    window.addEventListener('message', handler)
-    return () => window.removeEventListener('message', handler)
-  }, [sourcePath, handleIframeHref])
-
-  useEffect(() => {
     const el = iframeRef.current
     if (!el || !iframeDoc) return
     return attachBundledIframeNavigation(el, handleIframeHref)

@@ -32,7 +32,12 @@ const STORAGE_KEYS = {
 /** 资源中心「离线资源」列表暂时隐藏的 manifest id（恢复展示时从此 Set 删除） */
 const RESOURCE_CENTER_CATALOG_HIDDEN_IDS = new Set(['builtin-php'])
 
-window.services = {
+const services = {
+
+  /** @returns {object} 阅读器专用后台会话。 */
+  createChmSession () {
+    return require('./chm-session.js').createChmSession()
+  },
 
   /** manifestId → AbortController，用于资源中心暂停下载 */
   _builtinDlAbortById: new Map(),
@@ -2046,9 +2051,6 @@ window.services = {
     try { fs.rmSync(extractDir, { recursive: true, force: true }) } catch { /* */ }
   },
 
-  /** ??? SearchService CHM_INDEX_MAX_HTML_FILES ??????????????????????????????????????????????????????? HTML ?????? */
-  _CHM_CONTENT_SCAN_MAX_FILES: 2000,
-
   decompileChm (chmPath) {
     if (!chmPath) {
       throw new Error('CHM ?????????????')
@@ -2472,16 +2474,7 @@ window.services = {
 
   _injectChmViewBase (html, baseHref) {
     const safeBase = baseHref.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
-    const navGuard = `<script>(function(){` +
-      `document.addEventListener("click",function(e){` +
-      `var t=e.target;while(t&&t!==document&&(!t.tagName||t.tagName!=="A"))t=t.parentElement;` +
-      `if(!t||!t.getAttribute)return;var h=t.getAttribute("href");` +
-      `if(!h)return;var s=h.replace(/^\\s+/,"");` +
-      `if(s.lastIndexOf("javascript:",0)===0||s.lastIndexOf("mailto:",0)===0||s.lastIndexOf("tel:",0)===0)return;` +
-      `e.preventDefault();e.stopImmediatePropagation();` +
-      `try{window.parent.postMessage({type:"pm-nav",href:h},"*")}catch(x){}` +
-      `},true);})()</script>`
-    const inject = `<meta charset="utf-8"><base href="${safeBase}">${navGuard}`
+    const inject = `<meta charset="utf-8"><base href="${safeBase}">`
     const headMatch = html.match(/<head[^>]*>/i)
     if (headMatch) {
       const i = headMatch.index + headMatch[0].length
@@ -2611,45 +2604,6 @@ window.services = {
       if (p[0].length === 0) reCount0.lastIndex++
     }
     return { index: bestIdx, termLen: bestLen, matchCount: count }
-  },
-
-  searchChmContent (extractDir, keyword, opts = {}) {
-    if (!keyword || !keyword.trim()) return []
-    const maxResults = typeof opts.maxResults === 'number' ? opts.maxResults : 80
-    const htmlFiles = this.scanDir(extractDir, ['.html', '.htm'], {
-      maxFiles: this._CHM_CONTENT_SCAN_MAX_FILES
-    })
-    const results = []
-
-    for (const file of htmlFiles) {
-      if (results.length >= maxResults) break
-      try {
-        const st = fs.statSync(file.path)
-        if (st.size > 512 * 1024) continue
-        const raw = this.readTextFileChmAware(file.path)
-        const text = this.extractTextFromHtml(raw)
-        const hit = this._contentSearchFind(text, keyword, opts)
-        if (!hit) continue
-
-        const snippetStart = Math.max(0, hit.index - 40)
-        const snippetEnd = Math.min(text.length, hit.index + hit.termLen + 80)
-        const snippet = (snippetStart > 0 ? '...' : '')
-          + text.substring(snippetStart, snippetEnd)
-          + (snippetEnd < text.length ? '...' : '')
-
-        const titleMatch = raw.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
-        const pageTitle = titleMatch
-          ? this.extractTextFromHtml(titleMatch[1])
-          : file.name
-
-        const relPath = file.path.replace(extractDir, '').replace(/^[\\/]/, '').replace(/\\/g, '/')
-
-        results.push({ local: relPath, title: pageTitle, snippet, matchCount: hit.matchCount })
-      } catch { /* skip unreadable */ }
-    }
-
-    results.sort((a, b) => b.matchCount - a.matchCount)
-    return results
   },
 
   searchDirContent (dirPath, keyword, maxResults, opts = {}) {
@@ -2919,9 +2873,14 @@ window.services = {
   }
 }
 
-try {
-  window.services.initBuiltinManuals()
-  window.services.syncManualFeatures()
-} catch (e) {
-  console.warn('preload auto-init:', e.message)
+module.exports = services
+
+if (typeof window !== 'undefined') {
+  window.services = services
+  try {
+    services.initBuiltinManuals()
+    services.syncManualFeatures()
+  } catch (e) {
+    console.warn('preload auto-init:', e.message)
+  }
 }

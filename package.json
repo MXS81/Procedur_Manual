@@ -12,8 +12,9 @@
   "scripts": {
     "dev": "vite",
     "test:nav": "node scripts/test-bundled-doc-nav.mjs",
+    "test:chm": "node scripts/test-chm-reader.mjs",
     "bundle:7za": "node scripts/copy-bundled-7za.mjs",
-    "build": "node scripts/test-bundled-doc-nav.mjs && node scripts/build-builtin-manifest.mjs && node scripts/copy-bundled-7za.mjs && vite build && node scripts/prepare-release.mjs",
+    "build": "node scripts/test-bundled-doc-nav.mjs && node scripts/test-chm-reader.mjs && node scripts/build-builtin-manifest.mjs && node scripts/copy-bundled-7za.mjs && vite build && node scripts/prepare-release.mjs",
     "build:full": "cross-env PM_RELEASE_SLIM=0 npm run build",
     "postinstall": "node scripts/copy-bundled-7za.mjs && npm install --prefix public/preload && node scripts/clean-preload-node-modules.mjs",
     "install:preload": "npm install --prefix public/preload"

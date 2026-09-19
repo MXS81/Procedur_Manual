@@ -18,7 +18,7 @@ export function shouldUseMiniSearchDefault (options = {}) {
 /**
  * @param {string} query
  * @param {{ matchCase?: boolean, wholeWord?: boolean, useRegex?: boolean }} options
- * @returns {{ ok: true, testBlob: (s: string) => boolean, highlightRe: RegExp, findFirst: (s: string) => { index: number, length: number } | null } | { ok: false, error: string }}
+ * @returns {{ ok: true, patterns: RegExp[], testBlob: (s: string) => boolean, highlightRe: RegExp, findFirst: (s: string) => { index: number, length: number } | null } | { ok: false, error: string }}
  */
 export function compileSearchMatcher (query, options = {}) {
   const q = query?.trim()
@@ -36,6 +36,7 @@ export function compileSearchMatcher (query, options = {}) {
       const reHighlight = new RegExp(q, gflags)
       return {
         ok: true,
+        patterns: [reTest],
         testBlob: (s) => {
           reTest.lastIndex = 0
           return reTest.test(s || '')
@@ -71,6 +72,7 @@ export function compileSearchMatcher (query, options = {}) {
 
   return {
     ok: true,
+    patterns: termRes.map(({ reTest }) => reTest),
     testBlob: (s) => {
       const str = s || ''
       return termRes.every(({ reTest }) => {

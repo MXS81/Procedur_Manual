@@ -1,5 +1,5 @@
 /**
- * CHM / 离线 HTML 内链解析回归：与 srcdoc + postMessage 导航约定一致。
+ * CHM / 离线 HTML 内链解析回归：与 srcdoc 父页面事件导航约定一致。
  * 运行：npm run test:nav
  */
 import assert from 'node:assert/strict'

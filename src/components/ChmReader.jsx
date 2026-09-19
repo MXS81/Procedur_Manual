@@ -10,17 +10,18 @@ import {
 } from '../utils/contextMenuBridge.js'
 import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightRegex } from '../utils/searchModes'
 import SearchInputWithModes from './SearchInputWithModes'
+import { identifyToc, filterToc, createReadingHistory, findDocumentRanges, revealDocumentRange } from '../utils/chmReader'
 import './ChmReader.css'
 
 const TocStoreCtx = createContext(null)
 
 // ---------- TocItem ----------
-const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
+const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = node.id, forceExpanded = false }) {
   const store = useContext(TocStoreCtx)
 
   const isActive = useSyncExternalStore(
     store.subscribe,
-    () => !!(node.local && store.getActivePath() === node.local)
+    () => !!(node.local && store.getActivePath() === splitBundledActive(node.local).path)
   )
 
   const expandSignal = useSyncExternalStore(
@@ -36,6 +37,7 @@ const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
   const initiallyOpen = depth < 2
   const [expanded, setExpanded] = useState(initiallyOpen)
   const [childrenEverShown, setChildrenEverShown] = useState(initiallyOpen)
+  const isExpanded = forceExpanded || expanded
   const hasChildren = node.children && node.children.length > 0
   const labelRef = useRef(null)
   const lastExpandRef = useRef(0)
@@ -90,9 +92,9 @@ const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
         {hasChildren
           ? (
             <button type='button'
-              className={'chm-toc-arrow-btn' + (expanded ? ' expanded' : '')}
-              aria-expanded={expanded}
-              aria-label={expanded ? '折叠' : '展开'}
+              className={'chm-toc-arrow-btn' + (isExpanded ? ' expanded' : '')}
+              aria-expanded={isExpanded}
+              aria-label={isExpanded ? '折叠' : '展开'}
               onClick={toggleExpand}>
               <span className='chm-toc-arrow' aria-hidden>&#9654;</span>
             </button>
@@ -108,17 +110,17 @@ const TocItem = memo(function TocItem ({ node, depth = 0, pathKey = 'r' }) {
           {node.name}
         </span>
       </div>
-      {hasChildren && childrenEverShown && (
-        <ul className={'chm-toc-children' + (expanded ? '' : ' chm-toc-children--collapsed')}>
-          {node.children.map((child, i) => (
-            <TocItem key={pathKey + '/' + i} pathKey={pathKey + '/' + i}
-              node={child} depth={depth + 1} />
+      {hasChildren && (childrenEverShown || forceExpanded) && (
+        <ul className={'chm-toc-children' + (isExpanded ? '' : ' chm-toc-children--collapsed')}>
+          {node.children.map(child => (
+            <TocItem key={child.id} pathKey={child.id}
+              node={child} depth={depth + 1} forceExpanded={forceExpanded} />
           ))}
         </ul>
       )}
     </li>
   )
-}, (prev, next) => prev.node === next.node && prev.depth === next.depth && prev.pathKey === next.pathKey)
+})
 
 // ---------- helpers ----------
 function highlightSnippet (snippet, highlightRe) {
@@ -128,11 +130,12 @@ function highlightSnippet (snippet, highlightRe) {
   )
 }
 
-// ---------- ChmReader ----------
+/** @param {object} props CHM 路径、手册名称及返回操作。 @returns {JSX.Element} CHM 阅读界面。 */
 export default function ChmReader ({ chmPath, onBack, manualName, initialSearch }) {
   const [chmInfo, setChmInfo] = useState(null)
   const [activePage, setActivePage] = useState('')
-  const [iframeDoc, setIframeDoc] = useState('')
+  const [pageDocument, setPageDocument] = useState({ path: '', html: '' })
+  const iframeDoc = pageDocument.html
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [sidebarVisible, setSidebarVisible] = useState(true)
@@ -146,56 +149,74 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const [pageSearchTerm, setPageSearchTerm] = useState('')
   const [pageMatchCount, setPageMatchCount] = useState(0)
   const iframeRef = useRef(null)
-  const searchTimerRef = useRef(null)
+  const sessionRef = useRef(null)
+  const loadedPathRef = useRef('')
+  const pendingViewRef = useRef(null)
+  const pageRangesRef = useRef({ ranges: [], index: -1 })
+  const pageSearchQueryRef = useRef('')
+  const [searchMeta, setSearchMeta] = useState(null)
+  const [searchError, setSearchError] = useState('')
   const pageSearchRef = useRef(null)
   const sidebarRef = useRef(null)
   const pendingFindRef = useRef(null)
 
-  // ---- History ----
-  const historyRef = useRef({ stack: [], idx: -1 })
+  // 历史记录保存离开页面时的位置，恢复操作在目标 iframe 加载完成后执行。
+  const historyRef = useRef(createReadingHistory())
   const [historyVer, setHistoryVer] = useState(0)
 
-  const navigateTo = useCallback((page, fromHistory = false) => {
-    setActivePage(page)
-    if (!fromHistory) {
-      const h = historyRef.current
-      h.stack = h.stack.slice(0, h.idx + 1)
-      h.stack.push(page)
-      h.idx = h.stack.length - 1
+  const capturePosition = useCallback(() => {
+    const win = iframeRef.current?.contentWindow
+    if (win && loadedPathRef.current) {
+      historyRef.current.capture({ x: win.scrollX, y: win.scrollY })
     }
-    setHistoryVer(v => v + 1)
   }, [])
 
-  const goBack = useCallback(() => {
-    const h = historyRef.current
-    if (h.idx <= 0) return
-    h.idx--
-    navigateTo(h.stack[h.idx], true)
-  }, [navigateTo])
+  const navigateTo = useCallback((page, delta = 0, query = null) => {
+    capturePosition()
+    pendingFindRef.current = query
+    const entry = delta ? historyRef.current.move(delta) : historyRef.current.visit(page)
+    pendingViewRef.current = { ...entry }
+    setActivePage(entry.page)
+    setHistoryVer(v => v + 1)
+  }, [capturePosition])
 
-  const goForward = useCallback(() => {
-    const h = historyRef.current
-    if (h.idx >= h.stack.length - 1) return
-    h.idx++
-    navigateTo(h.stack[h.idx], true)
-  }, [navigateTo])
-
-  const handleSelectPage = useCallback((localPath) => { navigateTo(localPath) }, [navigateTo])
-
-  void historyVer
+  const goBack = useCallback(() => navigateTo('', -1), [navigateTo])
+  const goForward = useCallback(() => navigateTo('', 1), [navigateTo])
+  const handleSelectPage = useCallback(localPath => navigateTo(localPath), [navigateTo])
   const canGoBack = historyRef.current.idx > 0
   const canGoForward = historyRef.current.idx < historyRef.current.stack.length - 1
 
-  // ---- Load CHM ----
   useEffect(() => {
-    try {
-      const info = window.services.getChmInfo(chmPath)
-      setChmInfo(info)
+    let session
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+    setChmInfo(null)
+    setActivePage('')
+    setPageDocument({ path: '', html: '' })
+    historyRef.current = createReadingHistory()
+    loadedPathRef.current = ''
+    pendingViewRef.current = null
+    pendingFindRef.current = null
+    // 会话创建与文件加载属于同一次异步操作，初始化异常也进入加载错误状态。
+    const load = async () => {
+      session = window.services.createChmSession()
+      sessionRef.current = session
+      return session.request('load', { chmPath })
+    }
+    load().then(info => {
+      if (cancelled) return
+      setChmInfo({ ...info, toc: identifyToc(info.toc) })
       if (info.defaultPage) navigateTo(info.defaultPage)
       setLoading(false)
-    } catch (e) {
+    }).catch(e => {
+      if (cancelled) return
       setError('CHM 加载失败: ' + e.message)
       setLoading(false)
+    })
+    return () => {
+      cancelled = true
+      session?.dispose()
     }
   }, [chmPath, navigateTo])
 
@@ -223,14 +244,13 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const localToPathKey = useMemo(() => {
     if (!chmInfo?.toc) return new Map()
     const map = new Map()
-    const walk = (nodes, prefix) => {
-      nodes.forEach((node, i) => {
-        const key = prefix + '/' + i
-        if (node.local) map.set(node.local, key)
-        if (node.children) walk(node.children, key)
+    const walk = (nodes) => {
+      nodes.forEach((node) => {
+        if (node.local) map.set(splitBundledActive(node.local).path, node.id)
+        if (node.children) walk(node.children)
       })
     }
-    walk(chmInfo.toc, 'r')
+    walk(chmInfo.toc)
     return map
   }, [chmInfo])
 
@@ -248,13 +268,17 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     }
   }, [activePath, localToPathKey])
 
-  // ---- Load page ----
+  // 每次切页只展示对应路径的文档，避免旧 srcdoc 被装入新 iframe。
   useEffect(() => {
-    if (!chmInfo?.extractDir || !activePath) { setIframeDoc(''); return }
-    try {
-      const html = window.services.getChmPageSrcdoc(chmInfo.extractDir, activePath)
-      setIframeDoc(html || '')
-    } catch { setIframeDoc('') }
+    if (!chmInfo || !activePath) return
+    let cancelled = false
+    loadedPathRef.current = ''
+    sessionRef.current.request('page', { page: activePath }).then(html => {
+      if (!cancelled) setPageDocument({ path: activePath, html })
+    }).catch(e => {
+      if (!cancelled) setError('页面加载失败: ' + e.message)
+    })
+    return () => { cancelled = true }
   }, [chmInfo, activePath])
 
   const handleIframeHref = useCallback((href) => {
@@ -271,58 +295,43 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     }
   }, [chmInfo, navigateTo])
 
-  // ---- Navigation via postMessage from injected nav-guard script ----
-  useEffect(() => {
-    if (!chmInfo) return
-    const handler = (e) => {
-      if (!e.data || e.data.type !== 'pm-nav') return
-      if (e.source !== iframeRef.current?.contentWindow) return
-      handleIframeHref(e.data.href)
-    }
-    window.addEventListener('message', handler)
-    return () => window.removeEventListener('message', handler)
-  }, [chmInfo, handleIframeHref])
-
-  // ---- Iframe pending find on load ----
-  useEffect(() => {
-    if (!iframeDoc || !chmInfo) return
+  const applyPagePosition = useCallback(() => {
     const el = iframeRef.current
-    if (!el) return
-    const onLoad = () => {
-      const term = pendingFindRef.current
-      if (term) {
-        pendingFindRef.current = null
-        try {
-          const win = el.contentWindow
-          if (win) { win.getSelection()?.removeAllRanges(); win.find(term, false, false, true) }
-        } catch {}
-      }
+    if (!el || loadedPathRef.current !== activePath) return
+    const query = pendingFindRef.current
+    if (query) {
+      const ranges = findDocumentRanges(el.contentDocument, compileSearchMatcher(query.term, query.options))
+      if (ranges.length) revealDocumentRange(ranges[0])
+      pendingFindRef.current = null
+      pendingViewRef.current = null
+      return
     }
-    el.addEventListener('load', onLoad)
-    return () => el.removeEventListener('load', onLoad)
-  }, [iframeDoc, chmInfo])
+    const entry = pendingViewRef.current
+    if (!entry) return
+    if (entry.scroll) el.contentWindow.scrollTo(entry.scroll.x, entry.scroll.y)
+    else if (activeFragment) scrollBundledIframeToFragment(el.contentDocument, activeFragment)
+    else el.contentWindow.scrollTo(0, 0)
+    pendingViewRef.current = null
+  }, [activePath, activeFragment])
 
-  // ---- Fragment scroll ----
-  useEffect(() => {
-    const el = iframeRef.current
-    if (!el || !iframeDoc) return
-    const run = () => { try { const d = el.contentDocument; if (d) scrollBundledIframeToFragment(d, activeFragment) } catch {} }
-    run()
-    el.addEventListener('load', run)
-    return () => el.removeEventListener('load', run)
-  }, [iframeDoc, activeFragment])
+  useEffect(() => { applyPagePosition() }, [historyVer, applyPagePosition])
+
+  const onPageLoad = useCallback(() => {
+    loadedPathRef.current = activePath
+    applyPagePosition()
+  }, [activePath, applyPagePosition])
 
   useEffect(() => {
     const el = iframeRef.current
     if (!el || !iframeDoc) return
     return attachBundledIframeNavigation(el, handleIframeHref)
-  }, [iframeDoc, activePath, handleIframeHref])
+  }, [pageDocument, activePath, handleIframeHref])
 
   useEffect(() => {
     const el = iframeRef.current
     if (!el || !iframeDoc) return
     return attachBundledIframeContextMenu(el)
-  }, [iframeDoc, activePath])
+  }, [pageDocument, activePath])
 
   // ---- Sidebar resize (preview line during drag, commit on mouseup) ----
   const onResizeStart = useCallback((e) => {
@@ -375,34 +384,47 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
 
   useEffect(() => {
     const onKey = (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'f') { e.preventDefault(); togglePageSearch() } }
+    const el = iframeRef.current
+    let frameDoc
+    const bind = () => {
+      frameDoc?.removeEventListener('keydown', onKey)
+      frameDoc = el.contentDocument
+      frameDoc.addEventListener('keydown', onKey)
+    }
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [togglePageSearch])
+    if (el) { bind(); el.addEventListener('load', bind) }
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      frameDoc?.removeEventListener('keydown', onKey)
+      el?.removeEventListener('load', bind)
+    }
+  }, [togglePageSearch, pageDocument])
 
   const findInPage = useCallback((forward = true) => {
-    try {
-      const win = iframeRef.current?.contentWindow
-      if (!win || !pageSearchTerm) return
-      win.find(pageSearchTerm, false, !forward, true)
-    } catch {}
-  }, [pageSearchTerm])
+    const state = pageRangesRef.current
+    if (!state.ranges.length) return
+    state.index = state.index < 0
+      ? (forward ? 0 : state.ranges.length - 1)
+      : (state.index + (forward ? 1 : -1) + state.ranges.length) % state.ranges.length
+    revealDocumentRange(state.ranges[state.index])
+  }, [])
 
   useEffect(() => {
-    if (!pageSearchOpen || !pageSearchTerm) { setPageMatchCount(0); return }
-    const t = setTimeout(() => {
-      try {
-        const doc = iframeRef.current?.contentDocument
-        if (!doc?.body) { setPageMatchCount(0); return }
-        const text = doc.body.textContent || ''
-        const escaped = pageSearchTerm.replace(/[.*+?^{}()|[\]\\$]/g, '\\$&')
-        const m = text.match(new RegExp(escaped, 'gi'))
-        setPageMatchCount(m ? m.length : 0)
-        const win = iframeRef.current?.contentWindow
-        if (win) { try { win.getSelection()?.removeAllRanges() } catch {}; win.find(pageSearchTerm, false, false, true) }
-      } catch { setPageMatchCount(0) }
-    }, 200)
-    return () => clearTimeout(t)
-  }, [pageSearchTerm, pageSearchOpen, iframeDoc])
+    const el = iframeRef.current
+    const update = () => {
+      const ranges = pageSearchOpen && pageSearchTerm && el?.contentDocument?.body
+        ? findDocumentRanges(el.contentDocument, compileSearchMatcher(pageSearchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), { useRegex: true })) : []
+      pageRangesRef.current = { ranges, index: -1 }
+      setPageMatchCount(ranges.length)
+      // 输入变化时定位首个匹配；切页仅重算计数，保留历史恢复的位置。
+      const queryKey = pageSearchOpen ? pageSearchTerm : ''
+      if (queryKey !== pageSearchQueryRef.current && ranges.length) findInPage()
+      pageSearchQueryRef.current = queryKey
+    }
+    const t = setTimeout(update, 200)
+    el?.addEventListener('load', update)
+    return () => { clearTimeout(t); el?.removeEventListener('load', update) }
+  }, [pageSearchTerm, pageSearchOpen, pageDocument, findInPage])
 
   // ---- Sidebar search ----
   const searchCompile = useMemo(() => {
@@ -413,23 +435,39 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
   const contentHighlightRe = searchCompile.ok ? searchCompile.highlightRe : null
 
   useEffect(() => {
-    if (searchMode !== 'content' || !searchTerm.trim() || !chmInfo || !searchCompile.ok) { setContentResults([]); return }
-    setSearching(true)
-    if (searchTimerRef.current) clearTimeout(searchTimerRef.current)
-    searchTimerRef.current = setTimeout(() => {
-      try { setContentResults(window.services.searchChmContent(chmInfo.extractDir, searchTerm, searchModeOpts)) }
-      catch { setContentResults([]) }
+    setContentResults([])
+    setSearchMeta(null)
+    setSearchError('')
+    if (searchMode !== 'content' || !searchTerm.trim() || !chmInfo || !searchCompile.ok) {
       setSearching(false)
+      return
+    }
+    let cancelled = false
+    setSearching(true)
+    const timer = setTimeout(() => {
+      sessionRef.current.request('search', {
+        patterns: searchCompile.patterns,
+        highlightRe: searchCompile.highlightRe
+      }).then(({ results, ...meta }) => {
+        if (cancelled) return
+        setContentResults(results)
+        setSearchMeta(meta)
+        setSearching(false)
+      }).catch(e => {
+        if (cancelled) return
+        setSearchError(e.message)
+        setSearching(false)
+      })
     }, 300)
-    return () => { if (searchTimerRef.current) clearTimeout(searchTimerRef.current) }
-  }, [searchTerm, searchMode, chmInfo, searchModeOpts, searchCompile.ok])
+    return () => { cancelled = true; clearTimeout(timer) }
+  }, [searchTerm, searchMode, chmInfo, searchCompile])
 
   const filteredToc = useMemo(() => {
     if (!chmInfo?.toc) return []
     if (!searchTerm.trim() || searchMode !== 'toc') return chmInfo.toc
     if (!searchCompile.ok) return []
-    return filterToc(chmInfo.toc, searchTerm, searchModeOpts)
-  }, [chmInfo, searchTerm, searchMode, searchModeOpts, searchCompile.ok])
+    return filterToc(chmInfo.toc, searchCompile)
+  }, [chmInfo, searchTerm, searchMode, searchCompile])
 
   const filteredIndex = useMemo(() => {
     if (!chmInfo?.indexEntries?.length) return []
@@ -515,6 +553,13 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                 onClick={() => setSearchMode('content')}>{'全文搜索'}</button>
             </div>
 
+            {searchMode === 'content' && searchMeta && (
+              <div className="chm-search-summary">
+                已搜索 {searchMeta.scanned} 页，命中 {searchMeta.total} 页
+                {searchMeta.total > contentResults.length && '，显示前 ' + contentResults.length + ' 条'}
+                {searchMeta.skipped > 0 && '，未能读取 ' + searchMeta.skipped + ' 页'}
+              </div>
+            )}
             <div className="chm-toc-container">
               {searchMode === 'toc' ? (
                 !hasTocOutline ? (
@@ -525,8 +570,8 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                 ) : filteredToc.length > 0 ? (
                   <TocStoreCtx.Provider value={tocStore}>
                     <ul className="chm-toc-root">
-                      {filteredToc.map((node, i) => (
-                        <TocItem key={'r/' + i} pathKey={'r/' + i} node={node} depth={0} />
+                      {filteredToc.map(node => (
+                        <TocItem key={node.id} pathKey={node.id} node={node} depth={0} forceExpanded={!!searchTerm.trim()} />
                       ))}
                     </ul>
                   </TocStoreCtx.Provider>
@@ -561,6 +606,8 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                   <div className="chm-toc-empty">{'输入关键词搜索所有页面内容'}</div>
                 ) : !searchCompile.ok ? (
                   <div className="chm-toc-empty">{'修正搜索条件'}</div>
+                ) : searchError ? (
+                  <div className="chm-toc-empty chm-error">{searchError}</div>
                 ) : searching ? (
                   <div className="chm-toc-empty">{'搜索中…'}</div>
                 ) : contentResults.length > 0 ? (
@@ -568,7 +615,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
                     {contentResults.map((r, i) => (
                       <li key={i}
                         className={'chm-search-result' + (activePath === r.local ? ' active' : '')}
-                        onClick={() => { pendingFindRef.current = searchTerm; handleSelectPage(r.local) }}>
+                        onClick={() => navigateTo(r.local, 0, { term: searchTerm, options: searchModeOpts })}>
                         <div className="chm-result-title">
                           {r.title}
                           <span className="chm-result-count">{r.matchCount} {'处匹配'}</span>
@@ -617,10 +664,10 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
             </div>
           )}
 
-          {iframeDoc ? (
-            <iframe key={activePath} ref={iframeRef} srcDoc={iframeDoc} sandbox="allow-same-origin" className="chm-iframe" title="CHM Content" />
+          {iframeDoc && pageDocument.path === activePath ? (
+            <iframe key={activePath} ref={iframeRef} onLoad={onPageLoad} srcDoc={iframeDoc} sandbox="allow-same-origin" className="chm-iframe" title="CHM Content" />
           ) : activePath ? (
-            <div className="chm-status">{'无法加载页面'}</div>
+            <div className="chm-status">{'页面加载中…'}</div>
           ) : (
             <div className="chm-status">{'请从左侧选择页面或使用全文搜索'}</div>
           )}
@@ -628,18 +675,4 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
       </div>
     </div>
   )
-}
-
-function filterToc (nodes, term, modeOpts) {
-  const m = compileSearchMatcher(term, modeOpts)
-  if (!m.ok) return []
-  const result = []
-  for (const node of nodes) {
-    const nameMatch = node.name && m.testBlob(node.name)
-    const childMatches = node.children ? filterToc(node.children, term, modeOpts) : []
-    if (nameMatch || childMatches.length > 0) {
-      result.push({ ...node, children: nameMatch ? (node.children || []) : childMatches })
-    }
-  }
-  return result
 }
