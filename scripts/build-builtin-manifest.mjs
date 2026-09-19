@@ -99,7 +99,7 @@ const STATIC_CATALOG = [
     id: 'builtin-linux-command',
     name: 'Linux 命令手册',
     description: '基于本地 Markdown 命令文档整理的 Linux 命令手册',
-    keywords: ['linux', '命令', 'shell', 'bash', 'terminal', 'cd', 'grep', 'ls'],
+    keywords: ['linux', '命令'],
     fileName: 'command',
     version: '1.0'
   },
@@ -107,7 +107,7 @@ const STATIC_CATALOG = [
     id: 'builtin-html-css',
     name: 'HTML / CSS 参考手册',
     description: 'HTML 标签与 CSS 属性完整参考',
-    keywords: ['html', 'css', '网页', '前端', '标签', '样式'],
+    keywords: ['html', 'css'],
     fileName: 'html-css-reference.chm',
     version: '1.0'
   },
@@ -115,7 +115,7 @@ const STATIC_CATALOG = [
     id: 'builtin-javascript',
     name: 'JavaScript 参考手册',
     description: 'JavaScript 语言核心、DOM、BOM 参考',
-    keywords: ['javascript', 'js', '前端', 'es6', 'dom', 'node'],
+    keywords: ['javascript', 'js'],
     fileName: 'javascript-reference.chm',
     version: '1.0'
   },
@@ -123,7 +123,7 @@ const STATIC_CATALOG = [
     id: 'builtin-python',
     name: 'Python 参考手册',
     description: 'Python 标准库与语言参考',
-    keywords: ['python', 'py', '标准库', 'pip'],
+    keywords: ['python', 'py'],
     fileName: 'python-reference.chm',
     version: '1.0'
   },
@@ -131,7 +131,7 @@ const STATIC_CATALOG = [
     id: 'builtin-python-313-core-ref-v110',
     name: 'Python 3.13.x 核心参考与实例手册',
     description: 'Python 3.13.x 语言核心与实例参考（CHM，含完整目录与全文搜索）',
-    keywords: ['python', 'py', '3.13', '核心', '实例', '标准库', 'pip', 'typing'],
+    keywords: ['python', '3.13'],
     fileName: 'Python 3.13.x 核心参考与实例手册 v1.10.chm',
     version: '1.10'
   },
@@ -139,7 +139,7 @@ const STATIC_CATALOG = [
     id: 'builtin-cpp',
     name: 'C/C++ 参考手册',
     description: 'C/C++ 标准库函数与语言参考',
-    keywords: ['c', 'c++', 'cpp', 'stl', '标准库'],
+    keywords: ['c++', 'cpp'],
     fileName: 'cppreference-zh_CN.chm',
     version: '1.0'
   },
@@ -147,7 +147,7 @@ const STATIC_CATALOG = [
     id: 'builtin-java',
     name: 'Java 参考手册',
     description: 'Java SE API 参考手册',
-    keywords: ['java', 'jdk', 'api', 'spring'],
+    keywords: ['java', 'jdk'],
     fileName: 'java-reference.chm',
     version: '1.0'
   },
@@ -155,7 +155,7 @@ const STATIC_CATALOG = [
     id: 'builtin-matlab',
     name: 'MATLAB 参考手册',
     description: 'MATLAB 函数与工具箱参考',
-    keywords: ['matlab', '矩阵', '数值计算', 'simulink'],
+    keywords: ['matlab', '数值'],
     fileName: 'matlab-reference.chm',
     version: '1.0'
   },
@@ -163,7 +163,7 @@ const STATIC_CATALOG = [
     id: 'builtin-sql',
     name: 'SQL 参考手册',
     description: 'SQL 语法与数据库操作参考',
-    keywords: ['sql', 'mysql', '数据库', '查询', 'postgresql'],
+    keywords: ['sql', 'mysql'],
     fileName: 'sql-reference.chm',
     version: '1.0'
   },
@@ -171,7 +171,7 @@ const STATIC_CATALOG = [
     id: 'builtin-mysql8',
     name: 'MySQL 8.0 中文参考手册',
     description: 'MySQL 8.0 官方中文文档，安装、SQL、存储引擎、复制、安全与运维等完整参考',
-    keywords: ['mysql', 'mysql8', '数据库', 'innodb', 'sql', '查询', '索引', '复制', '备份'],
+    keywords: ['mysql', '数据库'],
     fileName: 'MYSQL8.0中文参考手册.chm',
     version: '1.0'
   },
@@ -179,7 +179,7 @@ const STATIC_CATALOG = [
     id: 'builtin-git',
     name: 'Git 参考手册',
     description: 'Git 常用命令参考手册，涵盖 config、clone、commit、push、pull、branch、merge、rebase、stash、tag 等',
-    keywords: ['git', '版本控制', 'github', '分支', '合并', 'commit', 'push', 'pull', 'clone', 'rebase'],
+    keywords: ['git', '版本控制'],
     fileName: 'git',
     version: '2.0'
   },
@@ -187,7 +187,7 @@ const STATIC_CATALOG = [
     id: 'builtin-php',
     name: 'PHP 参考手册',
     description: 'PHP 官方中文文档，函数、类、语言语法完整参考',
-    keywords: ['php', '函数', 'array', 'string', 'mysql', 'pdo', 'json', '正则'],
+    keywords: ['php', 'web'],
     fileName: 'php-chunked-xhtml',
     entryFile: 'index.html',
     version: '1.0'
@@ -197,7 +197,7 @@ const STATIC_CATALOG = [
     name: 'JavaScript 核心参考手册',
     description:
       'JavaScript 核心语法与 API 参考（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
-    keywords: ['javascript', 'js', '核心', '参考', 'ecma', '语法'],
+    keywords: ['javascript', '核心'],
     fileName: 'JS_core.chm',
     version: '1.0'
   },
@@ -206,7 +206,7 @@ const STATIC_CATALOG = [
     name: '微软 JavaScript 手册',
     description:
       '微软 JavaScript / JScript 脚本手册（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
-    keywords: ['javascript', 'js', '微软', 'jscript', '脚本', 'ie'],
+    keywords: ['javascript', '微软'],
     fileName: 'Microsoft_JS.chm',
     version: '1.0'
   },
@@ -215,7 +215,7 @@ const STATIC_CATALOG = [
     name: 'JavaScript 语言中文参考手册',
     description:
       'JavaScript 语言中文参考（CHM）。请在资源中心下载；无 .hhc 时不生成侧栏目录，请用全文搜索。',
-    keywords: ['javascript', 'js', '中文', '参考', '语言', 'ecma'],
+    keywords: ['javascript', '中文'],
     fileName: 'JS_zh.chm',
     version: '1.0'
   },
@@ -223,7 +223,7 @@ const STATIC_CATALOG = [
     id: 'builtin-vim-manual-zh-72',
     name: 'Vim 手册中文版 7.2',
     description: 'Vim 编辑器中文帮助文档 7.2（内置 CHM；无 .hhc 时请用全文搜索）',
-    keywords: ['vim', 'vi', '编辑器', '帮助', '命令', '7.2', '中文版'],
+    keywords: ['vim', '编辑器'],
     fileName: 'Vim手册中文版7.2.chm',
     version: '7.2'
   },
@@ -231,18 +231,15 @@ const STATIC_CATALOG = [
     id: 'builtin-qt-help-zh-full',
     name: 'Qt 中文帮助文档（完整版）',
     description: 'Qt 框架官方中文帮助（CHM，含类库、信号槽、QML 等参考）',
-    keywords: [
-      'qt', 'qt5', 'qt6', 'qml', 'qwidget', 'signals', 'slots', 'c++', 'gui',
-      '信号', '槽', '界面', '帮助'
-    ],
+    keywords: ['qt', 'qml'],
     fileName: 'QT中文帮助文档完整版.chm',
     version: '1.0'
   },
   {
     id: 'builtin-vue-official-pdf-zh',
     name: 'Vue.js 官方离线文档（PDF）',
-    description: 'Vue.js 官方文档中文离线版（PDF）。PDF 全文检索需 Poppler（pdftotext）；资源与依赖内可安装或重启 uTools 后点「索引」。',
-    keywords: ['vue', 'vue3', 'vue2', '前端', '框架', '组合式', '选项式', 'cli', 'router', 'vuex'],
+    description: 'Vue.js 官方文档中文离线版（PDF）。PDF 全文检索需 Poppler（pdftotext）；资源中心可安装或重启 uTools 后点「索引」。',
+    keywords: ['vue', '前端'],
     fileName: 'VueJS官方离线文档(搬运版).pdf',
     version: '1.0'
   }
@@ -368,7 +365,7 @@ function buildAutoEntry (fileName) {
     'builtin-auto-' +
     crypto.createHash('md5').update(fileName).digest('hex').slice(0, 12)
   const parts = base.split(/[\s._\-\/]+/).filter(Boolean)
-  const kw = parts.slice(0, 8)
+  const kw = parts.slice(0, 3)
   if (kw.length === 0) kw.push('docs')
   return {
     id,
@@ -429,6 +426,13 @@ function buildManifest () {
   rows.sort((a, b) =>
     String(a.fileName).localeCompare(String(b.fileName), 'zh-Hans-CN', { sensitivity: 'base' })
   )
+
+  const MAX_KW = 3
+  for (const entry of rows) {
+    if (Array.isArray(entry.keywords) && entry.keywords.length > MAX_KW) {
+      entry.keywords = entry.keywords.slice(0, MAX_KW)
+    }
+  }
 
   return rows
 }

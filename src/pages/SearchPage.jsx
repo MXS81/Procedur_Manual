@@ -46,8 +46,12 @@ export default function SearchPage ({ initialQuery = '' }) {
   const [searching, setSearching] = useState(false)
   const inputRef = useRef(null)
   const timer = useRef(null)
+  const syncedInitialQueryRef = useRef(initialQuery)
 
-  const ready = manuals.filter(m => m.enabled && m.indexStatus === 'ready')
+  const ready = useMemo(
+    () => manuals.filter(m => m.enabled && m.indexStatus === 'ready'),
+    [manuals]
+  )
 
   const matcherForHighlight = useMemo(() => {
     if (!query.trim()) return null
@@ -90,29 +94,38 @@ export default function SearchPage ({ initialQuery = '' }) {
 
   useEffect(() => {
     inputRef.current?.focus()
-    if (initialQuery) doSearch(initialQuery, filter, modeOpts)
   }, [])
 
-  const runDebounced = (v, f, opts) => {
+  useEffect(() => {
+    if (initialQuery === syncedInitialQueryRef.current) return
+    syncedInitialQueryRef.current = initialQuery
+    setQuery(initialQuery || '')
+  }, [initialQuery])
+
+  useEffect(() => {
     clearTimeout(timer.current)
-    timer.current = setTimeout(() => doSearch(v, f, opts), 200)
-  }
+    if (!query.trim()) {
+      setResults([])
+      setSearchError('')
+      setSearching(false)
+      return undefined
+    }
+    timer.current = setTimeout(() => doSearch(query, filter, modeOpts), 200)
+    return () => clearTimeout(timer.current)
+  }, [query, filter, modeOpts, doSearch])
 
   const onInput = (e) => {
     const v = e.target.value
     setQuery(v)
-    runDebounced(v, filter, modeOpts)
   }
 
   const onFilterChange = (e) => {
     const v = e.target.value
     setFilter(v)
-    doSearch(query, v, modeOpts)
   }
 
   const onModesChange = (next) => {
     setModeOpts(next)
-    doSearch(query, filter, next)
   }
 
   const clearQuery = () => {

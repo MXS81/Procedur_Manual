@@ -4,7 +4,10 @@ import {
   splitBundledActive,
   scrollBundledIframeToFragment
 } from '../utils/bundledDocNav'
-import { attachBundledIframeContextMenu } from '../utils/contextMenuBridge.js'
+import {
+  attachBundledIframeContextMenu,
+  attachBundledIframeNavigation
+} from '../utils/contextMenuBridge.js'
 import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightRegex } from '../utils/searchModes'
 import SearchInputWithModes from './SearchInputWithModes'
 import './IframeManualReader.css'
@@ -216,27 +219,36 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
     setActivePage(localPath)
   }, [])
 
+  const handleIframeHref = useCallback((href) => {
+    if (!href) return
+    const trimmed = String(href).trim()
+    if (/^https?:/i.test(trimmed)) {
+      try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
+      return
+    }
+    const rel = resolveBundledNavigationTarget(href, sourcePath, activePathRef.current)
+    if (rel) {
+      activePathRef.current = splitBundledActive(rel).path
+      setActivePage(rel)
+    }
+  }, [sourcePath])
+
   useEffect(() => {
     if (!sourcePath) return
     const handler = (e) => {
       if (!e.data || e.data.type !== 'pm-nav') return
       if (e.source !== iframeRef.current?.contentWindow) return
-      const href = e.data.href
-      if (!href) return
-      const trimmed = String(href).trim()
-      if (/^https?:/i.test(trimmed)) {
-        try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
-        return
-      }
-      const rel = resolveBundledNavigationTarget(href, sourcePath, activePathRef.current)
-      if (rel) {
-        activePathRef.current = splitBundledActive(rel).path
-        setActivePage(rel)
-      }
+      handleIframeHref(e.data.href)
     }
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
-  }, [sourcePath])
+  }, [sourcePath, handleIframeHref])
+
+  useEffect(() => {
+    const el = iframeRef.current
+    if (!el || !iframeDoc) return
+    return attachBundledIframeNavigation(el, handleIframeHref)
+  }, [iframeDoc, activePath, handleIframeHref])
 
   useEffect(() => {
     const el = iframeRef.current
@@ -400,6 +412,7 @@ export default function IframeManualReader ({ sourcePath, onBack, manualName, en
               key={activePath}
               ref={iframeRef}
               srcDoc={iframeDoc}
+              sandbox="allow-same-origin"
               className="ifr-iframe"
               title={manualName || '手册'}
             />

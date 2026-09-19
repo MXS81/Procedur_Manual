@@ -2,7 +2,12 @@
   "main": "index.html",
   "preload": "preload/services.js",
   "logo": "logo.png",
-  "description": "本地技术手册阅读与全文检索。主界面「资源与依赖」可勾选 GitHub Releases 离线包并下载，Windows 下可同页安装 Poppler（pdftotext）到用户 PATH。PDF 索引需 Poppler；重启 uTools 后点「索引」。亦可运行 install-poppler-windows.ps1 或手动下载。远程资源见 Release manuals。",
+  "description": "本地技术手册阅读与全文检索。主界面「资源中心」可勾选 GitHub Releases 离线包并下载，Windows 下可同页安装 Poppler（pdftotext）到用户 PATH。PDF 索引需 Poppler；重启 uTools 后点「索引」。亦可运行 install-poppler-windows.ps1 或手动下载。远程资源见 Release manuals。",
+  "keywords": [
+    "程序员手册",
+    "猿手册",
+    "CHM"
+  ],
   "development": {
     "main": "http://localhost:5173"
   },
@@ -12,8 +17,7 @@
       "explain": "打开程序员手册主界面，管理和浏览手册",
       "cmds": [
         "程序员手册",
-        "手册管理",
-        "manual"
+        "猿手册"
       ]
     },
     {
@@ -21,6 +25,7 @@
       "explain": "搜索命令、函数和关键词",
       "cmds": [
         "手册搜索",
+        "全文搜索",
         {
           "type": "over",
           "label": "手册搜索"
@@ -31,6 +36,7 @@
       "code": "manual-file-import",
       "explain": "导入本地手册文件（支持 HTML、Markdown、JSON、PDF、CHM）",
       "cmds": [
+        "导入手册",
         {
           "type": "files",
           "fileType": "file",

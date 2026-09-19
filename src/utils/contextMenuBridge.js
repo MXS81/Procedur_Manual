@@ -24,6 +24,68 @@ export function emitContextMenuOpen (detail) {
   subscriber?.(detail)
 }
 
+
+/**
+ * Attach link navigation on a same-origin iframe document. Used with sandboxed
+ * srcdoc pages where scripts are disabled, so the parent app still owns routing.
+ * @param {HTMLIFrameElement} iframeEl
+ * @param {(href: string) => void} onHref
+ * @returns {() => void} cleanup
+ */
+export function attachBundledIframeNavigation (iframeEl, onHref) {
+  if (!iframeEl || typeof onHref !== 'function') return () => {}
+
+  const onIframeClick = (e) => {
+    let target = e.target
+    while (target && target !== e.currentTarget && target.tagName !== 'A') {
+      target = target.parentElement
+    }
+    if (!target?.getAttribute) return
+
+    const href = target.getAttribute('href')
+    if (!href) return
+
+    const trimmed = String(href).trim()
+    if (/^(javascript:|mailto:|tel:)/i.test(trimmed)) return
+
+    e.preventDefault()
+    e.stopPropagation()
+    onHref(href)
+  }
+
+  let attachedDoc = null
+
+  const bindDoc = () => {
+    try {
+      const doc = iframeEl.contentDocument
+      if (!doc || attachedDoc === doc) return
+      if (attachedDoc) {
+        try {
+          attachedDoc.removeEventListener('click', onIframeClick, true)
+        } catch { /* */ }
+      }
+      attachedDoc = doc
+      doc.addEventListener('click', onIframeClick, true)
+    } catch {
+      attachedDoc = null
+    }
+  }
+
+  const onLoad = () => bindDoc()
+
+  iframeEl.addEventListener('load', onLoad)
+  bindDoc()
+
+  return () => {
+    iframeEl.removeEventListener('load', onLoad)
+    try {
+      if (attachedDoc) attachedDoc.removeEventListener('click', onIframeClick, true)
+    } catch { /* */ }
+    attachedDoc = null
+  }
+}
+
+
 /**
  * Attach contextmenu on iframe's document (same-origin only). Converts coords to parent viewport.
  * @returns {() => void} cleanup

@@ -81,7 +81,7 @@
 - **导入本地文件**：通过 uTools 场景（如「导入手册」）选择 `.html` / `.htm` / `.md` / `.markdown` / `.json` / `.pdf` / `.chm` 等加入库中。
 - **内置 7-Zip 工具链**：用于 CHM 等解压（见 `public/tools` 与构建脚本说明）。
 
-插件内功能入口以 uTools 中配置的 **关键字与场景** 为准（见 `public/plugin.json` 的 `features`）。
+插件内功能入口以 uTools 中配置的 **关键字与场景** 为准（见 `public/plugin.json` 的 `features` 与根级 `keywords`）。内置条目的 `keywords` 在清单脚本中建议每条 **2～3 个**，动态注册的 `setFeature` 与之对齐，保持设置页简洁。
 
 ---
 

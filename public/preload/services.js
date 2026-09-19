@@ -1290,11 +1290,12 @@ window.services = {
       if (!window.utools || !window.utools.dbStorage) return new Set()
       const raw = window.utools.dbStorage.getItem(STORAGE_KEYS.REMOTE_BUILTIN_ENABLED)
       if (!raw) {
+        const ids = [...allRemote]
         window.utools.dbStorage.setItem(
           STORAGE_KEYS.REMOTE_BUILTIN_ENABLED,
-          JSON.stringify({ v: 1, ids: [] })
+          JSON.stringify({ v: 1, ids })
         )
-        return new Set()
+        return new Set(ids)
       }
       const o = JSON.parse(raw)
       const arr = Array.isArray(o.ids) ? o.ids.map(String) : []
@@ -1761,20 +1762,26 @@ window.services = {
     return manual.searchEntryEnabled !== false
   },
 
+  /**
+   * uTools 功能指令：除 { type:'over' } 外最多 2 条字符串（与 manifest keywords 条数一致），避免设置页关键字过长。
+   */
   _buildManualFeatureCmds (manual) {
     const label = (manual.name || '').trim() || '手册'
     const cmds = [{ type: 'over', label }]
     const seen = new Set()
+    const maxStr = 2
     const pushStr = (s) => {
+      if (cmds.length - 1 >= maxStr) return
       const t = String(s || '').trim()
-      if (!t || seen.has(t)) return
+      if (!t || seen.has(t) || t === label) return
       seen.add(t)
       cmds.push(t)
     }
-    pushStr(manual.name)
-    for (const kw of manual.keywords || []) {
+    const kws = Array.isArray(manual.keywords) ? manual.keywords : []
+    for (const kw of kws) {
       pushStr(kw)
     }
+    if (cmds.length - 1 < maxStr) pushStr(manual.name)
     return cmds
   },
 
@@ -2025,6 +2032,16 @@ window.services = {
     try { return fs.readdirSync(dir).length > 0 } catch { return false }
   },
 
+  _chmCacheKey (chmPath) {
+    const resolved = path.resolve(chmPath)
+    let fingerprint = resolved
+    try {
+      const st = fs.statSync(resolved)
+      fingerprint += '|' + st.size + '|' + Math.round(st.mtimeMs)
+    } catch { /* keep path-only fallback */ }
+    return crypto.createHash('md5').update(fingerprint).digest('hex').substring(0, 12)
+  },
+
   _chmRmExtractDir (extractDir) {
     try { fs.rmSync(extractDir, { recursive: true, force: true }) } catch { /* */ }
   },
@@ -2048,8 +2065,10 @@ window.services = {
       throw new Error('CHM ????????????????????????????????')
     }
 
-    const hash = crypto.createHash('md5').update(resolvedChm).digest('hex').substring(0, 12)
+    const legacyHash = crypto.createHash('md5').update(resolvedChm).digest('hex').substring(0, 12)
+    const hash = this._chmCacheKey(resolvedChm)
     const extractDir = path.join(os.tmpdir(), 'pm_chm_' + hash)
+    const legacyExtractDir = path.join(os.tmpdir(), 'pm_chm_' + legacyHash)
 
     if (fs.existsSync(extractDir)) {
       if (this._hasFiles(extractDir) && this._chmExtractLooksUsable(extractDir)) {
@@ -2057,6 +2076,7 @@ window.services = {
       }
       this._chmRmExtractDir(extractDir)
     }
+    if (legacyExtractDir !== extractDir) this._chmRmExtractDir(legacyExtractDir)
     fs.mkdirSync(extractDir, { recursive: true })
 
     let workChm = resolvedChm
@@ -2635,7 +2655,7 @@ window.services = {
   searchDirContent (dirPath, keyword, maxResults, opts = {}) {
     if (!keyword || !keyword.trim()) return []
     const limit = maxResults || 50
-    const htmlFiles = this.scanDir(dirPath, ['.html', '.htm'])
+    const htmlFiles = this.scanDir(dirPath, ['.html', '.htm'], { maxFiles: 2000 })
     const results = []
     const MAX_FILE_SIZE = 512 * 1024
 
@@ -2767,9 +2787,15 @@ window.services = {
 
   clearChmCache (chmPath) {
     if (chmPath) {
-      const hash = crypto.createHash('md5').update(chmPath).digest('hex').substring(0, 12)
+      const resolvedChm = path.resolve(chmPath)
+      const legacyHash = crypto.createHash('md5').update(resolvedChm).digest('hex').substring(0, 12)
+      const hash = this._chmCacheKey(resolvedChm)
       const extractDir = path.join(os.tmpdir(), 'pm_chm_' + hash)
+      const legacyExtractDir = path.join(os.tmpdir(), 'pm_chm_' + legacyHash)
       try { fs.rmSync(extractDir, { recursive: true, force: true }) } catch { /* ok */ }
+      if (legacyExtractDir !== extractDir) {
+        try { fs.rmSync(legacyExtractDir, { recursive: true, force: true }) } catch { /* ok */ }
+      }
       return
     }
     try {

@@ -57,7 +57,7 @@ export default function DirectoryManualReader ({ manualId, sourcePath, title, se
     if (!sourcePath) return []
     const entries = window.services.scanDir(sourcePath, [
       '.md', '.markdown', '.json', '.pdf', '.html', '.htm', '.chm'
-    ])
+    ], { maxFiles: 2500 })
     return entries
       .map(entry => {
         const isChm = entry.ext.toLowerCase() === '.chm'

@@ -4,7 +4,10 @@ import {
   splitBundledActive,
   scrollBundledIframeToFragment
 } from '../utils/bundledDocNav'
-import { attachBundledIframeContextMenu } from '../utils/contextMenuBridge.js'
+import {
+  attachBundledIframeContextMenu,
+  attachBundledIframeNavigation
+} from '../utils/contextMenuBridge.js'
 import { compileSearchMatcher, defaultSearchModeOptions, splitTextByHighlightRegex } from '../utils/searchModes'
 import SearchInputWithModes from './SearchInputWithModes'
 import './ChmReader.css'
@@ -254,28 +257,31 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     } catch { setIframeDoc('') }
   }, [chmInfo, activePath])
 
+  const handleIframeHref = useCallback((href) => {
+    if (!href || !chmInfo?.extractDir) return
+    const trimmed = String(href).trim()
+    if (/^https?:/i.test(trimmed)) {
+      try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
+      return
+    }
+    const rel = resolveBundledNavigationTarget(href, chmInfo.extractDir, activePathRef.current)
+    if (rel) {
+      activePathRef.current = splitBundledActive(rel).path
+      navigateTo(rel)
+    }
+  }, [chmInfo, navigateTo])
+
   // ---- Navigation via postMessage from injected nav-guard script ----
   useEffect(() => {
     if (!chmInfo) return
     const handler = (e) => {
       if (!e.data || e.data.type !== 'pm-nav') return
       if (e.source !== iframeRef.current?.contentWindow) return
-      const href = e.data.href
-      if (!href) return
-      const trimmed = String(href).trim()
-      if (/^https?:/i.test(trimmed)) {
-        try { window.utools ? window.utools.shellOpenExternal(trimmed) : window.open(trimmed, '_blank') } catch { /* */ }
-        return
-      }
-      const rel = resolveBundledNavigationTarget(href, chmInfo.extractDir, activePathRef.current)
-      if (rel) {
-        activePathRef.current = splitBundledActive(rel).path
-        navigateTo(rel)
-      }
+      handleIframeHref(e.data.href)
     }
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
-  }, [chmInfo, navigateTo])
+  }, [chmInfo, handleIframeHref])
 
   // ---- Iframe pending find on load ----
   useEffect(() => {
@@ -305,6 +311,12 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
     el.addEventListener('load', run)
     return () => el.removeEventListener('load', run)
   }, [iframeDoc, activeFragment])
+
+  useEffect(() => {
+    const el = iframeRef.current
+    if (!el || !iframeDoc) return
+    return attachBundledIframeNavigation(el, handleIframeHref)
+  }, [iframeDoc, activePath, handleIframeHref])
 
   useEffect(() => {
     const el = iframeRef.current
@@ -606,7 +618,7 @@ export default function ChmReader ({ chmPath, onBack, manualName, initialSearch 
           )}
 
           {iframeDoc ? (
-            <iframe key={activePath} ref={iframeRef} srcDoc={iframeDoc} className="chm-iframe" title="CHM Content" />
+            <iframe key={activePath} ref={iframeRef} srcDoc={iframeDoc} sandbox="allow-same-origin" className="chm-iframe" title="CHM Content" />
           ) : activePath ? (
             <div className="chm-status">{'无法加载页面'}</div>
           ) : (
